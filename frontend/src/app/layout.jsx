@@ -1,11 +1,11 @@
 import "../styles/globals.css";
-import Header from "../components/Header";
+import Navbar from "../components/Navbar";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="bg-[#F6F4FA] text-[#2E2A36]">
-        <Header />
+        <Navbar />
 
         <main>
           {children}
