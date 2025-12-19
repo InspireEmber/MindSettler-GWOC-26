@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function RootLayout({ children }) {
   return (
@@ -11,9 +12,7 @@ export default function RootLayout({ children }) {
           {children}
         </main>
 
-        <footer className="text-center py-8 text-[#5E5A6B] border-t border-[#3F2965]/10 bg-white">
-          <p className="text-sm">© {new Date().getFullYear()} MindSettler. All rights reserved.</p>
-        </footer>
+        <Footer />
       </body>
     </html>
   );
