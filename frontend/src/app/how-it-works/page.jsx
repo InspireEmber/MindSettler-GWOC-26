@@ -89,15 +89,22 @@ export default function HowItWorksPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-24 text-center">
-        <div className="max-w-2xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-light text-[#2E2A36] mb-6">Ready to Start?</h2>
-          <p className="text-lg mb-10 leading-relaxed">Book your first session and take the first step toward understanding your mind.</p>
-          <Link href="/book-session" className="px-10 py-4 rounded-full bg-[#3F2965] text-white font-medium text-lg hover:shadow-xl transition-all active:scale-95 inline-block">
-            Book Your First Session
-          </Link>
-        </div>
-      </section>
+      <section className="py-20 md:py-32 bg-gradient-to-br from-[#3F2965] to-[#DD1764]">
+  <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
+    <h2 className="text-4xl md:text-5xl font-light text-white mb-6">
+      Ready to Start?
+    </h2>
+    <p className="text-xl text-white/90 mb-8 leading-relaxed">
+      Book your first session and take the first step toward understanding your mind.
+    </p>
+    <Link 
+      href="/book-session"
+      className="inline-block px-10 py-4 rounded-full bg-white text-[#3F2965] font-medium text-lg hover:bg-white/90 transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95"
+    >
+      Book Your First Session
+    </Link>
+  </div>
+</section>
     </div>
   );
 }

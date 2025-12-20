@@ -26,22 +26,22 @@ export default function FAQsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-[#F6F4FA]">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-light text-[#2E2A36] mb-6">
-            Still Have Questions?
-          </h2>
-          <p className="text-lg text-[#5E5A6B] mb-10 leading-relaxed">
-            Feel free to reach out. We're here to help you understand how MindSettler can support your mental well-being journey.
-          </p>
-          <Link 
-            href="/contact"
-            className="px-10 py-4 rounded-full bg-[#3F2965] text-white font-medium text-lg hover:shadow-xl transition-all active:scale-95 inline-block"
-          >
-            Contact Us
-          </Link>
-        </div>
-      </section>
+      <section className="py-20 md:py-32 bg-gradient-to-br from-[#3F2965] to-[#DD1764]">
+  <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
+    <h2 className="text-4xl md:text-5xl font-light text-white mb-6">
+      Still Have Questions?
+    </h2>
+    <p className="text-xl text-white/90 mb-8 leading-relaxed">
+      Feel free to reach out. We're here to help you understand how MindSettler can support your mental well-being journey.
+    </p>
+    <Link 
+      href="/contact"
+      className="inline-block px-10 py-4 rounded-full bg-white text-[#3F2965] font-medium text-lg hover:bg-white/90 transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95"
+    >
+      Contact Us
+    </Link>
+  </div>
+</section>
     </div>
   );
 }
