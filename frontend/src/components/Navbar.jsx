@@ -7,14 +7,14 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <img
-              src="/logo.svg"
+            <Image
+              src="/logo.png"
               alt="MindSettler"
-              className="h-16 w-auto"
+              width={60}
+              height={60}
+              className="h-14 w-auto object-contain"
+              priority
             />
-            <span className="text-2xl font-medium tracking-wide text-[#3F2965]">
-              MindSettler
-            </span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
