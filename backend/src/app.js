@@ -1,15 +1,11 @@
 const express = require('express');
 const cors = require('cors');
-const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
 
 // Import routes
 const bookingRoutes = require('./routes/bookingRoutes');
 const slotRoutes = require('./routes/slotRoutes');
 const adminRoutes = require('./routes/adminRoutes');
-
-// Connect to database
-connectDB();
 
 const app = express();
 
