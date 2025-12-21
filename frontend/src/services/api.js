@@ -17,14 +17,36 @@ class ApiService {
 
     try {
       const response = await fetch(url, config);
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'An error occurred');
+      
+      // Handle network errors or cases where response is not available
+      if (!response) {
+        throw new Error('Network error: Unable to connect to the server. Please make sure the backend server is running.');
       }
 
-      return data;
+      // Check if response has content before parsing JSON
+      const contentType = response.headers.get('content-type');
+      let data;
+      
+      if (contentType && contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        // If not JSON, get text response
+        const text = await response.text();
+        throw new Error(text || `Server returned ${response.status}: ${response.statusText}`);
+      }
+
+      if (!response.ok) {
+        throw new Error(data.message || data.error || `Server error: ${response.status}`);
+      }
+
+      // Extract data field if response has success/data structure
+      return data.data !== undefined ? data.data : data;
     } catch (error) {
+      // Handle network errors (connection refused, CORS, etc.)
+      if (error instanceof TypeError && error.message === 'Failed to fetch') {
+        throw new Error('Unable to connect to the server. Please ensure the backend server is running on http://localhost:5000');
+      }
+      // Re-throw other errors with their original message
       throw error;
     }
   }

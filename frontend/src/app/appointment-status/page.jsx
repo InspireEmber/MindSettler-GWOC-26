@@ -32,8 +32,8 @@ function AppointmentStatusContent() {
     }
     const fetchStatus = async () => {
       try {
-        const response = await api.getBookingStatus(bookingId);
-        setBooking(response.data);
+        const booking = await api.getBookingStatus(bookingId);
+        setBooking(booking);
       } catch (err) {
         setError(err.message || "Failed to fetch booking status");
       } finally {
