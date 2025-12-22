@@ -1,6 +1,9 @@
 "use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import BookingForm from "../../components/BookingForm";
 import { Clock, Shield, Globe } from "lucide-react";
+import { getCurrentUser } from "../../services/auth";
 
 const SESSION_FEATURES = [
   { 
@@ -27,6 +30,43 @@ const SESSION_FEATURES = [
 ];
 
 export default function BookSessionPage() {
+  const router = useRouter();
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function checkAuth() {
+      try {
+        const user = await getCurrentUser();
+        if (!user && !cancelled) {
+          router.replace("/login");
+          return;
+        }
+      } catch (e) {
+        if (!cancelled) {
+          router.replace("/login");
+          return;
+        }
+      } finally {
+        if (!cancelled) setCheckingAuth(false);
+      }
+    }
+
+    checkAuth();
+    return () => {
+      cancelled = true;
+    };
+  }, [router]);
+
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center text-[#5E5A6B]">Checking your session...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}

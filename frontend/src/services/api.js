@@ -78,6 +78,21 @@ class ApiService {
       body: data,
     });
   }
+
+  // User auth endpoints
+  async userSignup(data) {
+    return this.request('/auth/user/signup', {
+      method: 'POST',
+      body: data,
+    });
+  }
+
+  async userLogin(data) {
+    return this.request('/auth/user/login', {
+      method: 'POST',
+      body: data,
+    });
+  }
 }
 
 export default new ApiService();

@@ -1,23 +1,97 @@
 "use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import api from "../../services/api";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setError("");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      await api.userLogin(formData);
+      router.push("/book-session");
+    } catch (err) {
+      setError(err.message || "Login failed. Please check your credentials.");
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-6 py-16">
-      <div className="max-w-md w-full text-center border border-[#3F2965]/10 rounded-3xl p-8 bg-[#F6F4FA]">
-        <h1 className="text-2xl md:text-3xl font-light text-[#2E2A36] mb-4">
+      <div className="max-w-md w-full border border-[#3F2965]/10 rounded-3xl p-8 bg-[#F6F4FA]">
+        <h1 className="text-2xl md:text-3xl font-light text-[#2E2A36] mb-2">
           User Login
         </h1>
-        <p className="text-sm md:text-base text-[#5E5A6B] mb-8">
-          User authentication is coming soon. For now, you can still book and track
-          your sessions without an account.
+        <p className="text-sm md:text-base text-[#5E5A6B] mb-6">
+          Log in to quickly book and track your psycho-education sessions.
         </p>
-        <Link
-          href="/book-session"
-          className="inline-block px-6 py-3 rounded-full bg-[#3F2965] text-white text-sm md:text-base hover:bg-[#3F2965]/90 transition-colors"
-        >
-          Go to Booking Page
-        </Link>
+
+        {error && (
+          <div className="mb-4 rounded-xl bg-red-50 border border-red-100 text-red-700 text-sm px-4 py-3">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4 mb-4">
+          <div>
+            <label className="block text-sm font-medium text-[#2E2A36] mb-1">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white"
+              placeholder="you@example.com"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-[#2E2A36] mb-1">
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              required
+              minLength={6}
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white"
+              placeholder="••••••••"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 rounded-full bg-[#3F2965] text-white font-medium text-sm md:text-base hover:bg-[#3F2965]/90 transition-colors disabled:opacity-60"
+          >
+            {loading ? "Logging in..." : "Log In"}
+          </button>
+        </form>
+
+        <p className="text-xs text-[#5E5A6B] text-center">
+          Don&apos;t have an account? {" "}
+          <Link href="/signup" className="text-[#3F2965] font-medium underline">
+            Sign up
+          </Link>
+        </p>
       </div>
     </div>
   );

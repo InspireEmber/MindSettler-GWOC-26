@@ -2,20 +2,27 @@ const Appointment = require('../models/Appointment');
 const User = require('../models/User');
 const Slot = require('../models/Slot');
 
-// Create a new booking request (public)
+// Create a new booking request (authenticated user only)
 // Validation is handled via Joi in the route layer.
 exports.createBooking = async (req, res) => {
-  const { name, email, phone, sessionType, preferredDate, preferredTime, slotId, isFirstSession, message } = req.body;
+  const { sessionType, preferredDate, preferredTime, slotId, isFirstSession, message } = req.body;
 
-  // Find or create user
-  let user = await User.findOne({ email });
+  if (!req.user) {
+    return res.status(401).json({
+      success: false,
+      message: 'Login required',
+    });
+  }
+
+  const userId = req.user._id;
+
+  // Ensure referenced user exists (defensive check)
+  const user = await User.findById(userId);
   if (!user) {
-    user = await User.create({ name, email, phone });
-  } else {
-    // Update user info if needed
-    user.name = name;
-    user.phone = phone;
-    await user.save();
+    return res.status(400).json({
+      success: false,
+      message: 'User account not found for this session',
+    });
   }
 
   // Find the selected slot (prefer slotId, fall back to preferredTime for compatibility)

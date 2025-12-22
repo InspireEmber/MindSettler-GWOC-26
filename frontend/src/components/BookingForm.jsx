@@ -8,9 +8,6 @@ export default function BookingForm() {
   const router = useRouter();
   const today = new Date().toISOString().split('T')[0];
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
     sessionType: "online",
     preferredDate: today,
     preferredTime: "",
@@ -54,7 +51,15 @@ export default function BookingForm() {
     setError("");
     setIsSubmitting(true);
     try {
-      const booking = await api.createBooking(formData);
+      const { sessionType, preferredDate, preferredTime, slotId, isFirstSession, message } = formData;
+      const booking = await api.createBooking({
+        sessionType,
+        preferredDate,
+        preferredTime,
+        slotId,
+        isFirstSession,
+        message,
+      });
       router.push(`/appointment-status?id=${booking.id}`);
     } catch (err) {
       setError(err.message || "Failed to create booking.");
@@ -80,24 +85,6 @@ export default function BookingForm() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            { label: "Full Name", name: "name", type: "text", placeholder: "John Doe" },
-            { label: "Email Address", name: "email", type: "email", placeholder: "john@example.com" }
-          ].map((field) => (
-            <div key={field.name}>
-              <label className="block text-sm font-medium text-[#2E2A36] mb-2">{field.label} *</label>
-              <input {...field} required value={formData[field.name]} onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none transition-all bg-white" />
-            </div>
-          ))}
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-[#2E2A36] mb-2">Phone Number *</label>
-          <input name="phone" type="tel" required value={formData.phone} onChange={handleChange} placeholder="+1..."
-            className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white" />
-        </div>
 
         <div className="grid grid-cols-2 gap-4">
           {["online", "offline"].map((type) => (

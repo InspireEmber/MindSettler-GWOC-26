@@ -96,7 +96,7 @@ exports.userSignup = async (req, res, next) => {
   }
 };
 
-// User login (email/password)
+// User login (email/password) with session-based auth
 exports.userLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -118,16 +118,21 @@ exports.userLogin = async (req, res, next) => {
       });
     }
 
-    // For now, user auth is stateless (no session) – frontend can store basic profile if needed
-    res.json({
-      success: true,
-      message: 'Logged in successfully',
-      data: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-      },
+    req.logIn(user, (loginErr) => {
+      if (loginErr) {
+        return next(loginErr);
+      }
+
+      return res.json({
+        success: true,
+        message: 'Logged in successfully',
+        data: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+        },
+      });
     });
   } catch (err) {
     next(err);
