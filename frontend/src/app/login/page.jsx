@@ -24,7 +24,8 @@ export default function LoginPage() {
 
     try {
       await api.userLogin(formData);
-      router.push("/book-session");
+      // Force a full reload so Navbar/useAuth picks up the new session cookie
+      window.location.href = "/book-session";
     } catch (err) {
       setError(err.message || "Login failed. Please check your credentials.");
       setLoading(false);

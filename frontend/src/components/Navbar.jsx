@@ -1,7 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Navbar() {
+  const router = useRouter();
+  const { user, loading, logout } = useAuth();
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#3F2965]/10">
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-4">
@@ -46,18 +52,36 @@ export default function Navbar() {
               Book Session
             </Link>
             <div className="flex items-center gap-4 text-sm">
-              <Link
-                href="/login"
-                className="text-[#5E5A6B] hover:text-[#3F2965] transition-colors"
-              >
-                User Login
-              </Link>
-              <Link
-                href="/signup"
-                className="text-[#5E5A6B] hover:text-[#3F2965] transition-colors"
-              >
-                User Signup
-              </Link>
+              {!loading && !user && (
+                <>
+                  <Link
+                    href="/login"
+                    className="text-[#5E5A6B] hover:text-[#3F2965] transition-colors"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className="text-[#5E5A6B] hover:text-[#3F2965] transition-colors"
+                  >
+                    Signup
+                  </Link>
+                </>
+              )}
+
+              {!loading && user && (
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await logout();
+                    router.push("/login");
+                  }}
+                  className="text-[#5E5A6B] hover:text-[#3F2965] transition-colors"
+                >
+                  Logout
+                </button>
+              )}
+
               <Link
                 href="/admin/dashboard"
                 className="text-[#5E5A6B] hover:text-[#3F2965] transition-colors"
