@@ -93,6 +93,19 @@ class ApiService {
       body: data,
     });
   }
+
+  // User profile endpoints
+  async getUserProfile() {
+    return this.request('/users/profile');
+  }
+
+  async getUserSessionsSummary() {
+    return this.request('/users/sessions-summary');
+  }
+
+  async getUserSessions() {
+    return this.request('/users/sessions');
+  }
 }
 
 export default new ApiService();

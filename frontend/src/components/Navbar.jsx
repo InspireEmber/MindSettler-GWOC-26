@@ -70,16 +70,24 @@ export default function Navbar() {
               )}
 
               {!loading && user && (
-                <button
-                  type="button"
-                  onClick={async () => {
-                    await logout();
-                    router.push("/login");
-                  }}
-                  className="text-[#5E5A6B] hover:text-[#3F2965] transition-colors"
-                >
-                  Logout
-                </button>
+                <>
+                  <Link
+                    href="/profile"
+                    className="text-[#5E5A6B] hover:text-[#3F2965] transition-colors"
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      await logout();
+                      router.push("/login");
+                    }}
+                    className="text-[#5E5A6B] hover:text-[#3F2965] transition-colors"
+                  >
+                    Logout
+                  </button>
+                </>
               )}
 
               <Link
