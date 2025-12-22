@@ -1,34 +1,41 @@
-// Basic validation middleware
-const validateBooking = (req, res, next) => {
-  const { name, email, phone, sessionType, preferredDate, preferredTime } = req.body;
+// Generic Joi-based validation middleware helpers
+// Schemas are defined in src/validation/* and passed into these helpers.
 
-  if (!name || !email || !phone || !sessionType || !preferredDate || !preferredTime) {
-    return res.status(400).json({
-      success: false,
-      message: 'Missing required fields'
-    });
-  }
+const validateBody = (schema) => {
+  return (req, res, next) => {
+    const { error, value } = schema.validate(req.body, { abortEarly: false, stripUnknown: true });
 
-  // Email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    return res.status(400).json({
-      success: false,
-      message: 'Invalid email format'
-    });
-  }
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation error',
+        errors: error.details.map((d) => d.message),
+      });
+    }
 
-  // Session type validation
-  if (!['online', 'offline'].includes(sessionType)) {
-    return res.status(400).json({
-      success: false,
-      message: 'Invalid session type. Must be "online" or "offline"'
-    });
-  }
+    req.body = value;
+    next();
+  };
+};
 
-  next();
+const validateQuery = (schema) => {
+  return (req, res, next) => {
+    const { error, value } = schema.validate(req.query, { abortEarly: false, stripUnknown: true });
+
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation error',
+        errors: error.details.map((d) => d.message),
+      });
+    }
+
+    req.query = value;
+    next();
+  };
 };
 
 module.exports = {
-  validateBooking
+  validateBody,
+  validateQuery,
 };

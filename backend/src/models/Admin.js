@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const passportLocalMongoose = require('passport-local-mongoose');
 
 const adminSchema = new mongoose.Schema({
   username: {
@@ -14,12 +15,21 @@ const adminSchema = new mongoose.Schema({
     lowercase: true,
     trim: true
   },
-  password: {
+  role: {
     type: String,
-    required: true
+    enum: ['admin'],
+    default: 'admin'
   }
 }, {
   timestamps: true
+});
+
+// Configure passport-local-mongoose to use email/username and hashed password
+adminSchema.plugin(passportLocalMongoose, {
+  usernameField: 'username',
+  errorMessages: {
+    UserExistsError: 'An account with this username already exists.'
+  }
 });
 
 module.exports = mongoose.model('Admin', adminSchema);

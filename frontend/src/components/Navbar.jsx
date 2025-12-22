@@ -20,7 +20,7 @@ export default function Navbar() {
             />
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6">
             <Link
               href="/about"
               className="text-[#2E2A36] hover:text-[#3F2965] transition-colors"
@@ -45,6 +45,26 @@ export default function Navbar() {
             >
               Book Session
             </Link>
+            <div className="flex items-center gap-4 text-sm">
+              <Link
+                href="/login"
+                className="text-[#5E5A6B] hover:text-[#3F2965] transition-colors"
+              >
+                User Login
+              </Link>
+              <Link
+                href="/signup"
+                className="text-[#5E5A6B] hover:text-[#3F2965] transition-colors"
+              >
+                User Signup
+              </Link>
+              <Link
+                href="/admin/dashboard"
+                className="text-[#5E5A6B] hover:text-[#3F2965] transition-colors"
+              >
+                Admin Dashboard
+              </Link>
+            </div>
           </nav>
         </div>
       </div>

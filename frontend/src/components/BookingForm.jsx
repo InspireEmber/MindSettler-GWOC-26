@@ -6,9 +6,17 @@ import api from "../services/api";
 
 export default function BookingForm() {
   const router = useRouter();
+  const today = new Date().toISOString().split('T')[0];
   const [formData, setFormData] = useState({
-    name: "", email: "", phone: "", sessionType: "online",
-    preferredDate: "", preferredTime: "", isFirstSession: true, message: ""
+    name: "",
+    email: "",
+    phone: "",
+    sessionType: "online",
+    preferredDate: today,
+    preferredTime: "",
+    slotId: "",
+    isFirstSession: true,
+    message: "",
   });
   const [availableSlots, setAvailableSlots] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,10 +28,12 @@ export default function BookingForm() {
         try {
           const slots = await api.getAvailableSlots({
             sessionType: formData.sessionType,
-            date: formData.preferredDate
+            date: formData.preferredDate,
           });
           setAvailableSlots(slots);
-        } catch (err) { console.error("Error fetching slots:", err); }
+        } catch (err) {
+          console.error("Error fetching slots:", err);
+        }
       };
       fetchSlots();
     }
@@ -31,13 +41,18 @@ export default function BookingForm() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+      ...(name === "preferredTime" ? { slotId: value } : {}),
+    }));
     setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); setIsSubmitting(true);
+    setError("");
+    setIsSubmitting(true);
     try {
       const booking = await api.createBooking(formData);
       router.push(`/appointment-status?id=${booking.id}`);
@@ -97,13 +112,36 @@ export default function BookingForm() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <input type="date" name="preferredDate" required value={formData.preferredDate} onChange={handleChange} min={new Date().toISOString().split('T')[0]}
-            className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white" />
-          
-          <select name="preferredTime" required value={formData.preferredTime} onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white">
+          <input
+            type="date"
+            name="preferredDate"
+            required
+            value={formData.preferredDate}
+            onChange={handleChange}
+            min={today}
+            className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white"
+          />
+
+          <select
+            name="preferredTime"
+            required
+            value={formData.preferredTime}
+            onChange={handleChange}
+            className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white"
+          >
             <option value="">Select Time Slot</option>
-            {availableSlots.map(s => <option key={s.id} value={s.id}>{s.time}</option>)}
+            {availableSlots.map((s) => {
+              const slotDate = new Date(s.date);
+              const dateLabel = slotDate.toLocaleDateString('en-US', {
+                weekday: 'short', month: 'short', day: 'numeric',
+              });
+              const label = `${dateLabel} — ${s.startTime} – ${s.endTime}`;
+              return (
+                <option key={s.id} value={s.id}>
+                  {label}
+                </option>
+              );
+            })}
           </select>
         </div>
 

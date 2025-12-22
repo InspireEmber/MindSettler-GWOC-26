@@ -38,6 +38,32 @@ const appointmentSchema = new mongoose.Schema({
   rejectionReason: {
     type: String,
     trim: true
+  },
+  paymentStatus: {
+    type: String,
+    enum: ['pending', 'paid', 'waived'],
+    default: 'pending'
+  },
+  paymentMethod: {
+    type: String,
+    enum: ['upi', 'cash', 'other'],
+    trim: true
+  },
+  paymentReference: {
+    type: String,
+    trim: true
+  },
+  meetingLink: {
+    type: String,
+    trim: true
+  },
+  calendarEventId: {
+    type: String,
+    trim: true
+  },
+  notes: {
+    type: String,
+    trim: true
   }
 }, {
   timestamps: true

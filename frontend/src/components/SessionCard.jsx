@@ -45,6 +45,22 @@ export default function SessionCard({ booking }) {
             })} 
           />
           <DetailItem label="Time Slot" value={booking.preferredTime} icon={Clock} />
+          <DetailItem label="Payment Status" value={booking.paymentStatus || 'pending'} icon={CheckCircle2} />
+          {booking.meetingLink && (
+            <div className="md:col-span-2">
+              <p className="text-sm font-medium text-[#5E5A6B] mb-1 flex items-center gap-2">
+                <Calendar size={14} /> Meeting Link
+              </p>
+              <a
+                href={booking.meetingLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#3F2965] underline break-all"
+              >
+                {booking.meetingLink}
+              </a>
+            </div>
+          )}
         </div>
 
         {booking.isFirstSession && (

@@ -4,6 +4,8 @@ class ApiService {
   async request(endpoint, options = {}) {
     const url = `${API_BASE_URL}${endpoint}`;
     const config = {
+      // Always send cookies for session-based auth (admin dashboard)
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         ...options.headers,
@@ -67,6 +69,14 @@ class ApiService {
   async getAvailableSlots(filters = {}) {
     const queryParams = new URLSearchParams(filters).toString();
     return this.request(`/slots/available?${queryParams}`);
+  }
+
+  // Corporate inquiry endpoints
+  async createCorporateInquiry(data) {
+    return this.request('/corporate/inquiries', {
+      method: 'POST',
+      body: data,
+    });
   }
 }
 
