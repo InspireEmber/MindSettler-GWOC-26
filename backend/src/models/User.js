@@ -1,31 +1,57 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   email: {
     type: String,
     required: true,
+    unique: true,
     lowercase: true,
-    trim: true
+    trim: true,
   },
   phone: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+  },
+  password: {
+    type: String,
+    // Optional for guests created via booking; required for registered accounts
+    select: false,
   },
   sessionCount: {
     type: Number,
-    default: 0
+    default: 0,
   },
   lastSessionAt: {
-    type: Date
-  }
+    type: Date,
+  },
 }, {
-  timestamps: true
+  timestamps: true,
 });
+
+// Hash password if modified
+userSchema.pre('save', async function hashPassword(next) {
+  if (!this.isModified('password') || !this.password) return next();
+
+  try {
+    const saltRounds = 10;
+    this.password = await bcrypt.hash(this.password, saltRounds);
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Compare candidate password with stored hash
+userSchema.methods.comparePassword = async function comparePassword(candidatePassword) {
+  if (!this.password) return false;
+  return bcrypt.compare(candidatePassword, this.password);
+};
 
 module.exports = mongoose.model('User', userSchema);

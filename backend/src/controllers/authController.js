@@ -1,5 +1,6 @@
 const passport = require('passport');
 const Admin = require('../models/Admin');
+const User = require('../models/User');
 
 // Admin login (session-based, cookie auth)
 exports.login = (req, res, next) => {
@@ -63,4 +64,72 @@ exports.me = (req, res) => {
       role: req.user.role,
     },
   });
+};
+
+// User signup (email/password)
+exports.userSignup = async (req, res, next) => {
+  try {
+    const { name, email, phone, password } = req.body;
+
+    let existing = await User.findOne({ email });
+    if (existing) {
+      return res.status(400).json({
+        success: false,
+        message: 'An account with this email already exists',
+      });
+    }
+
+    const user = await User.create({ name, email, phone, password });
+
+    res.status(201).json({
+      success: true,
+      message: 'Account created successfully',
+      data: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// User login (email/password)
+exports.userLogin = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    // Explicitly select password field
+    const user = await User.findOne({ email }).select('+password');
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid email or password',
+      });
+    }
+
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid email or password',
+      });
+    }
+
+    // For now, user auth is stateless (no session) – frontend can store basic profile if needed
+    res.json({
+      success: true,
+      message: 'Logged in successfully',
+      data: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
 };
