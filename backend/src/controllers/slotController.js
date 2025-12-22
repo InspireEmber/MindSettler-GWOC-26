@@ -177,12 +177,22 @@ exports.generateWeeklySlots = async (req, res) => {
     startTime,
     endTime,
     slotDurationMinutes,
+    slotDuration,
     sessionType,
+    sessionTypes,
     location,
     excludeDates,
   } = req.body;
 
+  const effectiveDuration = slotDurationMinutes || slotDuration || 60;
+  const typesToUse = (sessionTypes && sessionTypes.length)
+    ? sessionTypes
+    : sessionType
+    ? [sessionType]
+    : ['online'];
+
   const createdSlots = [];
+  let skippedCount = 0;
   const weekStart = new Date(weekStartDate);
   weekStart.setHours(0, 0, 0, 0);
 
@@ -197,51 +207,58 @@ exports.generateWeeklySlots = async (req, res) => {
     if (excluded.has(dayDate.toDateString())) continue;
 
     const [startHour, startMinute] = startTime.split(':').map(Number);
-    let slotStart = new Date(dayDate);
-    slotStart.setHours(startHour, startMinute, 0, 0);
 
-    const slotEndLimit = new Date(dayDate);
-    slotEndLimit.setHours(endTimeParts[0], endTimeParts[1], 0, 0);
+    for (const type of typesToUse) {
+      let slotStart = new Date(dayDate);
+      slotStart.setHours(startHour, startMinute, 0, 0);
 
-    while (slotStart < slotEndLimit) {
-      const slotEnd = new Date(slotStart.getTime() + slotDurationMinutes * 60000);
-      if (slotEnd > slotEndLimit) break;
+      const slotEndLimit = new Date(dayDate);
+      slotEndLimit.setHours(endTimeParts[0], endTimeParts[1], 0, 0);
 
-      const startTimeStr = `${String(slotStart.getHours()).padStart(2, '0')}:${String(
-        slotStart.getMinutes(),
-      ).padStart(2, '0')}`;
-      const endTimeStr = `${String(slotEnd.getHours()).padStart(2, '0')}:${String(
-        slotEnd.getMinutes(),
-      ).padStart(2, '0')}`;
+      while (slotStart < slotEndLimit) {
+        const slotEnd = new Date(slotStart.getTime() + effectiveDuration * 60000);
+        if (slotEnd > slotEndLimit) break;
 
-      const existing = await Slot.findOne({
-        date: dayDate,
-        startTime: startTimeStr,
-        sessionType,
-      });
+        const startTimeStr = `${String(slotStart.getHours()).padStart(2, '0')}:${String(
+          slotStart.getMinutes(),
+        ).padStart(2, '0')}`;
+        const endTimeStr = `${String(slotEnd.getHours()).padStart(2, '0')}:${String(
+          slotEnd.getMinutes(),
+        ).padStart(2, '0')}`;
 
-      if (!existing) {
-        const newSlot = await Slot.create({
+        const existing = await Slot.findOne({
           date: dayDate,
           startTime: startTimeStr,
-          endTime: endTimeStr,
-          sessionType,
-          isActive: true,
-          isAvailable: true,
-          isBooked: false,
-          generatedWeekStart: weekStart,
-          location,
+          sessionType: type,
         });
-        createdSlots.push(newSlot);
-      }
 
-      slotStart = slotEnd;
+        if (!existing) {
+          const newSlot = await Slot.create({
+            date: dayDate,
+            startTime: startTimeStr,
+            endTime: endTimeStr,
+            sessionType: type,
+            isActive: true,
+            isAvailable: true,
+            isBooked: false,
+            generatedWeekStart: weekStart,
+            location,
+          });
+          createdSlots.push(newSlot);
+        } else {
+          skippedCount += 1;
+        }
+
+        slotStart = slotEnd;
+      }
     }
   }
 
   res.status(201).json({
     success: true,
     message: 'Weekly slots generated successfully',
+    createdCount: createdSlots.length,
+    skippedCount,
     data: createdSlots,
   });
 };

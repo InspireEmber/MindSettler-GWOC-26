@@ -19,14 +19,17 @@ const getAllSlotsQuerySchema = Joi.object({
 
 const generateWeeklySlotsSchema = Joi.object({
   weekStartDate: Joi.string().isoDate().required(),
-  daysOfWeek: Joi.array().items(Joi.number().integer().min(0).max(6)).min(1).required(),
+  daysOfWeek: Joi.array().items(Joi.number().integer().min(0).max(6)).min(1).default([0,1,2,3,4,5,6]),
   startTime: timeString.required(),
   endTime: timeString.required(),
   slotDurationMinutes: Joi.number().integer().min(15).max(480).default(60),
-  sessionType: Joi.string().valid('online', 'offline').required(),
+  // Backwards compatibility: allow either a single sessionType or an array of sessionTypes
+  sessionType: Joi.string().valid('online', 'offline').optional(),
+  sessionTypes: Joi.array().items(Joi.string().valid('online', 'offline')).min(1).optional(),
   location: Joi.string().trim().optional(),
   excludeDates: Joi.array().items(Joi.string().isoDate()).default([]),
-});
+})
+  .or('sessionType', 'sessionTypes');
 
 module.exports = {
   createSlotSchema,

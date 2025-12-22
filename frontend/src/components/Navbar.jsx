@@ -90,12 +90,6 @@ export default function Navbar() {
                 </>
               )}
 
-              <Link
-                href="/admin/dashboard"
-                className="text-[#5E5A6B] hover:text-[#3F2965] transition-colors"
-              >
-                Admin Dashboard
-              </Link>
             </div>
           </nav>
         </div>
