@@ -20,21 +20,20 @@ export default function VideosResourcesPage() {
         </div>
       </section>
 
-      <section className="py-6 sm:py-8 bg-white">
+      <section className="py-10 sm:py-12 md:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {/* Video 1 */}
-            <div className="space-y-3">
+            <div className="space-y-4 sm:space-y-5">
               {/* Video Heading Placeholder */}
               <div>
-                <h2 className="text-base sm:text-lg font-light text-[#2E2A36] mb-2">
-                  {/* TODO: Add heading for Video 1 */}
+                <h2 className="text-xl sm:text-2xl font-light text-[#2E2A36] mb-3 sm:mb-4">
                   Panic Attack vs Anxiety Attack
                 </h2>
               </div>
 
               {/* Video Player - Original Size */}
-              <div className="relative w-full rounded-lg overflow-hidden bg-[#F6F4FA] border border-[#3F2965]/10 shadow-sm">
+              <div className="relative w-full rounded-xl sm:rounded-2xl overflow-hidden bg-[#F6F4FA] border border-[#3F2965]/10 shadow-sm">
                 <video
                   className="w-full h-auto"
                   controls
@@ -47,49 +46,48 @@ export default function VideosResourcesPage() {
               </div>
 
               {/* Video Information Placeholder */}
-              <div className="bg-[#F6F4FA] rounded-lg p-3 border border-[#3F2965]/10 space-y-2">
-                <p className="text-xs text-[#5E5A6B] leading-relaxed">
-                  {/* TODO: Add information/description for Video 1 */}
-                  <h3><h2>panic attack:</h2>
-                    Triggers: Often linked to specific stressors or situations, or a general feeling of worry.</h3>
-                  <h3><h2>anxiety attack:</h2>
-                    Triggers: Can occur without a clear external threat; often linked to the body's fight-or-flight response being activated inappropriately. </h3>
-                </p>
+              <div className="bg-[#F6F4FA] rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-[#3F2965]/10 space-y-4">
+                <div className="space-y-3 text-sm sm:text-base text-[#5E5A6B] leading-relaxed">
+                  <div>
+                    <h3 className="font-semibold text-[#3F2965] mb-1.5 text-base sm:text-lg">Panic Attack:</h3>
+                    <p>Triggers: Often linked to specific stressors or situations, or a general feeling of worry.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-[#3F2965] mb-1.5 text-base sm:text-lg">Anxiety Attack:</h3>
+                    <p>Triggers: Can occur without a clear external threat; often linked to the body's fight-or-flight response being activated inappropriately.</p>
+                  </div>
+                </div>
                 
                 {/* Links Section */}
-                <div className="pt-2 border-t border-[#3F2965]/10">
-                  <p className="text-xs font-medium text-[#3F2965] mb-1.5">Related Links:</p>
-                  <ul className="space-y-1">
-                    {/* TODO: Add your links here */}
-                    
+                <div className="pt-4 border-t border-[#3F2965]/10">
+                  <p className="text-sm sm:text-base font-medium text-[#3F2965] mb-3">Related Links:</p>
+                  <ul className="space-y-2">
                     <li>
                       <a 
                         href="https://www.maxhealthcare.in/blogs/panic-attacks-symptoms-and-causes" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-xs text-[#3F2965] hover:text-[#DD1764] hover:underline"
+                        className="text-sm sm:text-base text-[#3F2965] hover:text-[#DD1764] hover:underline transition-colors"
                       >
                         Panic attack symptoms
                       </a>
                     </li>
-                    
                   </ul>
                 </div>
               </div>
             </div>
 
             {/* Video 2 */}
-            <div className="space-y-3">
+            <div className="space-y-4 sm:space-y-5">
               {/* Video Heading Placeholder */}
               <div>
-                <h2 className="text-base sm:text-lg font-light text-[#2E2A36] mb-2">
-                  {/* TODO: Add heading for Video 2 */}
+                <h2 className="text-xl sm:text-2xl font-light text-[#2E2A36] mb-3 sm:mb-4">
                   Walls vs Boundaries
                 </h2>
               </div>
 
               {/* Video Player - Original Size */}
-              <div className="relative w-full rounded-lg overflow-hidden bg-[#F6F4FA] border border-[#3F2965]/10 shadow-sm">
+              <div className="relative w-full rounded-xl sm:rounded-2xl overflow-hidden bg-[#F6F4FA] border border-[#3F2965]/10 shadow-sm">
                 <video
                   className="w-full h-auto"
                   controls
@@ -102,30 +100,29 @@ export default function VideosResourcesPage() {
               </div>
 
               {/* Video Information Placeholder */}
-              <div className="bg-[#F6F4FA] rounded-lg p-3 border border-[#3F2965]/10 space-y-2">
-                <p className="text-xs text-[#5E5A6B] leading-relaxed">
-                  {/* TODO: Add information/description for Video 2 */}
-                  Whether you’re dealing with romantic partners, family, friends, or coworkers, 
-                  maintaining healthy boundaries can help you strengthen relationships, 
-                  avoid unhealthy connections, and improve your self-esteem and overall well-being.
-                </p>
+              <div className="bg-[#F6F4FA] rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-[#3F2965]/10 space-y-4">
+                <div className="text-sm sm:text-base text-[#5E5A6B] leading-relaxed">
+                  <p>
+                    Whether you're dealing with romantic partners, family, friends, or coworkers, 
+                    maintaining healthy boundaries can help you strengthen relationships, 
+                    avoid unhealthy connections, and improve your self-esteem and overall well-being.
+                  </p>
+                </div>
                 
                 {/* Links Section */}
-                <div className="pt-2 border-t border-[#3F2965]/10">
-                  <p className="text-xs font-medium text-[#3F2965] mb-1.5">Related Links:</p>
-                  <ul className="space-y-1">
-                    {/* TODO: Add your links here */}
+                <div className="pt-4 border-t border-[#3F2965]/10">
+                  <p className="text-sm sm:text-base font-medium text-[#3F2965] mb-3">Related Links:</p>
+                  <ul className="space-y-2">
                     <li>
                       <a 
                         href="https://www.helpguide.org/relationships/social-connection/setting-healthy-boundaries-in-relationships" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-xs text-[#3F2965] hover:text-[#DD1764] hover:underline"
+                        className="text-sm sm:text-base text-[#3F2965] hover:text-[#DD1764] hover:underline transition-colors"
                       >
                         healthy boundaries
                       </a>
                     </li>
-                    
                   </ul>
                 </div>
               </div>
