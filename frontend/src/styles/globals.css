@@ -25,6 +25,9 @@ body {
 /* ---------- Base Document Styles ---------- */
 html {
   scroll-behavior: smooth;
+  /* Prevent horizontal scroll on mobile */
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -35,6 +38,10 @@ body {
   color: #1f2937; /* neutral-800 like */
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* Prevent horizontal scroll on mobile */
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 /* ---------- Links ---------- */
@@ -57,6 +64,14 @@ canvas,
 svg {
   display: block;
   max-width: 100%;
+  height: auto;
+}
+
+/* Ensure all images are responsive on mobile */
+img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 /* ---------- Accessibility ---------- */
@@ -92,4 +107,36 @@ svg {
 
 .animate-fade-in {
   animation: fade-in 1s ease-out forwards;
+}
+
+/* ---------- Mobile Responsiveness Utilities ---------- */
+/* Prevent horizontal overflow */
+.container,
+section,
+main {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Ensure touch targets are at least 44px on mobile */
+@media (max-width: 768px) {
+  button,
+  a,
+  input[type="button"],
+  input[type="submit"],
+  label {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Improve text readability on mobile */
+  body {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Better spacing on mobile */
+  section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
