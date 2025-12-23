@@ -104,6 +104,8 @@ exports.getBookingStatus = async (req, res) => {
       // Non-breaking additions:
       paymentStatus: appointment.paymentStatus,
       meetingLink: appointment.meetingLink || null,
+      // ✅ ADD THIS
+      rejectionReason: appointment.rejectionReason || null,
     },
   });
 };
