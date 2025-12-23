@@ -56,6 +56,9 @@ exports.getSessionsSummary = async (req, res) => {
   let upcoming = 0;
   let completed = 0;
   let cancelled = 0;
+  let approvedUpcoming = 0;
+  let pendingUpcoming = 0;
+
 
   for (const appt of appointments) {
     total += 1;
@@ -67,7 +70,14 @@ exports.getSessionsSummary = async (req, res) => {
     if (!appt.slot) continue;
 
     const statusFromTime = computeStatus(appt.slot.date, appt.slot.startTime);
-    if (statusFromTime === 'upcoming') upcoming += 1;
+    if (appt.status === 'confirmed' && statusFromTime === 'upcoming') {
+      approvedUpcoming += 1;
+    } else if (appt.status === 'pending' && statusFromTime === 'upcoming') {
+      pendingUpcoming += 1;
+    }else if (statusFromTime === 'upcoming') {
+    // fallback if needed
+    //don’t need to do anything there, because all sessions are already covered by the conditions above (approvedUpcoming, pendingUpcoming, completed, cancelled/rejected).
+    }
     else completed += 1;
   }
 
@@ -75,7 +85,9 @@ exports.getSessionsSummary = async (req, res) => {
     success: true,
     data: {
       totalSessions: total,
-      upcomingSessions: upcoming,
+      // upcomingSessions: upcoming,
+      approvedUpcomingSessions: approvedUpcoming,
+      pendingSessions: pendingUpcoming,
       completedSessions: completed,
       cancelledSessions: cancelled,
     },
@@ -98,12 +110,25 @@ exports.getSessions = async (req, res) => {
   const sessions = appointments.map((appt) => {
     const slot = appt.slot;
     const statusFromTime = slot ? computeStatus(slot.date, slot.startTime) : 'unknown';
+    let displayCategory = 'unknown';
+
+    if (appt.status === 'confirmed' && statusFromTime === 'upcoming') {
+      displayCategory = 'approvedUpcoming';
+    } else if (appt.status === 'pending' && statusFromTime === 'upcoming') {
+      displayCategory = 'pendingUpcoming';
+    } else if (statusFromTime === 'completed') {
+      displayCategory = 'completed';
+    } else if (appt.status === 'rejected' || appt.status === 'cancelled') {
+      displayCategory = 'rejected';
+      //Or derivedCategory = 'cancelled';
+    }
 
     return {
       id: appt._id,
       sessionType: appt.sessionType,
-      status: appt.status,
+      status: appt.status, // confirmed, pending, rejected, cancelled
       derivedStatus: statusFromTime,
+      displayCategory, // new field
       date: slot ? slot.date : null,
       startTime: slot ? slot.startTime : null,
       endTime: slot ? slot.endTime : null,
