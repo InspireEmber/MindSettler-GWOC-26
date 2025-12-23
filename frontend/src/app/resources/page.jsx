@@ -1,8 +1,11 @@
+import Link from "next/link";
+
 export default function ResourcesPage() {
   const resourceCategories = [
     {
       title: "Articles & Blogs",
       description: "Educational articles about mental health, emotional well-being, and self-care practices.",
+      href: "/resources/articles",
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -12,6 +15,7 @@ export default function ResourcesPage() {
     {
       title: "Videos & Guides",
       description: "Visual content and guides to help you understand mental health concepts and coping strategies.",
+      href: "/resources/videos",
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -21,6 +25,7 @@ export default function ResourcesPage() {
     {
       title: "Helpful Links",
       description: "Curated resources and organizations that support mental health awareness and well-being.",
+      href: "/resources/links",
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
@@ -49,12 +54,10 @@ export default function ResourcesPage() {
       {/* Resource Categories */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {resourceCategories.map((category, index) => (
-              <div 
-                key={index}
-                className="p-8 rounded-2xl bg-[#F6F4FA] border border-[#3F2965]/10 hover:shadow-lg transition-all duration-300"
-              >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          {resourceCategories.map((category, index) => (
+            <Link key={index} href={category.href} className="block">
+              <div className="p-8 rounded-2xl bg-[#F6F4FA] border border-[#3F2965]/10 hover:shadow-lg transition-all duration-300">
                 <div className="w-16 h-16 rounded-full bg-[#3F2965]/10 flex items-center justify-center mb-6 text-[#3F2965]">
                   {category.icon}
                 </div>
@@ -65,8 +68,9 @@ export default function ResourcesPage() {
                   {category.description}
                 </p>
               </div>
-            ))}
-          </div>
+            </Link>
+          ))}
+        </div>
 
           {/* Coming Soon Notice */}
           <div className="text-center p-12 rounded-2xl bg-gradient-to-br from-[#E9E6F2] to-[#F6F4FA] border border-[#3F2965]/10">
