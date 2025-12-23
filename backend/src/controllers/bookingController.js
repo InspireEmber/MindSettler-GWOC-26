@@ -87,6 +87,18 @@ exports.getBookingStatus = async (req, res) => {
     });
   }
 
+  // 🔒 SECURITY: Only owner can access(Authorization on status)
+  if (
+    req.user &&
+    appointment.user &&
+    appointment.user._id.toString() !== req.user._id.toString()
+  ) {
+    return res.status(403).json({
+      success: false,
+      message: 'Unauthorized access',
+    });
+  }
+
   res.json({
     success: true,
     data: {
