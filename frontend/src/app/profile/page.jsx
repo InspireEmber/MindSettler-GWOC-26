@@ -196,7 +196,20 @@ export default function ProfilePage() {
                       
                     </p>
                   </div>
-                  <StatusBadge type="approvedUpcoming" />
+                  {/* <StatusBadge type="approvedUpcoming" /> */}
+                  <div className="flex items-center gap-3">
+                    <StatusBadge type="approvedUpcoming" />
+
+                    {/* 👉 VIEW DETAILS BUTTON */}
+                    <button
+                      onClick={() =>
+                        router.push(`/appointment-status?id=${s.id}`)
+                      }
+                      className="px-3 py-1 rounded-full border border-[#3F2965] text-[#3F2965] text-xs hover:bg-[#3F2965]/10 transition"
+                    >
+                      View Details
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -229,7 +242,20 @@ export default function ProfilePage() {
                    {s.startTime} - {s.endTime} ({s.sessionType})
                   </p>
                   </div>
-                  <StatusBadge type="pendingUpcoming" />
+                  {/* <StatusBadge type="pendingUpcoming" /> */}
+                  <div className="flex items-center gap-3">
+                    <StatusBadge type="pendingUpcoming" />
+
+                    {/* 👉 VIEW DETAILS BUTTON */}
+                    <button
+                      onClick={() =>
+                        router.push(`/appointment-status?id=${s.id}`)
+                      }
+                      className="px-3 py-1 rounded-full border border-amber-300 text-amber-700 text-xs hover:bg-amber-50 transition"
+                    >
+                      View Details
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -261,8 +287,23 @@ export default function ProfilePage() {
                     <p className="text-xs text-[#5E5A6B]">
                       {s.startTime} - {s.endTime} ({s.sessionType})
                     </p>
+                    {s.rejectionReason && (
+                    <p className="mt-1 text-xs text-red-600">
+                      <span className="font-medium">Reason:</span> {s.rejectionReason}
+                    </p>
+                     )}
                   </div>
-                  <StatusBadge type="rejected" />
+                  {/* <StatusBadge type="rejected" /> */}
+                  <div className="flex flex-col items-end gap-2">
+                    <StatusBadge type="rejected" />
+
+                    <button
+                      onClick={() => router.push(`/appointment-status?id=${s.id}`)}
+                      className="px-4 py-1 rounded-full text-xs border border-red-300 text-red-700 hover:bg-red-50 transition"
+                    >
+                      View Details
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>

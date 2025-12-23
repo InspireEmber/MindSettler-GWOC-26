@@ -132,6 +132,7 @@ exports.getSessions = async (req, res) => {
       date: slot ? slot.date : null,
       startTime: slot ? slot.startTime : null,
       endTime: slot ? slot.endTime : null,
+      rejectionReason: appt.rejectionReason || null,
       createdAt: appt.createdAt,
     };
   });

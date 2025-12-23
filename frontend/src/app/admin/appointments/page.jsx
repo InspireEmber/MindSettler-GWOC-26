@@ -114,6 +114,9 @@ useEffect(() => {
     const confirmed = window.confirm(
       "Are you sure you want to reject this appointment?",
     );
+    const reason = window.prompt(
+      "Enter reason for rejecting this appointment:"
+    );
     if (!confirmed) return;
 
     setActionError((prev) => ({ ...prev, [id]: "" }));
@@ -126,7 +129,11 @@ useEffect(() => {
           headers: { "Content-Type": "application/json" },
           credentials: "include",
           // Reason is optional; we send empty string for now
-          body: JSON.stringify({ reason: "" }),
+          // body: JSON.stringify({ reason: "" }),
+          body: JSON.stringify({
+          reason: reason.trim(), // 🔥 THIS IS THE KEY
+          }),
+
         },
       );
       const data = await res.json().catch(() => ({}));

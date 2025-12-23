@@ -81,7 +81,21 @@ export default function SessionCard({ booking }) {
               <p className="text-sm leading-relaxed mb-4">
                 {status === "pending" && "Your request is under review. Expect an email confirmation within 24-48 hours."}
                 {status === "confirmed" && "Success! Detailed session information and meeting links will arrive via email shortly."}
-                {status === "rejected" && "We couldn't accommodate this slot. Please try another time or contact support."}
+                {/* {status === "rejected" && "We couldn't accommodate this slot. Please try another time or contact support."} */}
+                {status === "rejected" && (
+                  <>
+                    <p className="text-sm leading-relaxed mb-3">
+                      We couldn't accommodate this slot.
+                    </p>
+
+                    {booking.rejectionReason && (
+                      <div className="p-4 rounded-xl bg-red-100 border border-red-200 text-red-800 text-sm">
+                        <span className="font-semibold">Reason:</span>{" "}
+                        {booking.rejectionReason}
+                      </div>
+                    )}
+                  </>
+                )}
               </p>
               {status === "rejected" && (
                 <Link href="/book-session" className="inline-block px-6 py-2 rounded-full bg-red-600 text-white text-sm font-bold hover:bg-red-700 transition-all">
