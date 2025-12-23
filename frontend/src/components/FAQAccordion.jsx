@@ -34,31 +34,31 @@ export default function FAQAccordion() {
   const toggle = (id) => setOpenId(openId === id ? null : id);
 
   return (
-    <div className="max-w-3xl mx-auto space-y-12 py-12">
+    <div className="max-w-3xl mx-auto space-y-8 sm:space-y-10 md:space-y-12 py-6 sm:py-8 md:py-12">
       {FAQ_DATA.map((cat, cIdx) => (
-        <div key={cIdx} className="space-y-4">
-          <h2 className="text-2xl font-semibold text-[#3F2965] px-2">{cat.category}</h2>
+        <div key={cIdx} className="space-y-3 sm:space-y-4">
+          <h2 className="text-xl sm:text-2xl font-semibold text-[#3F2965] px-2">{cat.category}</h2>
           
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             {cat.questions.map((faq, qIdx) => {
               const id = `${cIdx}-${qIdx}`;
               const isOpen = openId === id;
 
               return (
-                <div key={qIdx} className={`group border border-[#3F2965]/10 rounded-2xl transition-all duration-300 ${isOpen ? 'bg-[#F6F4FA] border-[#3F2965]/30' : 'bg-white hover:border-[#3F2965]/30'}`}>
+                <div key={qIdx} className={`group border border-[#3F2965]/10 rounded-xl sm:rounded-2xl transition-all duration-300 ${isOpen ? 'bg-[#F6F4FA] border-[#3F2965]/30' : 'bg-white hover:border-[#3F2965]/30'}`}>
                   <button
                     onClick={() => toggle(id)}
-                    className="w-full p-5 md:p-6 text-left flex items-center justify-between outline-none"
+                    className="w-full p-4 sm:p-5 md:p-6 text-left flex items-center justify-between outline-none min-h-[44px]"
                   >
-                    <span className={`text-lg transition-colors duration-300 ${isOpen ? 'text-[#3F2965] font-medium' : 'text-[#2E2A36]'}`}>
+                    <span className={`text-base sm:text-lg transition-colors duration-300 pr-4 ${isOpen ? 'text-[#3F2965] font-medium' : 'text-[#2E2A36]'}`}>
                       {faq.q}
                     </span>
-                    <ChevronDown className={`w-5 h-5 text-[#3F2965] transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-5 h-5 text-[#3F2965] transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
                   </button>
                   
                   <div className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
                     <div className="overflow-hidden">
-                      <p className="px-6 pb-6 text-[#5E5A6B] leading-relaxed">
+                      <p className="px-4 sm:px-6 pb-4 sm:pb-6 text-sm sm:text-base text-[#5E5A6B] leading-relaxed">
                         {faq.a}
                       </p>
                     </div>

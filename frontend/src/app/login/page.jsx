@@ -33,12 +33,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-6 py-16">
-      <div className="max-w-md w-full border border-[#3F2965]/10 rounded-3xl p-8 bg-[#F6F4FA]">
-        <h1 className="text-2xl md:text-3xl font-light text-[#2E2A36] mb-2">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4 sm:px-6 py-12 sm:py-16">
+      <div className="max-w-md w-full border border-[#3F2965]/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 bg-[#F6F4FA]">
+        <h1 className="text-2xl sm:text-3xl font-light text-[#2E2A36] mb-2">
           User Login
         </h1>
-        <p className="text-sm md:text-base text-[#5E5A6B] mb-6">
+        <p className="text-sm sm:text-base text-[#5E5A6B] mb-6">
           Log in to quickly book and track your psycho-education sessions.
         </p>
 
@@ -50,7 +50,7 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4 mb-4">
           <div>
-            <label className="block text-sm font-medium text-[#2E2A36] mb-1">
+            <label className="block text-sm font-medium text-[#2E2A36] mb-2">
               Email
             </label>
             <input
@@ -59,12 +59,12 @@ export default function LoginPage() {
               required
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white"
+              className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white min-h-[44px] text-sm sm:text-base"
               placeholder="you@example.com"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-[#2E2A36] mb-1">
+            <label className="block text-sm font-medium text-[#2E2A36] mb-2">
               Password
             </label>
             <input
@@ -74,22 +74,22 @@ export default function LoginPage() {
               minLength={6}
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white"
+              className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white min-h-[44px] text-sm sm:text-base"
               placeholder="••••••••"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-full bg-[#3F2965] text-white font-medium text-sm md:text-base hover:bg-[#3F2965]/90 transition-colors disabled:opacity-60"
+            className="w-full py-3 sm:py-4 rounded-full bg-[#3F2965] text-white font-medium text-sm sm:text-base hover:bg-[#3F2965]/90 transition-colors disabled:opacity-60 min-h-[44px]"
           >
             {loading ? "Logging in..." : "Log In"}
           </button>
         </form>
 
-        <p className="text-xs text-[#5E5A6B] text-center">
+        <p className="text-xs sm:text-sm text-[#5E5A6B] text-center">
           Don&apos;t have an account? {" "}
-          <Link href="/signup" className="text-[#3F2965] font-medium underline">
+          <Link href="/signup" className="text-[#3F2965] font-medium underline min-h-[32px] inline-flex items-center">
             Sign up
           </Link>
         </p>

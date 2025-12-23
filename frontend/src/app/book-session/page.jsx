@@ -70,38 +70,38 @@ export default function BookSessionPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#F6F4FA] via-white to-[#F6F4FA] py-20 md:py-32">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mb-6" />
-          <h1 className="text-4xl md:text-6xl font-light text-[#2E2A36] mb-6">
+      <section className="bg-gradient-to-br from-[#F6F4FA] via-white to-[#F6F4FA] py-12 sm:py-16 md:py-20 lg:py-32">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mb-4 sm:mb-6" />
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-[#2E2A36] mb-4 sm:mb-6 leading-tight">
             Book Your <span className="font-medium text-[#3F2965]">Session</span>
           </h1>
-          <p className="text-xl text-[#5E5A6B] leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-[#5E5A6B] leading-relaxed px-2">
             Take the first step toward understanding your mind. Book a 60-minute psycho-education session.
           </p>
         </div>
       </section>
 
       {/* Booking Form Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="bg-white rounded-3xl p-2 md:p-8 border border-[#3F2965]/5 shadow-sm">
+      <section className="py-8 sm:py-12 md:py-16 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-0 sm:p-2 md:p-8 border border-[#3F2965]/5 shadow-sm">
             <BookingForm />
           </div>
         </div>
       </section>
 
       {/* Session Info Grid */}
-      <section className="py-20 bg-[#F6F4FA]">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <section className="py-12 sm:py-16 md:py-20 bg-[#F6F4FA]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 md:gap-12">
             {SESSION_FEATURES.map((feature, i) => (
               <div key={i} className="text-center group">
-                <div className={`w-16 h-16 mx-auto mb-4 rounded-full ${feature.bg} ${feature.color} flex items-center justify-center transition-transform group-hover:scale-110`}>
+                <div className={`w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-4 rounded-full ${feature.bg} ${feature.color} flex items-center justify-center transition-transform group-hover:scale-110`}>
                   {feature.icon}
                 </div>
-                <h3 className="text-lg font-medium text-[#2E2A36] mb-2">{feature.title}</h3>
-                <p className="text-[#5E5A6B] text-sm leading-relaxed">{feature.desc}</p>
+                <h3 className="text-base sm:text-lg font-medium text-[#2E2A36] mb-2">{feature.title}</h3>
+                <p className="text-sm sm:text-base text-[#5E5A6B] leading-relaxed">{feature.desc}</p>
               </div>
             ))}
           </div>
