@@ -29,42 +29,25 @@ export default function HomePage() {
         style={{ scaleX }}
       />
 
-      {/* HERO SECTION */}
+      {/* HERO SECTION – NO ANIMATIONS */}
       <section className="relative min-h-[85vh] flex items-center bg-gradient-to-b from-[#F6F4FA] to-white pt-16 sm:pt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-14 items-center">
           {/* LEFT CONTENT */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
-          >
-            <motion.div
-              variants={revealUp}
-              className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-[#3F2965]/5 border border-[#3F2965]/10 text-[#3F2965] text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6"
-            >
-              <Sparkles size={12} className="sm:w-[14px] sm:h-[14px]" />{" "}
-              <span className="whitespace-nowrap">
-                Your Journey Starts Here
-              </span>
-            </motion.div>
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-[#3F2965]/5 border border-[#3F2965]/10 text-[#3F2965] text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6">
+              <Sparkles size={12} className="sm:w-[14px] sm:h-[14px]" />
+              <span>Your Journey Starts Here</span>
+            </div>
 
-            {/* QUOTE */}
-            <motion.h1
-              variants={revealUp}
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight mb-6 sm:mb-8"
-            >
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight mb-6 sm:mb-8">
               <span className="text-[#3F2965] italic font-serif">
                 "It's okay to not be okay.
                 <br />
                 It's okay to ask for help."
               </span>
-            </motion.h1>
+            </h1>
 
-            {/* SUPPORTING TEXT */}
-            <motion.p
-              variants={revealUp}
-              className="text-base sm:text-lg text-[#5E5A6B] max-w-lg leading-relaxed mb-8 sm:mb-10"
-            >
+            <p className="text-base sm:text-lg text-[#5E5A6B] max-w-lg leading-relaxed mb-8 sm:mb-10">
               MindSettler by Parnika is a safe space to understand your mind,
               settle emotional distress, and begin your mental well-being
               journey.
@@ -73,40 +56,28 @@ export default function HomePage() {
               <span className="font-semibold text-[#3F2965] text-sm sm:text-base">
                 Confidential · Non-judgmental · Guided support
               </span>
-            </motion.p>
+            </p>
 
-            {/* CTA */}
-            <motion.div
-              variants={revealUp}
-              className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4"
-            >
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
               <Link
                 href="/book-session"
-                className="px-6 sm:px-10 py-3 sm:py-4 rounded-full bg-[#3F2965] text-white font-medium hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2 group min-h-[44px] text-sm sm:text-base"
+                className="px-6 sm:px-10 py-3 sm:py-4 rounded-full bg-[#3F2965] text-white font-medium hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2 group min-h-[44px]"
               >
                 Begin When You're Ready
-                <ArrowRight
-                  size={18}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
+                <ArrowRight size={18} />
               </Link>
 
               <Link
                 href="/how-it-works"
-                className="px-6 sm:px-10 py-3 sm:py-4 rounded-full border border-[#3F2965]/20 text-[#3F2965] hover:bg-[#3F2965]/5 transition-all text-center min-h-[44px] text-sm sm:text-base"
+                className="px-6 sm:px-10 py-3 sm:py-4 rounded-full border border-[#3F2965]/20 text-[#3F2965] hover:bg-[#3F2965]/5 transition-all text-center min-h-[44px]"
               >
                 Learn More
               </Link>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* RIGHT IMAGE */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            className="flex justify-center mt-8 lg:mt-0"
-          >
+          <div className="flex justify-center mt-8 lg:mt-0">
             <div className="relative w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] md:w-[320px] md:h-[320px] lg:w-[380px] lg:h-[380px] rounded-full bg-white shadow-[0_0_80px_rgba(63,41,101,0.08)] flex items-center justify-center border border-[#3F2965]/10 overflow-hidden">
               <Image
                 src="/images/hands.jpg"
@@ -115,13 +86,9 @@ export default function HomePage() {
                 className="object-cover"
                 priority
               />
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-3 border border-dashed border-[#3F2965]/20 rounded-full"
-              />
+              <div className="absolute inset-3 border border-dashed border-[#3F2965]/20 rounded-full" />
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
