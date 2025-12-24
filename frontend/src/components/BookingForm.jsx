@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Info, Loader2, Check } from "lucide-react";
+import { Info, Loader2, Calendar as CalendarIcon, Clock, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import api from "../services/api";
 
 export default function BookingForm() {
@@ -10,7 +11,6 @@ export default function BookingForm() {
   const [formData, setFormData] = useState({
     sessionType: "online",
     preferredDate: today,
-    preferredTime: "",
     slotId: "",
     isFirstSession: true,
     message: "",
@@ -19,6 +19,7 @@ export default function BookingForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
+  // Fetch slots based on date and type
   useEffect(() => {
     if (formData.sessionType && formData.preferredDate) {
       const fetchSlots = async () => {
@@ -36,30 +37,29 @@ export default function BookingForm() {
     }
   }, [formData.sessionType, formData.preferredDate]);
 
+  const handleSlotSelect = (id) => {
+    setFormData(prev => ({ ...prev, slotId: id }));
+    setError("");
+  };
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
-      ...(name === "preferredTime" ? { slotId: value } : {}),
     }));
     setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    if (!formData.slotId) {
+      setError("Please select a specific time slot.");
+      return;
+    }
     setIsSubmitting(true);
     try {
-      const { sessionType, preferredDate, preferredTime, slotId, isFirstSession, message } = formData;
-      const booking = await api.createBooking({
-        sessionType,
-        preferredDate,
-        preferredTime,
-        slotId,
-        isFirstSession,
-        message,
-      });
+      const booking = await api.createBooking(formData);
       router.push(`/appointment-status?id=${booking.id}`);
     } catch (err) {
       setError(err.message || "Failed to create booking.");
@@ -68,87 +68,126 @@ export default function BookingForm() {
   };
 
   return (
-    <div className="p-4 sm:p-6 md:p-8 lg:p-12 rounded-2xl sm:rounded-3xl bg-[#F6F4FA] border border-[#3F2965]/10 shadow-sm">
-      <div className="mb-6 sm:mb-8">
-        <h2 className="text-2xl sm:text-3xl font-light text-[#2E2A36] mb-2">Session Booking</h2>
-        <p className="text-sm sm:text-base text-[#5E5A6B]">Request a 60-minute psycho-education session below.</p>
-      </div>
-
-      {formData.isFirstSession && (
-        <div className="mb-6 sm:mb-8 p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#3F2965] to-[#DD1764] text-white flex gap-3 sm:gap-4 items-start shadow-md">
-          <Info className="shrink-0 mt-1 w-5 h-5 sm:w-6 sm:h-6" />
-          <div>
-            <h3 className="font-semibold mb-1 text-sm sm:text-base">First Session</h3>
-            <p className="text-xs sm:text-sm opacity-90">Please review our confidentiality policy before proceeding.</p>
-          </div>
+    <div className="max-w-3xl mx-auto p-1">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="rounded-3xl bg-white border border-[#3F2965]/10 shadow-2xl overflow-hidden"
+      >
+        {/* Progress Header */}
+        <div className="bg-gradient-to-r from-[#3F2965] to-[#DD1764] p-8 text-white">
+          <h2 className="text-3xl font-light mb-2 flex items-center gap-3">
+            <CheckCircle2 className="text-white/80" /> Reserve a Session
+          </h2>
+          <p className="text-white/80 text-sm">Choose your preferred mode and time to begin.</p>
         </div>
-      )}
 
-      <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+        <form onSubmit={handleSubmit} className="p-6 md:p-10 space-y-8">
+          
+          {/* Step 1: Session Type */}
+          <section className="space-y-4">
+            <h3 className="text-sm font-bold text-[#3F2965] uppercase tracking-widest flex items-center gap-2">
+              <ShieldCheck size={16} /> 1. Select Mode
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
+              {["online", "offline"].map((type) => (
+                <label key={type} className={`relative p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col items-center justify-center gap-2 capitalize group ${formData.sessionType === type ? "border-[#3F2965] bg-[#F6F4FA] shadow-md" : "border-gray-100 hover:border-[#3F2965]/30"}`}>
+                  <input type="radio" name="sessionType" value={type} checked={formData.sessionType === type} onChange={handleChange} className="sr-only" />
+                  <span className={`text-lg font-medium ${formData.sessionType === type ? "text-[#3F2965]" : "text-gray-400"}`}>{type}</span>
+                  {formData.sessionType === type && (
+                    <motion.div layoutId="activeType" className="absolute -top-2 -right-2 bg-[#DD1764] text-white p-1 rounded-full shadow-lg">
+                      <CheckCircle2 size={16} />
+                    </motion.div>
+                  )}
+                </label>
+              ))}
+            </div>
+          </section>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-4">
-          {["online", "offline"].map((type) => (
-            <label key={type} className={`p-3 sm:p-4 rounded-xl border-2 cursor-pointer transition-all flex items-center gap-2 sm:gap-3 capitalize min-h-[44px] ${formData.sessionType === type ? "border-[#3F2965] bg-[#3F2965]/5" : "border-[#3F2965]/10 bg-white hover:border-[#3F2965]/30"}`}>
-              <input type="radio" name="sessionType" value={type} checked={formData.sessionType === type} onChange={handleChange} className="sr-only" />
-              <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${formData.sessionType === type ? "border-[#3F2965]" : "border-gray-300"}`}>
-                {formData.sessionType === type && <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#3F2965]" />}
+          {/* Step 2: Date Selection */}
+          <section className="space-y-4">
+            <h3 className="text-sm font-bold text-[#3F2965] uppercase tracking-widest flex items-center gap-2">
+              <CalendarIcon size={16} /> 2. Choose Date
+            </h3>
+            <input
+              type="date"
+              name="preferredDate"
+              required
+              value={formData.preferredDate}
+              onChange={handleChange}
+              min={today}
+              className="w-full px-6 py-4 rounded-2xl border border-gray-100 focus:ring-2 focus:ring-[#3F2965]/20 outline-none bg-[#FAFAFA] text-lg font-medium text-[#2E2A36]"
+            />
+          </section>
+
+          {/* Step 3: Time Slot Grid */}
+          <section className="space-y-4">
+            <h3 className="text-sm font-bold text-[#3F2965] uppercase tracking-widest flex items-center gap-2">
+              <Clock size={16} /> 3. Available Times
+            </h3>
+            {availableSlots.length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {availableSlots.map((s) => (
+                  <button
+                    key={s.id}
+                    type="button"
+                    onClick={() => handleSlotSelect(s.id)}
+                    className={`p-3 rounded-xl border text-sm font-medium transition-all ${formData.slotId === s.id ? "bg-[#3F2965] text-white border-[#3F2965] shadow-lg" : "bg-white border-gray-200 text-[#5E5A6B] hover:border-[#3F2965]"}`}
+                  >
+                    {s.startTime}
+                  </button>
+                ))}
               </div>
-              <span className="font-medium text-[#2E2A36] text-sm sm:text-base">{type}</span>
+            ) : (
+              <div className="p-8 text-center rounded-2xl bg-gray-50 border border-dashed border-gray-200 text-gray-400">
+                No slots available for this date.
+              </div>
+            )}
+          </section>
+
+          {/* Additional Notes */}
+          <section className="space-y-4">
+            <h3 className="text-sm font-bold text-[#3F2965] uppercase tracking-widest">Additional Context</h3>
+            <textarea 
+              name="message" 
+              value={formData.message} 
+              onChange={handleChange} 
+              rows={3} 
+              placeholder="What would you like to focus on?"
+              className="w-full px-6 py-4 rounded-2xl border border-gray-100 focus:ring-2 focus:ring-[#3F2965]/20 outline-none bg-[#FAFAFA] resize-none" 
+            />
+          </section>
+
+          {/* Policy & Submit */}
+          <div className="pt-4 space-y-6">
+            <label className="flex items-start gap-4 cursor-pointer group">
+              <div className="relative flex items-center">
+                <input type="checkbox" required className="peer h-6 w-6 rounded-md border-gray-300 text-[#3F2965] focus:ring-[#3F2965]" />
+              </div>
+              <span className="text-xs text-[#5E5A6B] leading-relaxed">
+                I agree to the <a href="/policies/confidentiality" className="text-[#3F2965] font-bold hover:underline">Confidentiality Policy</a>. 
+                I understand this is an educational session, not medical treatment.
+              </span>
             </label>
-          ))}
-        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-          <input
-            type="date"
-            name="preferredDate"
-            required
-            value={formData.preferredDate}
-            onChange={handleChange}
-            min={today}
-            className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white min-h-[44px] text-sm sm:text-base"
-          />
+            <AnimatePresence>
+              {error && (
+                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="p-4 rounded-2xl bg-red-50 text-red-800 text-sm border border-red-100 flex items-center gap-3">
+                  <Info size={18} /> {error}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-          <select
-            name="preferredTime"
-            required
-            value={formData.preferredTime}
-            onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white min-h-[44px] text-sm sm:text-base"
-          >
-            <option value="">Select Time Slot</option>
-            {availableSlots.map((s) => {
-              const slotDate = new Date(s.date);
-              const dateLabel = slotDate.toLocaleDateString('en-US', {
-                weekday: 'short', month: 'short', day: 'numeric',
-              });
-              const label = `${dateLabel} — ${s.startTime} – ${s.endTime}`;
-              return (
-                <option key={s.id} value={s.id}>
-                  {label}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-
-        <textarea name="message" value={formData.message} onChange={handleChange} rows={4} placeholder="Additional notes..."
-          className="w-full px-4 py-3 rounded-xl border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white resize-none text-sm sm:text-base min-h-[100px]" />
-
-        <label className="flex items-start gap-3 cursor-pointer group min-h-[44px]">
-          <input type="checkbox" name="confidentiality" required className="mt-1 w-5 h-5 rounded border-[#3F2965]/30 text-[#3F2965] focus:ring-[#3F2965] shrink-0" />
-          <span className="text-xs sm:text-sm text-[#5E5A6B] group-hover:text-[#2E2A36] transition-colors leading-relaxed">
-            I agree to the <a href="/policies/confidentiality" className="text-[#3F2965] font-semibold hover:underline" target="_blank">Confidentiality Policy</a>.
-          </span>
-        </label>
-
-        {error && <div className="p-4 rounded-xl bg-red-50 text-red-800 text-sm border border-red-100">{error}</div>}
-
-        <button type="submit" disabled={isSubmitting}
-          className="w-full py-4 rounded-full bg-[#3F2965] text-white font-medium text-base sm:text-lg hover:shadow-xl transition-all disabled:opacity-50 active:scale-95 flex items-center justify-center gap-2 min-h-[44px]">
-          {isSubmitting ? <><Loader2 className="animate-spin" /> Submitting...</> : "Confirm Booking Request"}
-        </button>
-      </form>
+            <button 
+              type="submit" 
+              disabled={isSubmitting || !formData.slotId}
+              className="w-full py-5 rounded-full bg-gradient-to-r from-[#3F2965] to-[#DD1764] text-white font-bold text-lg hover:shadow-2xl transition-all disabled:opacity-30 disabled:grayscale active:scale-95 flex items-center justify-center gap-3"
+            >
+              {isSubmitting ? <><Loader2 className="animate-spin" /> Processing...</> : "Confirm Request"}
+            </button>
+          </div>
+        </form>
+      </motion.div>
     </div>
   );
 }

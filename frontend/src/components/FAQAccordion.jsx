@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { ChevronDown } from "lucide-react"; // npm install lucide-react
+import { ChevronDown, Sparkles, HelpCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const FAQ_DATA = [
   {
@@ -34,40 +35,82 @@ export default function FAQAccordion() {
   const toggle = (id) => setOpenId(openId === id ? null : id);
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8 sm:space-y-10 md:space-y-12 py-6 sm:py-8 md:py-12">
+    <div className="max-w-3xl mx-auto space-y-12 py-12 px-4">
       {FAQ_DATA.map((cat, cIdx) => (
-        <div key={cIdx} className="space-y-3 sm:space-y-4">
-          <h2 className="text-xl sm:text-2xl font-semibold text-[#3F2965] px-2">{cat.category}</h2>
+        <motion.div 
+          key={cIdx} 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, delay: cIdx * 0.1 }}
+          className="space-y-6"
+        >
+          {/* Category Header */}
+          <div className="flex items-center gap-3 px-2">
+            <div className="w-8 h-8 rounded-lg bg-[#3F2965]/5 flex items-center justify-center text-[#3F2965]">
+              <HelpCircle size={18} />
+            </div>
+            <h2 className="text-xl sm:text-2xl font-light text-[#2E2A36]">
+              {cat.category}
+            </h2>
+          </div>
           
-          <div className="space-y-2 sm:space-y-3">
+          <div className="space-y-4">
             {cat.questions.map((faq, qIdx) => {
               const id = `${cIdx}-${qIdx}`;
               const isOpen = openId === id;
 
               return (
-                <div key={qIdx} className={`group border border-[#3F2965]/10 rounded-xl sm:rounded-2xl transition-all duration-300 ${isOpen ? 'bg-[#F6F4FA] border-[#3F2965]/30' : 'bg-white hover:border-[#3F2965]/30'}`}>
+                <div 
+                  key={qIdx}
+                  className={`group relative rounded-[1.5rem] md:rounded-[2rem] transition-all duration-500 overflow-hidden border ${
+                    isOpen 
+                      ? 'bg-[#F6F4FA] border-[#3F2965]/20 shadow-lg' 
+                      : 'bg-white border-[#3F2965]/10 hover:border-[#3F2965]/30'
+                  }`}
+                >
                   <button
                     onClick={() => toggle(id)}
-                    className="w-full p-4 sm:p-5 md:p-6 text-left flex items-center justify-between outline-none min-h-[44px]"
+                    className="w-full p-5 sm:p-7 text-left flex items-center justify-between outline-none relative z-10"
                   >
-                    <span className={`text-base sm:text-lg transition-colors duration-300 pr-4 ${isOpen ? 'text-[#3F2965] font-medium' : 'text-[#2E2A36]'}`}>
+                    <span className={`text-base sm:text-lg transition-colors duration-300 pr-6 leading-relaxed ${
+                      isOpen ? 'text-[#3F2965] font-medium' : 'text-[#5E5A6B]'
+                    }`}>
                       {faq.q}
                     </span>
-                    <ChevronDown className={`w-5 h-5 text-[#3F2965] transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
+                    <motion.div 
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      className={`shrink-0 p-2 rounded-full ${
+                        isOpen ? 'bg-[#3F2965] text-white' : 'bg-[#F6F4FA] text-[#3F2965]'
+                      }`}
+                    >
+                      <ChevronDown size={18} />
+                    </motion.div>
                   </button>
                   
-                  <div className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
-                    <div className="overflow-hidden">
-                      <p className="px-4 sm:px-6 pb-4 sm:pb-6 text-sm sm:text-base text-[#5E5A6B] leading-relaxed">
-                        {faq.a}
-                      </p>
-                    </div>
-                  </div>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        key="content"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                      >
+                        <div className="px-6 sm:px-7 pb-8 text-sm sm:text-base text-[#5E5A6B] leading-relaxed">
+                          <div className="pt-4 border-t border-[#3F2965]/10 flex gap-3">
+                             <Sparkles size={16} className="text-[#DD1764] mt-1 shrink-0" />
+                             <p>{faq.a}</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               );
             })}
           </div>
-        </div>
+        </motion.div>
       ))}
     </div>
   );
