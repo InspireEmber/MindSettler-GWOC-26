@@ -14,6 +14,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const authRoutes = require('./routes/authRoutes');
 const corporateRoutes = require('./routes/corporateRoutes');
 const userRoutes = require('./routes/userRoutes');
+const chatbotRoutes = require('./routes/chatbotRoutes');
 
 const app = express();
 
@@ -74,6 +75,7 @@ app.use('/api/slots', slotRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/corporate', corporateRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/chatbot', chatbotRoutes);
 
 // Error handling middleware (must be last)
 app.use(errorHandler);

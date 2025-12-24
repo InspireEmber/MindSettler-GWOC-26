@@ -1,110 +1,63 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 class ApiService {
-  async request(endpoint, options = {}) {
-    const url = `${API_BASE_URL}${endpoint}`;
+  /**
+   * Universal Request Handler
+   * @param {string} endpoint - API path
+   * @param {object} options - Fetch options
+   * @param {boolean} fullResponse - If true, returns the raw data object instead of data.data
+   */
+  async request(endpoint, options = {}, fullResponse = false) {
     const config = {
-      // Always send cookies for session-based auth (admin dashboard)
       credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
+      headers: { 'Content-Type': 'application/json', ...options.headers },
       ...options,
+      body: options.body && typeof options.body === 'object' ? JSON.stringify(options.body) : options.body,
     };
 
-    if (config.body && typeof config.body === 'object') {
-      config.body = JSON.stringify(config.body);
-    }
-
     try {
-      const response = await fetch(url, config);
-      
-      // Handle network errors or cases where response is not available
-      if (!response) {
-        throw new Error('Network error: Unable to connect to the server. Please make sure the backend server is running.');
-      }
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+      if (!response) throw new Error('Network error: Unable to connect to server.');
 
-      // Check if response has content before parsing JSON
       const contentType = response.headers.get('content-type');
-      let data;
-      
-      if (contentType && contentType.includes('application/json')) {
-        data = await response.json();
-      } else {
-        // If not JSON, get text response
+      if (!contentType?.includes('application/json')) {
         const text = await response.text();
-        throw new Error(text || `Server returned ${response.status}: ${response.statusText}`);
+        throw new Error(text || `Server Error ${response.status}`);
       }
 
-      if (!response.ok) {
-        throw new Error(data.message || data.error || `Server error: ${response.status}`);
-      }
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || data.error || `Error ${response.status}`);
 
-      // Extract data field if response has success/data structure
-      return data.data !== undefined ? data.data : data;
+      // Return full object if requested (needed for Chatbot/Auth), otherwise extract .data
+      return fullResponse ? data : (data.data !== undefined ? data.data : data);
     } catch (error) {
-      // Handle network errors (connection refused, CORS, etc.)
       if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        throw new Error('Unable to connect to the server. Please ensure the backend server is running on http://localhost:5000');
+        throw new Error('Connection refused. Please ensure backend is running on port 5000.');
       }
-      // Re-throw other errors with their original message
       throw error;
     }
   }
 
-  // Booking endpoints
-  async createBooking(bookingData) {
-    return this.request('/bookings', {
-      method: 'POST',
-      body: bookingData,
-    });
+  // Booking & Slots
+  createBooking(body) { return this.request('/bookings', { method: 'POST', body }); }
+  getBookingStatus(id) { return this.request(`/bookings/${id}`); }
+  getAvailableSlots(filters = {}) { 
+    return this.request(`/slots/available?${new URLSearchParams(filters)}`); 
   }
 
-  async getBookingStatus(bookingId) {
-    return this.request(`/bookings/${bookingId}`);
-  }
+  // Corporate
+  createCorporateInquiry(body) { return this.request('/corporate/inquiries', { method: 'POST', body }); }
 
-  // Slot endpoints
-  async getAvailableSlots(filters = {}) {
-    const queryParams = new URLSearchParams(filters).toString();
-    return this.request(`/slots/available?${queryParams}`);
-  }
+  // Auth & Profile
+  userSignup(body) { return this.request('/auth/user/signup', { method: 'POST', body }, true); }
+  userLogin(body) { return this.request('/auth/user/login', { method: 'POST', body }, true); }
+  getUserProfile() { return this.request('/users/profile'); }
+  getUserSessionsSummary() { return this.request('/users/sessions-summary'); }
+  getUserSessions() { return this.request('/users/sessions'); }
 
-  // Corporate inquiry endpoints
-  async createCorporateInquiry(data) {
-    return this.request('/corporate/inquiries', {
-      method: 'POST',
-      body: data,
-    });
-  }
-
-  // User auth endpoints
-  async userSignup(data) {
-    return this.request('/auth/user/signup', {
-      method: 'POST',
-      body: data,
-    });
-  }
-
-  async userLogin(data) {
-    return this.request('/auth/user/login', {
-      method: 'POST',
-      body: data,
-    });
-  }
-
-  // User profile endpoints
-  async getUserProfile() {
-    return this.request('/users/profile');
-  }
-
-  async getUserSessionsSummary() {
-    return this.request('/users/sessions-summary');
-  }
-
-  async getUserSessions() {
-    return this.request('/users/sessions');
+  // Chatbot - Uses the 'fullResponse' flag to match your backend logic
+  sendChatMessage(body) { 
+    return this.request('/chatbot/chat', { method: 'POST', body }, true); 
   }
 }
 

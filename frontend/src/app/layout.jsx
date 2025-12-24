@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Chatbot from "../components/Chatbot";
 
 export default function RootLayout({ children }) {
   return (
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
         </main>
 
         <Footer />
+        <Chatbot />
       </body>
     </html>
   );
