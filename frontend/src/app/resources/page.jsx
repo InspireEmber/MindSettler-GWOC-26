@@ -91,20 +91,28 @@ export default function ResourcesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-[#F6F4FA]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-12 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-[#2E2A36] mb-4 sm:mb-6 leading-tight">
-            Start Your Learning Journey
-          </h2>
-          <p className="text-base sm:text-lg text-[#5E5A6B] mb-6 sm:mb-8 px-2">
-            While we prepare our resource library, book a session to begin your structured psycho-education journey.
-          </p>
-          <a 
-            href="/book-session"
-            className="inline-block px-8 py-4 rounded-full bg-[#3F2965] text-white font-medium text-base sm:text-lg hover:bg-[#3F2965]/90 transition-all duration-300 hover:shadow-lg hover:shadow-[#3F2965]/25 min-h-[44px] flex items-center justify-center"
-          >
-            Book Your First Session
-          </a>
+      <section className="py-24 md:py-32 bg-[#F6F4FA]/50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12">
+          <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-10 sm:p-12 md:p-20 text-center text-white shadow-2xl shadow-[#3F2965]/30">
+            {/* Decorative Brand Accents */}
+            <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" />
+            <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
+
+            <div className="relative z-10">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-light mb-4 sm:mb-6 leading-tight">
+                Start Your Learning Journey
+              </h2>
+              <p className="text-base sm:text-lg md:text-xl text-white/80 mb-6 sm:mb-8 max-w-2xl mx-auto">
+                While we prepare our resource library, book a session to begin your structured psycho-education journey.
+              </p>
+              <a
+                href="/book-session"
+                className="inline-flex px-8 sm:px-10 py-4 sm:py-5 rounded-full bg-white text-[#3F2965] font-semibold text-base sm:text-lg hover:bg-white/95 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(255,255,255,0.2)] hover:scale-[1.03] active:scale-95 min-h-[44px] items-center justify-center"
+              >
+                Book Your First Session
+              </a>
+            </div>
+          </div>
         </div>
       </section>
     </div>

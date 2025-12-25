@@ -466,8 +466,12 @@ export default function HomePage() {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="max-w-5xl mx-auto rounded-2xl sm:rounded-3xl md:rounded-[3.5rem] bg-gradient-to-br from-[#3F2965] to-[#DD1764] p-8 sm:p-12 md:p-16 lg:p-24 text-center text-white relative overflow-hidden shadow-2xl"
+          className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-8 sm:p-12 md:p-16 lg:p-24 text-center text-white shadow-2xl shadow-[#3F2965]/30"
         >
+          {/* Decorative Brand Accents */}
+          <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" />
+          <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
+
           <div className="relative z-10">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light mb-6 sm:mb-8 leading-tight px-2">
               Ready to write your next chapter?
@@ -483,8 +487,6 @@ export default function HomePage() {
               Book Your First Session
             </Link>
           </div>
-          {/* Subtle Decorative Circle */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
         </motion.div>
       </section>
     </div>

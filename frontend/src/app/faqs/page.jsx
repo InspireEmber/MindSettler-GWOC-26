@@ -67,28 +67,27 @@ export default function FAQsPage() {
 
       {/* 3. CTA Section: Vibrant Story Ending */}
       <section className="px-6 pb-20 md:pb-32">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="max-w-5xl mx-auto rounded-[3rem] bg-gradient-to-br from-[#3F2965] to-[#DD1764] p-10 md:p-24 text-center text-white relative overflow-hidden shadow-2xl"
+          className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-10 md:p-24 text-center text-white shadow-2xl shadow-[#3F2965]/30"
         >
-          {/* Decorative Sparkle */}
-          <div className="absolute top-10 left-10 opacity-20 animate-pulse">
-            <Sparkles size={48} />
-          </div>
-          
+          {/* Decorative Brand Accents */}
+          <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" />
+          <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
+
           <div className="relative z-10">
             <h2 className="text-3xl md:text-5xl font-light mb-6">
               Still Have Questions?
             </h2>
             <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">
-              We understand that every journey is unique. If you couldn't find your answer here, 
+              We understand that every journey is unique. If you couldn't find your answer here,
               reach out and let's discuss how we can support you.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link 
+              <Link
                 href="/contact"
                 className="group px-10 py-4 rounded-full bg-white text-[#3F2965] font-bold text-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 active:scale-95"
               >
@@ -97,9 +96,6 @@ export default function FAQsPage() {
               </Link>
             </div>
           </div>
-
-          {/* Background circles for depth */}
-          <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
         </motion.div>
       </section>
     </div>
