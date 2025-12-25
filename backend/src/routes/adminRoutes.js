@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');
+const slotController = require('../controllers/slotController');
 const wrapAsync = require('../utils/wrapAsync');
 const { isAuthenticated, requireRole } = require('../middleware/authMiddleware');
 const { validateBody } = require('../middleware/validationMiddleware');
@@ -50,5 +51,15 @@ router.post(
 
 // Basic stats overview
 router.get('/stats/overview', wrapAsync(adminController.getStatsOverview));
+
+// Delete a slot (Admin only)
+router.delete(
+  '/slots/:id',
+  wrapAsync(slotController.deleteSlot)
+);
+
+router.use(isAuthenticated, requireRole('admin'));
+
+
 
 module.exports = router;
