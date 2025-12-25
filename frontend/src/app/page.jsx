@@ -391,28 +391,32 @@ export default function HomePage() {
                   title: "Arrive",
                   desc: "Come as you are. Stillness is welcome.",
                   icon: "💧",
-                  position: "sm:absolute sm:left-[4%] sm:top-[50%]",
+                  // Moved slightly left and centered vertically
+                  position: "sm:absolute sm:left-[2%] sm:top-[45%]",
                 },
                 {
                   step: "2",
                   title: "Settle",
                   desc: "We gently make sense of what feels heavy.",
                   icon: "🌊",
-                  position: "sm:absolute sm:left-[30%] sm:top-[32%]",
+                  // Standard upward curve
+                  position: "sm:absolute sm:left-[26%] sm:top-[25%]",
                 },
                 {
                   step: "3",
                   title: "Flow",
                   desc: "Steady movement with support beside you.",
                   icon: "💙",
-                  position: "sm:absolute sm:left-[56%] sm:top-[44%]",
+                  // Moved left to 50% to clear space for step 4
+                  position: "sm:absolute sm:left-[50%] sm:top-[48%]",
                 },
                 {
                   step: "4",
                   title: "Renew",
                   desc: "A calmer, clearer relationship with yourself.",
                   icon: "✨",
-                  position: "sm:absolute sm:left-[76%] sm:top-[26%]",
+                  // Shifted right to 75% to prevent the merge
+                  position: "sm:absolute sm:left-[75%] sm:top-[22%]",
                 },
               ].map((item, index) => (
                 <motion.div

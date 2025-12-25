@@ -185,51 +185,86 @@ export default function AboutPage() {
       ))}
 
       {/* Approach Section */}
-      <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mb-6 sm:mb-8 md:mb-12" />
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
+          {/* Light Violet Shade Background Accent - Matches the image feel */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-[#3F2965]/5 rounded-[100px] blur-3xl -z-10" />
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-[#2E2A36] mb-8 sm:mb-10 md:mb-12 leading-tight">
-            Our Psycho-Education Approach
-          </h2>
+          {/* Updated Heading Style based on provided image */}
+          <div className="text-center mb-16 md:mb-24">
+            <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mb-8" />
 
-          <div className="space-y-6 sm:space-y-8 text-left">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-[#2E2A36] leading-[1.1] tracking-tight mb-4">
+              Our Psycho-Education <br className="hidden sm:block" />
+              <span className="font-light italic text-[#3F2965]">Approach</span>
+            </h2>
+
+            <p className="text-[#5E5A6B] font-light tracking-[0.2em] uppercase text-[10px] sm:text-xs mt-6 opacity-80">
+              A World of Emotional Understanding
+            </p>
+          </div>
+
+          {/* Remaining Content Stays Exactly the Same */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+            <div className="hidden md:block absolute top-1/2 left-0 w-full h-[1px] bg-[#3F2965]/10 -translate-y-1/2 z-0" />
+
             {/* Card 1 */}
-            <div className="p-6 sm:p-8 rounded-xl sm:rounded-2xl bg-[#F6F4FA] border border-[#3F2965]/10">
-              <h3 className="text-xl sm:text-2xl font-medium text-[#3F2965] mb-3 sm:mb-4">
+            <div className="group relative z-10 bg-[#F6F4FA] p-8 rounded-2xl border border-[#3F2965]/10 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-[#3F2965]/5">
+              <div className="mb-6 flex items-center justify-between">
+                <span className="text-4xl font-serif italic text-[#3F2965]/20">
+                  01
+                </span>
+                <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+                  <div className="h-2 w-2 rounded-full bg-[#3F2965]" />
+                </div>
+              </div>
+              <h3 className="text-xl font-medium text-[#3F2965] mb-4">
                 Thoughtful & Structured Sessions
               </h3>
               <p className="text-sm sm:text-base leading-relaxed text-[#5E5A6B]">
                 Sessions at MindSettler follow a thoughtful and structured
                 format, designed to help individuals better understand mental
-                health concepts, emotional patterns, and personal experiences in
-                a clear and accessible way.
+                health concepts in a clear and accessible way.
               </p>
             </div>
 
             {/* Card 2 */}
-            <div className="p-6 sm:p-8 rounded-xl sm:rounded-2xl bg-[#F6F4FA] border border-[#3F2965]/10">
-              <h3 className="text-xl sm:text-2xl font-medium text-[#3F2965] mb-3 sm:mb-4">
+            <div className="group relative z-10 bg-[#F6F4FA] p-8 rounded-2xl border border-[#3F2965]/10 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-[#3F2965]/5 md:mt-8">
+              <div className="mb-6 flex items-center justify-between">
+                <span className="text-4xl font-serif italic text-[#3F2965]/20">
+                  02
+                </span>
+                <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+                  <div className="h-2 w-2 rounded-full bg-[#DD1764]" />
+                </div>
+              </div>
+              <h3 className="text-xl font-medium text-[#3F2965] mb-4">
                 Guided Reflection with Parnika
               </h3>
               <p className="text-sm sm:text-base leading-relaxed text-[#5E5A6B]">
                 Each session is personally guided by me, offering a safe,
-                non-judgmental space for reflection and exploration. The focus
-                remains on understanding thoughts and emotions at one’s own
-                pace, without pressure or assumptions.
+                non-judgmental space. The focus remains on understanding
+                thoughts and emotions at one’s own pace.
               </p>
             </div>
 
             {/* Card 3 */}
-            <div className="p-6 sm:p-8 rounded-xl sm:rounded-2xl bg-[#F6F4FA] border border-[#3F2965]/10">
-              <h3 className="text-xl sm:text-2xl font-medium text-[#3F2965] mb-3 sm:mb-4">
+            <div className="group relative z-10 bg-[#F6F4FA] p-8 rounded-2xl border border-[#3F2965]/10 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-[#3F2965]/5">
+              <div className="mb-6 flex items-center justify-between">
+                <span className="text-4xl font-serif italic text-[#3F2965]/20">
+                  03
+                </span>
+                <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+                  <div className="h-2 w-2 rounded-full bg-[#3F2965]" />
+                </div>
+              </div>
+              <h3 className="text-xl font-medium text-[#3F2965] mb-4">
                 Practical Awareness for Daily Life
               </h3>
               <p className="text-sm sm:text-base leading-relaxed text-[#5E5A6B]">
                 The approach emphasises practical awareness—helping individuals
-                apply insights from sessions to everyday situations. The aim is
-                to support emotional balance, self-understanding, and mindful
-                decision-making beyond the session space.
+                apply insights from sessions to everyday situations to support
+                emotional balance and mindful decision-making.
               </p>
             </div>
           </div>
