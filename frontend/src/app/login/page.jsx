@@ -26,32 +26,29 @@ export default function LoginPage() {
   const isScrollingRef = useRef(false);
 
   // TODO: Add your local image paths here (images should be in public/images folder)
-  // Example: "/images/loginimage1.jpg" (path starts with / and references public folder)
   const images = [
-    "/images/loginimage4.jpg", // Image 1 - Local path
-    "/images/loginimage2.jpg", // Image 2 - Local path
-    "/images/loginimage3.JPG", // Image 3 - Local path
-    // Add more local image paths as needed
-    // Example: "/images/your-image.jpg"
-  ].filter(url => url !== ""); // Remove empty strings
+    "/images/loginimage4.jpg",
+    "/images/loginimage2.jpg",
+    "/images/loginimage3.JPG",
+  ].filter(url => url !== "");
 
   // Auto-play carousel with pause on hover
   useEffect(() => {
     if (images.length > 1 && !isHovered) {
       const interval = setInterval(() => {
         setCurrentImageIndex((prev) => (prev + 1) % images.length);
-      }, 7000); // Change image every 7 seconds
+      }, 7000);
       return () => clearInterval(interval);
     }
   }, [images.length, isHovered]);
 
   const goToNext = () => {
-    setDirection(1); // Slide from right
+    setDirection(1);
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
   };
 
   const goToPrevious = () => {
-    setDirection(-1); // Slide from left
+    setDirection(-1);
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
@@ -73,17 +70,14 @@ export default function LoginPage() {
     const currentX = e.targetTouches[0].clientX;
     const currentY = e.targetTouches[0].clientY;
     
-    // Only prevent default if it's clearly a horizontal swipe
     if (touchStart !== null && touchStartY !== null) {
       const deltaX = Math.abs(currentX - touchStart);
       const deltaY = Math.abs(currentY - touchStartY);
       
-      // If horizontal movement is significantly more than vertical, prevent page scroll
       if (deltaX > deltaY * 2 && deltaX > 15) {
         e.preventDefault();
         isScrollingRef.current = true;
       } else if (deltaY > deltaX * 2) {
-        // Vertical scrolling - allow it
         isScrollingRef.current = false;
       }
     }
@@ -104,34 +98,27 @@ export default function LoginPage() {
       goToPrevious();
     }
     
-    // Reset touch states
     setTouchStart(null);
     setTouchEnd(null);
     setTouchStartY(null);
-    // Reset scrolling flag after a short delay
     setTimeout(() => {
       isScrollingRef.current = false;
     }, 100);
   };
 
-  // Handle mouse wheel/trackpad gestures with smooth scrolling
   const handleWheel = (e) => {
-    // Only handle horizontal scrolling (when deltaX is significantly larger than deltaY)
     const isHorizontalScroll = Math.abs(e.deltaX) > Math.abs(e.deltaY) * 2;
     
     if (isHorizontalScroll && Math.abs(e.deltaX) > 15) {
-      // Prevent page scroll only for horizontal scrolling
       e.preventDefault();
       e.stopPropagation();
       
-      // Use requestAnimationFrame for smoother transitions
       if (e.deltaX > 0) {
         goToNext();
       } else {
         goToPrevious();
       }
     }
-    // For vertical scrolling (deltaY is larger), let it pass through normally
   };
 
   const handleChange = (e) => {
@@ -147,7 +134,6 @@ export default function LoginPage() {
 
     try {
       await api.userLogin(formData);
-      // Force a full reload so Navbar/useAuth picks up the new session cookie
       window.location.href = "/book-session";
     } catch (err) {
       setError(err.message || "Login failed. Please check your credentials.");
@@ -205,17 +191,17 @@ export default function LoginPage() {
       
       {/* Container for flexible positioning of both units */}
       <div className="w-full max-w-[99vw] xl:max-w-[97vw] 2xl:max-w-[95vw] flex flex-col lg:flex-row gap-4 lg:gap-6 items-stretch justify-center relative z-10 min-h-[600px]">
+        
         {/* Desktop Image Carousel - Left side, only visible on desktop */}
+        {/* CHANGES: Removed bg-gradient, shadow classes, and rounded classes */}
         <motion.div
           initial={{ opacity: 0, y: 10, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="hidden lg:flex lg:w-1/2 relative flex-1 bg-gradient-to-br from-[#2E2A36] to-[#3F2965] overflow-hidden rounded-lg sm:rounded-xl shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] transition-all duration-500"
+          className="hidden lg:flex lg:w-1/2 relative flex-1 overflow-hidden"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-
-
           {images.length > 0 ? (
             <>
               {/* Desktop Image Carousel */}
@@ -306,7 +292,7 @@ export default function LoginPage() {
               </div>
             </>
           ) : (
-            <div className="w-full h-full flex items-center justify-center">
+            <div className="w-full h-full flex items-center justify-center bg-gray-900">
               <div className="text-center p-8">
                 <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-white/10 flex items-center justify-center">
                   <svg className="w-12 h-12 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -482,11 +468,12 @@ export default function LoginPage() {
 
         {/* Mobile Image Carousel - Below login form, only visible on mobile */}
         {images.length > 0 && (
+          // CHANGES: Removed bg-gradient, shadow classes, and rounded classes
           <motion.div
             initial={{ opacity: 0, y: 10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="lg:hidden w-full relative bg-gradient-to-br from-[#2E2A36] to-[#3F2965] overflow-hidden rounded-lg sm:rounded-xl shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] transition-all duration-500 order-2"
+            className="lg:hidden w-full relative overflow-hidden order-2"
             style={{ minHeight: '400px', height: '400px' }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
