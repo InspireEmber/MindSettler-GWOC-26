@@ -1,10 +1,24 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import BookingForm from "../../components/BookingForm";
 import { Clock, Shield, Globe, ArrowRight, CheckCircle, Sparkles } from "lucide-react";
 import { getCurrentUser } from "../../services/auth";
 import { motion } from "framer-motion";
+
+const SESSION_PHOTOS = [
+  "/images/5.jpeg",
+  "/images/6.jpeg",
+  "/images/7.jpeg",
+  "/images/8.jpeg",
+  "/images/9.jpeg",
+  "/images/10.jpeg",
+  "/images/11.jpeg",
+  "/images/12.jpeg",
+  "/images/13.jpeg",
+  "/images/14.jpeg",
+];
 
 const STEPS = [
   { title: "Select Mode", desc: "Choose Online or In-person" },
@@ -13,29 +27,6 @@ const STEPS = [
   { title: "Confirmation", desc: "Receive your session link" }
 ];
 
-const FEATURES = [
-  { 
-    title: "Guided Learning", 
-    desc: "Not just talk therapy, but actual psychological frameworks.", 
-    icon: <Clock />, 
-    color: "text-[#3F2965]",
-    bg: "bg-[#3F2965]/5"
-  },
-  { 
-    title: "Privacy First", 
-    desc: "Encrypted sessions and strictly confidential records.", 
-    icon: <Shield />, 
-    color: "text-[#DD1764]",
-    bg: "bg-[#DD1764]/5"
-  },
-  { 
-    title: "Global Access", 
-    desc: "Connect from anywhere via our secure platform.", 
-    icon: <Globe />, 
-    color: "text-[#3F2965]",
-    bg: "bg-[#3F2965]/5"
-  },
-];
 
 export default function BookSessionPage() {
   const router = useRouter();
@@ -84,16 +75,12 @@ export default function BookSessionPage() {
           <h1 className="text-4xl md:text-6xl font-light leading-tight mb-6">
             Begin Your <span className="font-serif italic text-[#3F2965]">Journey</span>
           </h1>
-          <p className="text-lg md:text-xl text-[#5E5A6B] max-w-2xl mx-auto leading-relaxed">
-            Book a structured psycho-education session to unravel unhelpful patterns and build lasting emotional resilience.
-          </p>
         </div>
       </section>
 
       {/* 2. Main Booking Area (Split Layout) */}
-      <section className="pb-24 -mt-20 relative z-20">
+      <section className="pb-16 md:pb-24 -mt-20 relative z-20">
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12">
-          
           {/* Left: The Roadmap */}
           <div className="lg:col-span-4 space-y-8">
             <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-[#3F2965]/5">
@@ -132,23 +119,48 @@ export default function BookSessionPage() {
         </div>
       </section>
 
-      {/* 3. Session Features */}
-      <section className="py-24 bg-white border-t border-gray-50">
-        <div className="max-w-7xl mx-auto px-6 text-center mb-16">
-          <h2 className="text-3xl font-light">Why Choose <span className="font-medium text-[#3F2965]">MindSettler</span>?</h2>
-        </div>
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-          {FEATURES.map((feature, i) => (
-            <div key={i} className="p-10 rounded-3xl bg-[#FAFAFA] border border-transparent hover:border-[#3F2965]/10 hover:bg-white transition-all group text-center">
-              <div className={`w-16 h-16 mx-auto mb-6 rounded-2xl ${feature.bg} ${feature.color} flex items-center justify-center transition-transform group-hover:scale-110`}>
-                {feature.icon}
-              </div>
-              <h3 className="text-xl font-medium mb-4">{feature.title}</h3>
-              <p className="text-[#5E5A6B] leading-relaxed text-sm">{feature.desc}</p>
+      {/* 3. Session Mood Gallery */}
+      <section className="pb-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="mb-8 md:mb-10 text-left md:text-center max-w-2xl mx-auto">
+            <p className="text-[10px] sm:text-xs tracking-[0.3em] font-semibold text-[#3F2965] uppercase mb-3">
+              A good therapy session also includes...
+            </p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-[#2E2A36] leading-tight">
+              Gentle reminders that you are supported.
+            </h2>
+          </div>
+
+          {/* Horizontal strip, all cards same size, smooth slide, no scrollbar */}
+          <div className="no-scrollbar overflow-x-auto scroll-smooth -mx-6 px-6 md:mx-0 md:px-0">
+            <div className="flex gap-4 sm:gap-6 py-2">
+              {SESSION_PHOTOS.map((src, index) => (
+                <motion.div
+                  key={src}
+                  className="relative flex-shrink-0 w-52 h-72 sm:w-56 sm:h-80 rounded-3xl bg-[#F6F4FA] border border-[#3F2965]/10 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-[#3F2965]/10 transition-transform duration-300 hover:-translate-y-1"
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <Image
+                    src={src}
+                    alt={`Therapy visual ${index + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 224px, (min-width: 640px) 208px, 208px"
+                  />
+                </motion.div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </section>
+
+      <style jsx>{`
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+
+      
     </div>
   );
 }

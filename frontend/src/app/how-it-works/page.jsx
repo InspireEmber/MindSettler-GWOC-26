@@ -89,22 +89,30 @@ export default function HowItWorksPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-12 sm:py-16 md:py-20 lg:py-32 bg-gradient-to-br from-[#3F2965] to-[#DD1764]">
-  <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-12 text-center">
-    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white mb-4 sm:mb-6 leading-tight">
-      Ready to Start?
-    </h2>
-    <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 sm:mb-8 leading-relaxed px-2">
-      Book your first session and take the first step toward understanding your mind.
-    </p>
-    <Link 
-      href="/book-session"
-      className="inline-block px-8 sm:px-10 py-3 sm:py-4 rounded-full bg-white text-[#3F2965] font-medium text-base sm:text-lg hover:bg-white/90 transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95 min-h-[44px] flex items-center justify-center"
-    >
-      Book Your First Session
-    </Link>
-  </div>
-</section>
+      <section className="py-16 sm:py-20 md:py-24 lg:py-32 bg-[#F6F4FA]/50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12">
+          <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-10 sm:p-12 md:p-20 text-center text-white shadow-2xl shadow-[#3F2965]/30">
+            {/* Decorative Brand Accents */}
+            <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" />
+            <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
+
+            <div className="relative z-10">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white mb-4 sm:mb-6 leading-tight">
+                Ready to Start?
+              </h2>
+              <p className="text-base sm:text-lg md:text-xl text-white/80 mb-6 sm:mb-8 leading-relaxed px-2">
+                Book your first session and take the first step toward understanding your mind.
+              </p>
+              <Link
+                href="/book-session"
+                className="inline-block px-8 sm:px-10 py-3 sm:py-4 rounded-full bg-white text-[#3F2965] font-medium text-base sm:text-lg hover:bg-white/95 transition-all duration-300 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] hover:scale-105 active:scale-95 min-h-[44px] flex items-center justify-center"
+              >
+                Book Your First Session
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

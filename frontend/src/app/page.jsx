@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { Lightbulb, Brain, Heart } from "lucide-react";
 import {
   Shield,
@@ -18,16 +18,8 @@ const revealUp = {
 };
 
 export default function HomePage() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
-
   return (
     <div className="min-h-screen bg-white text-[#2E2A36] overflow-x-hidden">
-      {/* Scroll Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3F2965] to-[#DD1764] origin-left z-50"
-        style={{ scaleX }}
-      />
 
       {/* HERO SECTION – NO ANIMATIONS */}
       <section className="relative min-h-[85vh] flex items-center bg-gradient-to-b from-[#F6F4FA] to-white pt-16 sm:pt-20">
@@ -95,12 +87,7 @@ export default function HomePage() {
       {/* 2. STORY CHAPTER: The Reality Check */}
       <section className="py-12 sm:py-16 md:py-24 lg:py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={revealUp}
-          >
+          <div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-6 sm:mb-8 leading-tight px-2">
               Mental health support shouldn't feel{" "}
               <span className="italic font-serif text-[#DD1764]">
@@ -116,7 +103,7 @@ export default function HomePage() {
               . By understanding the "Why" behind your feelings, you gain the
               power to change the "How" of your life.
             </p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -461,13 +448,8 @@ export default function HomePage() {
       </section>
 
       {/* 5. VIBRANT CTA: The Finale */}
-      <section className="py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-8 sm:p-12 md:p-16 lg:p-24 text-center text-white shadow-2xl shadow-[#3F2965]/30"
-        >
+      <section className="py-10 sm:py-14 md:py-20 lg:py-24 px-4 sm:px-6">
+        <div className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-8 sm:p-12 md:p-16 lg:p-24 text-center text-white shadow-2xl shadow-[#3F2965]/30">
           {/* Decorative Brand Accents */}
           <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" />
           <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
@@ -487,7 +469,7 @@ export default function HomePage() {
               Book Your First Session
             </Link>
           </div>
-        </motion.div>
+        </div>
       </section>
     </div>
   );
