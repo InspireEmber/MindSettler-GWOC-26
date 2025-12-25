@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { 
   User, Calendar, CheckCircle2, Clock, 
-  XCircle, ChevronRight, Activity, LogOut 
+  XCircle, ChevronRight, Activity, LogOut, MessageSquare
 } from "lucide-react";
 import { motion } from "framer-motion";
 import api from "../../services/api";
@@ -69,15 +69,15 @@ export default function ProfilePage() {
           <motion.button 
              whileHover={{ scale: 1.05 }}
              whileTap={{ scale: 0.95 }}
+             onClick={() => { /* Add your logout logic here */ }}
              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-gray-200 text-sm font-bold text-red-500 shadow-sm hover:bg-red-50 transition-colors"
           >
             <LogOut size={16} /> Sign Out
           </motion.button>
         </div>
 
-        {/* Info Grid */}
+        {/* Stats Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-          {/* Account Detail Card */}
           <div className="lg:col-span-1 bg-white rounded-[2rem] p-8 shadow-sm border border-[#3F2965]/5 relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
               <User size={100} />
@@ -95,7 +95,6 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Stats Summary Cards */}
           <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4">
             <SummaryCard label="Total" value={summary?.totalSessions} icon={<Activity size={18}/>} color="bg-[#3F2965]" />
             <SummaryCard label="Approved" value={summary?.approvedUpcomingSessions} icon={<CheckCircle2 size={18}/>} color="bg-emerald-500" />
@@ -159,34 +158,46 @@ function SessionSection({ title, data, type, router }) {
         <div className="grid gap-3">
           {data.map((s) => (
             <motion.div 
-              key={s.id}
+              key={s._id || s.id}
               whileHover={{ x: 5 }}
-              className="bg-white rounded-2xl p-5 shadow-sm border border-[#3F2965]/5 flex flex-col md:flex-row md:items-center justify-between gap-4 group"
+              className="bg-white rounded-2xl p-5 shadow-sm border border-[#3F2965]/5 flex flex-col gap-4 group"
             >
-              <div className="flex items-center gap-4">
-                <div className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center ${styles[type]} bg-opacity-40`}>
-                   <span className="text-[10px] font-bold uppercase">{new Date(s.date).toLocaleDateString('en-US', { month: 'short' })}</span>
-                   <span className="text-lg font-bold leading-none">{new Date(s.date).getDate()}</span>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center ${styles[type]} bg-opacity-40`}>
+                     <span className="text-[10px] font-bold uppercase">{new Date(s.date || s.slot?.date).toLocaleDateString('en-US', { month: 'short' })}</span>
+                     <span className="text-lg font-bold leading-none">{new Date(s.date || s.slot?.date).getDate()}</span>
+                  </div>
+                  <div>
+                    <p className="font-bold text-[#2E2A36]">{s.startTime || s.slot?.startTime} - {s.endTime || s.slot?.endTime}</p>
+                    <p className="text-xs text-[#5E5A6B] capitalize">{s.sessionType} Session</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-bold text-[#2E2A36]">{s.startTime} - {s.endTime}</p>
-                  <p className="text-xs text-[#5E5A6B] capitalize">{s.sessionType} Session</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <span className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${styles[type]}`}>
-                  {icons[type]} {type.replace(/([A-Z])/g, ' $1').trim()}
-                </span>
-                {(type !== 'completed' && type !== 'rejected') && (
+                
+                <div className="flex items-center gap-3 self-end md:self-auto">
+                  <span className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${styles[type]}`}>
+                    {icons[type]} {type === 'approvedUpcoming' ? 'Approved' : type === 'pendingUpcoming' ? 'Pending' : type}
+                  </span>
                   <button 
-                    onClick={() => router.push(`/appointment-status?id=${s.id}`)}
-                    className="p-2 rounded-full bg-[#F6F4FA] text-[#3F2965] hover:bg-[#3F2965] hover:text-white transition-all"
+                    onClick={() => router.push(`/appointment-status?id=${s._id || s.id}`)}
+                    className="p-2 rounded-full bg-[#F6F4FA] text-[#3F2965] hover:bg-[#3F2965] hover:text-white transition-all shadow-sm"
+                    title="View Full Details"
                   >
                     <ChevronRight size={18} />
                   </button>
-                )}
+                </div>
               </div>
+
+              {/* REJECTION REASON PREVIEW */}
+              {type === 'rejected' && s.rejectionReason && (
+                <div className="mt-2 p-3 rounded-xl bg-red-50 border border-red-100 flex items-start gap-3">
+                  <MessageSquare size={14} className="text-red-400 mt-0.5 shrink-0" />
+                  <div className="text-xs text-red-800">
+                    <p className="font-bold mb-0.5">Note from MindSettler:</p>
+                    <p>{s.rejectionReason}</p>
+                  </div>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>
