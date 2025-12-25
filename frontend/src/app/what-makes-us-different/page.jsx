@@ -1,3 +1,6 @@
+"use client";
+
+import React, { useRef } from "react";
 import Link from "next/link";
 import {
   ClipboardCheck,
@@ -6,48 +9,69 @@ import {
   BookOpen,
   Heart,
   Users2,
+  ArrowRight,
+  Sparkles,
 } from "lucide-react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+} from "framer-motion";
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
+// --- UTILITY ---
+function cn(...inputs) {
+  return twMerge(clsx(inputs));
+}
 
+// --- DATA ---
 const FEATURES = [
   {
     title: "Structured Sessions",
-    desc: "Every session follows a clear, thoughtful structure. You always know what to expect, what you’re working on, and why it matters.",
+    desc: "Every session follows a clear, thoughtful structure. You always know what to expect.",
+    longDesc: "We remove the anxiety of the unknown. Our sessions are architected to give you a roadmap, so you can focus purely on your growth.",
     icon: <ClipboardCheck />,
     color: "text-[#3F2965]",
     bg: "bg-[#3F2965]/10",
   },
   {
     title: "Confidentiality First",
-    desc: "Your privacy is respected at every step. What you share stays safe, secure, and completely judgment-free.",
+    desc: "Your privacy is respected at every step. What you share stays safe.",
+    longDesc: "A judgment-free zone where your data and your stories are protected with enterprise-grade care and human empathy.",
     icon: <ShieldCheck />,
     color: "text-[#DD1764]",
     bg: "bg-[#DD1764]/10",
   },
   {
     title: "Personalized Guidance",
-    desc: "No two journeys are the same. Sessions are shaped around your experiences, needs, and pace, never one-size-fits-all.",
+    desc: "Sessions are shaped around your experiences, needs, and pace.",
+    longDesc: "No cookie-cutter scripts. We adapt to your emotional velocity, ensuring the journey feels uniquely yours.",
     icon: <UserCircle />,
     color: "text-[#3F2965]",
     bg: "bg-[#3F2965]/10",
   },
   {
     title: "Education-Focused",
-    desc: "We focus on understanding, not quick fixes. Learn tools and insights that support long-term mental well-being.",
+    desc: "We focus on understanding, not quick fixes. Learn tools for the long term.",
+    longDesc: "We don't just listen; we equip you. You leave with a toolkit of cognitive strategies to navigate life independently.",
     icon: <BookOpen />,
     color: "text-[#DD1764]",
     bg: "bg-[#DD1764]/10",
   },
   {
     title: "Calm & Approachable",
-    desc: "A warm, welcoming space where you can speak openly. No pressure, no fear—just support at your comfort level.",
+    desc: "A warm, welcoming space where you can speak openly without pressure.",
+    longDesc: "The environment is designed to lower cortisol and raise comfort. Come as you are, feel safe immediately.",
     icon: <Heart />,
     color: "text-[#3F2965]",
     bg: "bg-[#3F2965]/10",
   },
   {
     title: "Human-Led Support",
-    desc: "Real conversations i.e. No bots, no automation—just genuine human connection.",
+    desc: "Real conversations. No bots, no automation—just genuine connection.",
+    longDesc: "Technology aids us, but it doesn't replace us. You will always be heard by a beating heart and a thinking mind.",
     icon: <Users2 />,
     color: "text-[#DD1764]",
     bg: "bg-[#DD1764]/10",
@@ -56,168 +80,249 @@ const FEATURES = [
 
 const REASONS = [
   {
-    title: "Building Trust Through Structure",
-    desc: "When you know what to expect, you can focus on the work. Our approach removes uncertainty and creates safety.",
+    title: "Trust Through Structure",
+    desc: "Uncertainty breeds anxiety. Our roadmap creates a safety net for your mind.",
   },
   {
-    title: "Education as Empowerment",
-    desc: "Knowledge is power. By understanding your mental health, you gain agency over your emotional well-being.",
+    title: "Empowerment",
+    desc: "Knowledge is agency. Understanding your mental health puts you back in the driver's seat.",
   },
   {
     title: "Human Connection",
-    desc: "While technology supports, nothing replaces human connection. Our approach ensures you are truly heard.",
+    desc: "In a digital world, being truly heard by another human is the ultimate healing tool.",
   },
 ];
 
-export default function WhatMakesUsDifferentPage() {
-  return (
-    <div className="min-h-screen bg-white text-[#5E5A6B]">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#F6F4FA] via-white to-[#F6F4FA] py-12 md:py-16 text-center">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mb-6" />
+// --- SUB-COMPONENTS ---
 
-          <h1 className="text-4xl md:text-6xl font-light text-[#2E2A36] mb-6 tracking-tight">
-            What Makes Us{" "}
-            <span className="block italic font-serif text-5xl md:text-7xl text-[#3F2965] mt-2">
+// 1. The Scroll Dock Item (The Core Animation)
+const FeatureDockItem = ({ feature, index }) => {
+  const ref = useRef(null);
+
+  // Track scroll relative to this specific card
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  // Animation Logic:
+  // When item is centered (0.5), it is large (1.1 scale) and opaque (1).
+  // When at edges (0 or 1), it is smaller (0.85) and faded (0.3).
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.85, 1.1, 0.85]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3]);
+  const y = useTransform(scrollYProgress, [0, 0.5, 1], [50, 0, -50]);
+  
+  // Add spring physics for smooth "floating" feel
+  const springScale = useSpring(scale, { stiffness: 200, damping: 20 });
+  const springOpacity = useSpring(opacity, { stiffness: 200, damping: 20 });
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ scale: springScale, opacity: springOpacity, y }}
+      className="group relative flex flex-col items-center text-center py-16 md:py-24 max-w-2xl mx-auto"
+    >
+      {/* Central Connector Line */}
+      <div className="absolute top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-[#3F2965]/20 to-transparent left-1/2 -z-10" />
+
+      {/* Icon Bubble */}
+      <div className="relative mb-8">
+        <div
+          className={cn(
+            "w-20 h-20 rounded-full flex items-center justify-center text-3xl shadow-2xl transition-all duration-500 bg-white",
+            feature.color
+          )}
+        >
+          {React.cloneElement(feature.icon, { size: 32, strokeWidth: 1.5 })}
+        </div>
+        {/* Glow Ring behind icon */}
+        <div className={cn("absolute inset-0 rounded-full blur-xl opacity-40", feature.bg)} />
+      </div>
+
+      <h3 className="text-3xl md:text-5xl font-light text-[#2E2A36] mb-6 tracking-tight">
+        {feature.title}
+      </h3>
+      
+      <p className="text-lg text-[#5E5A6B] leading-relaxed max-w-md font-medium">
+        {feature.desc}
+      </p>
+
+      {/* Extended Description (Visible when centered/hovered) */}
+      <motion.p 
+        className="mt-6 text-sm md:text-base text-[#3F2965] font-serif italic max-w-md opacity-0 group-hover:opacity-100 md:opacity-80 transition-opacity duration-500"
+      >
+        "{feature.longDesc}"
+      </motion.p>
+    </motion.div>
+  );
+};
+
+// 2. Parallax Reason Card
+const ReasonCard = ({ reason, index }) => {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.2, duration: 0.6 }}
+      whileHover={{ y: -10 }}
+      className="p-8 rounded-[2rem] bg-white border border-[#3F2965]/5 shadow-lg shadow-[#3F2965]/5 hover:shadow-2xl hover:shadow-[#DD1764]/10 transition-all duration-300 relative overflow-hidden group"
+    >
+      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#F6F4FA] to-transparent rounded-bl-[100px] -z-0 group-hover:scale-150 transition-transform duration-700 ease-in-out" />
+      
+      <div className="relative z-10">
+        <span className="block text-6xl font-serif italic text-[#3F2965]/10 mb-4 group-hover:text-[#DD1764]/20 transition-colors">
+          0{index + 1}
+        </span>
+        <h4 className="text-xl font-semibold text-[#3F2965] mb-3">{reason.title}</h4>
+        <p className="text-[#5E5A6B] leading-relaxed">{reason.desc}</p>
+      </div>
+    </motion.div>
+  );
+};
+
+// --- MAIN PAGE COMPONENT ---
+export default function WhatMakesUsDifferentPage() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll();
+  
+  // Background parallax movement logic
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, -200]);
+
+  return (
+    <div className="min-h-screen bg-[#FDFBFD] text-[#5E5A6B] overflow-hidden selection:bg-[#DD1764]/20">
+      
+      {/* 1. Global Animated Background Elements */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <motion.div style={{ y: bgY }} className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] bg-[#3F2965]/5 rounded-full blur-[120px]" />
+        <motion.div style={{ y: bgY }} className="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] bg-[#DD1764]/5 rounded-full blur-[120px]" />
+      </div>
+
+      {/* 2. HERO SECTION */}
+      <section className="relative z-10 pt-32 pb-10 md:pt-48 md:pb-20 px-6 text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="max-w-4xl mx-auto"
+        >
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#3F2965]/10 shadow-sm mb-8">
+            <Sparkles className="w-4 h-4 text-[#DD1764]" />
+            <span className="text-xs font-bold tracking-widest text-[#3F2965] uppercase">
+              Beyond Standard Care
+            </span>
+          </div>
+
+          <h1 className="text-5xl md:text-8xl font-light text-[#2E2A36] mb-8 tracking-tight">
+            What Makes Us <br />
+            <span className="font-serif italic text-[#3F2965] relative inline-block">
               Different
+              {/* Animated Underline */}
+              <motion.svg
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ delay: 0.5, duration: 1 }}
+                className="absolute -bottom-2 left-0 w-full"
+                height="10"
+                viewBox="0 0 100 10"
+                preserveAspectRatio="none"
+              >
+                <path d="M0 5 Q 50 10 100 5" stroke="#DD1764" strokeWidth="2" fill="transparent" />
+              </motion.svg>
             </span>
           </h1>
 
-          <p className="text-sm md:text-base uppercase tracking-[0.2em] text-[#5E5A6B] font-medium">
-            Our unique approach to mental health education and support.
+          <p className="text-lg md:text-xl text-[#5E5A6B] max-w-2xl mx-auto font-light leading-relaxed">
+            We don't just offer sessions; we offer a carefully architected journey 
+            designed for sustainable emotional growth.
           </p>
-        </div>
+        </motion.div>
+
+        {/* Scroll Indicator */}
+        <motion.div 
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="mt-16 flex justify-center opacity-40"
+        >
+          <div className="w-[1px] h-24 bg-gradient-to-b from-[#3F2965] to-transparent" />
+        </motion.div>
       </section>
-      {/* Features Grid */}
-      <section className="py-16 md:py-24 max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {FEATURES.map((f, i) => (
-          <div
-            key={i}
-            className="p-8 rounded-3xl bg-[#F6F4FA] border border-[#3F2965]/10 hover:shadow-xl transition-all duration-300"
-          >
-            <div
-              className={`w-14 h-14 rounded-full ${f.bg} ${f.color} flex items-center justify-center mb-6`}
-            >
-              {cloneElement(f.icon, { className: "w-7 h-7" })}
-            </div>
-            <h3 className="text-2xl font-medium text-[#2E2A36] mb-4">
-              {f.title}
-            </h3>
-            <p className="leading-relaxed">{f.desc}</p>
-          </div>
-        ))}
-      </section>
-      {/* Why It Matters Section */}
-      <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
-          {/* Background Glow Accent */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-[#3F2965]/5 rounded-[100px] blur-3xl -z-10" />
 
-          {/* Heading matching the Image style */}
-          <div className="text-center mb-16 md:mb-24">
-            <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mb-8" />
-
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-[#2E2A36] leading-[1.1] tracking-tight mb-4">
-              Why This Approach <br className="hidden sm:block" />
-              <span className="font-light italic font-serif text-[#3F2965]">
-                Matters
-              </span>
-            </h2>
-
-            <p className="text-[#5E5A6B] font-light tracking-[0.2em] uppercase text-[10px] sm:text-xs mt-6 opacity-80">
-              Sustainable Growth & Emotional Well-being
-            </p>
-          </div>
-
-          {/* Staggered Grid Content */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            {/* Horizontal connecting line for Desktop */}
-            <div className="hidden md:block absolute top-1/2 left-0 w-full h-[1px] bg-[#3F2965]/10 -translate-y-1/2 z-0" />
-
-            {REASONS.map((r, i) => (
-              <div
-                key={i}
-                className={`group relative z-10 bg-[#F6F4FA] p-8 rounded-2xl border border-[#3F2965]/10 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-[#3F2965]/5 ${
-                  i === 1 ? "md:mt-8" : "" // This creates the staggered middle-card effect from the image
-                }`}
-              >
-                <div className="mb-6 flex items-center justify-between">
-                  <span className="text-4xl font-serif italic text-[#3F2965]/20">
-                    0{i + 1}
-                  </span>
-                  <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center shadow-sm">
-                    {/* Alternate dot colors based on the card index */}
-                    <div
-                      className={`h-2 w-2 rounded-full ${
-                        i === 1 ? "bg-[#DD1764]" : "bg-[#3F2965]"
-                      }`}
-                    />
-                  </div>
-                </div>
-
-                <h3 className="text-xl font-medium text-[#3F2965] mb-4">
-                  {r.title}
-                </h3>
-                <p className="text-sm sm:text-base leading-relaxed text-[#5E5A6B]">
-                  {r.desc}
-                </p>
-              </div>
+      {/* 3. FLUID DOCK SECTION (Features) */}
+      <section ref={containerRef} className="relative z-10 py-12 md:py-24">
+        <div className="max-w-4xl mx-auto px-6 relative">
+          <div className="flex flex-col gap-0">
+            {FEATURES.map((feature, i) => (
+              <FeatureDockItem 
+                key={i} 
+                feature={feature} 
+                index={i} 
+              />
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section - Sophisticated Rounded Card */}
-      <section className="py-24 md:py-32 bg-[#F6F4FA]/50">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-12 md:p-24 text-center shadow-2xl shadow-[#3F2965]/30">
-            {/* Decorative Brand Accents */}
-            <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" />
-            <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
+      {/* 4. REASONS GRID */}
+      <section className="relative z-10 py-24 md:py-32 bg-white/50 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+             <h2 className="text-3xl md:text-5xl font-light text-[#2E2A36]">
+               Why This Approach <span className="font-serif italic text-[#DD1764]">Matters</span>
+             </h2>
+          </div>
 
-            <div className="relative z-10">
-              {/* Small Tagline */}
-              <p className="text-[#DD1764] font-semibold tracking-[0.3em] uppercase text-[10px] mb-6 opacity-90">
-                The Journey Starts Here
-              </p>
-
-              {/* Heading matching the Image Style */}
-              <h2 className="text-4xl md:text-6xl font-extralight text-white mb-8 leading-[1.1] tracking-tight">
-                Ready to Experience <br className="hidden sm:block" />
-                the{" "}
-                <span className="font-serif italic text-white/90">
-                  Difference?
-                </span>
-              </h2>
-
-              <p className="text-lg md:text-xl text-white/70 mb-12 max-w-xl mx-auto font-light leading-relaxed">
-                Step into a space designed for clarity, safety, and genuine
-                human connection.
-              </p>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <Link
-                  href="/book-session"
-                  className="w-full sm:w-auto px-12 py-5 rounded-full bg-white text-[#3F2965] font-semibold text-lg hover:bg-white/95 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(255,255,255,0.2)] hover:scale-[1.03] active:scale-95"
-                >
-                  Book Your First Session
-                </Link>
-
-                <Link
-                  href="/contact"
-                  className="text-white/80 hover:text-white border-b border-white/20 hover:border-white transition-all pb-1 font-light text-lg"
-                >
-                  Ask a question
-                </Link>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {REASONS.map((r, i) => (
+                <ReasonCard key={i} reason={r} index={i} />
+            ))}
           </div>
         </div>
+      </section>
+
+      {/* 5. CTA SECTION */}
+      <section className="relative z-10 py-24 px-6 overflow-hidden">
+        <motion.div 
+            initial={{ scale: 0.95, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+            className="max-w-5xl mx-auto bg-[#3F2965] rounded-[3rem] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl shadow-[#3F2965]/40"
+        >
+            {/* Spinning Gradient Orb inside CTA */}
+            <motion.div 
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute -top-[50%] -left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-[#DD1764]/30 to-transparent rounded-full blur-[100px] pointer-events-none"
+            />
+            
+            <div className="relative z-10">
+                <h2 className="text-4xl md:text-7xl font-light text-white mb-8 tracking-tight">
+                    Start Your <span className="font-serif italic">Transformation</span>
+                </h2>
+                <p className="text-white/70 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-light">
+                    Experience the difference of a structured, human-first approach to mental well-being.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                    <Link href="/book-session">
+                        <motion.button 
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="bg-white text-[#3F2965] px-10 py-5 rounded-full text-lg font-semibold shadow-lg hover:shadow-white/20 transition-all flex items-center gap-3 group"
+                        >
+                            Book Your Session
+                            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </motion.button>
+                    </Link>
+                    <Link href="/contact" className="text-white/80 hover:text-white border-b border-white/20 hover:border-white transition-all pb-1">
+                        Ask a question first
+                    </Link>
+                </div>
+            </div>
+        </motion.div>
       </section>
     </div>
   );
 }
-
-import { cloneElement } from "react";
