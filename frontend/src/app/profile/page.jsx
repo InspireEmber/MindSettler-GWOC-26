@@ -1,7 +1,11 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { 
+  User, Calendar, CheckCircle2, Clock, 
+  XCircle, ChevronRight, Activity, LogOut 
+} from "lucide-react";
+import { motion } from "framer-motion";
 import api from "../../services/api";
 
 export default function ProfilePage() {
@@ -13,335 +17,180 @@ export default function ProfilePage() {
   const [sessions, setSessions] = useState([]);
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function load() {
+    async function loadData() {
       try {
         const [p, s, sess] = await Promise.all([
           api.getUserProfile(),
           api.getUserSessionsSummary(),
           api.getUserSessions(),
         ]);
-        if (cancelled) return;
         setProfile(p);
         setSummary(s);
         setSessions(sess || []);
       } catch (e) {
-        if (cancelled) return;
         if (e.message?.toLowerCase().includes("login")) {
           router.replace("/login");
           return;
         }
         setError(e.message || "Failed to load profile");
       } finally {
-        if (!cancelled) setLoading(false);
+        setLoading(false);
       }
     }
-
-    load();
-    return () => {
-      cancelled = true;
-    };
+    loadData();
   }, [router]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-[#5E5A6B]">Loading your profile...</div>
-      </div>
-    );
-  }
+  if (loading) return (
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center space-y-4">
+      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }} className="w-10 h-10 border-4 border-[#3F2965]/10 border-t-[#3F2965] rounded-full" />
+      <p className="text-[#5E5A6B] animate-pulse">Syncing your journey...</p>
+    </div>
+  );
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center px-6">
-        <div className="max-w-md w-full text-center">
-          <h1 className="text-2xl font-light text-[#2E2A36] mb-2">Profile Error</h1>
-          <p className="text-sm text-[#5E5A6B] mb-4">{error}</p>
-          <button
-            onClick={() => router.push("/login")}
-            className="px-6 py-3 rounded-full bg-[#3F2965] text-white text-sm"
-          >
-            Go to Login
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // const upcoming = sessions.filter((s) => s.derivedStatus === "upcoming");
-  // const completed = sessions.filter((s) => s.derivedStatus === "completed");
-  // const upcoming = sessions.filter((s) => s.derivedStatus === "upcoming" && s.status !== "rejected");
   const approvedUpcoming = sessions.filter(s => s.displayCategory === 'approvedUpcoming').sort((a, b) => new Date(a.date) - new Date(b.date));
   const pendingUpcoming = sessions.filter(s => s.displayCategory === 'pendingUpcoming').sort((a, b) => new Date(a.date) - new Date(b.date));
-
-  // const completed = sessions.filter((s) => s.derivedStatus === "completed" && s.status !== "rejected");
-  // const rejected = sessions.filter((s) => s.status === "rejected");
   const completed = sessions.filter(s => s.displayCategory === 'completed');
   const rejected = sessions.filter(s => s.displayCategory === 'rejected');
 
-  function StatusBadge({ type }) {
-    const styles = {
-      approvedUpcoming: "bg-emerald-50 text-emerald-700 border border-emerald-100",
-      pendingUpcoming: "bg-amber-50 text-amber-700 border border-amber-100",
-      completed: "bg-slate-100 text-slate-700 border border-slate-200",
-      rejected: "bg-red-50 text-red-700 border border-red-200",
-    };
-
-    const labels = {
-      approvedUpcoming: "Admin approved",
-      pendingUpcoming: "Awaiting admin approval",
-      completed: "Completed",
-      rejected: "Rejected",
-    };
-
-    return (
-      <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${styles[type]}`}>
-        {labels[type]}
-      </span>
-    );
-  }
-
-
   return (
-    <div className="min-h-screen bg-[#F6F4FA] py-12">
-      <div className="max-w-5xl mx-auto px-6">
-        <h1 className="text-3xl md:text-4xl font-light text-[#2E2A36] mb-8">
-          Your Profile
-        </h1>
-
-        {/* User Info + Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#3F2965]/10">
-            <h2 className="text-lg font-medium text-[#2E2A36] mb-4">
-              Account Details
-            </h2>
-            <p className="text-sm text-[#5E5A6B]"><span className="font-medium text-[#2E2A36]">Name:</span> {profile?.name}</p>
-            <p className="text-sm text-[#5E5A6B]"><span className="font-medium text-[#2E2A36]">Email:</span> {profile?.email}</p>
-            <p className="text-sm text-[#5E5A6B]"><span className="font-medium text-[#2E2A36]">Role:</span> {profile?.role || "user"}</p>
-            <p className="text-sm text-[#5E5A6B] mt-2">
-              <span className="font-medium text-[#2E2A36]">Member since:</span>{" "}
-              {profile?.createdAt ? new Date(profile.createdAt).toLocaleDateString() : "-"}
-            </p>
-          </div>
-
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#3F2965]/10">
-            <h2 className="text-lg font-medium text-[#2E2A36] mb-4">
-              Session Overview
-            </h2>
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div className="p-3 rounded-xl bg-[#3F2965]/5">
-                <p className="text-xs text-[#5E5A6B]">Total Sessions</p>
-                <p className="text-xl font-semibold text-[#2E2A36]">
-                  {summary?.totalSessions ?? 0}
-                </p>
-              </div>
-              {/* <div className="p-3 rounded-xl bg-[#3F2965]/5">
-                <p className="text-xs text-[#5E5A6B]">Upcoming</p>
-                <p className="text-xl font-semibold text-[#2E2A36]">
-                  {summary?.upcomingSessions ?? 0}
-                </p>
-              </div> */}
-              <div className="p-3 rounded-xl bg-[#3F2965]/5">
-                <p className="text-xs text-[#5E5A6B]">Approved Upcoming</p>
-                <p className="text-xl font-semibold text-[#2E2A36]">
-                  {summary?.approvedUpcomingSessions ?? 0}
-                </p>
-              </div>
-               <div className="p-3 rounded-xl bg-[#3F2965]/5">
-                <p className="text-xs text-[#5E5A6B]">Pending Approval</p>
-                <p className="text-xl font-semibold text-[#2E2A36]">
-                  {summary?.pendingSessions ?? 0}
-                </p>
-
-              </div>
-              <div className="p-3 rounded-xl bg-[#3F2965]/5">
-                <p className="text-xs text-[#5E5A6B]">Completed</p>
-                <p className="text-xl font-semibold text-[#2E2A36]">
-                  {summary?.completedSessions ?? 0}
-                </p>
-              </div>
-              <div className="p-3 rounded-xl bg-[#3F2965]/5">
-                <p className="text-xs text-[#5E5A6B]">Cancelled</p>
-                <p className="text-xl font-semibold text-[#2E2A36]">
-                  {summary?.cancelledSessions ?? 0}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Upcoming Sessions (Approved)  */}
-        <div className="mb-8">
-          <h2 className="text-xl font-medium text-[#2E2A36] mb-4">
-            Upcoming Sessions (Approved)
-          </h2>
-          {approvedUpcoming.length === 0 ? (
-            <p className="text-sm text-[#5E5A6B] bg-white rounded-2xl p-4 border border-dashed border-[#3F2965]/20">
-              You don&apos;t have any approved upcoming sessions. yet.
-            </p>
-          ) : (
-            <div className="space-y-3">
-              {approvedUpcoming.map((s) => (
-                <div
-                  key={s.id}
-                  className="bg-white rounded-2xl p-4 shadow-sm border border-[#3F2965]/10 flex flex-col md:flex-row md:items-center md:justify-between gap-2"
-                >
-                  <div>
-                    <p className="text-sm font-medium text-[#2E2A36]">
-                      {s.date ? new Date(s.date).toLocaleDateString() : "-"}
-                    </p>
-                    <p className="text-xs text-[#5E5A6B]">
-                      {s.startTime} - {s.endTime} ({s.sessionType})
-                      
-                    </p>
-                  </div>
-                  {/* <StatusBadge type="approvedUpcoming" /> */}
-                  <div className="flex items-center gap-3">
-                    <StatusBadge type="approvedUpcoming" />
-
-                    {/* 👉 VIEW DETAILS BUTTON */}
-                    <button
-                      onClick={() =>
-                        router.push(`/appointment-status?id=${s.id}`)
-                      }
-                      className="px-3 py-1 rounded-full border border-[#3F2965] text-[#3F2965] text-xs hover:bg-[#3F2965]/10 transition"
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+    <div className="min-h-screen bg-[#FAFAFA] py-12 px-6">
+      <div className="max-w-5xl mx-auto">
         
-
-       {/* Upcoming Sessions (Pending Approval) */}
-        <div className="mb-8">
-          <h2 className="text-xl font-medium text-[#2E2A36] mb-4">
-            Upcoming Sessions (Pending Approval)
-          </h2>
-
-          {pendingUpcoming.length === 0 ? (
-            <p className="text-sm text-[#5E5A6B] bg-white rounded-2xl p-4 border border-dashed border-[#3F2965]/20">
-              You don&apos;t have any pending approval sessions yet. 
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+            <h1 className="text-3xl md:text-5xl font-light text-[#2E2A36]">
+              Hello, <span className="font-medium text-[#3F2965]">{profile?.name.split(' ')[0]}</span>
+            </h1>
+            <p className="text-[#5E5A6B] mt-2 flex items-center gap-2">
+              <Calendar size={14} /> {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
             </p>
-          ) : (
-            <div className="space-y-3">
-              {pendingUpcoming.map((s) => (
-                <div
-                  key={s.id}
-                  className="bg-white rounded-2xl p-4 shadow-sm border border-[#3F2965]/10"
-                >
-                  <div>
-                  <p className="text-sm font-medium text-[#2E2A36]">
-                    {s.date ? new Date(s.date).toLocaleDateString() : "-"}
-                  </p>
-                  <p className="text-xs text-[#5E5A6B]">
-                   {s.startTime} - {s.endTime} ({s.sessionType})
-                  </p>
-                  </div>
-                  {/* <StatusBadge type="pendingUpcoming" /> */}
-                  <div className="flex items-center gap-3">
-                    <StatusBadge type="pendingUpcoming" />
-
-                    {/* 👉 VIEW DETAILS BUTTON */}
-                    <button
-                      onClick={() =>
-                        router.push(`/appointment-status?id=${s.id}`)
-                      }
-                      className="px-3 py-1 rounded-full border border-amber-300 text-amber-700 text-xs hover:bg-amber-50 transition"
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          </motion.div>
+          <motion.button 
+             whileHover={{ scale: 1.05 }}
+             whileTap={{ scale: 0.95 }}
+             className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-gray-200 text-sm font-bold text-red-500 shadow-sm hover:bg-red-50 transition-colors"
+          >
+            <LogOut size={16} /> Sign Out
+          </motion.button>
         </div>
 
-
-
-        {/* Rejected Sessions */}
-        <div className="mb-8">
-          <h2 className="text-xl font-medium text-[#2E2A36] mb-4">
-            Rejected Sessions
-          </h2>
-          {rejected.length === 0 ? (
-            <p className="text-sm text-[#5E5A6B] bg-white rounded-2xl p-4 border border-dashed border-[#3F2965]/20">
-              You don&apos;t have any rejected sessions.
-            </p>
-          ) : (
-            <div className="space-y-3">
-              {rejected.map((s) => (
-                <div
-                  key={s.id}
-                  className="bg-white rounded-2xl p-4 shadow-sm border border-[#3F2965]/10 flex flex-col md:flex-row md:items-center md:justify-between gap-2"
-                >
-                  <div>
-                    <p className="text-sm font-medium text-[#2E2A36]">
-                      {s.date ? new Date(s.date).toLocaleDateString() : "-"}
-                    </p>
-                    <p className="text-xs text-[#5E5A6B]">
-                      {s.startTime} - {s.endTime} ({s.sessionType})
-                    </p>
-                    {s.rejectionReason && (
-                    <p className="mt-1 text-xs text-red-600">
-                      <span className="font-medium">Reason:</span> {s.rejectionReason}
-                    </p>
-                     )}
-                  </div>
-                  {/* <StatusBadge type="rejected" /> */}
-                  <div className="flex flex-col items-end gap-2">
-                    <StatusBadge type="rejected" />
-
-                    <button
-                      onClick={() => router.push(`/appointment-status?id=${s.id}`)}
-                      className="px-4 py-1 rounded-full text-xs border border-red-300 text-red-700 hover:bg-red-50 transition"
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-              ))}
+        {/* Info Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+          {/* Account Detail Card */}
+          <div className="lg:col-span-1 bg-white rounded-[2rem] p-8 shadow-sm border border-[#3F2965]/5 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+              <User size={100} />
             </div>
-          )}
+            <h3 className="text-xs font-bold uppercase tracking-widest text-[#3F2965] mb-6">Identity</h3>
+            <div className="space-y-4 relative z-10">
+               <div>
+                 <p className="text-[10px] text-gray-400 uppercase font-bold">Email Address</p>
+                 <p className="text-[#2E2A36] font-medium">{profile?.email}</p>
+               </div>
+               <div>
+                 <p className="text-[10px] text-gray-400 uppercase font-bold">Member Since</p>
+                 <p className="text-[#2E2A36] font-medium">{new Date(profile?.createdAt).toLocaleDateString()}</p>
+               </div>
+            </div>
+          </div>
+
+          {/* Stats Summary Cards */}
+          <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <SummaryCard label="Total" value={summary?.totalSessions} icon={<Activity size={18}/>} color="bg-[#3F2965]" />
+            <SummaryCard label="Approved" value={summary?.approvedUpcomingSessions} icon={<CheckCircle2 size={18}/>} color="bg-emerald-500" />
+            <SummaryCard label="Pending" value={summary?.pendingSessions} icon={<Clock size={18}/>} color="bg-amber-500" />
+            <SummaryCard label="Completed" value={summary?.completedSessions} icon={<CheckCircle2 size={18}/>} color="bg-blue-500" />
+          </div>
         </div>
 
-
-        {/* Completed Sessions */}
-        <div>
-          <h2 className="text-xl font-medium text-[#2E2A36] mb-4">
-            Completed Sessions
-          </h2>
-          {completed.length === 0 ? (
-            <p className="text-sm text-[#5E5A6B] bg-white rounded-2xl p-4 border border-dashed border-[#3F2965]/20">
-              Completed sessions will appear here after they finish.
-            </p>
-          ) : (
-            <div className="space-y-3">
-              {completed.map((s) => (
-                <div
-                  key={s.id}
-                  className="bg-white rounded-2xl p-4 shadow-sm border border-[#3F2965]/10 flex flex-col md:flex-row md:items-center md:justify-between gap-2"
-                >
-                  <div>
-                    <p className="text-sm font-medium text-[#2E2A36]">
-                      {s.date ? new Date(s.date).toLocaleDateString() : "-"}
-                    </p>
-                    <p className="text-xs text-[#5E5A6B]">
-                      {s.sessionType} session
-                    </p>
-                  </div>
-                  <StatusBadge type="completed" />
-                </div>
-              ))}
-            </div>
-          )}
+        {/* Sessions Sections */}
+        <div className="space-y-12">
+          <SessionSection title="Confirmed Appointments" data={approvedUpcoming} type="approvedUpcoming" router={router} />
+          <SessionSection title="Waiting for Approval" data={pendingUpcoming} type="pendingUpcoming" router={router} />
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            <SessionSection title="History" data={completed} type="completed" router={router} />
+            <SessionSection title="Archive" data={rejected} type="rejected" router={router} />
+          </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function SummaryCard({ label, value, icon, color }) {
+  return (
+    <div className="bg-white rounded-[2rem] p-5 border border-[#3F2965]/5 shadow-sm flex flex-col justify-between">
+      <div className={`w-10 h-10 rounded-xl ${color} text-white flex items-center justify-center mb-4`}>
+        {icon}
+      </div>
+      <div>
+        <p className="text-[10px] font-bold uppercase text-gray-400 tracking-tighter">{label}</p>
+        <p className="text-2xl font-bold text-[#2E2A36]">{value ?? 0}</p>
+      </div>
+    </div>
+  );
+}
+
+function SessionSection({ title, data, type, router }) {
+  const styles = {
+    approvedUpcoming: "bg-emerald-50 text-emerald-700 border-emerald-100",
+    pendingUpcoming: "bg-amber-50 text-amber-700 border-amber-100",
+    completed: "bg-gray-50 text-gray-600 border-gray-200",
+    rejected: "bg-red-50 text-red-700 border-red-100",
+  };
+
+  const icons = {
+    approvedUpcoming: <CheckCircle2 size={14} />,
+    pendingUpcoming: <Clock size={14} />,
+    completed: <CheckCircle2 size={14} />,
+    rejected: <XCircle size={14} />,
+  };
+
+  return (
+    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-[#3F2965] mb-5 px-2">{title}</h2>
+      {data.length === 0 ? (
+        <div className="bg-white rounded-3xl p-6 border border-dashed border-gray-200 text-sm text-gray-400 text-center italic">
+          No records found in this category.
+        </div>
+      ) : (
+        <div className="grid gap-3">
+          {data.map((s) => (
+            <motion.div 
+              key={s.id}
+              whileHover={{ x: 5 }}
+              className="bg-white rounded-2xl p-5 shadow-sm border border-[#3F2965]/5 flex flex-col md:flex-row md:items-center justify-between gap-4 group"
+            >
+              <div className="flex items-center gap-4">
+                <div className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center ${styles[type]} bg-opacity-40`}>
+                   <span className="text-[10px] font-bold uppercase">{new Date(s.date).toLocaleDateString('en-US', { month: 'short' })}</span>
+                   <span className="text-lg font-bold leading-none">{new Date(s.date).getDate()}</span>
+                </div>
+                <div>
+                  <p className="font-bold text-[#2E2A36]">{s.startTime} - {s.endTime}</p>
+                  <p className="text-xs text-[#5E5A6B] capitalize">{s.sessionType} Session</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <span className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${styles[type]}`}>
+                  {icons[type]} {type.replace(/([A-Z])/g, ' $1').trim()}
+                </span>
+                {(type !== 'completed' && type !== 'rejected') && (
+                  <button 
+                    onClick={() => router.push(`/appointment-status?id=${s.id}`)}
+                    className="p-2 rounded-full bg-[#F6F4FA] text-[#3F2965] hover:bg-[#3F2965] hover:text-white transition-all"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

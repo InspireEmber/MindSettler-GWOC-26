@@ -1,118 +1,146 @@
+"use client";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { BookOpen, Video, Link2, Sparkles, ArrowRight } from "lucide-react";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+};
 
 export default function ResourcesPage() {
   const resourceCategories = [
     {
       title: "Articles & Blogs",
-      description: "Educational articles about mental health, emotional well-being, and self-care practices.",
+      description: "Deep dives into psychological frameworks, emotional intelligence, and self-care science.",
       href: "/resources/articles",
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-        </svg>
-      )
+      icon: <BookOpen className="w-6 h-6" />,
+      tag: "Read",
+      color: "#3F2965"
     },
     {
       title: "Videos & Guides",
-      description: "Visual content and guides to help you understand mental health concepts and coping strategies.",
+      description: "Visual walkthroughs of coping strategies and cognitive behavioral concepts.",
       href: "/resources/videos",
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-        </svg>
-      )
+      icon: <Video className="w-6 h-6" />,
+      tag: "Watch",
+      color: "#DD1764"
     },
     {
-      title: "Helpful Links",
-      description: "Curated resources and organizations that support mental health awareness and well-being.",
+      title: "Curated Links",
+      description: "Hand-picked external tools and clinical organizations for deeper support.",
       href: "/resources/links",
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-        </svg>
-      )
+      icon: <Link2 className="w-6 h-6" />,
+      tag: "Explore",
+      color: "#3F2965"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#F6F4FA] via-white to-[#F6F4FA] py-12 sm:py-16 md:py-20 lg:py-32">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-12 text-center">
-          <div className="inline-block mb-4 sm:mb-6">
-            <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto"></div>
-          </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-[#2E2A36] mb-4 sm:mb-6 leading-tight">
-            Mental Health <span className="font-medium text-[#3F2965]">Resources</span>
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-[#5E5A6B] leading-relaxed px-2">
-            Educational content, articles, and helpful links to support your mental health journey.
-          </p>
+    <div className="min-h-screen bg-[#FAFAFA] selection:bg-[#3F2965] selection:text-white">
+      
+      <section className="relative pt-24 pb-20 overflow-hidden bg-white">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#3F2965]/5 rounded-full blur-[120px] -z-0 translate-x-1/4 -translate-y-1/4" />
+        
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+          className="max-w-5xl mx-auto px-6 relative z-10"
+        >
+          <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#3F2965]/5 border border-[#3F2965]/10 text-[#3F2965] text-xs font-bold uppercase tracking-widest mb-8">
+            <Sparkles size={14} className="text-[#DD1764]" /> The Learning Hub
+          </motion.div>
+          
+          <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-light text-[#2E2A36] mb-8 leading-[1.1]">
+            Empowerment through <br />
+            <span className="font-medium text-[#3F2965]">Knowledge</span>
+          </motion.h1>
+          
+          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-[#5E5A6B] max-w-2xl leading-relaxed">
+            Access our library of structured psycho-education content designed 
+            to help you decode the complexity of your mind.
+          </motion.p>
+        </motion.div>
+      </section>
+
+      <section className="pb-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.h2 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-xs font-bold uppercase tracking-[0.2em] text-[#5E5A6B] mb-10 px-2"
+          >
+
+          </motion.h2>
+
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
+            {resourceCategories.map((category, index) => (
+              <motion.div key={index} variants={fadeInUp}>
+                <Link href={category.href} className="group block h-full">
+                  <div className="h-full p-8 rounded-[2rem] bg-white border border-[#3F2965]/5 shadow-[0_8px_30px_rgba(63,41,101,0.02)] hover:shadow-[0_20px_50px_rgba(63,41,101,0.08)] transition-all duration-500">
+                    <div className="flex justify-between items-start mb-10">
+                      <div className="w-14 h-14 rounded-2xl bg-[#3F2965]/5 flex items-center justify-center text-[#3F2965] group-hover:bg-[#3F2965] group-hover:text-white transition-all duration-500">
+                        {category.icon}
+                      </div>
+                      <span className="px-4 py-1.5 rounded-xl bg-[#F6F4FA] text-[#3F2965] text-[10px] font-bold uppercase tracking-wider">
+                        {category.tag}
+                      </span>
+                    </div>
+
+                    <h3 className="text-2xl font-medium text-[#2E2A36] mb-4 group-hover:text-[#3F2965] transition-colors">
+                      {category.title}
+                    </h3>
+                    <p className="text-[#5E5A6B] text-sm leading-relaxed mb-10">
+                      {category.description}
+                    </p>
+                    
+                    <div className="flex items-center gap-2 text-xs font-bold text-[#5E5A6B] group-hover:text-[#3F2965] transition-all">
+                      View Section <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
-      {/* Resource Categories */}
-      <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
-          {resourceCategories.map((category, index) => (
-            <Link key={index} href={category.href} className="block">
-              <div className="p-6 sm:p-8 rounded-xl sm:rounded-2xl bg-[#F6F4FA] border border-[#3F2965]/10 hover:shadow-lg transition-all duration-300 min-h-[44px]">
-                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#3F2965]/10 flex items-center justify-center mb-4 sm:mb-6 text-[#3F2965]">
-                  {category.icon}
-                </div>
-                <h3 className="text-xl sm:text-2xl font-medium text-[#2E2A36] mb-3 sm:mb-4">
-                  {category.title}
-                </h3>
-                <p className="text-sm sm:text-base text-[#5E5A6B] leading-relaxed">
-                  {category.description}
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-          {/* Coming Soon Notice */}
-          <div className="text-center p-8 sm:p-10 md:p-12 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#E9E6F2] to-[#F6F4FA] border border-[#3F2965]/10">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 rounded-full bg-[#3F2965]/10 flex items-center justify-center">
-              <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#3F2965]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h3 className="text-xl sm:text-2xl font-medium text-[#2E2A36] mb-3 sm:mb-4">
-              Resources Coming Soon
-            </h3>
-            <p className="text-sm sm:text-base md:text-lg text-[#5E5A6B] leading-relaxed max-w-2xl mx-auto px-2">
-              We're curating valuable mental health resources, articles, videos, and helpful links to support 
-              your journey. Check back soon for educational content that complements our psycho-education sessions.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 md:py-32 bg-[#F6F4FA]/50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12">
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-10 sm:p-12 md:p-20 text-center text-white shadow-2xl shadow-[#3F2965]/30">
-            {/* Decorative Brand Accents */}
-            <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" />
-            <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
-
+      <section className="pb-32 px-6">
+        <div className="max-w-5xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative overflow-hidden rounded-[3.5rem] bg-gradient-to-br from-[#3F2965] to-[#DD1764] p-12 md:p-24 text-center text-white shadow-2xl"
+          >
             <div className="relative z-10">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-light mb-4 sm:mb-6 leading-tight">
-                Start Your Learning Journey
-              </h2>
-              <p className="text-base sm:text-lg md:text-xl text-white/80 mb-6 sm:mb-8 max-w-2xl mx-auto">
-                While we prepare our resource library, book a session to begin your structured psycho-education journey.
+              <h2 className="text-4xl md:text-6xl font-light mb-8">Ready for Clarity?</h2>
+              <p className="text-lg md:text-xl opacity-90 mb-12 max-w-2xl mx-auto leading-relaxed">
+                While we finalize our full library, you can start your personal journey 
+                today through a guided session with our professionals.
               </p>
-              <a
+              <Link
                 href="/book-session"
-                className="inline-flex px-8 sm:px-10 py-4 sm:py-5 rounded-full bg-white text-[#3F2965] font-semibold text-base sm:text-lg hover:bg-white/95 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(255,255,255,0.2)] hover:scale-[1.03] active:scale-95 min-h-[44px] items-center justify-center"
+                className="inline-block px-12 py-5 rounded-full bg-white text-[#3F2965] font-bold text-lg hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] hover:scale-105 active:scale-95 transition-all"
               >
                 Book Your First Session
-              </a>
+              </Link>
             </div>
-          </div>
+        
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+          </motion.div>
         </div>
       </section>
     </div>
