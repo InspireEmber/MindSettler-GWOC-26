@@ -31,8 +31,6 @@ export default function LoginPage() {
     "/images/loginimage4.jpg", // Image 1 - Local path
     "/images/loginimage2.jpg", // Image 2 - Local path
     "/images/loginimage3.JPG", // Image 3 - Local path
-    "/images/loginimage1.jpg", // Image 4 - Local path
-    "/images/loginimage5.jpg", // Image 5 - Local path
     // Add more local image paths as needed
     // Example: "/images/your-image.jpg"
   ].filter(url => url !== ""); // Remove empty strings
