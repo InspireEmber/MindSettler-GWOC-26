@@ -193,7 +193,7 @@ function SessionSection({ title, data, type, router }) {
                 <div className="mt-2 p-3 rounded-xl bg-red-50 border border-red-100 flex items-start gap-3">
                   <MessageSquare size={14} className="text-red-400 mt-0.5 shrink-0" />
                   <div className="text-xs text-red-800">
-                    <p className="font-bold mb-0.5">Note from MindSettler:</p>
+                    <p className="font-bold mb-0.5">Reason for rejecting your appointment request:</p>
                     <p>{s.rejectionReason}</p>
                   </div>
                 </div>
