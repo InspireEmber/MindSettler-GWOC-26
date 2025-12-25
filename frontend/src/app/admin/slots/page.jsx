@@ -1,15 +1,15 @@
 "use client";
-
 import { useEffect, useState } from "react";
+import { Calendar, Filter, PlusCircle, Trash2, Clock, CheckCircle, XCircle } from "lucide-react";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 export default function AdminSlotsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [slots, setSlots] = useState([]);
-
+  
+  // Form State
   const [weekStartDate, setWeekStartDate] = useState("");
   const [startTime, setStartTime] = useState("10:00");
   const [endTime, setEndTime] = useState("17:00");
@@ -18,264 +18,141 @@ export default function AdminSlotsPage() {
   const [submitting, setSubmitting] = useState(false);
   const [formMessage, setFormMessage] = useState("");
 
+  // Filter State
   const [filterDate, setFilterDate] = useState("");
   const [filterType, setFilterType] = useState("all");
+  const [deletingSlotId, setDeletingSlotId] = useState(null);
+  const [deleteError, setDeleteError] = useState("");
 
   async function loadSlots({ date, sessionType } = {}) {
     const params = new URLSearchParams();
     if (date) params.set("date", date);
     if (sessionType && sessionType !== "all") params.set("sessionType", sessionType);
 
-    const query = params.toString();
-    const url = query ? `${API_BASE_URL}/slots?${query}` : `${API_BASE_URL}/slots`;
-
-    const res = await fetch(url, {
-      credentials: "include",
-    });
+    const res = await fetch(`${API_BASE_URL}/slots?${params.toString()}`, { credentials: "include" });
     if (!res.ok) throw new Error("Failed to load slots");
     const data = await res.json();
     setSlots(data.data || []);
   }
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function initialLoad() {
-      try {
-        await loadSlots();
-      } catch (e) {
-        if (!cancelled) setError(e.message || "Failed to load slots");
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    initialLoad();
-    return () => {
-      cancelled = true;
-    };
+    loadSlots().catch(e => setError(e.message)).finally(() => setLoading(false));
   }, []);
 
-  async function handleGenerate(e) {
+  const handleGenerate = async (e) => {
     e.preventDefault();
-    setFormMessage("");
     setSubmitting(true);
     try {
-      if (!weekStartDate) {
-        throw new Error("Please select a week start date");
-      }
-      const sessionTypes =
-        sessionMode === "both"
-          ? ["online", "offline"]
-          : sessionMode === "online"
-          ? ["online"]
-          : ["offline"];
-
+      const sessionTypes = sessionMode === "both" ? ["online", "offline"] : [sessionMode];
       const res = await fetch(`${API_BASE_URL}/slots/generate-week`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          weekStartDate,
-          startTime,
-          endTime,
-          slotDurationMinutes: Number(duration),
-          sessionTypes,
-        }),
+        body: JSON.stringify({ weekStartDate, startTime, endTime, slotDurationMinutes: Number(duration), sessionTypes }),
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to generate weekly slots");
-      }
-      setFormMessage(
-        `Generated ${data.createdCount ?? 0} slots, skipped ${data.skippedCount ?? 0} existing.`,
-      );
-      // Refresh slots list with current filters
-      try {
-        await loadSlots({
-          date: filterDate || undefined,
-          sessionType: filterType || undefined,
-        });
-      } catch (e) {
-        // ignore here; main form message already set
-      }
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Generation failed");
+      setFormMessage(`Generated ${data.createdCount} slots.`);
+      loadSlots({ date: filterDate, sessionType: filterType });
     } catch (err) {
-      setFormMessage(err.message || "Failed to generate weekly slots");
+      setFormMessage(err.message);
     } finally {
       setSubmitting(false);
     }
-  }
+  };
 
-  if (loading) return <div className="text-[#5E5A6B]">Loading slots...</div>;
-  if (error) return <div className="text-red-600 text-sm">{error}</div>;
+  const handleDeleteSlot = async (slotId, isBooked) => {
+    if (isBooked) return setDeleteError("Booked slots cannot be deleted.");
+    if (!window.confirm("Delete this slot?")) return;
+
+    setDeletingSlotId(slotId);
+    try {
+      const res = await fetch(`${API_BASE_URL}/admin/slots/${slotId}`, { method: "DELETE", credentials: "include" });
+      if (!res.ok) throw new Error("Delete failed");
+      setSlots(prev => prev.filter(s => s._id !== slotId));
+    } catch (err) {
+      setDeleteError(err.message);
+    } finally {
+      setDeletingSlotId(null);
+    }
+  };
+
+  if (loading) return <div className="flex items-center gap-2 p-8 text-[#5E5A6B]"><Clock className="animate-spin" /> Loading...</div>;
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-light text-[#2E2A36]">Slots</h1>
-
-      {/* Filters */}
-      <div className="bg-white rounded-2xl p-4 shadow-sm border border-[#3F2965]/10 mb-2 text-xs md:text-sm flex flex-col md:flex-row md:items-end gap-3">
-        <div>
-          <label className="block text-xs font-medium text-[#2E2A36] mb-1">
-            Filter by date
-          </label>
-          <input
-            type="date"
-            value={filterDate}
-            onChange={async (e) => {
-              const value = e.target.value;
-              setFilterDate(value);
-              setLoading(true);
-              setError("");
-              try {
-                await loadSlots({
-                  date: value || undefined,
-                  sessionType: filterType || undefined,
-                });
-              } catch (err) {
-                setError(err.message || "Failed to load slots");
-              } finally {
-                setLoading(false);
-              }
-            }}
-            className="w-full px-3 py-2 rounded-lg border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none"
-          />
-        </div>
-        <div>
-          <label className="block text-xs font-medium text-[#2E2A36] mb-1">
-            Session type
-          </label>
-          <select
-            value={filterType}
-            onChange={async (e) => {
-              const value = e.target.value;
-              setFilterType(value);
-              setLoading(true);
-              setError("");
-              try {
-                await loadSlots({
-                  date: filterDate || undefined,
-                  sessionType: value || undefined,
-                });
-              } catch (err) {
-                setError(err.message || "Failed to load slots");
-              } finally {
-                setLoading(false);
-              }
-            }}
-            className="w-full px-3 py-2 rounded-lg border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white"
-          >
-            <option value="all">All</option>
-            <option value="online">Online</option>
-            <option value="offline">Offline</option>
-          </select>
+    <div className="max-w-6xl mx-auto p-4 md:p-8 space-y-8 animate-in fade-in duration-500">
+      <div className="flex items-center justify-between border-b border-[#3F2965]/10 pb-4">
+        <h1 className="text-3xl font-light text-[#2E2A36]">Slot <span className="font-medium">Management</span></h1>
+        <div className="flex items-center gap-2 text-xs font-medium text-[#5E5A6B]">
+          <div className="w-3 h-3 rounded-full bg-green-500" /> Available
+          <div className="w-3 h-3 rounded-full bg-blue-500" /> Booked
         </div>
       </div>
 
-      {/* Weekly Slot Generator Form */}
-      <form
-        onSubmit={handleGenerate}
-        className="bg-white rounded-2xl p-4 shadow-sm border border-[#3F2965]/10 space-y-4 text-sm"
-      >
-        <h2 className="text-base font-medium text-[#2E2A36]">
-          Weekly Slot Generator
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-xs font-medium text-[#2E2A36] mb-1">
-              Week start date
-            </label>
-            <input
-              type="date"
-              value={weekStartDate}
-              onChange={(e) => setWeekStartDate(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-[#2E2A36] mb-1">
-              Daily start time
-            </label>
-            <input
-              type="time"
-              value={startTime}
-              onChange={(e) => setStartTime(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-[#2E2A36] mb-1">
-              Daily end time
-            </label>
-            <input
-              type="time"
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none"
-              required
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-xs font-medium text-[#2E2A36] mb-1">
-              Slot duration (minutes)
-            </label>
-            <input
-              type="number"
-              min={15}
-              max={480}
-              value={duration}
-              onChange={(e) => setDuration(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-[#2E2A36] mb-1">
-              Session types
-            </label>
-            <select
-              value={sessionMode}
-              onChange={(e) => setSessionMode(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-[#3F2965]/20 focus:ring-2 focus:ring-[#3F2965] outline-none bg-white"
-            >
-              <option value="online">Online only</option>
-              <option value="offline">Offline only</option>
-              <option value="both">Online & Offline</option>
-            </select>
-          </div>
-        </div>
-        {formMessage && (
-          <p className="text-xs text-[#5E5A6B]">{formMessage}</p>
-        )}
-        <button
-          type="submit"
-          disabled={submitting}
-          className="px-4 py-2 rounded-full bg-[#3F2965] text-white text-xs font-medium hover:bg-[#3F2965]/90 disabled:opacity-60"
-        >
-          {submitting ? "Generating..." : "Generate Weekly Slots"}
-        </button>
-      </form>
-
-      <div className="space-y-3 text-xs text-[#5E5A6B]">
-        {slots.map((s) => (
-          <div
-            key={s._id}
-            className="bg-white rounded-2xl p-4 shadow-sm border border-[#3F2965]/10 flex flex-col md:flex-row md:items-center md:justify-between gap-2"
-          >
-            <div>
-              <p className="font-medium text-[#2E2A36]">
-                {s.date ? new Date(s.date).toLocaleDateString() : "-"}  b7 {s.startTime} - {s.endTime}
-              </p>
-              <p>
-                {s.sessionType}  b7 {s.isBooked ? "Booked" : s.isAvailable ? "Available" : "Unavailable"}
-              </p>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Sidebar: Filters & Generator */}
+        <aside className="space-y-6">
+          <section className="bg-white rounded-3xl p-6 shadow-sm border border-[#3F2965]/10">
+            <h3 className="flex items-center gap-2 text-[#3F2965] font-semibold mb-4"><Filter size={18} /> Filters</h3>
+            <div className="space-y-4">
+              <input type="date" value={filterDate} onChange={(e) => {setFilterDate(e.target.value); loadSlots({date: e.target.value, sessionType: filterType});}} className="w-full p-3 rounded-xl border border-gray-200 text-sm outline-none focus:ring-2 focus:ring-[#3F2965]/20" />
+              <select value={filterType} onChange={(e) => {setFilterType(e.target.value); loadSlots({date: filterDate, sessionType: e.target.value});}} className="w-full p-3 rounded-xl border border-gray-200 text-sm outline-none bg-white">
+                <option value="all">All Modes</option>
+                <option value="online">Online</option>
+                <option value="offline">Offline</option>
+              </select>
             </div>
+          </section>
+
+          <section className="bg-[#3F2965] rounded-3xl p-6 text-white shadow-lg">
+            <h3 className="flex items-center gap-2 font-semibold mb-4"><PlusCircle size={18} /> Bulk Generate</h3>
+            <form onSubmit={handleGenerate} className="space-y-4 text-sm">
+              <input type="date" value={weekStartDate} onChange={e => setWeekStartDate(e.target.value)} className="w-full p-3 rounded-xl text-black" required />
+              <div className="grid grid-cols-2 gap-2">
+                <input type="time" value={startTime} onChange={e => setStartTime(e.target.value)} className="p-3 rounded-xl text-black" required />
+                <input type="time" value={endTime} onChange={e => setEndTime(e.target.value)} className="p-3 rounded-xl text-black" required />
+              </div>
+              <select value={sessionMode} onChange={e => setSessionMode(e.target.value)} className="w-full p-3 rounded-xl text-black">
+                <option value="both">Both Modes</option>
+                <option value="online">Online Only</option>
+                <option value="offline">Offline Only</option>
+              </select>
+              <button disabled={submitting} className="w-full py-3 bg-[#DD1764] hover:bg-[#c11457] rounded-xl font-bold transition-all disabled:opacity-50">
+                {submitting ? "Processing..." : "Generate Week"}
+              </button>
+              {formMessage && <p className="text-xs text-white/80 mt-2">{formMessage}</p>}
+            </form>
+          </section>
+        </aside>
+
+        {/* Main: Slot List */}
+        <main className="lg:col-span-2">
+          {error && <div className="bg-red-50 text-red-600 p-4 rounded-2xl mb-4 text-sm">{error}</div>}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {slots.map((s) => (
+              <div key={s._id} className={`group relative p-5 rounded-3xl border transition-all ${s.isBooked ? 'bg-blue-50/50 border-blue-200' : 'bg-white border-gray-100 hover:shadow-md'}`}>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full ${s.sessionType === 'online' ? 'bg-purple-100 text-purple-700' : 'bg-orange-100 text-orange-700'}`}>
+                      {s.sessionType}
+                    </span>
+                    <h4 className="text-lg font-semibold text-[#2E2A36] mt-2">
+                      {s.startTime} - {s.endTime}
+                    </h4>
+                    <p className="text-xs text-[#5E5A6B]">{new Date(s.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}</p>
+                  </div>
+                  {s.isBooked ? <CheckCircle size={20} className="text-blue-500" /> : <div className="w-2 h-2 rounded-full bg-green-500" />}
+                </div>
+                
+                {!s.isBooked && (
+                  <button onClick={() => handleDeleteSlot(s._id, s.isBooked)} className="absolute bottom-4 right-4 p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors opacity-0 group-hover:opacity-100">
+                    <Trash2 size={18} />
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
-        ))}
+        </main>
       </div>
     </div>
   );
