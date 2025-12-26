@@ -1,11 +1,15 @@
+"use client"; // Required for framer-motion in Next.js App Router
+
 import Link from "next/link";
 import { BookOpen, Brain, Sparkles, ShieldCheck, Users2 } from "lucide-react";
+import { motion } from "framer-motion";
 
+// 1. Pass the component reference directly
 const CONCEPTS = [
-  { title: "Emotional Awareness", desc: "Recognize and name emotions to understand your mental well-being. We explore why they matter.", icon: <Brain />, color: "text-[#3F2965]", bg: "bg-[#3F2965]/10" },
-  { title: "Thought Patterns", desc: "Understand how thoughts influence feelings to develop healthier cognitive responses to life's challenges.", icon: <Sparkles />, color: "text-[#DD1764]", bg: "bg-[#DD1764]/10" },
-  { title: "Stress Management", desc: "Practical strategies for managing anxiety and overwhelm to build resilience and maintain balance.", icon: <ShieldCheck />, color: "text-[#3F2965]", bg: "bg-[#3F2965]/10" },
-  { title: "Relationships", desc: "Healthy relationship dynamics and boundaries are crucial for emotional growth and well-being.", icon: <Users2 />, color: "text-[#DD1764]", bg: "bg-[#DD1764]/10" }
+  { title: "Emotional Awareness", desc: "Recognize and name emotions to understand your mental well-being. We explore why they matter.", icon: Brain, color: "text-[#3F2965]", bg: "bg-[#3F2965]/10" },
+  { title: "Thought Patterns", desc: "Understand how thoughts influence feelings to develop healthier cognitive responses to life's challenges.", icon: Sparkles, color: "text-[#DD1764]", bg: "bg-[#DD1764]/10" },
+  { title: "Stress Management", desc: "Practical strategies for managing anxiety and overwhelm to build resilience and maintain balance.", icon: ShieldCheck, color: "text-[#3F2965]", bg: "bg-[#3F2965]/10" },
+  { title: "Relationships", desc: "Healthy relationship dynamics and boundaries are crucial for emotional growth and well-being.", icon: Users2, color: "text-[#DD1764]", bg: "bg-[#DD1764]/10" }
 ];
 
 const BENEFITS = [
@@ -40,7 +44,7 @@ export default function PsychoEducationPage() {
           <div className="w-16 h-16 rounded-full bg-[#3F2965]/10 flex items-center justify-center text-[#3F2965] mb-4">
             <BookOpen className="w-8 h-8" />
           </div>
-          <span className="font-medium">Educational Content</span>
+          <span className="font-medium text-[#2E2A36]">Educational Content</span>
         </div>
       </section>
 
@@ -52,15 +56,19 @@ export default function PsychoEducationPage() {
             <p className="text-lg">Foundational knowledge for building emotional clarity</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {CONCEPTS.map((c, i) => (
-              <div key={i} className="p-8 rounded-3xl bg-white border border-[#3F2965]/10 hover:shadow-xl transition-all">
-                <div className={`w-12 h-12 rounded-full ${c.bg} ${c.color} flex items-center justify-center mb-6`}>
-                  {c.icon}
+            {CONCEPTS.map((c, i) => {
+              // 2. Extract the component and render it
+              const IconComponent = c.icon;
+              return (
+                <div key={i} className="p-8 rounded-3xl bg-white border border-[#3F2965]/10 hover:shadow-xl transition-all">
+                  <div className={`w-12 h-12 rounded-full ${c.bg} ${c.color} flex items-center justify-center mb-6`}>
+                    <IconComponent className="w-6 h-6" />
+                  </div>
+                  <h3 className={`text-2xl font-medium mb-4 ${c.color}`}>{c.title}</h3>
+                  <p className="leading-relaxed">{c.desc}</p>
                 </div>
-                <h3 className={`text-2xl font-medium mb-4 ${c.color}`}>{c.title}</h3>
-                <p className="leading-relaxed">{c.desc}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -83,29 +91,41 @@ export default function PsychoEducationPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 md:py-32 bg-[#F6F4FA]/50">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-10 sm:p-12 md:p-20 text-center text-white shadow-2xl shadow-[#3F2965]/30">
-            {/* Decorative Brand Accents */}
-            <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" />
+      {/* Final CTA */}
+      <section className="py-16 sm:py-20 md:py-24 lg:py-32 bg-[#F6F4FA]/50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 40 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-10 sm:p-12 md:p-20 text-center text-white shadow-2xl shadow-[#3F2965]/30"
+          >
+            <motion.div 
+              animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+              transition={{ duration: 6, repeat: Infinity }}
+              className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" 
+            />
             <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
 
             <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-light mb-6">
-                Ready to Begin Your Journey?
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white mb-4 sm:mb-6 leading-tight">
+                Ready to Start?
               </h2>
-              <p className="text-lg md:text-xl text-white/80 mb-10 leading-relaxed max-w-2xl mx-auto">
-                Book your first 60-minute psycho-education session and take the first step toward emotional clarity.
+              <p className="text-base sm:text-lg md:text-xl text-white/80 mb-6 sm:mb-8 leading-relaxed px-2">
+                Book your first session and take the first step toward understanding your mind.
               </p>
-              <Link
-                href="/book-session"
-                className="inline-flex px-10 py-4 md:px-12 md:py-5 rounded-full bg-white text-[#3F2965] font-semibold text-lg hover:bg-white/95 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(255,255,255,0.2)] hover:scale-[1.03] active:scale-95 items-center justify-center"
-              >
-                Book Your First Session
+              <Link href="/book-session">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-block px-8 sm:px-10 py-3 sm:py-4 rounded-full bg-white text-[#3F2965] font-medium text-base sm:text-lg hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] min-h-[44px]"
+                >
+                  Book Your First Session
+                </motion.button>
               </Link>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

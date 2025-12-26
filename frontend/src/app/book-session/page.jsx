@@ -130,27 +130,6 @@ export default function BookSessionPage() {
               Gentle reminders that you are supported.
             </h2>
           </div>
-
-          {/* Horizontal strip, all cards same size, smooth slide, no scrollbar */}
-          <div className="no-scrollbar overflow-x-auto scroll-smooth -mx-6 px-6 md:mx-0 md:px-0">
-            <div className="flex gap-4 sm:gap-6 py-2">
-              {SESSION_PHOTOS.map((src, index) => (
-                <motion.div
-                  key={src}
-                  className="relative flex-shrink-0 w-52 h-72 sm:w-56 sm:h-80 rounded-3xl bg-[#F6F4FA] border border-[#3F2965]/10 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-[#3F2965]/10 transition-transform duration-300 hover:-translate-y-1"
-                  whileTap={{ scale: 0.97 }}
-                >
-                  <Image
-                    src={src}
-                    alt={`Therapy visual ${index + 1}`}
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 224px, (min-width: 640px) 208px, 208px"
-                  />
-                </motion.div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
