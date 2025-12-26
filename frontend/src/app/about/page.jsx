@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ReadyToBook from "@/components/ReadyToBook";
 
 const APPROACHES = [
   {
@@ -270,6 +271,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      <ReadyToBook />
     </div>
   );
 }

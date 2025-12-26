@@ -1,4 +1,6 @@
 "use client";
+import ReadyToBook from "@/components/ReadyToBook";
+
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { BookOpen, Video, Link2, Sparkles, ArrowRight } from "lucide-react";
@@ -116,38 +118,7 @@ export default function ResourcesPage() {
           </motion.div>
         </div>
       </section>
-
-      <section className="pb-32 pt-8 px-6 bg-[#F6F4FA]/50">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.97, y: 10 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-12 md:p-24 text-center text-white shadow-2xl shadow-[#3F2965]/30"
-          >
-            {/* Decorative Brand Accents */}
-            <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" />
-            <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
-
-            <div className="relative z-10">
-              <h2 className="text-4xl md:text-6xl font-light mb-8 leading-[1.1] tracking-tight">
-                Ready for Clarity?
-              </h2>
-              <p className="text-lg md:text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
-                While we finalize our full library, you can start your personal journey
-                today through a guided session with our professionals.
-              </p>
-              <Link
-                href="/book-session"
-                className="inline-block px-12 py-5 rounded-full bg-white text-[#3F2965] font-bold text-lg hover:bg-white/95 transition-all duration-300 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)] hover:scale-105 active:scale-95"
-              >
-                Book Your First Session
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <ReadyToBook />
     </div>
   );
 }
