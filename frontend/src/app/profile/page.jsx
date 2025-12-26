@@ -7,6 +7,8 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import api from "../../services/api";
+import { ExternalLink } from "lucide-react";
+// import { getGoogleCalendarEventLink } from "../../utils/googleCalendar";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -40,6 +42,13 @@ export default function ProfilePage() {
     loadData();
   }, [router]);
 
+  useEffect(() => {
+  const onFocus = () => refreshSessions();
+  window.addEventListener("focus", onFocus);
+  return () => window.removeEventListener("focus", onFocus);
+}, []);
+
+
   if (loading) return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center space-y-4">
       <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }} className="w-10 h-10 border-4 border-[#3F2965]/10 border-t-[#3F2965] rounded-full" />
@@ -51,6 +60,12 @@ export default function ProfilePage() {
   const pendingUpcoming = sessions.filter(s => s.displayCategory === 'pendingUpcoming').sort((a, b) => new Date(a.date) - new Date(b.date));
   const completed = sessions.filter(s => s.displayCategory === 'completed');
   const rejected = sessions.filter(s => s.displayCategory === 'rejected');
+
+  const refreshSessions = async () => {
+  const freshSessions = await api.getUserSessions();
+  setSessions(freshSessions || []);
+};
+
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] py-12 px-6">
@@ -178,6 +193,20 @@ function SessionSection({ title, data, type, router }) {
                   <span className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${styles[type]}`}>
                     {icons[type]} {type === 'approvedUpcoming' ? 'Approved' : type === 'pendingUpcoming' ? 'Pending' : type}
                   </span>
+
+                  {/* ADD TO GOOGLE CALENDAR BUTTON */}
+                   {type === "approvedUpcoming" && s.calendarEventLink && (
+                      <a
+                        href={s.calendarEventLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#3F2965]/10 text-[#3F2965] text-[10px] font-bold uppercase hover:bg-[#3F2965] hover:text-white transition-all"
+                      >
+                        <ExternalLink size={12} />
+                        Add to Calendar
+                      </a>
+                    )}
+                    
                   <button 
                     onClick={() => router.push(`/appointment-status?id=${s._id || s.id}`)}
                     className="p-2 rounded-full bg-[#F6F4FA] text-[#3F2965] hover:bg-[#3F2965] hover:text-white transition-all shadow-sm"

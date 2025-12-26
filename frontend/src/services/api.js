@@ -10,6 +10,7 @@ class ApiService {
   async request(endpoint, options = {}, fullResponse = false) {
     const config = {
       credentials: 'include',
+      cache:'no-store',
       headers: { 'Content-Type': 'application/json', ...options.headers },
       ...options,
       body: options.body && typeof options.body === 'object' ? JSON.stringify(options.body) : options.body,

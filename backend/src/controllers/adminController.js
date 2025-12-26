@@ -69,8 +69,10 @@ exports.approveAppointment = async (req, res) => {
         user: appointment.user,
         meetingLink: appointment.meetingLink,
       });
+      console.log("Created Google Event:", event);
       if (event && event.eventId) {
         appointment.calendarEventId = event.eventId;
+        appointment.calendarEventLink = event.htmlLink;
       }
     } catch (err) {
       // Log but do not fail the approval flow

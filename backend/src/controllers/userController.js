@@ -133,6 +133,8 @@ exports.getSessions = async (req, res) => {
       startTime: slot ? slot.startTime : null,
       endTime: slot ? slot.endTime : null,
       rejectionReason: appt.rejectionReason || null,
+      calendarEventId: appt.calendarEventId ?? null,
+      calendarEventLink: appt.calendarEventLink ?? null,
       createdAt: appt.createdAt,
     };
   });

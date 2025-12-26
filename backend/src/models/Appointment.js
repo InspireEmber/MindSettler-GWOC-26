@@ -61,6 +61,10 @@ const appointmentSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  calendarEventLink: {
+  type: String,
+  trim: true
+},
   notes: {
     type: String,
     trim: true
