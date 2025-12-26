@@ -1,4 +1,6 @@
 "use client";
+import ReadyToBook from "@/components/ReadyToBook";
+
 
 import React, { useRef } from "react";
 import Link from "next/link";
@@ -55,7 +57,7 @@ const FEATURES = [
   {
     title: "Education-Focused",
     desc: "We focus on understanding, not quick fixes. Learn tools for the long term.",
-    longDesc: "We don't just listen; we equip you. You leave with a toolkit of cognitive strategies to navigate life independently.",
+    longDesc: "We don\'t just listen; we equip you. You leave with a toolkit of cognitive strategies to navigate life independently.",
     icon: <BookOpen />,
     color: "text-[#DD1764]",
     bg: "bg-[#DD1764]/10",
@@ -71,7 +73,7 @@ const FEATURES = [
   {
     title: "Human-Led Support",
     desc: "Real conversations. No bots, no automation—just genuine connection.",
-    longDesc: "Technology aids us, but it doesn't replace us. You will always be heard by a beating heart and a thinking mind.",
+    longDesc: "Technology aids us, but it doesn\'t replace us. You will always be heard by a beating heart and a thinking mind.",
     icon: <Users2 />,
     color: "text-[#DD1764]",
     bg: "bg-[#DD1764]/10",
@@ -85,7 +87,7 @@ const REASONS = [
   },
   {
     title: "Empowerment",
-    desc: "Knowledge is agency. Understanding your mental health puts you back in the driver's seat.",
+    desc: "Knowledge is agency. Understanding your mental health puts you back in the driver\'s seat.",
   },
   {
     title: "Human Connection",
@@ -151,7 +153,7 @@ const FeatureDockItem = ({ feature, index }) => {
       <motion.p 
         className="mt-6 text-sm md:text-base text-[#3F2965] font-serif italic max-w-md opacity-0 group-hover:opacity-100 md:opacity-80 transition-opacity duration-500"
       >
-        "{feature.longDesc}"
+        \"{feature.longDesc}\"
       </motion.p>
     </motion.div>
   );
@@ -234,7 +236,7 @@ export default function WhatMakesUsDifferentPage() {
           </h1>
 
           <p className="text-lg md:text-xl text-[#5E5A6B] max-w-2xl mx-auto font-light leading-relaxed">
-            We don't just offer sessions; we offer a carefully architected journey 
+            We don\'t just offer sessions; we offer a carefully architected journey 
             designed for sustainable emotional growth.
           </p>
         </motion.div>
@@ -280,49 +282,7 @@ export default function WhatMakesUsDifferentPage() {
           </div>
         </div>
       </section>
-
-      {/* 5. CTA SECTION */}
-      <section className="relative z-10 py-24 px-6 overflow-hidden">
-        <motion.div 
-            initial={{ scale: 0.95, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="max-w-5xl mx-auto bg-[#3F2965] rounded-[3rem] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl shadow-[#3F2965]/40"
-        >
-            {/* Spinning Gradient Orb inside CTA */}
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="absolute -top-[50%] -left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-[#DD1764]/30 to-transparent rounded-full blur-[100px] pointer-events-none"
-            />
-            
-            <div className="relative z-10">
-                <h2 className="text-4xl md:text-7xl font-light text-white mb-8 tracking-tight">
-                    Start Your <span className="font-serif italic">Transformation</span>
-                </h2>
-                <p className="text-white/70 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-light">
-                    Experience the difference of a structured, human-first approach to mental well-being.
-                </p>
-                
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                    <Link href="/book-session">
-                        <motion.button 
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="bg-white text-[#3F2965] px-10 py-5 rounded-full text-lg font-semibold shadow-lg hover:shadow-white/20 transition-all flex items-center gap-3 group"
-                        >
-                            Book Your Session
-                            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                        </motion.button>
-                    </Link>
-                    <Link href="/contact" className="text-white/80 hover:text-white border-b border-white/20 hover:border-white transition-all pb-1">
-                        Ask a question first
-                    </Link>
-                </div>
-            </div>
-        </motion.div>
-      </section>
+      <ReadyToBook />
     </div>
   );
 }
