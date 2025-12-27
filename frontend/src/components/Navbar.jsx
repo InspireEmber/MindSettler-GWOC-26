@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 
 export default function Navbar() {
@@ -85,9 +85,9 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/profile"
-                    className="text-[#5E5A6B] hover:text-[#3F2965] transition-colors"
+                    className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#3F2965]/20 text-[#3F2965] hover:bg-[#3F2965] hover:text-white transition-all"
                   >
-                    Profile
+                    <User size={20} />
                   </Link>
                   <button
                     type="button"
@@ -177,6 +177,9 @@ export default function Navbar() {
                       className="px-4 py-3 text-[#5E5A6B] hover:text-[#3F2965] hover:bg-[#3F2965]/5 rounded-lg transition-colors min-h-[44px] flex items-center"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
+                      <div className="flex items-center justify-center w-8 h-8 mr-3 rounded-full border-2 border-[#3F2965]/30">
+                        <User size={16} />
+                      </div>
                       Profile
                     </Link>
                     <button
