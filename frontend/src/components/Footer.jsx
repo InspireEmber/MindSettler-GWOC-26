@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Instagram, ArrowRight } from "lucide-react"; 
+import { Instagram } from "lucide-react"; 
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -27,9 +27,10 @@ export default function Footer() {
   return (
     <footer className="bg-[#3A3545] text-white pt-16 pb-8 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+        {/* Changed lg:grid-cols-5 to lg:grid-cols-6 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-10">
           
-          {/* Logo Section */}
+          {/* Logo Section (Spans 2 columns) */}
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="inline-block hover:opacity-80 transition-opacity">
               <Image
@@ -45,9 +46,9 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Dynamic Links Sections */}
+          {/* Dynamic Links Sections (Each spans 1 column) */}
           {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
+            <div key={category} className="lg:col-span-1">
               <h3 className="text-[#DD1764] font-bold mb-6 text-xs uppercase tracking-[0.15em]">
                 {category}
               </h3>
@@ -60,7 +61,6 @@ export default function Footer() {
                     >
                       <span className="relative">
                         {link.name}
-                        {/* Underline Animation */}
                         <span className="absolute bottom-0 left-0 w-0 h-px bg-[#DD1764] transition-all duration-300 group-hover:w-full" />
                       </span>
                     </Link>
@@ -70,8 +70,8 @@ export default function Footer() {
             </div>
           ))}
 
-          {/* Social Section */}
-          <div className="flex flex-col">
+          {/* Social Section (Now fits in the 6th column) */}
+          <div className="flex flex-col lg:col-span-1">
             <h3 className="text-[#DD1764] font-bold mb-6 text-xs uppercase tracking-[0.15em]">
               Follow us
             </h3>
