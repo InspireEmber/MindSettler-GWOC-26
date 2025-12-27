@@ -44,7 +44,7 @@ The user journey is structured as follows:
 
 The booking system is designed to be straightforward for the user while giving administrators full control.
 
-*   **Session Type:** Users can book 60-minute online or offline consultation sessions. The first session is emphasized as an important introductory step.
+*   **Session Type:** Users can book online or offline consultation sessions. The first session is emphasized as an important introductory step.
 *   **Slot Selection:** The backend, controlled by an admin, dictates available time slots. Users browse these slots and select a time that works for them.
 *   **Booking Process:**
     1.  The user selects an available time slot and submits their information.
