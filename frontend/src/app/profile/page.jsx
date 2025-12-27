@@ -18,6 +18,11 @@ export default function ProfilePage() {
   const [summary, setSummary] = useState(null);
   const [sessions, setSessions] = useState([]);
 
+  const refreshSessions = async () => {
+    const freshSessions = await api.getUserSessions();
+    setSessions(freshSessions || []);
+  };
+
   useEffect(() => {
     async function loadData() {
       try {
@@ -43,10 +48,10 @@ export default function ProfilePage() {
   }, [router]);
 
   useEffect(() => {
-  const onFocus = () => refreshSessions();
-  window.addEventListener("focus", onFocus);
-  return () => window.removeEventListener("focus", onFocus);
-}, []);
+    const onFocus = () => refreshSessions();
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
+  }, []);
 
 
   if (loading) return (
@@ -61,10 +66,7 @@ export default function ProfilePage() {
   const completed = sessions.filter(s => s.displayCategory === 'completed');
   const rejected = sessions.filter(s => s.displayCategory === 'rejected');
 
-  const refreshSessions = async () => {
-  const freshSessions = await api.getUserSessions();
-  setSessions(freshSessions || []);
-};
+
 
 
   return (
