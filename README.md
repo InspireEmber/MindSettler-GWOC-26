@@ -84,6 +84,24 @@ A secure, session-authenticated admin panel allows administrators to manage the 
 *   **Appointment Management:** Admins can view all appointment requests, filter them by status, and approve or reject them.
 *   **User Information:** The panel allows for the management of session details and user information.
 
+### 🔧 Backend Features
+
+- RESTful API built with Express.js
+- Secure session-based authentication using Passport
+- Role-based access control (Admin / User)
+- Appointment lifecycle management:
+  - Pending → Approved → Confirmed → Completed / Rejected
+- Google Calendar integration:
+  - Auto-create calendar events on appointment confirmation
+  - Store `calendarEventId` and `calendarEventLink`
+- Slot availability management with real-time booking control
+- Payment status tracking (Paid / Pending / Waived)
+- Admin dashboard APIs for analytics and session management
+- AI-powered chatbot backend using Google Gemini API
+- Input validation using Joi for API safety
+- MongoDB-backed session persistence
+
+
 ## Technical Stack & Architecture
 
 This project is a full-stack web application built with the MERN stack (MongoDB, Express.js, React.js, Node.js) and uses Next.js for the frontend.
@@ -138,6 +156,55 @@ To set up a local development environment, follow these steps.
     *   To start the backend server: `cd backend && npm run dev`
     *   To start the frontend development server: `cd frontend && npm run dev`
 
+---
+
+## 📦 Backend Dependencies & Purpose
+
+The backend of **MindSettler** is built using a secure, scalable, and production-ready Node.js architecture.
+
+### Core Server
+- **express** – REST API framework
+- **dotenv** – Environment variable management
+- **cors** – Secure cross-origin requests
+- **helmet** – HTTP security headers
+- **morgan** – API request logging
+
+### Database
+- **mongoose** – MongoDB object modeling and schema validation
+- **connect-mongo** – MongoDB-backed session storage
+
+### Authentication & Security
+- **passport** – Authentication middleware
+- **passport-local** – Username/password strategy
+- **passport-local-mongoose** – Simplified user auth integration
+- **bcrypt** – Password hashing and verification
+
+###  Validation
+- **joi** – Request body and payload validation
+
+###  Google Calendar Integration
+- **googleapis** – Creates calendar events for confirmed sessions  
+- Automatically stores:
+  - `calendarEventId`
+  - `calendarEventLink`
+
+### AI Features
+- **@google/generative-ai** – Gemini-powered mental health chatbot
+
+###  Development Tools
+- **nodemon** – Auto-reload during development
+
+## Backend Functionality Overview
+
+- Session-based authentication using Passport
+- Role-based access (Admin / User)
+- Appointment lifecycle:
+  - Pending → Approved → Confirmed
+- Google Calendar event auto-creation on confirmation
+- Secure payment status handling
+- AI-powered chatbot using Gemini API
+- MongoDB session persistence
+
 ## API Endpoints
 
 The backend provides the following RESTful API endpoints:
@@ -150,6 +217,19 @@ The backend provides the following RESTful API endpoints:
 *   `/api/users`: Manages user profile data.
 *   `/api/chatbot`: Processes interactions with the AI chatbot.
 *   `/health`: A health-check endpoint to verify that the server is running.
+
+## Environment Variables (Backend)
+
+Create a `.env` file inside `backend/`:
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_url
+SESSION_SECRET=your_secret
+GOOGLE_CLIENT_EMAIL=service_account_email
+GOOGLE_PRIVATE_KEY=private_key
+GOOGLE_CALENDAR_ID=calendar_id
+GOOGLE_CALENDAR_ENABLED=true
 
 A more detailed API documentation can be found in `docs/API_DOCUMENTATION.md`.
 '''
