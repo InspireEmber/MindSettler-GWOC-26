@@ -26,6 +26,9 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
 
+require('dotenv').config();
+console.log("Key Loaded:", process.env.OPENROUTER_API_KEY ? "Yes" : "No");
+
 // CORS
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:3000',
