@@ -169,12 +169,14 @@ main {
 /* ---------- Mesh gradient + grainy texture utilities ---------- */
 @layer utilities {
   .bg-mesh-gradient {
-    background-color: #9d7bb0;
+    /* Violet → Blue mesh, no pink */
+    background-color: #6a5acd;
     background-image:
-      radial-gradient(at 0% 0%, #c471f5 0px, transparent 50%),
-      radial-gradient(at 100% 0%, #fa71cd 0px, transparent 50%),
-      radial-gradient(at 100% 100%, #7adcf0 0px, transparent 50%),
-      radial-gradient(at 0% 100%, #b68de3 0px, transparent 50%);
+      radial-gradient(at 0% 0%, #b299ff 0px, transparent 55%),
+      radial-gradient(at 100% 0%, #8ab6ff 0px, transparent 55%),
+      radial-gradient(at 0% 100%, #a58dff 0px, transparent 55%),
+      radial-gradient(at 100% 100%, #7adcf0 0px, transparent 55%),
+      linear-gradient(120deg, #6a5acd 0%, #7b7dff 40%, #6fb7ff 80%, #7adcf0 100%);
   }
 
   .grainy-texture::before {
