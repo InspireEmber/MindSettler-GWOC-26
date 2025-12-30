@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import { 
-  CheckCircle2, XCircle, CreditCard, Clock, 
-  User, Mail, Calendar, RefreshCcw, AlertCircle 
+  CheckCircle2, CreditCard, Clock, 
+  Mail, AlertCircle, MapPin, Video, 
+  ChevronLeft, ChevronRight, LayoutGrid, List as ListIcon, X, Calendar as CalendarIcon
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
@@ -11,9 +13,16 @@ export default function AdminAppointmentsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [appointments, setAppointments] = useState([]);
-  const [filter, setFilter] = useState("all");
+  
+  // View States
+  const [viewMode, setViewMode] = useState("calendar");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [currentDate, setCurrentDate] = useState(new Date()); 
+  
+  // Interaction States
   const [actionLoading, setActionLoading] = useState({});
   const [actionError, setActionError] = useState({});
+  const [selectedDate, setSelectedDate] = useState(null); 
 
   async function fetchAppointments() {
     setLoading(true);
@@ -31,6 +40,7 @@ export default function AdminAppointmentsPage() {
 
   useEffect(() => { fetchAppointments(); }, []);
 
+  // --- Actions ---
   async function handleAction(id, endpoint, body = {}, type) {
     setActionError(prev => ({ ...prev, [id]: "" }));
     setActionLoading(prev => ({ ...prev, [id]: type }));
@@ -52,147 +62,312 @@ export default function AdminAppointmentsPage() {
   }
 
   const handleApprove = (appt) => handleAction(appt._id, "approve", {}, "approve");
-
   const handleReject = (appt) => {
     const reason = window.prompt("Enter rejection reason:");
-    if (reason === null) return;
-    handleAction(appt._id, "reject", { reason: reason.trim() }, "reject");
+    if (reason) handleAction(appt._id, "reject", { reason: reason.trim() }, "reject");
   };
-
   const handleMarkPaid = (appt) => {
     const method = window.prompt('Enter method ("upi" or "cash"):', "upi");
-    if (!method) return;
-    const ref = window.prompt("Payment reference (optional):", "");
-    handleAction(appt._id, "payment", { 
-        paymentStatus: "paid", 
-        paymentMethod: method.toLowerCase(), 
-        paymentReference: ref 
-    }, "payment");
+    if (method) {
+        const ref = window.prompt("Payment reference (optional):", "");
+        handleAction(appt._id, "payment", { 
+            paymentStatus: "paid", 
+            paymentMethod: method.toLowerCase(), 
+            paymentReference: ref 
+        }, "payment");
+    }
   };
 
-  const filteredAppointments = appointments.filter(a => filter === "all" || a.status === filter);
+  // --- Date Logic ---
+  const getDaysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
+  const getFirstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
+
+  const handlePrevMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+  const handleNextMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+
+  const isSameDay = (dateString, dateObj) => {
+    if (!dateString || !dateObj) return false;
+    const d = new Date(dateString);
+    return d.getDate() === dateObj.getDate() && 
+           d.getMonth() === dateObj.getMonth() && 
+           d.getFullYear() === dateObj.getFullYear();
+  };
+
+  // --- Filtering ---
+  const filteredAppointments = appointments.filter(a => statusFilter === "all" || a.status === statusFilter);
+
+  // --- Components ---
+  const AppointmentCard = ({ a, isModal = false }) => {
+    const dateObj = new Date(a.slot?.date);
+    const dayVal = dateObj.getDate();
+    const monthVal = dateObj.toLocaleDateString('en-US', { month: 'short' });
+    const weekVal = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+
+    return (
+      <div className={`relative bg-white rounded-2xl p-4 md:p-5 border border-slate-100 ${!isModal && "shadow-sm hover:shadow-lg"} transition-all duration-200`}>
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start sm:items-center">
+            
+            {/* Date Box */}
+            <div className="flex-shrink-0 w-full sm:w-20 h-14 sm:h-20 bg-slate-50 rounded-xl border border-slate-100 flex sm:flex-col flex-row items-center justify-center sm:justify-center gap-2 sm:gap-0 shadow-sm">
+                <span className="text-xs font-bold text-rose-500 uppercase">{monthVal}</span>
+                <span className="text-xl sm:text-3xl font-bold text-slate-800 leading-none sm:my-1">{dayVal}</span>
+                <span className="text-[10px] text-slate-400 font-medium uppercase">{weekVal}</span>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 w-full grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                
+                {/* Info */}
+                <div className="md:col-span-4 flex flex-col gap-1">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                        <h3 className="text-lg md:text-xl font-bold text-slate-900 truncate">{a.user?.name || "Guest User"}</h3>
+                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border shrink-0 ${
+                            a.status === 'confirmed' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' :
+                            a.status === 'rejected' ? 'bg-red-50 text-red-700 border-red-100' : 
+                            'bg-amber-50 text-amber-700 border-amber-100'
+                        }`}>
+                            {a.status}
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-slate-500 font-medium break-all">
+                        <Mail size={14} className="text-slate-400 shrink-0" /> {a.user?.email}
+                    </div>
+                </div>
+
+                {/* Timing & Type */}
+                <div className="md:col-span-5 flex md:justify-center w-full">
+                    <div className="flex flex-wrap sm:flex-nowrap items-center sm:justify-center gap-x-5 gap-y-2 bg-slate-50/80 px-4 py-3 rounded-xl border border-slate-100 w-full sm:w-auto">
+                        <div className="flex items-center gap-2">
+                            <Clock size={18} className="text-indigo-500 shrink-0" />
+                            <span className="text-sm font-bold text-slate-700 whitespace-nowrap">
+                                {a.slot?.startTime} - {a.slot?.endTime}
+                            </span>
+                        </div>
+                        <div className="hidden sm:block w-px h-5 bg-slate-300"></div>
+                        <div className="flex items-center gap-2">
+                            {a.sessionType === 'online' ? <Video size={18} className="text-orange-500 shrink-0" /> : <MapPin size={18} className="text-orange-500 shrink-0" />}
+                            <span className="text-sm font-semibold text-slate-600 capitalize whitespace-nowrap">{a.sessionType}</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Actions */}
+                <div className="md:col-span-3 flex flex-col sm:items-end gap-3 w-full">
+                    {(a.status === "pending" || (a.status === "confirmed" && a.paymentStatus !== "paid")) && (
+                        <div className="flex flex-row sm:flex-row items-center gap-2 w-full sm:justify-end">
+                            {a.status === "pending" && (
+                            <>
+                                <button onClick={(e) => { e.stopPropagation(); handleReject(a); }} disabled={actionLoading[a._id]} className="flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-100 transition-colors">
+                                    {actionLoading[a._id] === 'reject' ? '...' : 'Reject'}
+                                </button>
+                                <button onClick={(e) => { e.stopPropagation(); handleApprove(a); }} disabled={actionLoading[a._id]} className="flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-bold text-white bg-emerald-500 hover:bg-emerald-600 shadow-sm transition-colors">
+                                    {actionLoading[a._id] === 'approve' ? '...' : 'Approve'}
+                                </button>
+                            </>
+                            )}
+                            {a.status === "confirmed" && a.paymentStatus !== "paid" && (
+                                <button onClick={(e) => { e.stopPropagation(); handleMarkPaid(a); }} disabled={actionLoading[a._id]} className="w-full sm:w-auto px-4 py-2 rounded-lg text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center gap-2 transition-colors">
+                                    <CreditCard size={14} /> Mark Paid
+                                </button>
+                            )}
+                        </div>
+                    )}
+                    <div className="flex flex-col items-start sm:items-end w-full sm:w-auto">
+                        {a.paymentStatus === 'paid' && <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 flex items-center gap-1"><CheckCircle2 size={12} /> PAID</span>}
+                        {actionError[a._id] && <span className="text-xs text-red-500 font-medium mt-1 text-center sm:text-right w-full">{actionError[a._id]}</span>}
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    );
+  };
 
   if (loading) return (
-    <div className="flex flex-col items-center justify-center min-h-[400px] text-[#5E5A6B] space-y-4">
-      <RefreshCcw className="w-8 h-8 animate-spin text-[#3F2965]" />
-      <p className="font-medium">Syncing appointments...</p>
+    <div className="flex flex-col items-center justify-center min-h-[400px] text-slate-400 space-y-4">
+      <div className="w-10 h-10 border-4 border-slate-200 border-t-indigo-500 rounded-full animate-spin" />
+      <p className="font-medium animate-pulse text-sm">Loading...</p>
     </div>
   );
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in duration-500">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#3F2965]/10 pb-6">
+    <div className="space-y-6 animate-in fade-in duration-700 pb-12 relative">
+      
+      {/* HEADER */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6">
         <div>
-          <h1 className="text-3xl font-light text-[#2E2A36]">Appointment <span className="font-medium">Requests</span></h1>
-          <p className="text-sm text-[#5E5A6B] mt-1">Manage client bookings and payment status.</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">Appointments</h1>
         </div>
         
-        <div className="flex bg-[#F6F4FA] p-1 rounded-xl border border-[#3F2965]/10">
-          {["all", "pending", "confirmed", "rejected"].map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
-                filter === f ? "bg-white text-[#3F2965] shadow-sm" : "text-[#5E5A6B] hover:text-[#3F2965]"
-              }`}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {error && (
-        <div className="bg-red-50 border border-red-100 text-red-600 p-4 rounded-2xl flex items-center gap-3">
-          <AlertCircle size={20} /> {error}
-        </div>
-      )}
-
-      <div className="grid gap-4">
-        {filteredAppointments.map((a) => (
-          <div key={a._id} className="bg-white rounded-[2rem] p-6 shadow-sm border border-[#3F2965]/5 hover:border-[#3F2965]/20 transition-all group">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-              
-              {/* Client Info */}
-              <div className="flex items-start gap-4 flex-1">
-                <div className="w-12 h-12 rounded-2xl bg-[#F6F4FA] flex items-center justify-center text-[#3F2965] shrink-0">
-                  <User size={24} />
-                </div>
-                <div className="space-y-1">
-                  <h3 className="font-bold text-[#2E2A36] text-lg">{a.user?.name || "Unknown Guest"}</h3>
-                  <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-[#5E5A6B]">
-                    <span className="flex items-center gap-1"><Mail size={14} /> {a.user?.email}</span>
-                    <span className="flex items-center gap-1 uppercase font-bold text-[10px] tracking-widest text-[#DD1764]">
-                        {a.sessionType} Session
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Schedule Info */}
-              <div className="flex items-center gap-4 px-6 border-x border-[#3F2965]/5 hidden lg:flex">
-                <Calendar className="text-[#3F2965] opacity-40" />
-                <div>
-                  <p className="text-sm font-bold text-[#2E2A36]">
-                    {a.slot?.date ? new Date(a.slot.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "No Date"}
-                  </p>
-                  <p className="text-xs text-[#5E5A6B]">{a.slot?.startTime} - {a.slot?.endTime}</p>
-                </div>
-              </div>
-
-              {/* Status & Actions */}
-              <div className="flex flex-col sm:flex-row items-center gap-4">
-                <div className="flex flex-col items-end gap-2">
-                   <div className="flex gap-2">
-                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter border ${
-                            a.status === 'confirmed' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
-                            a.status === 'rejected' ? 'bg-red-50 text-red-600 border-red-100' : 
-                            'bg-amber-50 text-amber-600 border-amber-100'
-                        }`}>
-                            {a.status}
-                        </span>
-                        {a.paymentStatus === 'paid' && (
-                            <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter bg-[#3F2965] text-white">
-                                Paid
-                            </span>
-                        )}
-                   </div>
-                   {actionError[a._id] && <p className="text-[10px] text-red-500 font-medium">{actionError[a._id]}</p>}
-                </div>
-
-                <div className="flex gap-2">
-                  {a.status === "pending" && (
-                    <>
-                      <button onClick={() => handleApprove(a)} disabled={actionLoading[a._id]}
-                        className="p-2 rounded-xl bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all">
-                        <CheckCircle2 size={20} />
-                      </button>
-                      <button onClick={() => handleReject(a)} disabled={actionLoading[a._id]}
-                        className="p-2 rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all">
-                        <XCircle size={20} />
-                      </button>
-                    </>
-                  )}
-                  {a.status === "confirmed" && a.paymentStatus !== "paid" && (
-                    <button onClick={() => handleMarkPaid(a)} disabled={actionLoading[a._id]}
-                      className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#3F2965] text-white text-xs font-bold hover:bg-[#2e1d4a] transition-all">
-                      <CreditCard size={16} /> Mark Paid
-                    </button>
-                  )}
-                </div>
-              </div>
-
+        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+            <div className="bg-white p-1 rounded-lg border border-slate-200 flex items-center shadow-sm w-full sm:w-auto">
+                <button onClick={() => setViewMode("calendar")} className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-bold transition-all ${viewMode === 'calendar' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}>
+                    <LayoutGrid size={16} /> <span className="sm:hidden lg:inline">Calendar</span>
+                </button>
+                <button onClick={() => setViewMode("list")} className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-bold transition-all ${viewMode === 'list' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}>
+                    <ListIcon size={16} /> <span className="sm:hidden lg:inline">List</span>
+                </button>
             </div>
-          </div>
-        ))}
+            
+            {/* Scrollable Filters */}
+            <div className="flex items-center gap-1 p-1 bg-white/60 backdrop-blur-md border border-white/50 rounded-lg shadow-sm overflow-x-auto no-scrollbar w-full sm:w-auto">
+                {["all", "pending", "confirmed", "rejected"].map((f) => (
+                    <button key={f} onClick={() => setStatusFilter(f)} className={`px-4 py-2 rounded-md text-sm font-bold uppercase tracking-wide transition-all whitespace-nowrap ${statusFilter === f ? "bg-indigo-50 text-indigo-700 border border-indigo-100 shadow-sm" : "text-slate-500 hover:bg-white/50 hover:text-slate-900"}`}>
+                        {f}
+                    </button>
+                ))}
+            </div>
+        </div>
       </div>
-      
-      {filteredAppointments.length === 0 && (
-        <div className="text-center py-20 bg-[#F6F4FA] rounded-[2rem] border border-dashed border-[#3F2965]/20">
-          <Clock className="w-12 h-12 text-[#3F2965]/20 mx-auto mb-4" />
-          <p className="text-[#5E5A6B]">No appointments found for this filter.</p>
+
+      {error && <div className="bg-rose-50 border border-rose-100 text-rose-600 p-4 rounded-xl flex items-center gap-3 text-sm font-medium"><AlertCircle size={18} /> {error}</div>}
+
+      {/* ==================== CALENDAR VIEW ==================== */}
+      {viewMode === 'calendar' && (
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden animate-in fade-in zoom-in-95 duration-300">
+            <div className="flex items-center justify-between p-4 md:p-6 border-b border-slate-100 bg-slate-50/50">
+                <button onClick={handlePrevMonth} className="p-2 hover:bg-white hover:shadow-sm rounded-lg transition-all border border-transparent hover:border-slate-200"><ChevronLeft size={20} className="text-slate-600"/></button>
+                <h2 className="text-lg md:text-xl font-bold text-slate-800">{currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</h2>
+                <button onClick={handleNextMonth} className="p-2 hover:bg-white hover:shadow-sm rounded-lg transition-all border border-transparent hover:border-slate-200"><ChevronRight size={20} className="text-slate-600"/></button>
+            </div>
+
+            <div className="p-2 md:p-6">
+                <div className="grid grid-cols-7 mb-2 md:mb-4">
+                    {/* Fixed Duplicate Key Issue: Using index (i) instead of day letter (d) */}
+                    {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
+                        <div key={i} className="text-center text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">{d}</div>
+                    ))}
+                </div>
+
+                <div className="grid grid-cols-7 gap-1 md:gap-2">
+                    {/* Empty Slots */}
+                    {Array.from({ length: getFirstDayOfMonth(currentDate.getFullYear(), currentDate.getMonth()) }).map((_, i) => (
+                        <div key={`empty-${i}`} className="h-20 md:h-32 rounded-xl bg-slate-50/30 border border-transparent"></div>
+                    ))}
+
+                    {/* Day Cells */}
+                    {Array.from({ length: getDaysInMonth(currentDate.getFullYear(), currentDate.getMonth()) }).map((_, i) => {
+                        const day = i + 1;
+                        const thisDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+                        const isToday = new Date().toDateString() === thisDate.toDateString();
+                        const dayAppts = filteredAppointments.filter(a => isSameDay(a.slot?.date, thisDate));
+
+                        return (
+                            <div 
+                                key={day} 
+                                onClick={() => setSelectedDate(thisDate)}
+                                className={`h-20 md:h-32 p-1 md:p-2 rounded-lg md:rounded-xl border transition-all relative cursor-pointer group flex flex-col items-center md:items-stretch ${
+                                    isToday ? 'bg-indigo-50/30 border-indigo-200 shadow-sm ring-1 ring-indigo-50' : 
+                                    'bg-white border-slate-100 hover:border-slate-300 hover:bg-slate-50'
+                                }`}
+                            >
+                                <div className="flex justify-between items-start mb-1 w-full">
+                                    <span className={`text-[10px] md:text-sm font-bold w-5 h-5 md:w-7 md:h-7 flex items-center justify-center rounded-full ${isToday ? 'bg-indigo-600 text-white' : 'text-slate-400 group-hover:text-slate-800'}`}>
+                                        {day}
+                                    </span>
+                                    {/* Mobile count indicator */}
+                                    {dayAppts.length > 0 && (
+                                        <div className="md:hidden w-1.5 h-1.5 rounded-full bg-rose-500 mt-1"></div>
+                                    )}
+                                    {/* Desktop count */}
+                                    {dayAppts.length > 0 && (
+                                        <span className="hidden md:inline-block text-[10px] font-bold bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded-md">
+                                            {dayAppts.length}
+                                        </span>
+                                    )}
+                                </div>
+                                
+                                {/* Detailed Pills (Desktop Only) */}
+                                <div className="hidden md:block space-y-1 overflow-hidden">
+                                    {dayAppts.slice(0, 3).map(appt => (
+                                        <div key={appt._id} className={`p-1 rounded border text-[9px] font-bold truncate ${
+                                            appt.status === 'confirmed' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' :
+                                            appt.status === 'rejected' ? 'bg-rose-50 text-rose-700 border-rose-100' :
+                                            'bg-amber-50 text-amber-700 border-amber-100'
+                                        }`}>
+                                            {appt.slot?.startTime}
+                                        </div>
+                                    ))}
+                                    {dayAppts.length > 3 && (
+                                        <div className="text-[9px] text-slate-400 font-medium text-center">
+                                            +{dayAppts.length - 3}
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Simple Dots (Mobile View) */}
+                                <div className="md:hidden flex flex-wrap gap-0.5 justify-center mt-1">
+                                    {dayAppts.slice(0, 4).map((_, idx) => (
+                                        <div key={idx} className={`w-1 h-1 rounded-full ${idx === 0 ? 'bg-indigo-400' : 'bg-slate-300'}`} />
+                                    ))}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
         </div>
       )}
+
+      {/* ==================== LIST VIEW ==================== */}
+      {viewMode === 'list' && (
+        <div className="space-y-4">
+            {filteredAppointments.length === 0 ? (
+                 <div className="text-center py-20 bg-white/30 rounded-3xl border border-dashed border-slate-300">
+                    <p className="text-slate-500 font-medium">No appointments found.</p>
+                </div>
+            ) : (
+                filteredAppointments.map(a => <AppointmentCard key={a._id} a={a} />)
+            )}
+        </div>
+      )}
+
+      {/* ==================== DAY VIEW MODAL ==================== */}
+      <AnimatePresence>
+        {selectedDate && (
+            <motion.div 
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4"
+                onClick={() => setSelectedDate(null)}
+            >
+                <motion.div 
+                    initial={{ scale: 0.95, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                    onClick={(e) => e.stopPropagation()}
+                    className="bg-slate-50 rounded-2xl shadow-2xl w-full max-w-2xl lg:max-w-4xl max-h-[85vh] flex flex-col overflow-hidden"
+                >
+                    {/* Modal Header */}
+                    <div className="p-4 md:p-5 bg-white border-b border-slate-200 flex justify-between items-center z-10">
+                        <div>
+                            <h3 className="text-lg md:text-xl font-bold text-slate-800">
+                                {selectedDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                            </h3>
+                            <p className="text-xs md:text-sm text-slate-500">
+                                {filteredAppointments.filter(a => isSameDay(a.slot?.date, selectedDate)).length} Appointments
+                            </p>
+                        </div>
+                        <button onClick={() => setSelectedDate(null)} className="p-2 hover:bg-slate-100 rounded-full text-slate-500 transition-colors">
+                            <X size={20} />
+                        </button>
+                    </div>
+
+                    {/* Modal Body (Scrollable List) */}
+                    <div className="flex-1 overflow-y-auto p-3 md:p-5 space-y-3 md:space-y-4 custom-scrollbar">
+                        {filteredAppointments.filter(a => isSameDay(a.slot?.date, selectedDate)).length > 0 ? (
+                            filteredAppointments
+                                .filter(a => isSameDay(a.slot?.date, selectedDate))
+                                .map(a => <AppointmentCard key={a._id} a={a} isModal={true} />)
+                        ) : (
+                            <div className="flex flex-col items-center justify-center h-32 md:h-48 text-slate-400">
+                                <CalendarIcon size={40} className="mb-3 opacity-20" />
+                                <p className="text-sm">No appointments scheduled.</p>
+                            </div>
+                        )}
+                    </div>
+                </motion.div>
+            </motion.div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 }
