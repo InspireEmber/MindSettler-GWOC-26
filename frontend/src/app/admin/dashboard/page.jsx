@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { 
   Users, CalendarCheck, Clock, TrendingUp, 
-  DollarSign, Activity, LayoutDashboard, ArrowRight
+  DollarSign, Activity, ArrowRight
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -20,7 +20,7 @@ export default function AdminDashboardPage() {
         const res = await fetch(`${API_BASE_URL}/admin/stats/overview`, {
           credentials: "include",
         });
-        if (!res.ok) throw new Error("Failed to sync dashboard data");
+        if (!res.ok) throw new Error("Failed to sync data");
         const data = await res.json();
         setStats(data.data || null);
       } catch (e) {
@@ -33,127 +33,153 @@ export default function AdminDashboardPage() {
   }, []);
 
   if (loading) return (
-    <div className="flex flex-col items-center justify-center min-h-[400px] text-[#5E5A6B] space-y-4">
-      <div className="w-10 h-10 border-4 border-[#3F2965]/10 border-t-[#3F2965] rounded-full animate-spin" />
-      <p className="animate-pulse font-medium">Building your overview...</p>
+    <div className="flex flex-col items-center justify-center min-h-[400px]">
+      <div className="w-10 h-10 border-4 border-pink-100 border-t-pink-500 rounded-full animate-spin" />
     </div>
   );
 
   return (
-    <div className="max-w-7xl mx-auto space-y-10 animate-in fade-in duration-700">
+    <div className="space-y-6 md:space-y-8">
+      
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-light text-[#2E2A36] flex items-center gap-3">
-            <LayoutDashboard className="text-[#3F2965]" />
-            Dashboard <span className="font-medium">Overview</span>
-          </h1>
-          <p className="text-sm text-[#5E5A6B] mt-1">Real-time performance and engagement metrics.</p>
-        </div>
-        <div className="hidden md:flex gap-2 text-[10px] font-bold uppercase tracking-widest text-[#3F2965]">
-          <span className="px-3 py-1 bg-[#3F2965]/5 rounded-full border border-[#3F2965]/10 flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> Live System Data
-          </span>
-        </div>
+      <div className="flex flex-col gap-2">
+        <h1 className="text-2xl md:text-3xl font-bold text-[#334155] tracking-tight">
+          Dashboard
+        </h1>
+        <p className="text-sm md:text-base text-[#64748B] font-medium">
+          Welcome back to your command center.
+        </p>
       </div>
 
       {error && (
-        <div className="p-4 bg-red-50 border border-red-100 text-red-600 rounded-2xl flex items-center gap-2 text-sm">
-          <Activity size={16} /> {error}
+        <div className="p-4 bg-rose-50/80 backdrop-blur-sm border border-rose-100 text-rose-600 rounded-2xl flex items-center gap-2 text-sm">
+          <Activity size={16} className="shrink-0" /> {error}
         </div>
       )}
 
-      {/* Primary Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
         <StatCard 
           label="Total Appointments" 
           value={stats?.totalAppointments} 
-          icon={<CalendarCheck size={20} />} 
-          trend="+12% growth" 
-          color="bg-[#3F2965]" 
+          icon={<CalendarCheck size={22} />} 
+          trend="+12%" 
+          theme="rose"
         />
         <StatCard 
           label="Pending Review" 
           value={stats?.pendingReview || stats?.upcomingAppointments} 
-          icon={<Clock size={20} />} 
-          trend="Needs Attention" 
-          color="bg-[#DD1764]" 
+          icon={<Clock size={22} />} 
+          trend="Action" 
+          theme="amber"
         />
         <StatCard 
           label="Total Users" 
           value={stats?.totalUsers} 
-          icon={<Users size={20} />} 
-          trend="Active Community" 
-          color="bg-[#2E2A36]" 
+          icon={<Users size={22} />} 
+          trend="Active" 
+          theme="blue"
         />
         <StatCard 
           label="Total Revenue" 
           value={`₹${stats?.revenue || 0}`} 
-          icon={<DollarSign size={20} />} 
-          trend="Net Earnings" 
-          color="bg-emerald-600" 
+          icon={<DollarSign size={22} />} 
+          trend="Net" 
+          theme="emerald"
         />
       </div>
 
       {/* Action Hub */}
-      <div className="bg-white rounded-[2.5rem] p-8 md:p-12 border border-[#3F2965]/5 shadow-[0_20px_50px_rgba(63,41,101,0.02)] overflow-hidden relative">
-        <div className="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none">
-          <TrendingUp size={240} />
-        </div>
-        
-        <div className="relative z-10">
-          <h3 className="text-2xl font-light text-[#2E2A36] mb-2">Management <span className="font-medium">Hub</span></h3>
-          <p className="text-[#5E5A6B] text-sm mb-10 max-w-md">Quickly navigate to core administrative tasks to keep MindSettler running smoothly.</p>
+      <div className="w-full">
+        <div className="bg-white/60 backdrop-blur-xl rounded-[24px] md:rounded-[30px] p-6 md:p-8 border border-white/50 shadow-sm relative overflow-hidden group">
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">
-            <Link href="/admin/appointments" className="group flex items-center justify-between p-6 bg-[#3F2965] text-white rounded-[2rem] hover:shadow-2xl hover:shadow-[#3F2965]/20 transition-all active:scale-[0.98]">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
-                  <CalendarCheck size={24} />
-                </div>
-                <div>
-                  <p className="font-bold">Review Appointments</p>
-                  <p className="text-xs text-white/60">Approve or manage bookings</p>
-                </div>
-              </div>
-              <ArrowRight className="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-            </Link>
+          {/* Subtle decoration - Hidden on mobile to save space/performance */}
+          <div className="absolute -right-10 -top-10 text-rose-500/5 group-hover:scale-110 transition-transform duration-1000 hidden md:block">
+            <TrendingUp size={350} />
+          </div>
 
-            <Link href="/admin/slots" className="group flex items-center justify-between p-6 bg-[#F6F4FA] text-[#3F2965] rounded-[2rem] border border-[#3F2965]/5 hover:bg-white hover:shadow-xl transition-all active:scale-[0.98]">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#3F2965]/5 flex items-center justify-center">
-                  <Clock size={24} />
-                </div>
-                <div>
-                  <p className="font-bold">Weekly Slots</p>
-                  <p className="text-xs text-[#5E5A6B]">Generate session availability</p>
-                </div>
-              </div>
-              <ArrowRight className="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-            </Link>
+          <div className="relative z-10">
+            <h3 className="text-lg md:text-xl font-bold text-[#334155] mb-2">Quick Actions</h3>
+            <p className="text-sm md:text-base text-[#64748B] mb-6 md:mb-8 max-w-md">
+              Navigate to your most frequent administrative tasks.
+            </p>
+            
+            {/* Grid of actions */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 max-w-4xl">
+              <ActionButton 
+                href="/admin/appointments" 
+                icon={<CalendarCheck size={24} />} 
+                title="Review Appointments" 
+                desc="Manage incoming bookings"
+                colorClass="bg-rose-50 text-rose-600 group-hover:bg-rose-500 group-hover:text-white"
+                arrowColor="text-rose-300"
+              />
+              <ActionButton 
+                href="/admin/slots" 
+                icon={<Clock size={24} />} 
+                title="Manage Slots" 
+                desc="Update weekly availability"
+                colorClass="bg-sky-50 text-sky-600 group-hover:bg-sky-500 group-hover:text-white"
+                arrowColor="text-sky-300"
+              />
+            </div>
           </div>
         </div>
       </div>
+
     </div>
   );
 }
 
-function StatCard({ label, value, icon, trend, color }) {
+// Reusable Components
+
+function StatCard({ label, value, icon, trend, theme }) {
+  const themes = {
+    rose:    { bg: "bg-rose-50/80",    icon: "text-rose-600",    border: "border-rose-100",    trend: "bg-rose-100 text-rose-700" },
+    teal:    { bg: "bg-teal-50/80",    icon: "text-teal-600",    border: "border-teal-100",    trend: "bg-teal-100 text-teal-700" },
+    amber:   { bg: "bg-amber-50/80",   icon: "text-amber-600",   border: "border-amber-100",   trend: "bg-amber-100 text-amber-700" },
+    blue:    { bg: "bg-sky-50/80",     icon: "text-sky-600",     border: "border-sky-100",     trend: "bg-sky-100 text-sky-700" },
+    emerald: { bg: "bg-emerald-50/80", icon: "text-emerald-600", border: "border-emerald-100", trend: "bg-emerald-100 text-emerald-700" },
+  };
+  
+  const t = themes[theme] || themes.blue;
+
   return (
     <motion.div 
-      whileHover={{ y: -5 }}
-      className="bg-white rounded-[2rem] p-6 shadow-[0_10px_40px_rgba(63,41,101,0.03)] border border-[#3F2965]/5 flex items-start gap-4 transition-all hover:border-[#3F2965]/20"
+      whileHover={{ y: -4 }}
+      className={`${t.bg} backdrop-blur-md rounded-[20px] md:rounded-[24px] p-5 md:p-6 border ${t.border} shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-lg transition-all`}
     >
-      <div className={`w-12 h-12 rounded-2xl ${color} text-white flex items-center justify-center shrink-0 shadow-lg`}>
-        {icon}
-      </div>
-      <div className="space-y-1">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-[#5E5A6B]">{label}</p>
-        <p className="text-2xl font-bold text-[#2E2A36]">{value ?? 0}</p>
-        <p className="text-[10px] text-[#3F2965] font-bold opacity-60 flex items-center gap-1 uppercase tracking-tighter">
+      <div className="flex items-center justify-between mb-4">
+         <div className={`p-3 rounded-xl bg-white/60 shadow-sm ${t.icon}`}>
+          {icon}
+        </div>
+        <span className={`text-[10px] md:text-[11px] font-bold px-2 md:px-3 py-1 rounded-full ${t.trend} uppercase tracking-wider`}>
           {trend}
-        </p>
+        </span>
+      </div>
+      <div>
+        <p className="text-2xl md:text-3xl font-bold text-[#1E293B]">{value ?? 0}</p>
+        <p className="text-[10px] md:text-xs font-semibold text-[#64748B] uppercase tracking-wider mt-1">{label}</p>
       </div>
     </motion.div>
+  );
+}
+
+function ActionButton({ href, icon, title, desc, colorClass, arrowColor }) {
+  return (
+    <Link href={href} className="group flex items-center justify-between p-4 md:p-5 bg-white/40 border border-white/60 rounded-[20px] hover:bg-white/90 hover:shadow-md transition-all duration-300">
+      <div className="flex items-center gap-4 md:gap-5">
+        <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center transition-colors duration-300 shadow-sm shrink-0 ${colorClass}`}>
+          {icon}
+        </div>
+        <div className="text-left min-w-0">
+          <p className="font-bold text-[#334155] text-base md:text-lg group-hover:text-black transition-colors truncate">{title}</p>
+          <p className="text-xs md:text-sm text-[#64748B] truncate">{desc}</p>
+        </div>
+      </div>
+      <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-50 flex items-center justify-center shrink-0 ${arrowColor} opacity-0 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-4 transition-all hidden sm:flex`}>
+         <ArrowRight size={18} />
+      </div>
+    </Link>
   );
 }
