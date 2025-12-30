@@ -1,9 +1,16 @@
+"use client";
+
 import "../styles/globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Chatbot from "../components/Chatbot";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
+  const isAdminRoute = pathname?.startsWith("/admin");
+
   return (
     <html lang="en">
       <head>
@@ -11,15 +18,20 @@ export default function RootLayout({ children }) {
       </head>
       <body className="bg-[#F6F4FA] text-[#2E2A36] w-full">
         <div className="min-h-screen flex flex-col">
-          <Navbar />
+          {!isAdminRoute && <Navbar />}
 
-          <main className="w-full pt-20 md:pt-24">
+          <main
+            className={clsx(
+              "w-full",
+              !isAdminRoute && "pt-20 md:pt-24"
+            )}
+          >
             {children}
           </main>
 
-          <Footer />
+          {!isAdminRoute && <Footer />}
         </div>
-        <Chatbot />
+        {!isAdminRoute && <Chatbot />}
       </body>
     </html>
   );
