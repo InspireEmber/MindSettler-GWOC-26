@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Calendar, Filter, Plus, Trash2, Clock, History, ChevronRight } from "lucide-react";
+import { Calendar, Trash2, Clock, Globe, MapPin, CheckSquare, Square } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
@@ -9,9 +9,16 @@ export default function AdminSlotsPage() {
   const [loading, setLoading] = useState(true);
   const [slots, setSlots] = useState([]);
   const [submitting, setSubmitting] = useState(false);
+  const [selectedSlots, setSelectedSlots] = useState([]); 
   
-  // Consolidated Form & Filter State
-  const [form, setForm] = useState({ startDate: "", startTime: "10:00", endTime: "17:00", mode: "both" });
+  const [form, setForm] = useState({ 
+    startDate: "", 
+    endDate: "",
+    startTime: "10:00", 
+    endTime: "17:00", 
+    mode: "both",
+    duration: "60" 
+  });
   const [filter, setFilter] = useState({ date: "", type: "all", timeline: "upcoming" });
 
   const fetchSlots = async (date = filter.date, type = filter.type, timeline = filter.timeline) => {
@@ -24,13 +31,11 @@ export default function AdminSlotsPage() {
       const res = await fetch(`${API_BASE_URL}/slots?${params.toString()}`, { credentials: "include" });
       const data = await res.json();
       let list = data.data || [];
-
-      // Local Filter: Upcoming vs Past (only if specific date not selected)
       if (!date) {
         const today = new Date(); today.setHours(0,0,0,0);
         list = list.filter(s => timeline === "upcoming" ? new Date(s.date) >= today : new Date(s.date) < today);
       }
-      setSlots(list);
+      setSlots(list.sort((a, b) => new Date(a.date) - new Date(b.date) || a.startTime.localeCompare(b.startTime)));
     } catch (e) { console.error(e); } finally { setLoading(false); }
   };
 
@@ -43,18 +48,45 @@ export default function AdminSlotsPage() {
       await fetch(`${API_BASE_URL}/slots/generate-week`, {
         method: "POST", credentials: "include", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-          weekStartDate: form.startDate, startTime: form.startTime, endTime: form.endTime, slotDurationMinutes: 60, 
-          sessionTypes: form.mode === "both" ? ["online", "offline"] : [form.mode], daysOfWeek: [1, 2, 3, 4, 5] 
+          startDate: form.startDate, 
+          endDate: form.endDate,
+          startTime: form.startTime, 
+          endTime: form.endTime, 
+          slotDurationMinutes: parseInt(form.duration),
+          sessionTypes: form.mode === "both" ? ["online", "offline"] : [form.mode], 
+          daysOfWeek: [0, 1, 2, 3, 4, 5, 6]
         }),
       });
-      fetchSlots(); alert("Generated!");
-    } catch (err) { alert("Failed"); } finally { setSubmitting(false); }
+      fetchSlots();
+      alert("Schedule generated successfully!");
+    } catch (err) { alert("Failed to generate"); } finally { setSubmitting(false); }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Delete slot?")) return;
+    if (!window.confirm("Delete this time slot?")) return;
     const res = await fetch(`${API_BASE_URL}/admin/slots/${id}`, { method: "DELETE", credentials: "include" });
     if (res.ok) setSlots(prev => prev.filter(s => s._id !== id));
+  };
+
+  const handleBulkDelete = async () => {
+    if (!window.confirm(`Delete ${selectedSlots.length} selected slots?`)) return;
+    const deletePromises = selectedSlots.map(id => 
+      fetch(`${API_BASE_URL}/admin/slots/${id}`, { method: "DELETE", credentials: "include" })
+    );
+    await Promise.all(deletePromises);
+    setSlots(prev => prev.filter(s => !selectedSlots.includes(s._id)));
+    setSelectedSlots([]);
+  };
+
+  const toggleSelect = (id) => {
+    setSelectedSlots(prev => 
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    );
+  };
+
+  const toggleSelectAll = () => {
+    const deletableIds = slots.filter(s => !s.isBooked).map(s => s._id);
+    setSelectedSlots(selectedSlots.length === deletableIds.length ? [] : deletableIds);
   };
 
   const updateFilter = (key, val) => {
@@ -64,103 +96,269 @@ export default function AdminSlotsPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-8 animate-in fade-in duration-500">
-      <header>
-        <h1 className="text-3xl font-light text-[#2E2A36]">Slot <span className="font-medium">Manager</span></h1>
-      </header>
-
-      {/* Compact Generator */}
-      <section className="bg-[#3F2965] rounded-[2rem] p-8 text-white shadow-xl relative overflow-hidden">
-        <form onSubmit={handleGenerate} className="flex flex-wrap items-end gap-4 relative z-10">
-          <div className="flex-1 min-w-[160px]">
-            <label className="text-[10px] font-bold opacity-60 uppercase">Start (Mon)</label>
-            <input type="date" required value={form.startDate} onChange={e => setForm({...form, startDate: e.target.value})} className="w-full h-12 px-4 rounded-xl bg-white/10 border-none outline-none focus:bg-white focus:text-black transition-all" />
+    <div className="min-h-screen text-white/90">
+      <div className="max-w-6xl mx-auto p-4 md:p-8 space-y-8">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]">
+              Schedule Manager
+            </h1>
+            <p className="text-sm text-white/80 mt-1 font-medium drop-shadow-[0_1px_6px_rgba(0,0,0,0.3)]">
+              Create, track, and manage session availability
+            </p>
           </div>
-          <div className="flex-[1.5] min-w-[220px]">
-            <label className="text-[10px] font-bold opacity-60 uppercase">Hours</label>
-            <div className="flex gap-2">
-              <input type="time" value={form.startTime} onChange={e => setForm({...form, startTime: e.target.value})} className="w-full h-12 px-2 rounded-xl bg-white/10 outline-none focus:bg-white focus:text-black text-center" />
-              <input type="time" value={form.endTime} onChange={e => setForm({...form, endTime: e.target.value})} className="w-full h-12 px-2 rounded-xl bg-white/10 outline-none focus:bg-white focus:text-black text-center" />
+          {selectedSlots.length > 0 && (
+            <motion.button
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              onClick={handleBulkDelete}
+              className="flex items-center gap-2 px-4 py-2.5 bg-schedule-pink text-white rounded-full shadow-lg shadow-schedule-pink/40 hover:bg-[#ff375c] transition-all font-semibold text-sm"
+            >
+              <Trash2 size={16} /> Delete Selected ({selectedSlots.length})
+            </motion.button>
+          )}
+        </header>
+
+        {/* Generate Slots Card (glassmorphism) */}
+        <section className="bg-white/15 backdrop-blur-xl border border-white/30 rounded-glass p-6 md:p-8 shadow-[0_22px_60px_rgba(15,23,42,0.55)]">
+          <form onSubmit={handleGenerate} className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="inline-flex items-center text-[11px] font-semibold text-schedule-purple uppercase tracking-widest px-3 py-1 rounded-full bg-white/40">
+                  Start Date
+                </label>
+                <input
+                  type="date"
+                  required
+                  value={form.startDate}
+                  onChange={e => setForm({ ...form, startDate: e.target.value })}
+                  className="w-full h-12 px-4 rounded-2xl bg-white text-[#2E2A36] border border-white/40 focus:border-schedule-pink focus:ring-2 focus:ring-schedule-pink/40 outline-none transition-all text-sm"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="inline-flex items-center text-[11px] font-semibold text-schedule-purple uppercase tracking-widest px-3 py-1 rounded-full bg-white/40">
+                  End Date
+                </label>
+                <input
+                  type="date"
+                  required
+                  value={form.endDate}
+                  onChange={e => setForm({ ...form, endDate: e.target.value })}
+                  className="w-full h-12 px-4 rounded-2xl bg-white text-[#2E2A36] border border-white/40 focus:border-schedule-pink focus:ring-2 focus:ring-schedule-pink/40 outline-none transition-all text-sm"
+                />
+              </div>
             </div>
-          </div>
-          <div className="flex-1 min-w-[160px]">
-            <label className="text-[10px] font-bold opacity-60 uppercase">Mode</label>
-            <select value={form.mode} onChange={e => setForm({...form, mode: e.target.value})} className="w-full h-12 px-4 rounded-xl bg-white/10 outline-none focus:bg-white focus:text-black appearance-none">
-              <option className="text-black" value="both">All Modes</option>
-              <option className="text-black" value="online">Online</option>
-              <option className="text-black" value="offline">Offline</option>
-            </select>
-          </div>
-          <button disabled={submitting} className="h-12 px-6 bg-[#DD1764] hover:bg-white hover:text-[#DD1764] rounded-xl font-bold transition-all disabled:opacity-50 flex items-center gap-2">
-            {submitting ? "..." : "Generate"} <ChevronRight size={16} />
-          </button>
-        </form>
-      </section>
 
-      {/* Unified Filter Bar */}
-      <div className="flex flex-col lg:flex-row gap-4 bg-white p-2 rounded-2xl border border-gray-100 shadow-sm items-center">
-        <div className="flex items-center gap-3 pl-4 w-full lg:w-auto">
-          <Calendar size={18} className="text-[#3F2965]" />
-          <input type="date" value={filter.date} onChange={(e) => updateFilter('date', e.target.value)} className="bg-transparent text-sm font-bold text-[#3F2965] outline-none w-full" />
-        </div>
-        
-        <div className="flex gap-2 w-full lg:w-auto justify-center bg-gray-50 p-1 rounded-xl">
-           {[ {id:'upcoming', icon:<Clock size={12}/>}, {id:'past', icon:<History size={12}/>} ].map(t => (
-             <button key={t.id} onClick={() => updateFilter('timeline', t.id)} className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-[10px] font-bold uppercase ${filter.timeline === t.id ? "bg-white shadow-sm text-[#3F2965]" : "text-gray-400"}`}>
-               {t.icon} {t.id}
-             </button>
-           ))}
-        </div>
-
-        <div className="flex gap-1 w-full lg:w-auto bg-gray-50 p-1 rounded-xl">
-          {["all", "online", "offline"].map(t => (
-            <button key={t} onClick={() => updateFilter('type', t)} className={`flex-1 px-6 py-1.5 rounded-lg text-[10px] font-bold uppercase ${filter.type === t ? "bg-white shadow-sm text-[#3F2965]" : "text-gray-400"}`}>
-              {t}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Slot Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        <AnimatePresence mode="popLayout">
-          {slots.map((s) => (
-            <motion.div layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} key={s._id} 
-              className={`p-5 rounded-[2rem] border transition-all relative group ${s.isBooked ? 'bg-blue-50/50 border-blue-100' : 'bg-white border-gray-100 hover:shadow-lg hover:border-[#3F2965]/20'}`}>
-              
-              <div className="flex justify-between items-start mb-3">
-                <div className="flex gap-2">
-                  <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase ${s.sessionType === 'online' ? 'bg-purple-100 text-purple-700' : 'bg-orange-100 text-orange-700'}`}>{s.sessionType}</span>
-                  <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase ${s.isBooked ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'}`}>{s.isBooked ? 'Booked' : 'Open'}</span>
-                </div>
-                {/* DELETE BUTTON - Only shows if not booked */}
-                {!s.isBooked && (
-                  <button onClick={() => handleDelete(s._id)} className="p-1.5 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors">
-                    <Trash2 size={16}/>
-                  </button>
-                )}
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className={`w-11 h-11 rounded-xl flex flex-col items-center justify-center shrink-0 ${s.isBooked ? 'bg-blue-500 text-white' : 'bg-gray-50 text-[#3F2965]'}`}>
-                    <span className="text-[9px] font-bold uppercase leading-none opacity-60">{new Date(s.date).toLocaleDateString(undefined, {month:'short'})}</span>
-                    <span className="text-lg font-bold leading-none">{new Date(s.date).getDate()}</span>
-                </div>
-                <div>
-                  <h4 className="text-base font-bold text-[#2E2A36]">{s.startTime}</h4>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase">to {s.endTime}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+              <div className="space-y-2">
+                <label className="inline-flex items-center gap-1 text-[11px] font-semibold text-schedule-purple uppercase tracking-widest px-3 py-1 rounded-full bg-white/40">
+                  <Clock size={12} /> Time Range
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="time"
+                    value={form.startTime}
+                    onChange={e => setForm({ ...form, startTime: e.target.value })}
+                    className="flex-1 h-12 px-3 rounded-2xl bg-white text-[#2E2A36] border border-white/40 outline-none text-center text-sm focus:border-schedule-pink focus:ring-2 focus:ring-schedule-pink/40"
+                  />
+                  <span className="text-white/50 font-semibold">
+                    -
+                  </span>
+                  <input
+                    type="time"
+                    value={form.endTime}
+                    onChange={e => setForm({ ...form, endTime: e.target.value })}
+                    className="flex-1 h-12 px-3 rounded-2xl bg-white text-[#2E2A36] border border-white/40 outline-none text-center text-sm focus:border-schedule-pink focus:ring-2 focus:ring-schedule-pink/40"
+                  />
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
 
-      {!loading && slots.length === 0 && (
-        <div className="py-20 text-center border-2 border-dashed border-gray-100 rounded-[3rem] text-gray-400">
-          No slots found. Try generating some!
+              <div className="space-y-2">
+                <label className="inline-flex items-center text-[11px] font-semibold text-schedule-purple uppercase tracking-widest px-3 py-1 rounded-full bg-white/40">
+                  Mins/Slot
+                </label>
+                <select
+                  value={form.duration}
+                  onChange={e => setForm({ ...form, duration: e.target.value })}
+                  className="w-full h-12 px-4 rounded-2xl bg-white text-[#2E2A36] border border-white/40 outline-none text-sm cursor-pointer appearance-none focus:border-schedule-pink focus:ring-2 focus:ring-schedule-pink/40"
+                >
+                  <option value="30">30 min</option>
+                  <option value="45">45 min</option>
+                  <option value="60">60 min</option>
+                  <option value="90">90 min</option>
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <label className="inline-flex items-center text-[11px] font-semibold text-schedule-purple uppercase tracking-widest px-3 py-1 rounded-full bg-white/40">
+                  Mode
+                </label>
+                <select
+                  value={form.mode}
+                  onChange={e => setForm({ ...form, mode: e.target.value })}
+                  className="w-full h-12 px-4 rounded-2xl bg-white text-[#2E2A36] border border-white/40 outline-none text-sm cursor-pointer appearance-none focus:border-schedule-pink focus:ring-2 focus:ring-schedule-pink/40"
+                >
+                  <option value="both">Both</option>
+                  <option value="online">Online</option>
+                  <option value="offline">Offline</option>
+                </select>
+              </div>
+
+              <button
+                disabled={submitting}
+                className="h-12 bg-schedule-purple text-white rounded-2xl font-bold shadow-lg shadow-schedule-purple/40 hover:bg-[#24124b] transition-all disabled:opacity-60"
+              >
+                {submitting ? "..." : "Generate"}
+              </button>
+            </div>
+          </form>
+        </section>
+
+        {/* Filters */}
+        <div className="flex flex-col sm:flex-row gap-4 items-center bg-white/10 backdrop-blur-xl p-2 rounded-full border border-white/20 shadow-[0_12px_40px_rgba(15,23,42,0.55)]">
+          <div className="flex items-center gap-2 px-4 py-2 bg-white/80 rounded-full w-full sm:w-auto border border-white/60">
+            <Calendar size={14} className="text-schedule-pink" />
+            <input
+              type="date"
+              value={filter.date}
+              onChange={e => updateFilter("date", e.target.value)}
+              className="bg-transparent text-xs font-semibold text-schedule-purple outline-none"
+            />
+          </div>
+          <div className="flex flex-1 gap-1">
+            {["upcoming", "past"].map(t => (
+              <button
+                key={t}
+                onClick={() => updateFilter("timeline", t)}
+                className={`flex-1 sm:flex-none px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
+                  filter.timeline === t
+                    ? "bg-schedule-purple text-white shadow-md shadow-schedule-purple/50"
+                    : "bg-white/70 text-schedule-purple/80"
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+          <div className="flex gap-1">
+            {["all", "online", "offline"].map(t => (
+              <button
+                key={t}
+                onClick={() => updateFilter("type", t)}
+                className={`px-4 py-2 rounded-full text-[10px] font-black uppercase transition-all ${
+                  filter.type === t
+                    ? "bg-schedule-pink text-white shadow-md shadow-schedule-pink/40"
+                    : "bg-white/70 text-schedule-purple/80"
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
         </div>
-      )}
+
+        {/* Slots table card (glassmorphism) */}
+        <div className="bg-white/15 backdrop-blur-xl border border-white/25 rounded-glass overflow-hidden shadow-[0_22px_60px_rgba(15,23,42,0.55)]">
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-white/10 border-b border-white/20 text-left">
+                  <th className="px-6 py-5 w-10">
+                    <button onClick={toggleSelectAll} className="text-white/40 hover:text-white transition-colors">
+                      {selectedSlots.length > 0 ? <CheckSquare size={20} /> : <Square size={20} />}
+                    </button>
+                  </th>
+                  <th className="px-6 py-5 text-[10px] font-bold text-white/80 uppercase tracking-widest">Date</th>
+                  <th className="px-6 py-5 text-[10px] font-bold text-white/80 uppercase tracking-widest">Time</th>
+                  <th className="px-6 py-5 text-[10px] font-bold text-white/80 uppercase tracking-widest">Mode</th>
+                  <th className="px-6 py-5 text-[10px] font-bold text-white/80 uppercase tracking-widest">Status</th>
+                  <th className="px-6 py-5 text-right text-[10px] font-bold text-white/80 uppercase tracking-widest">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-rose-100/50">
+                <AnimatePresence mode="popLayout">
+                  {slots.map((s) => (
+                    <motion.tr
+                      layout
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      key={s._id}
+                      className={`transition-colors ${
+                        selectedSlots.includes(s._id)
+                          ? "bg-white/15 hover:bg-white/20"
+                          : "hover:bg-white/10"
+                      }`}
+                    >
+                      <td className="px-6 py-4">
+                        {!s.isBooked && (
+                          <button
+                            onClick={() => toggleSelect(s._id)}
+                            className={`rounded-full p-1.5 border transition-colors ${
+                              selectedSlots.includes(s._id)
+                                ? "bg-schedule-pink/10 border-schedule-pink text-schedule-pink"
+                                : "border-white/30 text-white/50 hover:text-white"
+                            }`}
+                          >
+                            {selectedSlots.includes(s._id) ? <CheckSquare size={18} /> : <Square size={18} />}
+                          </button>
+                        )}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex flex-col">
+                          <span className="text-sm font-bold text-white">
+                            {new Date(s.date).toLocaleDateString(undefined, { day: "2-digit", month: "short" })}
+                          </span>
+                          <span className="text-[10px] text-white/70 font-bold uppercase">
+                            {new Date(s.date).toLocaleDateString(undefined, { weekday: "short" })}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-sm font-semibold text-white">
+                        {s.startTime} — {s.endTime}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-1.5">
+                          {s.sessionType === "online" ? (
+                            <Globe size={14} className="text-sky-300" />
+                          ) : (
+                            <MapPin size={14} className="text-schedule-pink" />
+                          )}
+                          <span className="text-[10px] font-black uppercase text-white/80">
+                            {s.sessionType}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span
+                          className={`inline-flex px-3 py-1 rounded-full text-[9px] font-black uppercase ${
+                            s.isBooked
+                              ? "bg-schedule-purple text-white"
+                              : "bg-schedule-softPink text-schedule-pink"
+                          }`}
+                        >
+                          {s.isBooked ? "Booked" : "Open"}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        {!s.isBooked && (
+                          <button
+                            onClick={() => handleDelete(s._id)}
+                            className="inline-flex items-center justify-center p-2 text-schedule-pink hover:text-white hover:bg-schedule-pink rounded-full transition-all shadow-sm shadow-schedule-pink/40"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        )}
+                      </td>
+                    </motion.tr>
+                  ))}
+                </AnimatePresence>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
