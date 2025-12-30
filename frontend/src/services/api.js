@@ -48,6 +48,12 @@ class ApiService {
 
   // Corporate
   createCorporateInquiry(body) { return this.request('/corporate/inquiries', { method: 'POST', body }); }
+  getCorporateInquiries(query = {}) { 
+    return this.request(`/corporate/inquiries?${new URLSearchParams(query)}`); 
+  }
+  updateCorporateInquiryStatus(id, status) {
+    return this.request(`/corporate/inquiries/${id}/status`, { method: 'PUT', body: { status } });
+  }
 
   // Auth & Profile
   userSignup(body) { return this.request('/auth/user/signup', { method: 'POST', body }, true); }
