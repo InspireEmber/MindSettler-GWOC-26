@@ -63,12 +63,23 @@ export default function AdminSlotsPage() {
     fetchSlots(newFilter.date, newFilter.type, newFilter.timeline);
   };
 
-  // --- Actions ---
+  // --- FIXED GENERATE LOGIC ---
   const handleGenerate = async (e) => {
     e.preventDefault();
+    
+    // 1. Frontend Validation
+    if (!form.startDate || !form.endDate) {
+        alert("Please select both start and end dates.");
+        return;
+    }
+    if (new Date(form.startDate) > new Date(form.endDate)) {
+        alert("Start date cannot be after the end date.");
+        return;
+    }
+
     setSubmitting(true);
     try {
-      await fetch(`${API_BASE_URL}/slots/generate-week`, {
+      const res = await fetch(`${API_BASE_URL}/slots/generate-week`, {
         method: "POST", 
         credentials: "include", 
         headers: { "Content-Type": "application/json" },
@@ -82,10 +93,26 @@ export default function AdminSlotsPage() {
             daysOfWeek: [0, 1, 2, 3, 4, 5, 6]
         }),
       });
-      fetchSlots();
+
+      // 2. Parse response
+      const data = await res.json();
+
+      // 3. Check for Server Errors (Status 400/500)
+      if (!res.ok) {
+        throw new Error(data.message || data.error || "Failed to generate slots");
+      }
+      
+      // Success Path
+      await fetchSlots(); // Wait for fetch to finish
       setShowGenerateModal(false);
-      alert("Schedule generated successfully!");
-    } catch (err) { alert("Failed to generate"); } finally { setSubmitting(false); }
+      alert(data.message || `Successfully generated slots from ${form.startDate} to ${form.endDate}`);
+
+    } catch (err) { 
+        console.error("Generation Error:", err);
+        alert(err.message); // Alert the actual error message
+    } finally { 
+        setSubmitting(false); 
+    }
   };
 
   const handleDelete = async (id) => {
@@ -198,7 +225,6 @@ export default function AdminSlotsPage() {
 
             <div className="p-2 md:p-6">
                 <div className="grid grid-cols-7 mb-2 md:mb-4">
-                    {/* FIXED: Using 'i' as key and single letters for mobile layout */}
                     {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
                         <div key={i} className="text-center text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">{d}</div>
                     ))}

@@ -17,19 +17,30 @@ const getAllSlotsQuerySchema = Joi.object({
   isBooked: Joi.string().valid('true', 'false').optional(),
 });
 
+// UPDATED: generateWeeklySlotsSchema
 const generateWeeklySlotsSchema = Joi.object({
-  weekStartDate: Joi.string().isoDate().required(),
+  // Legacy support
+  weekStartDate: Joi.string().isoDate().optional(),
+  
+  // New Frontend support
+  startDate: Joi.string().isoDate().optional(),
+  endDate: Joi.string().isoDate().optional(),
+
   daysOfWeek: Joi.array().items(Joi.number().integer().min(0).max(6)).min(1).default([0,1,2,3,4,5,6]),
   startTime: timeString.required(),
   endTime: timeString.required(),
   slotDurationMinutes: Joi.number().integer().min(15).max(480).default(60),
-  // Backwards compatibility: allow either a single sessionType or an array of sessionTypes
+  
   sessionType: Joi.string().valid('online', 'offline').optional(),
   sessionTypes: Joi.array().items(Joi.string().valid('online', 'offline')).min(1).optional(),
+  
   location: Joi.string().trim().optional(),
   excludeDates: Joi.array().items(Joi.string().isoDate()).default([]),
 })
-  .or('sessionType', 'sessionTypes');
+  .or('sessionType', 'sessionTypes')
+  // Ensure we either have weekStartDate OR (startDate + endDate)
+  .or('weekStartDate', 'startDate')
+  .with('startDate', 'endDate');
 
 module.exports = {
   createSlotSchema,

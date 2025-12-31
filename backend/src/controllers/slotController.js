@@ -5,7 +5,6 @@ exports.getAvailableSlots = async (req, res) => {
   const { sessionType, date } = req.query;
 
   const query = {
-    // Only active, not-booked slots
     isActive: true,
     isBooked: false,
   };
@@ -25,7 +24,6 @@ exports.getAvailableSlots = async (req, res) => {
       $lte: endDate,
     };
   } else {
-    // Default to today and future dates
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     query.date = { $gte: today };
@@ -41,7 +39,6 @@ exports.getAvailableSlots = async (req, res) => {
     startTime: slot.startTime,
     endTime: slot.endTime,
     sessionType: slot.sessionType,
-    // Backwards-compatible alias used by older frontends
     time: slot.startTime,
   }));
 
@@ -51,11 +48,10 @@ exports.getAvailableSlots = async (req, res) => {
   });
 };
 
-// Create a new slot (Admin only) - body validated via Joi
+// Create a new slot (Admin only)
 exports.createSlot = async (req, res) => {
   const { date, startTime, endTime, sessionType, location } = req.body;
 
-  // Check if slot already exists
   const existingSlot = await Slot.findOne({
     date: new Date(date),
     startTime,
@@ -102,7 +98,6 @@ exports.updateSlot = async (req, res) => {
 
   if (isAvailable !== undefined) {
     slot.isAvailable = isAvailable;
-    // Keep isActive aligned with manual availability toggles for public API
     slot.isActive = isAvailable;
   }
   if (isBooked !== undefined) {
@@ -169,10 +164,12 @@ exports.getAllSlots = async (req, res) => {
   });
 };
 
-// Generate weekly slots (Admin only) - body validated via Joi
+// --- UPDATED: Generate weekly/range slots ---
 exports.generateWeeklySlots = async (req, res) => {
   const {
-    weekStartDate,
+    weekStartDate, // Legacy
+    startDate, // New
+    endDate, // New
     daysOfWeek,
     startTime,
     endTime,
@@ -185,6 +182,8 @@ exports.generateWeeklySlots = async (req, res) => {
   } = req.body;
 
   const effectiveDuration = slotDurationMinutes || slotDuration || 60;
+  
+  // Determine Session Types
   const typesToUse = (sessionTypes && sessionTypes.length)
     ? sessionTypes
     : sessionType
@@ -193,55 +192,92 @@ exports.generateWeeklySlots = async (req, res) => {
 
   const createdSlots = [];
   let skippedCount = 0;
-  const weekStart = new Date(weekStartDate);
-  weekStart.setHours(0, 0, 0, 0);
+  
+  // --- DATE RANGE CALCULATION ---
+  // If startDate/endDate provided (New Frontend), use those.
+  // Otherwise fall back to weekStartDate (Legacy), defaulting to a 7-day range.
+  let rangeStart, rangeEnd;
+
+  if (startDate && endDate) {
+      rangeStart = new Date(startDate);
+      rangeEnd = new Date(endDate);
+  } else if (weekStartDate) {
+      rangeStart = new Date(weekStartDate);
+      rangeEnd = new Date(weekStartDate);
+      rangeEnd.setDate(rangeEnd.getDate() + 6); // Default to 1 week
+  } else {
+      return res.status(400).json({ success: false, message: "Start date is required" });
+  }
+
+  // Set times to midnight to ensure clean day iteration
+  rangeStart.setHours(0,0,0,0);
+  rangeEnd.setHours(0,0,0,0);
 
   const endTimeParts = endTime.split(':').map(Number);
-
   const excluded = new Set((excludeDates || []).map((d) => new Date(d).toDateString()));
 
-  for (const dayOfWeek of daysOfWeek) {
-    const dayDate = new Date(weekStart);
-    dayDate.setDate(weekStart.getDate() + dayOfWeek);
+  // Loop through every day in the range
+  const loopDate = new Date(rangeStart);
 
-    if (excluded.has(dayDate.toDateString())) continue;
+  while (loopDate <= rangeEnd) {
+    // 1. Check if this specific date is excluded
+    if (excluded.has(loopDate.toDateString())) {
+        loopDate.setDate(loopDate.getDate() + 1);
+        continue;
+    }
 
+    // 2. Check if this day of the week (0-6) is allowed
+    // getDay(): 0 = Sunday, 1 = Monday, etc.
+    if (!daysOfWeek.includes(loopDate.getDay())) {
+        loopDate.setDate(loopDate.getDate() + 1);
+        continue;
+    }
+
+    // 3. Generate slots for this valid day
     const [startHour, startMinute] = startTime.split(':').map(Number);
+    
+    // We create a new date object for the slot generation to not mess up the loopDate
+    const currentDayDate = new Date(loopDate); 
 
     for (const type of typesToUse) {
-      let slotStart = new Date(dayDate);
+      let slotStart = new Date(currentDayDate);
       slotStart.setHours(startHour, startMinute, 0, 0);
 
-      const slotEndLimit = new Date(dayDate);
+      const slotEndLimit = new Date(currentDayDate);
       slotEndLimit.setHours(endTimeParts[0], endTimeParts[1], 0, 0);
 
       while (slotStart < slotEndLimit) {
         const slotEnd = new Date(slotStart.getTime() + effectiveDuration * 60000);
+        
+        // Stop if the slot exceeds the end time
         if (slotEnd > slotEndLimit) break;
 
         const startTimeStr = `${String(slotStart.getHours()).padStart(2, '0')}:${String(
           slotStart.getMinutes(),
         ).padStart(2, '0')}`;
+        
         const endTimeStr = `${String(slotEnd.getHours()).padStart(2, '0')}:${String(
           slotEnd.getMinutes(),
         ).padStart(2, '0')}`;
 
+        // Check for duplicates
         const existing = await Slot.findOne({
-          date: dayDate,
+          date: currentDayDate,
           startTime: startTimeStr,
           sessionType: type,
         });
 
         if (!existing) {
           const newSlot = await Slot.create({
-            date: dayDate,
+            date: currentDayDate,
             startTime: startTimeStr,
             endTime: endTimeStr,
             sessionType: type,
             isActive: true,
             isAvailable: true,
             isBooked: false,
-            generatedWeekStart: weekStart,
+            // Store the start of the generation range for reference
+            generatedWeekStart: rangeStart, 
             location,
           });
           createdSlots.push(newSlot);
@@ -249,14 +285,18 @@ exports.generateWeeklySlots = async (req, res) => {
           skippedCount += 1;
         }
 
+        // Move to next slot
         slotStart = slotEnd;
       }
     }
+
+    // Move loop to next day
+    loopDate.setDate(loopDate.getDate() + 1);
   }
 
   res.status(201).json({
     success: true,
-    message: 'Weekly slots generated successfully',
+    message: `Slots generated successfully from ${rangeStart.toDateString()} to ${rangeEnd.toDateString()}`,
     createdCount: createdSlots.length,
     skippedCount,
     data: createdSlots,
