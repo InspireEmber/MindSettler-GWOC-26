@@ -4,7 +4,14 @@ import Link from "next/link";
 export default function ReadyToBook() {
   return (
     <section className="py-10 sm:py-14 md:py-20 lg:py-24 px-4 sm:px-6">
-      <div className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-8 sm:p-12 md:p-16 lg:p-24 text-center text-white shadow-2xl shadow-[#3F2965]/30">
+      <div 
+        className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 md:p-16 lg:p-24 text-center text-white shadow-2xl shadow-[#3F2965]/30"
+        style={{
+          background: "linear-gradient(90deg, hsla(286, 28%, 66%, 1) 0%, hsla(340, 73%, 75%, 1) 50%, hsla(263, 47%, 58%, 1) 100%)",
+          backgroundSize: "100% 100%",
+          backgroundRepeat: "no-repeat"
+        }}
+      >
         {/* Decorative Brand Accents */}
         <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" />
         <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />

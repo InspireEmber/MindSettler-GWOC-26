@@ -103,7 +103,11 @@ export default function BookSessionPage() {
 
             <div 
               className="p-8 rounded-[2rem] text-white shadow-xl relative overflow-hidden"
-              style={{ background: "linear-gradient(to right, #8e44ad, #c0392b)" }}
+              style={{ 
+                background: "linear-gradient(90deg, hsla(286, 28%, 66%, 1) 0%, hsla(340, 73%, 75%, 1) 50%, hsla(263, 47%, 58%, 1) 100%)",
+                backgroundSize: "100% 100%",
+                backgroundRepeat: "no-repeat"
+              }}
             >
               <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white/5 rounded-full blur-2xl" />
               <h3 className="text-lg font-medium mb-4 flex items-center gap-2">

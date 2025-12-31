@@ -5,6 +5,14 @@ import { Info, Loader2, Calendar as CalendarIcon, Clock, ShieldCheck, CheckCircl
 import { motion, AnimatePresence } from "framer-motion";
 import api from "../services/api";
 
+const BlobBackground = () => (
+  <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none bg-purple-100">
+    <div className="absolute top-[-50%] left-[-20%] w-[120%] h-[120%] rounded-full bg-purple-500/50 blur-3xl mix-blend-multiply" />
+    <div className="absolute top-[-50%] right-[-20%] w-[120%] h-[120%] rounded-full bg-pink-500/50 blur-3xl mix-blend-multiply" />
+    <div className="absolute bottom-[-50%] left-[-20%] w-[120%] h-[120%] rounded-full bg-yellow-400/50 blur-3xl mix-blend-multiply" />
+  </div>
+);
+
 export default function BookingForm() {
   const router = useRouter();
   const today = new Date().toISOString().split('T')[0];
@@ -75,14 +83,14 @@ export default function BookingForm() {
         className="rounded-3xl bg-white border border-[#3F2965]/10 shadow-2xl overflow-hidden"
       >
         {/* Progress Header */}
-        <div 
-          className="p-8 text-white" 
-          style={{ background: "linear-gradient(to right, #8e44ad, #c0392b)" }}
-        >
-          <h2 className="text-3xl font-light mb-2 flex items-center gap-3">
-            <CheckCircle2 className="text-white/80" /> Reserve a Session
-          </h2>
-          <p className="text-white/80 text-sm">Choose your preferred mode and time to begin.</p>
+        <div className="p-8 relative overflow-hidden group">
+          <BlobBackground />
+          <div className="relative z-10">
+            <h2 className="text-3xl font-light mb-2 flex items-center gap-3 text-[#3F2965]">
+              <CheckCircle2 className="text-[#3F2965]" /> Reserve a Session
+            </h2>
+            <p className="text-[#3F2965]/80 text-sm">Choose your preferred mode and time to begin.</p>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 md:p-10 space-y-8">
@@ -97,8 +105,8 @@ export default function BookingForm() {
                 <label key={type} className={`relative p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col items-center justify-center gap-2 capitalize group ${formData.sessionType === type ? "border-[#3F2965] bg-[#F6F4FA] shadow-md" : "border-gray-100 hover:border-[#3F2965]/30"}`}>
                   <input type="radio" name="sessionType" value={type} checked={formData.sessionType === type} onChange={handleChange} className="sr-only" />
                   <span className={`text-lg font-medium ${formData.sessionType === type ? "text-[#3F2965]" : "text-gray-400"}`}>{type}</span>
-                  {formData.sessionType === type && (
-                    <motion.div layoutId="activeType" className="absolute -top-2 -right-2 bg-[#DD1764] text-white p-1 rounded-full shadow-lg">
+                {formData.sessionType === type && (
+                    <motion.div layoutId="activeType" className="absolute top-3 right-3 bg-[#DD1764] text-white p-1 rounded-full shadow-lg">
                       <CheckCircle2 size={16} />
                     </motion.div>
                   )}
@@ -119,7 +127,7 @@ export default function BookingForm() {
               value={formData.preferredDate}
               onChange={handleChange}
               min={today}
-              className="w-full px-6 py-4 rounded-2xl border border-gray-100 focus:ring-2 focus:ring-[#3F2965]/20 outline-none bg-[#FAFAFA] text-lg font-medium text-[#2E2A36]"
+              className="w-full px-6 py-4 rounded-2xl border border-gray-100 focus:outline-none focus:border-[#3F2965] focus:ring-1 focus:ring-[#3F2965] bg-[#FAFAFA] text-lg font-medium text-[#2E2A36]"
             />
           </section>
 
@@ -135,19 +143,17 @@ export default function BookingForm() {
                     key={s.id}
                     type="button"
                     onClick={() => handleSlotSelect(s.id)}
-                    className={`p-3 rounded-xl border text-sm font-medium transition-all ${formData.slotId === s.id ? "text-white border-transparent shadow-lg" : "bg-white border-gray-200 text-[#5E5A6B] hover:border-[#3F2965]"}`}
-                    style={formData.slotId === s.id ? { background: "linear-gradient(to right, #8e44ad, #c0392b)" } : {}}
+                    className={`p-3 rounded-xl border text-sm font-medium transition-all relative overflow-hidden ${formData.slotId === s.id ? "text-[#3F2965] border-transparent shadow-lg" : "bg-white border-gray-200 text-[#5E5A6B] hover:border-[#3F2965]"}`}
                   >
-                    {s.startTime}
+                    {formData.slotId === s.id && <BlobBackground />}
+                    <span className="relative z-10">{s.startTime}</span>
                   </button>
                 ))}
               </div>
             ) : (
-              <div 
-                className="p-8 text-white"
-                style={{ background: "linear-gradient(to right, #8e44ad, #c0392b)" }}
-              >
-                No slots available for this date.
+              <div className="p-8 text-[#3F2965] relative overflow-hidden rounded-2xl border border-gray-100">
+                <BlobBackground />
+                <span className="relative z-10">No slots available for this date.</span>
               </div>
             )}
           </section>
@@ -188,10 +194,12 @@ export default function BookingForm() {
             <button 
               type="submit" 
               disabled={isSubmitting || !formData.slotId}
-              className="w-full py-5 rounded-full text-white font-bold text-lg hover:shadow-2xl transition-all disabled:opacity-30 disabled:grayscale active:scale-95 flex items-center justify-center gap-3"
-              style={{ background: "linear-gradient(to right, #8e44ad, #c0392b)" }}
+              className="w-full py-5 rounded-full text-[#3F2965] font-bold text-lg hover:shadow-2xl transition-all disabled:opacity-30 disabled:grayscale active:scale-95 flex items-center justify-center gap-3 relative overflow-hidden"
             >
-              {isSubmitting ? <><Loader2 className="animate-spin" /> Processing...</> : "Confirm Request"}
+              <BlobBackground />
+              <span className="relative z-10 flex items-center gap-3">
+                {isSubmitting ? <><Loader2 className="animate-spin" /> Processing...</> : "Confirm Request"}
+              </span>
             </button>
           </div>
         </form>
