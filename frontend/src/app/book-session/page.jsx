@@ -101,7 +101,10 @@ export default function BookSessionPage() {
               </div>
             </div>
 
-            <div className="bg-[#3F2965] p-8 rounded-[2rem] text-white shadow-xl relative overflow-hidden">
+            <div 
+              className="p-8 rounded-[2rem] text-white shadow-xl relative overflow-hidden"
+              style={{ background: "linear-gradient(to right, #8e44ad, #c0392b)" }}
+            >
               <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white/5 rounded-full blur-2xl" />
               <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
                 <CheckCircle size={20} className="text-[#DD1764]" /> Confidentiality

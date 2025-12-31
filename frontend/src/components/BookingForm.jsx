@@ -75,7 +75,10 @@ export default function BookingForm() {
         className="rounded-3xl bg-white border border-[#3F2965]/10 shadow-2xl overflow-hidden"
       >
         {/* Progress Header */}
-        <div className="bg-gradient-to-r from-[#3F2965] to-[#DD1764] p-8 text-white">
+        <div 
+          className="p-8 text-white" 
+          style={{ background: "linear-gradient(to right, #8e44ad, #c0392b)" }}
+        >
           <h2 className="text-3xl font-light mb-2 flex items-center gap-3">
             <CheckCircle2 className="text-white/80" /> Reserve a Session
           </h2>
@@ -132,14 +135,18 @@ export default function BookingForm() {
                     key={s.id}
                     type="button"
                     onClick={() => handleSlotSelect(s.id)}
-                    className={`p-3 rounded-xl border text-sm font-medium transition-all ${formData.slotId === s.id ? "bg-[#3F2965] text-white border-[#3F2965] shadow-lg" : "bg-white border-gray-200 text-[#5E5A6B] hover:border-[#3F2965]"}`}
+                    className={`p-3 rounded-xl border text-sm font-medium transition-all ${formData.slotId === s.id ? "text-white border-transparent shadow-lg" : "bg-white border-gray-200 text-[#5E5A6B] hover:border-[#3F2965]"}`}
+                    style={formData.slotId === s.id ? { background: "linear-gradient(to right, #8e44ad, #c0392b)" } : {}}
                   >
                     {s.startTime}
                   </button>
                 ))}
               </div>
             ) : (
-              <div className="p-8 text-center rounded-2xl bg-gray-50 border border-dashed border-gray-200 text-gray-400">
+              <div 
+                className="p-8 text-white"
+                style={{ background: "linear-gradient(to right, #8e44ad, #c0392b)" }}
+              >
                 No slots available for this date.
               </div>
             )}
@@ -181,7 +188,8 @@ export default function BookingForm() {
             <button 
               type="submit" 
               disabled={isSubmitting || !formData.slotId}
-              className="w-full py-5 rounded-full bg-gradient-to-r from-[#3F2965] to-[#DD1764] text-white font-bold text-lg hover:shadow-2xl transition-all disabled:opacity-30 disabled:grayscale active:scale-95 flex items-center justify-center gap-3"
+              className="w-full py-5 rounded-full text-white font-bold text-lg hover:shadow-2xl transition-all disabled:opacity-30 disabled:grayscale active:scale-95 flex items-center justify-center gap-3"
+              style={{ background: "linear-gradient(to right, #8e44ad, #c0392b)" }}
             >
               {isSubmitting ? <><Loader2 className="animate-spin" /> Processing...</> : "Confirm Request"}
             </button>
