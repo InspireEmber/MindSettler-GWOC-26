@@ -1,274 +1,275 @@
 "use client";
 import ReadyToBook from "@/components/ReadyToBook";
-
-import React, { useRef } from "react";
-import Link from "next/link";
-import {
-  ClipboardCheck,
-  ShieldCheck,
-  UserCircle,
-  BookOpen,
-  Heart,
-  Users2,
-  ArrowRight,
-  Sparkles,
+import React from "react";
+import { useState, useEffect } from "react";
+import { 
+    Sparkles, 
+    ShieldCheck, 
+    LayoutGrid, 
+    Lock, 
+    Sprout, 
+    Lightbulb, 
+    Heart 
 } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-// --- UTILITY ---
-function cn(...inputs) {
-  return twMerge(clsx(inputs));
-}
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 // --- DATA ---
-const FEATURES = [
+const BRAIN_ZONES = [
   {
-    title: "Structured Sessions",
-    desc: "Every session follows a clear, thoughtful structure. You always know what to expect.",
-    longDesc:
-      "We remove the anxiety of the unknown. Our sessions are architected to give you a roadmap, so you can focus purely on your growth.",
-    icon: <ClipboardCheck />,
-    color: "text-[#3F2965]",
-    bg: "bg-[#3F2965]/10",
+    title: "Emotional Safety",
+    desc: "A judgment-free environment where you can express yourself without fear. We create a container where vulnerability is met with unconditional validation.",
+    icon: <ShieldCheck className="w-6 h-6 text-[#DD1764]" />,
   },
   {
-    title: "Confidentiality First",
-    desc: "Your privacy is respected at every step. What you share stays safe.",
-    longDesc:
-      "A judgment-free zone where your data and your stories are protected with enterprise-grade care and human empathy.",
-    icon: <ShieldCheck />,
-    color: "text-[#DD1764]",
-    bg: "bg-[#DD1764]/10",
+    title: "Structured Thinking",
+    desc: "Organized sessions that help you navigate chaos and find clarity. We turn overwhelming thoughts into actionable pathways for change.",
+    icon: <LayoutGrid className="w-6 h-6 text-[#3F2965]" />,
   },
   {
-    title: "Personalized Guidance",
-    desc: "Sessions are shaped around your experiences, needs, and pace.",
-    longDesc:
-      "No cookie-cutter scripts. We adapt to your emotional velocity, ensuring the journey feels uniquely yours.",
-    icon: <UserCircle />,
-    color: "text-[#3F2965]",
-    bg: "bg-[#3F2965]/10",
+    title: "Confidential Space",
+    desc: "Your privacy is paramount; what happens here stays here. We adhere to the strictest ethical standards to protect your story.",
+    icon: <Lock className="w-6 h-6 text-[#DD1764]" />,
   },
   {
-    title: "Education-Focused",
-    desc: "We focus on understanding, not quick fixes. Learn tools for the long term.",
-    longDesc:
-      "We don't just listen; we equip you. You leave with a toolkit of cognitive strategies to navigate life independently.",
-    icon: <BookOpen />,
-    color: "text-[#DD1764]",
-    bg: "bg-[#DD1764]/10",
+    title: "Growth",
+    desc: "Every step is designed to move you forward on your personal journey. We track progress not just by symptom reduction, but by life satisfaction.",
+    icon: <Sprout className="w-6 h-6 text-[#3F2965]" />,
   },
   {
-    title: "Calm & Approachable",
-    desc: "A warm, welcoming space where you can speak openly without pressure.",
-    longDesc:
-      "The environment is designed to lower cortisol and raise comfort. Come as you are, feel safe immediately.",
-    icon: <Heart />,
-    color: "text-[#3F2965]",
-    bg: "bg-[#3F2965]/10",
-  },
-  {
-    title: "Human-Led Support",
-    desc: "Real conversations. No bots, no automation—just genuine connection.",
-    longDesc:
-      "Technology aids us, but it doesn't replace us. You will always be heard by a beating heart and a thinking mind.",
-    icon: <Users2 />,
-    color: "text-[#DD1764]",
-    bg: "bg-[#DD1764]/10",
-  },
-];
-
-const REASONS = [
-  {
-    title: "Trust Through Structure",
-    desc: "Uncertainty breeds anxiety. Our roadmap creates a safety net for your mind.",
-  },
-  {
-    title: "Empowerment",
-    desc: "Knowledge is agency. Understanding your mental health puts you back in the driver's seat.",
+    title: "Self-Understanding",
+    desc: "Gain deep insights into your patterns and behaviors. Unlock the 'why' behind your actions to empower lasting transformation.",
+    icon: <Lightbulb className="w-6 h-6 text-[#DD1764]" />,
   },
   {
     title: "Human Connection",
-    desc: "In a digital world, being truly heard by another human is the ultimate healing tool.",
+    desc: "Real empathy and understanding from a dedicated professional. Technology bridges the gap, but the healing comes from authentic human presence.",
+    icon: <Heart className="w-6 h-6 text-[#3F2965]" />,
   },
 ];
 
+const NEW_ROTATING_CONTENT = [
+  {
+    id: 1,
+    title: "Understanding Deeper", 
+    text: "Sometimes words aren't enough. We look beyond the surface to understand what your mind is truly asking for.",
+    imageSrc: "/images/4b.svg" 
+  },
+  {
+    id: 2,
+    title: "Finding Balance",
+    text: "Life is a balancing act. We help you find the equilibrium between your responsibilities and your well-being.",
+    imageSrc: "/images/5b.svg"
+  },
+  {
+    id: 3,
+    title: "Moving Forward",
+    text: "The past informs us, but it doesn't define us. We focus on building a future that aligns with your values.",
+    imageSrc: "/images/6b.svg"
+  }
+];
+
+// Split data for layout
+const ZONES_LEFT = BRAIN_ZONES.slice(0, 3);
+const ZONES_BOTTOM = BRAIN_ZONES.slice(3, 6);
+
 // --- ANIMATION VARIANTS ---
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+        opacity: 1, 
+        transition: { 
+            staggerChildren: 0.15
+        } 
+    }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 15 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
+    transition: { duration: 0.5, ease: "easeOut" }
   },
 };
 
+const imageVariants = {
+    hidden: { opacity: 0, scale: 0.95, x: 20 },
+    visible: { 
+        opacity: 1, 
+        scale: 1, 
+        x: 0, 
+        transition: { duration: 0.8, ease: "easeOut" } 
+    }
+};
+
 // --- SUB-COMPONENTS ---
-
-// 1. The Scroll Dock Item (Lighter Animation)
-const FeatureDockItem = ({ feature, index }) => {
-  return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.4 }}
-      variants={fadeInUp}
-      className="group relative flex flex-col items-center text-center py-12 md:py-16 max-w-2xl mx-auto"
-    >
-      {/* Central Connector Line */}
-      <div className="absolute top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-[#3F2965]/10 to-transparent left-1/2 -z-10" />
-
-      {/* Icon Bubble */}
-      <div className="relative mb-6">
-        <div
-          className={cn(
-            "w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-lg bg-white transition-all duration-400",
-            feature.color
-          )}
-        >
-          {React.cloneElement(feature.icon, { size: 28, strokeWidth: 1.5 })}
+const ZoneCard = ({ zone, className }) => (
+  <motion.div
+    variants={itemVariants}
+    whileHover={{ y: -5, transition: { duration: 0.2 } }}
+    className={`flex gap-5 p-6 rounded-2xl bg-white border border-[#3F2965]/5 shadow-sm hover:shadow-xl hover:shadow-[#DD1764]/5 transition-all duration-300 h-full ${className}`}
+  >
+    <div className="shrink-0 mt-1">
+        <div className="w-14 h-14 rounded-full bg-[#FAF9FC] flex items-center justify-center border border-[#3F2965]/5 shadow-inner">
+            {zone.icon}
         </div>
-      </div>
-
-      <h3 className="text-2xl md:text-4xl font-light text-[#2E2A36] mb-4 tracking-tight">
-        {feature.title}
-      </h3>
-
-      <p className="text-base md:text-lg text-[#5E5A6B] leading-relaxed max-w-md">
-        {feature.desc}
-      </p>
-
-      {/* Extended Description (Fades in on hover) */}
-      <p className="mt-4 text-sm md:text-base text-[#3F2965] font-serif italic max-w-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        "{feature.longDesc}"
-      </p>
-    </motion.div>
-  );
-};
-
-// 2. Parallax Reason Card
-const ReasonCard = ({ reason, index }) => {
-  return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.5 }}
-      variants={fadeInUp}
-      transition={{ delay: index * 0.1 }}
-      whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className="p-8 rounded-[2rem] bg-white border border-[#3F2965]/5 shadow-lg shadow-[#3F2965]/5 hover:shadow-xl hover:shadow-[#DD1764]/10 transition-shadow duration-300 relative overflow-hidden group"
-    >
-      <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#F6F4FA] to-transparent rounded-bl-[80px] -z-0 group-hover:scale-125 transition-transform duration-500 ease-in-out" />
-
-      <div className="relative z-10">
-        <span className="block text-5xl font-serif italic text-[#3F2965]/10 mb-4 group-hover:text-[#DD1764]/20 transition-colors">
-          0{index + 1}
-        </span>
-        <h4 className="text-xl font-semibold text-[#3F2965] mb-3">
-          {reason.title}
-        </h4>
-        <p className="text-[#5E5A6B] leading-relaxed">{reason.desc}</p>
-      </div>
-    </motion.div>
-  );
-};
+    </div>
+    <div className="flex flex-col">
+        <h3 className="text-2xl font-medium text-[#2E2A36] mb-2 tracking-tight">
+            {zone.title}
+        </h3>
+        <p className="text-[#5E5A6B] text-base leading-relaxed">
+            {zone.desc}
+        </p>
+    </div>
+  </motion.div>
+);
 
 // --- MAIN PAGE COMPONENT ---
 export default function WhatMakesUsDifferentPage() {
-  const { scrollYProgress } = useScroll();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Reduced background parallax movement
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  // Auto-rotate logic
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % NEW_ROTATING_CONTENT.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#FDFBFD] text-[#5E5A6B] overflow-hidden selection:bg-[#DD1764]/20">
-      {/* 1. Global Animated Background Elements */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <motion.div
-          style={{ y: bgY }}
-          className="absolute top-[-10%] left-[-15%] w-[60vw] h-[60vw] bg-[#3F2965]/5 rounded-full blur-[100px]"
-        />
-        <motion.div
-          style={{ y: bgY }}
-          className="absolute bottom-[-10%] right-[-15%] w-[60vw] h-[60vw] bg-[#DD1764]/5 rounded-full blur-[100px]"
-        />
-      </div>
+    <div className="min-h-screen bg-[#FDFBFD] text-[#5E5A6B] selection:bg-[#DD1764]/20 overflow-x-hidden">
+      
+      {/* HERO HEADER */}
+      <section className="relative z-10 pt-20 pb-8 md:pt-28 md:pb-12 px-6 text-center">
+          {/* Gradient Bar */}
+          <div className="w-24 h-1.5 mx-auto bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mb-8" />
 
-      {/* 2. HERO SECTION */}
-      <section className="relative z-10 pt-28 pb-4 md:pt-40 md:pb-8 px-6 text-center">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          className="max-w-4xl mx-auto"
-        >
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#3F2965]/10 shadow-sm mb-6">
-            <Sparkles className="w-4 h-4 text-[#DD1764]" />
-            <span className="text-xs font-bold tracking-widest text-[#3F2965] uppercase">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#3F2965]/10 shadow-sm mb-4">
+            <Sparkles className="w-3.5 h-3.5 text-[#DD1764]" />
+            <span className="text-[10px] sm:text-xs font-bold tracking-widest text-[#3F2965] uppercase">
               Beyond Standard Care
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-7xl font-light text-[#2E2A36] mb-6 tracking-tight">
+          <h1 className="text-3xl md:text-5xl lg:text-7xl font-light text-[#2E2A36] tracking-tight mb-6">
             What Makes Us <br />
             <span className="font-serif italic text-[#3F2965] relative inline-block">
               Different
             </span>
           </h1>
 
-          <p className="text-lg md:text-xl text-[#5E5A6B] max-w-2xl mx-auto font-light leading-relaxed">
+           <p className="text-base md:text-xl text-[#5E5A6B] max-w-2xl mx-auto font-light leading-relaxed">
             We don't just offer sessions; we offer a carefully architected
             journey designed for sustainable emotional growth.
           </p>
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2.2 }}
-          className="mt-6 flex justify-center opacity-30"
-        >
-          <div className="w-[1px] h-20 bg-gradient-to-b from-[#3F2965] to-transparent" />
-        </motion.div>
       </section>
 
-      {/* 3. FLUID DOCK SECTION (Features) */}
-      <section className="relative z-10 pt-6 pb-12 md:pt-8 md:pb-16">
-        <div className="max-w-4xl mx-auto px-6 relative">
-          <div className="flex flex-col gap-4">
-            {FEATURES.map((feature, i) => (
-              <FeatureDockItem key={i} feature={feature} index={i} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. REASONS GRID */}
-      <section className="relative z-10 py-20 md:py-28 bg-white/40 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-6">
-          <motion.div
+      {/* L-SHAPE LAYOUT SECTION */}
+      <section className="relative z-10 px-6 pb-20 md:pb-32 max-w-7xl mx-auto">
+        <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInUp}
-            className="text-center mb-12 md:mb-16"
-          >
-            <h2 className="text-3xl md:text-5xl font-light text-[#2E2A36]">
-              Why This Approach{" "}
-              <span className="font-serif italic text-[#DD1764]">Matters</span>
-            </h2>
-          </motion.div>
+            viewport={{ once: true, amount: 0.1 }}
+            variants={containerVariants}
+        >
+            {/* TOP ROW: Left Cards + Right Image */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-8">
+                
+                {/* LEFT: 3 Stacked Cards (Takes up 5/12 width) */}
+                <div className="lg:col-span-5 flex flex-col gap-6 justify-center">
+                    {ZONES_LEFT.map((zone, i) => (
+                        <ZoneCard key={i} zone={zone} />
+                    ))}
+                </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {REASONS.map((r, i) => (
-              <ReasonCard key={i} reason={r} index={i} />
-            ))}
+                {/* RIGHT: Illustration (Takes up 7/12 width) */}
+                <div className="lg:col-span-7 flex justify-center items-center">
+                    <motion.div 
+                         variants={imageVariants}
+                         className="relative w-full max-w-[600px] lg:max-w-none"
+                    >
+                        <Image
+                            src="/images/brain_illustration.png"
+                            alt="Conceptual illustration of the brain"
+                            width={1024}
+                            height={1024}
+                            className="w-full h-auto object-contain drop-shadow-sm mix-blend-multiply"
+                            priority
+                        />
+                    </motion.div>
+                </div>
+            </div>
+
+            {/* BOTTOM ROW: 3 Horizontal Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                 {ZONES_BOTTOM.map((zone, i) => (
+                    <ZoneCard key={i + 3} zone={zone} /> // i+3 to keep unique keys if we needed them different
+                ))}
+            </div>
+
+        </motion.div>
+      </section>
+
+      {/* --- NEW ROTATING SECTION (Replicated) --- */}
+       <section className="py-20 sm:py-24 bg-[#F6F4FA] border-t border-b border-[#3F2965]/5 overflow-hidden">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-[#2E2A36] leading-tight">
+              The Journey of <span className="font-medium italic text-[#DD1764]">Discovery</span>
+            </h2>
+          </div>
+
+          <div className="relative min-h-[350px] flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, x: 50, filter: "blur(5px)" }}
+                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, x: -50, filter: "blur(5px)" }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="w-full flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20"
+              >
+                
+                {/* --- IMAGE DISPLAY --- */}
+                <div className="shrink-0">
+                    <img 
+                        src={NEW_ROTATING_CONTENT[currentIndex].imageSrc} 
+                        alt={NEW_ROTATING_CONTENT[currentIndex].title}
+                        className="w-64 h-64 object-contain drop-shadow-2xl" 
+                    />
+                </div>
+
+                {/* --- TEXT DISPLAY --- */}
+                <div className="text-center md:text-left max-w-lg">
+                  <h3 className="text-3xl sm:text-4xl font-light text-[#2E2A36] mb-6">
+                    {NEW_ROTATING_CONTENT[currentIndex].title}
+                  </h3>
+                  <p className="text-lg text-[#5E5A6B] leading-relaxed mb-8 whitespace-pre-line">
+                    {NEW_ROTATING_CONTENT[currentIndex].text}
+                  </p>
+                  
+                  {/* Progress Indicators */}
+                  <div className="flex justify-center md:justify-start gap-3">
+                    {NEW_ROTATING_CONTENT.map((_, i) => (
+                      <div 
+                        key={i}
+                        className={`h-1.5 rounded-full transition-all duration-500 ${
+                          i === currentIndex ? "w-12 bg-[#3F2965]" : "w-3 bg-[#3F2965]/20"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </section>
+
       <ReadyToBook />
     </div>
   );
