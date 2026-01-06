@@ -4,18 +4,18 @@ import Link from "next/link";
 export default function ReadyToBook() {
   return (
     <section className="py-10 sm:py-14 md:py-20 lg:py-24 px-4 sm:px-6">
-      <div 
+      <div
         className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 md:p-16 lg:p-24 text-center text-white shadow-2xl shadow-[#3F2965]/30 min-h-[400px] flex flex-col items-center justify-center isolate"
       >
         {/* --- Background Circle Pattern (Image) --- */}
         <div className="absolute inset-0 z-0">
-           <img 
-              src="/images/cta-final-bg.png" 
-              alt="Background Pattern" 
-              className="w-full h-full object-cover"
-           />
-           {/* Blur Overlay */}
-           <div className="absolute inset-0 backdrop-blur-[2px] bg-[#3F2965]/10" />
+          <img
+            src="/images/cta-final-bg.png"
+            alt="Background Pattern"
+            className="w-full h-full object-cover"
+          />
+          {/* Blur Overlay */}
+          <div className="absolute inset-0 backdrop-blur-[2px] bg-black/30" />
         </div>
 
         <div className="relative z-10">

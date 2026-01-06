@@ -37,10 +37,10 @@ export default function HomePage() {
           className="absolute inset-0 w-full h-[130vh] -top-[10vh]"
         >
           <Image
-            src="/images/howback.jpg"
+            src="/images/bg2.jpg"
             alt="Fluid Art Background"
             fill
-            className="object-cover blur-[2px] opacity-60"
+            className="object-cover blur-[2px] opacity-50"
             priority
           />
         </motion.div>
