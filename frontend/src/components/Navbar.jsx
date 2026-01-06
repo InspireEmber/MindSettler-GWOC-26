@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
   Menu, X, User, LogOut, LogIn,
@@ -14,6 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const router = useRouter();
+  const pathname = usePathname();
   const { user, loading, logout } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -48,17 +49,33 @@ export default function Navbar() {
     tap: { scale: 0.95 }
   };
 
-  const NavLink = ({ href, children, icon: Icon }) => (
-    <motion.div variants={navLinkVariants} whileHover="hover" whileTap="tap">
-      <Link
-        href={href}
-        className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-all duration-300"
-      >
-        <Icon size={16} className="text-[#eeb9ff] opacity-90" />
-        <span className="tracking-wide">{children}</span>
-      </Link>
-    </motion.div>
-  );
+  const NavLink = ({ href, children, icon: Icon }) => {
+    const isActive = pathname === href;
+
+    return (
+      <div className="relative">
+        <motion.div variants={navLinkVariants} whileHover="hover" whileTap="tap">
+          <Link
+            href={href}
+            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isActive ? "text-white" : "text-white/80 hover:text-white"
+              }`}
+          >
+            <Icon size={16} className={isActive ? "text-[#eeb9ff]" : "text-[#eeb9ff] opacity-90"} />
+            <span className="tracking-wide">{children}</span>
+          </Link>
+        </motion.div>
+        {isActive && (
+          <motion.div
+            layoutId="navbar-underline"
+            className="absolute bottom-0 left-4 right-4 h-[2px] bg-gradient-to-r from-[#eeb9ff] to-[#DD1764] rounded-full shadow-[0_0_8px_rgba(238,185,255,0.6)]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+        )}
+      </div>
+    );
+  };
 
   return (
     <header
@@ -157,21 +174,28 @@ export default function Navbar() {
                   { href: "/how-it-works", label: "How It Works", icon: Sparkles },
                   { href: "/resources", label: "Resources", icon: BookOpen },
                   { href: "/book-session", label: "Book Session", icon: CalendarCheck, primary: true },
-                ].map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex items-center justify-between px-5 py-4 rounded-xl transition-all ${item.primary ? "bg-[#4a313e]/60 backdrop-blur-md text-white mx-2 ring-1 ring-inset ring-white/10" : "text-white/80 hover:bg-white/10 hover:text-white"
-                      }`}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <div className="flex items-center gap-3 font-medium">
-                      <item.icon size={20} className={item.primary ? "text-white" : "text-[#eeb9ff]"} />
-                      {item.label}
-                    </div>
-                    <ChevronRight size={16} className="opacity-50" />
-                  </Link>
-                ))}
+                ].map((item) => {
+                  const isActive = pathname === item.href;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`flex items-center justify-between px-5 py-4 rounded-xl transition-all ${item.primary
+                        ? "bg-[#4a313e]/60 backdrop-blur-md text-white mx-2 ring-1 ring-inset ring-white/10"
+                        : isActive
+                          ? "bg-white/5 text-white mx-2 border-l-2 border-[#eeb9ff]"
+                          : "text-white/80 hover:bg-white/10 hover:text-white"
+                        }`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="flex items-center gap-3 font-medium">
+                        <item.icon size={20} className={item.primary ? "text-white" : isActive ? "text-[#eeb9ff]" : "text-[#eeb9ff]/70"} />
+                        {item.label}
+                      </div>
+                      <ChevronRight size={16} className={isActive ? "opacity-100 text-[#eeb9ff]" : "opacity-50"} />
+                    </Link>
+                  );
+                })}
 
                 {!loading && !user && (
                   <div className="flex gap-3 p-4 mt-2 border-t border-white/10">
