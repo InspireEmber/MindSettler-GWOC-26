@@ -16,8 +16,8 @@ export default function RootLayout({ children }) {
   const isLogin = pathname === "/login";
   
   // Routes that should NOT have the global parallax background
-  // Added /login and /signup to exclusion list as they have their own specific backgrounds
-  const isGlobalBackgroundExcluded = ["/how-it-works", "/admin", "/login", "/signup"].some((path) =>
+  // Added /signup to exclusion list as it has its own specific backgrounds
+  const isGlobalBackgroundExcluded = ["/how-it-works", "/admin", "/signup"].some((path) =>
     pathname?.startsWith(path)
   );
 
