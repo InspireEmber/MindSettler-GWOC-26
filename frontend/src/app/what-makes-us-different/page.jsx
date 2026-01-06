@@ -196,7 +196,8 @@ export default function WhatMakesUsDifferentPage() {
                             alt="Conceptual illustration of the brain"
                             width={1024}
                             height={1024}
-                            className="w-full h-auto object-contain drop-shadow-sm mix-blend-multiply opacity-90"
+                            className="w-full h-auto object-contain mix-blend-screen invert contrast-125 opacity-90"
+                            style={{ maskImage: "radial-gradient(circle at center, black 40%, transparent 70%)", WebkitMaskImage: "radial-gradient(circle at center, black 40%, transparent 70%)" }}
                             priority
                         />
                     </motion.div>
