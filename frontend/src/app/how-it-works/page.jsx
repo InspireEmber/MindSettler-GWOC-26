@@ -123,7 +123,7 @@ export default function HowItWorksPage() {
         {/* PARALLAX CONTAINER */}
         <motion.div 
           style={{ y: backgroundY }}
-          className="absolute inset-0 w-full h-[130vh] -top-[10vh]"
+          className="absolute inset-0 w-full h-[160vh] -top-[10vh]"
         >
             <Image 
                 src="/images/howback.jpg" 
