@@ -1,5 +1,6 @@
 "use client";
 
+import { useSpring } from "framer-motion";
 import ReadyToBook from "@/components/ReadyToBook";
 
 import Link from "next/link";
@@ -21,46 +22,72 @@ const revealUp = {
 };
 
 export default function HomePage() {
-  
+  const { scrollY } = useScroll();
+  const smoothY = useSpring(scrollY, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
+  const opacity = useTransform(smoothY, [0, 500], [0.8, 0]);
+  const scale = useTransform(smoothY, [0, 500], [1, 1.1]);
+  const blur = useTransform(smoothY, [0, 500], [0, 10]);
+
   return (
     <div className="relative overflow-x-hidden">
 
       {/* --- CONTENT LAYER --- */}
       <div className="relative z-10">
 
-        {/* HERO SECTION – NO ANIMATIONS */}
-        <section className="py-12 sm:py-16 md:py-20 lg:py-32 text-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-14 items-center">
-            {/* LEFT CONTENT */}
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6">
-                <Sparkles size={12} className="sm:w-[14px] sm:h-[14px]" />
-                <span>Your Journey Starts Here</span>
-              </div>
+        {/* HERO SECTION – VIDEO BACKGROUND */}
+        <section className="relative min-h-[70vh] lg:min-h-[100vh] flex items-center overflow-hidden">
+          {/* Background Video Layer */}
+          <motion.div
+            style={{ opacity, scale, filter: `blur(${blur}px)` }}
+            className="absolute inset-0 z-0 bg-[#0b0220]"
+          >
+            <motion.video
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source src="/videos/herosect.mp4" type="video/mp4" />
+            </motion.video>
+            {/* Dark/Gradient Overlay for blending */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0b0220]/80 via-transparent to-[#0b0220] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-[#0b0220] to-transparent pointer-events-none" />
+          </motion.div>
 
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight mb-6 sm:mb-8">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff] italic font-serif">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12 sm:gap-16 items-center text-center pt-32 pb-16 md:pb-24 lg:pb-32">
+            {/* LEFT CONTENT - QUOTE */}
+            <div className="max-w-xl">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff] via-[#fff] to-[#fff] italic font-serif">
                   "It's okay to not be okay.
                   <br />
                   It's okay to ask for help."
                 </span>
               </h1>
+            </div>
 
-              <p className="text-base sm:text-lg text-gray-200 max-w-lg leading-relaxed mb-8 sm:mb-10">
+            {/* RIGHT CONTENT - DESC & BUTTONS */}
+            <div className="flex flex-col gap-8">
+              <p className="text-lg sm:text-xl text-gray-200 leading-relaxed">
                 MindSettler by Parnika is a safe space to understand your mind,
                 settle emotional distress, and begin your mental well-being
                 journey.
                 <br />
                 <br />
-                <span className="font-semibold text-white text-sm sm:text-base">
+                <span className="font-semibold text-white text-base sm:text-lg">
                   Confidential · Non-judgmental · Guided support
                 </span>
               </p>
 
-              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-4">
                 <Link
                   href="/book-session"
-                  className="px-6 sm:px-10 py-3 sm:py-4 rounded-full bg-gradient-to-r from-[#3F2965] to-[#DD1764] text-white font-medium hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2 group min-h-[44px]"
+                  className="px-8 py-4 rounded-full bg-[#4a313e]/60 backdrop-blur-md text-white font-medium hover:shadow-2xl hover:scale-105 transition-all flex items-center justify-center gap-2 group shadow-xl ring-1 ring-inset ring-white/10"
                 >
                   Begin When You're Ready
                   <ArrowRight size={18} />
@@ -68,24 +95,10 @@ export default function HomePage() {
 
                 <Link
                   href="/how-it-works"
-                  className="px-6 sm:px-10 py-3 sm:py-4 rounded-full border border-white/30 text-white hover:bg-white/10 transition-all text-center min-h-[44px]"
+                  className="px-8 py-4 rounded-full bg-white/5 backdrop-blur-md border border-white/20 text-white hover:bg-white/10 transition-all text-center"
                 >
                   Learn More
                 </Link>
-              </div>
-            </div>
-
-            {/* RIGHT IMAGE */}
-            <div className="flex justify-center mt-8 lg:mt-0">
-              <div className="relative w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] md:w-[320px] md:h-[320px] lg:w-[380px] lg:h-[380px] rounded-full bg-white/10 backdrop-blur-md shadow-[0_0_80px_rgba(63,41,101,0.3)] flex items-center justify-center border border-white/20 overflow-hidden">
-                <Image
-                  src="/images/hands.jpg"
-                  alt="Support and care"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                <div className="absolute inset-3 border border-dashed border-white/30 rounded-full" />
               </div>
             </div>
           </div>
@@ -196,7 +209,7 @@ export default function HomePage() {
                 <div className="bg-gradient-to-br from-[#3F2965] to-[#DD1764] p-[1px] rounded-3xl">
                   <div className="bg-black/50 backdrop-blur-md rounded-3xl p-6 sm:p-8">
                     <h3 className="font-serif italic text-xl sm:text-2xl text-[#eeb9ff] mb-6 text-center">
-                      \"MindSettler by Parnika\"
+                      "MindSettler by Parnika"
                     </h3>
 
                     <p className="text-gray-200 leading-relaxed mb-6 text-center">

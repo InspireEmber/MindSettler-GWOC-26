@@ -144,7 +144,7 @@ export default function HowItWorksPage() {
       <div className="relative z-10">
 
         {/* Hero Section */}
-        <section className="py-12 sm:py-16 md:py-20 lg:py-32 text-center">
+        <section className="py-12 sm:py-16 md:py-20 lg:py-20 text-center">
           <motion.div
             initial="hidden"
             animate="visible"

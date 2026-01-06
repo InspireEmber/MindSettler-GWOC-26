@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
   const isAdminRoute = pathname?.startsWith("/admin");
   const isHowItWorks = pathname === "/how-it-works";
   const isLogin = pathname === "/login";
-  
+
   // Routes that should NOT have the global parallax background
   // Added /signup to exclusion list as it has its own specific backgrounds
   const isGlobalBackgroundExcluded = ["/how-it-works", "/admin"].some((path) =>
@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
       </head>
-      <body 
+      <body
         className={clsx(
           "w-full transition-colors duration-300",
           showGlobalBackground ? "bg-black text-white selection:bg-[#DD1764] selection:text-white" : "bg-[#F6F4FA] text-[#2E2A36]"
@@ -68,7 +68,7 @@ export default function RootLayout({ children }) {
           <main
             className={clsx(
               "w-full flex-grow",
-              !isAdminRoute && "pt-20 md:pt-24"
+              !isAdminRoute && pathname !== "/" && "pt-20 md:pt-24"
             )}
           >
             {children}
