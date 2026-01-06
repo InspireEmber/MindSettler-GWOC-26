@@ -28,7 +28,7 @@ export default function LoginPage() {
 
     try {
       await api.userLogin(formData);
-      window.location.href = "/book-session";
+      router.push("/book-session");
     } catch (err) {
       setError(err.message || "Login failed. Please check your credentials.");
       setLoading(false);

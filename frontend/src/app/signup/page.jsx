@@ -31,7 +31,7 @@ export default function SignupPage() {
     setError("");
 
     // --- CLIENT SIDE VALIDATION START ---
-    
+
     // 1. Check for empty Name
     if (!formData.name.trim()) {
       setError("Please enter your full name.");
@@ -64,8 +64,15 @@ export default function SignupPage() {
     // --- CLIENT SIDE VALIDATION END ---
 
     try {
+      // 1. Create the user
       await api.userSignup(formData);
-      router.push("/login");
+
+      // 2. Automatically log them in
+      await api.userLogin({ email: formData.email, password: formData.password });
+
+      // 3. Redirect to the app (Book Session)
+      // Use window.location.href to guarantee session cookie persistence
+      window.location.href = "/book-session";
     } catch (err) {
       setError(err.message || "Signup failed. Please try again.");
       setLoading(false);
