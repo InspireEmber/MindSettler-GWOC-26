@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ShieldAlert, Lock, Eye, FileCheck, UserPlus } from "lucide-react";
+import ReadyToBook from "@/components/ReadyToBook";
 
 const POLICY_SECTIONS = [
   {
@@ -85,27 +86,7 @@ export default function ConfidentialityPolicyPage() {
         </div>
       </section>
 
-      {/* Your Specific Vibrant CTA */}
-      <section className="py-24 md:py-32 bg-[#F6F4FA]/50">
-        <div className="max-w-5xl mx-auto px-6 md:px-12">
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-10 sm:p-12 md:p-20 text-center text-white shadow-2xl shadow-[#3F2965]/30">
-            {/* Decorative Brand Accents */}
-            <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" />
-            <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
-
-            <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl font-light text-white mb-6">Ready to Begin Your Journey?</h2>
-              <p className="text-xl text-white/90 mb-8 leading-relaxed max-w-2xl mx-auto">Take the first step toward understanding your mind and building emotional clarity.</p>
-              <Link
-                href="/book-session"
-                className="inline-flex px-10 py-4 md:px-12 md:py-5 rounded-full bg-white text-[#3F2965] font-medium text-lg hover:bg-white/95 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(255,255,255,0.2)] hover:scale-[1.03] active:scale-95 items-center justify-center"
-              >
-                Book Your First Session
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ReadyToBook />
     </div>
   );
 }

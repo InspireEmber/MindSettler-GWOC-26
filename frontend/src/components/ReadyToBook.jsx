@@ -5,16 +5,18 @@ export default function ReadyToBook() {
   return (
     <section className="py-10 sm:py-14 md:py-20 lg:py-24 px-4 sm:px-6">
       <div 
-        className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 md:p-16 lg:p-24 text-center text-white shadow-2xl shadow-[#3F2965]/30"
-        style={{
-          background: "linear-gradient(90deg, hsla(286, 28%, 66%, 1) 0%, hsla(340, 73%, 75%, 1) 50%, hsla(263, 47%, 58%, 1) 100%)",
-          backgroundSize: "100% 100%",
-          backgroundRepeat: "no-repeat"
-        }}
+        className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 md:p-16 lg:p-24 text-center text-white shadow-2xl shadow-[#3F2965]/30 min-h-[400px] flex flex-col items-center justify-center isolate"
       >
-        {/* Decorative Brand Accents */}
-        <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" />
-        <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
+        {/* --- Background Circle Pattern (Image) --- */}
+        <div className="absolute inset-0 z-0">
+           <img 
+              src="/images/cta-final-bg.png" 
+              alt="Background Pattern" 
+              className="w-full h-full object-cover"
+           />
+           {/* Blur Overlay */}
+           <div className="absolute inset-0 backdrop-blur-[2px] bg-[#3F2965]/10" />
+        </div>
 
         <div className="relative z-10">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light mb-6 sm:mb-8 leading-tight px-2">
