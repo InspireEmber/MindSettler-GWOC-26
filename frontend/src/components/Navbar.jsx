@@ -20,10 +20,17 @@ export default function Navbar() {
 
   // Scroll listener for glass effect
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -56,8 +63,8 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-          ? "bg-[#0b0220]/80 backdrop-blur-xl border-b border-white/10 shadow-lg"
-          : "bg-transparent border-b border-transparent py-4"
+        ? "bg-[#ad4689]/40 backdrop-blur-xl border-b border-white/10 shadow-lg"
+        : "bg-transparent border-b border-transparent py-4"
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-3">
@@ -93,9 +100,9 @@ export default function Navbar() {
 
             <Link
               href="/book-session"
-              className="group relative flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#3F2965] to-[#DD1764] text-white shadow-lg hover:shadow-[#DD1764]/30 transition-all overflow-hidden border border-white/10"
+              className="group relative flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#4a313e]/60 backdrop-blur-md text-white shadow-xl hover:shadow-[#4A313E]/30 transition-all overflow-hidden ring-1 ring-inset ring-white/10"
             >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-white/20 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300" />
               <CalendarCheck size={18} className="relative z-10" />
               <span className="font-semibold text-sm relative z-10">Book Session</span>
             </Link>
@@ -114,13 +121,13 @@ export default function Navbar() {
                     href="/profile"
                     className="group flex items-center gap-2 p-1 pr-4 rounded-full bg-white/10 border border-white/10 hover:bg-white/20 transition-all"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#3F2965] to-[#DD1764] text-white flex items-center justify-center border border-white/20">
+                    <div className="w-8 h-8 rounded-full bg-[#4a313e]/60 backdrop-blur-md text-white flex items-center justify-center ring-1 ring-inset ring-white/20">
                       <User size={14} />
                     </div>
-                    <span className="text-xs font-bold text-white/90">My Account</span>
+                    <span className="text-xs font-bold text-white/90">Profile</span>
                   </Link>
-                  <button onClick={handleLogout} className="text-white/70 hover:text-[#EF4444] transition-colors">
-                    <LogOut size={20} />
+                  <button onClick={handleLogout} className="text-white/70 hover:text-[#EF4444] text-xs font-bold transition-colors uppercase tracking-wider">
+                    Logout
                   </button>
                 </div>
               )}
@@ -154,7 +161,7 @@ export default function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center justify-between px-5 py-4 rounded-xl transition-all ${item.primary ? "bg-gradient-to-r from-[#3F2965] to-[#DD1764] text-white mx-2" : "text-white/80 hover:bg-white/10 hover:text-white"
+                    className={`flex items-center justify-between px-5 py-4 rounded-xl transition-all ${item.primary ? "bg-[#4a313e]/60 backdrop-blur-md text-white mx-2 ring-1 ring-inset ring-white/10" : "text-white/80 hover:bg-white/10 hover:text-white"
                       }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
