@@ -27,41 +27,41 @@ const POLICY_SECTIONS = [
 
 export default function ConfidentialityPolicyPage() {
   return (
-    <div className="min-h-screen bg-white text-[#5E5A6B]">
+    <div className="min-h-screen relative overflow-x-hidden">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#F6F4FA] via-white to-[#F6F4FA] py-20 md:py-32 text-center">
+      <section className="relative z-10 pt-20 pb-8 md:pt-32 md:pb-12 text-center">
         <div className="max-w-4xl mx-auto px-6">
           <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mb-6" />
-          <h1 className="text-4xl md:text-6xl font-light text-[#2E2A36] mb-6">
-            Confidentiality <span className="font-medium text-[#3F2965]">Policy</span>
+          <h1 className="text-4xl md:text-6xl font-light text-white mb-6">
+            Confidentiality <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Policy</span>
           </h1>
-          <p className="text-xl">Your privacy and confidentiality are our top priorities.</p>
+          <p className="text-xl text-gray-200">Your privacy and confidentiality are our top priorities.</p>
         </div>
       </section>
 
       {/* Policy Content */}
-      <section className="py-16 md:py-24 max-w-4xl mx-auto px-6">
+      <section className="relative z-10 py-16 md:py-24 max-w-4xl mx-auto px-6">
         <div className="space-y-12">
           {/* Pre-session Alert */}
-          <div className="p-6 rounded-2xl bg-[#3F2965]/5 border border-[#3F2965]/20 flex items-center gap-4">
-            <ShieldAlert className="text-[#3F2965] shrink-0" />
-            <p className="text-[#3F2965] font-medium">This policy must be acknowledged before your first session.</p>
+          <div className="p-6 rounded-2xl bg-[#3F2965]/20 border border-[#3F2965]/40 flex items-center gap-4">
+            <ShieldAlert className="text-[#eeb9ff] shrink-0" />
+            <p className="text-[#eeb9ff] font-medium">This policy must be acknowledged before your first session.</p>
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-3xl font-light text-[#2E2A36]">Our Commitment</h2>
-            <p className="leading-relaxed">MindSettler is committed to maintaining the highest standards of privacy. All information shared is treated with the utmost respect and protection.</p>
+            <h2 className="text-3xl font-light text-white">Our Commitment</h2>
+            <p className="leading-relaxed text-gray-200">MindSettler is committed to maintaining the highest standards of privacy. All information shared is treated with the utmost respect and protection.</p>
           </div>
 
           {/* Dynamic Sections */}
           <div className="grid gap-12">
             {POLICY_SECTIONS.map((section, i) => (
               <div key={i} className="group">
-                <h2 className="text-2xl font-medium text-[#2E2A36] mb-4 group-hover:text-[#3F2965] transition-colors">{section.title}</h2>
-                <p className="mb-4">{section.content}</p>
+                <h2 className="text-2xl font-medium text-white mb-4 group-hover:text-[#eeb9ff] transition-colors">{section.title}</h2>
+                <p className="mb-4 text-gray-200">{section.content}</p>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {section.items.map((item, j) => (
-                    <li key={j} className="flex items-center gap-3 text-sm">
+                    <li key={j} className="flex items-center gap-3 text-sm text-gray-300">
                       <div className="w-1.5 h-1.5 rounded-full bg-[#DD1764]" />
                       {item}
                     </li>
@@ -72,14 +72,14 @@ export default function ConfidentialityPolicyPage() {
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-2xl font-medium text-[#2E2A36]">Session Privacy & Records</h2>
-            <p className="leading-relaxed text-sm">Online sessions use encrypted platforms, and offline sessions take place in confidential spaces. We maintain minimal records necessary and retain them only as long as required for legal purposes.</p>
+            <h2 className="text-2xl font-medium text-white">Session Privacy & Records</h2>
+            <p className="leading-relaxed text-sm text-gray-200">Online sessions use encrypted platforms, and offline sessions take place in confidential spaces. We maintain minimal records necessary and retain them only as long as required for legal purposes.</p>
           </div>
 
-          <div className="p-8 rounded-3xl bg-[#F6F4FA] border border-[#3F2965]/10">
-            <h3 className="text-xl font-medium text-[#2E2A36] mb-2">Acknowledgment</h3>
-            <p className="text-sm leading-relaxed mb-6">By booking a session with MindSettler, you acknowledge that you have read, understood, and agree to this confidentiality policy.</p>
-            <Link href="/contact" className="text-[#3F2965] font-medium hover:underline inline-flex items-center gap-2">
+          <div className="p-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20">
+            <h3 className="text-xl font-medium text-white mb-2">Acknowledgment</h3>
+            <p className="text-sm leading-relaxed mb-6 text-gray-200">By booking a session with MindSettler, you acknowledge that you have read, understood, and agree to this confidentiality policy.</p>
+            <Link href="/contact" className="text-[#eeb9ff] font-medium hover:underline inline-flex items-center gap-2">
                Questions? Contact Us <Lock size={14}/>
             </Link>
           </div>

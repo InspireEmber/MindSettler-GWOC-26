@@ -47,10 +47,10 @@ export default function FAQAccordion() {
         >
           {/* Category Header */}
           <div className="flex items-center gap-3 px-2">
-            <div className="w-8 h-8 rounded-lg bg-[#3F2965]/5 flex items-center justify-center text-[#3F2965]">
+            <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-[#eeb9ff]">
               <HelpCircle size={18} />
             </div>
-            <h2 className="text-xl sm:text-2xl font-light text-[#2E2A36]">
+            <h2 className="text-xl sm:text-2xl font-light text-white">
               {cat.category}
             </h2>
           </div>
@@ -65,8 +65,8 @@ export default function FAQAccordion() {
                   key={qIdx}
                   className={`group relative rounded-[1.5rem] md:rounded-[2rem] transition-all duration-500 overflow-hidden border ${
                     isOpen 
-                      ? 'bg-[#F6F4FA] border-[#3F2965]/20 shadow-lg' 
-                      : 'bg-white border-[#3F2965]/10 hover:border-[#3F2965]/30'
+                      ? 'bg-white/10 backdrop-blur-md border-white/20 shadow-lg' 
+                      : 'bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/10'
                   }`}
                 >
                   <button
@@ -74,14 +74,14 @@ export default function FAQAccordion() {
                     className="w-full p-5 sm:p-7 text-left flex items-center justify-between outline-none relative z-10"
                   >
                     <span className={`text-base sm:text-lg transition-colors duration-300 pr-6 leading-relaxed ${
-                      isOpen ? 'text-[#3F2965] font-medium' : 'text-[#5E5A6B]'
+                      isOpen ? 'text-[#eeb9ff] font-medium' : 'text-gray-200'
                     }`}>
                       {faq.q}
                     </span>
                     <motion.div 
                       animate={{ rotate: isOpen ? 180 : 0 }}
                       className={`shrink-0 p-2 rounded-full ${
-                        isOpen ? 'bg-[#3F2965] text-white' : 'bg-[#F6F4FA] text-[#3F2965]'
+                        isOpen ? 'bg-[#eeb9ff] text-[#3F2965]' : 'bg-white/10 text-white'
                       }`}
                     >
                       <ChevronDown size={18} />
@@ -97,9 +97,9 @@ export default function FAQAccordion() {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                       >
-                        <div className="px-6 sm:px-7 pb-8 text-sm sm:text-base text-[#5E5A6B] leading-relaxed">
-                          <div className="pt-4 border-t border-[#3F2965]/10 flex gap-3">
-                             <Sparkles size={16} className="text-[#DD1764] mt-1 shrink-0" />
+                        <div className="px-6 sm:px-7 pb-8 text-sm sm:text-base text-gray-300 leading-relaxed">
+                          <div className="pt-4 border-t border-white/10 flex gap-3">
+                             <Sparkles size={16} className="text-[#eeb9ff] mt-1 shrink-0" />
                              <p>{faq.a}</p>
                           </div>
                         </div>

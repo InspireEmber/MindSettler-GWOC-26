@@ -108,18 +108,18 @@ const ZoneCard = ({ zone, className }) => (
   <motion.div
     variants={itemVariants}
     whileHover={{ y: -5, transition: { duration: 0.2 } }}
-    className={`flex gap-5 p-6 rounded-2xl bg-white border border-[#3F2965]/5 shadow-sm hover:shadow-xl hover:shadow-[#DD1764]/5 transition-all duration-300 h-full ${className}`}
+    className={`flex gap-5 p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg hover:bg-white/20 hover:shadow-xl hover:shadow-[#DD1764]/10 transition-all duration-300 h-full ${className}`}
   >
     <div className="shrink-0 mt-1">
-        <div className="w-14 h-14 rounded-full bg-[#FAF9FC] flex items-center justify-center border border-[#3F2965]/5 shadow-inner">
+        <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center border border-white/10 shadow-inner">
             {zone.icon}
         </div>
     </div>
     <div className="flex flex-col">
-        <h3 className="text-2xl font-medium text-[#2E2A36] mb-2 tracking-tight">
+        <h3 className="text-2xl font-medium text-white mb-2 tracking-tight">
             {zone.title}
         </h3>
-        <p className="text-[#5E5A6B] text-base leading-relaxed">
+        <p className="text-gray-200 text-base leading-relaxed">
             {zone.desc}
         </p>
     </div>
@@ -139,7 +139,7 @@ export default function WhatMakesUsDifferentPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FDFBFD] text-[#5E5A6B] selection:bg-[#DD1764]/20 overflow-x-hidden">
+    <div className="min-h-screen relative overflow-x-hidden">
       
       {/* HERO HEADER */}
       <section className="relative z-10 pt-20 pb-8 md:pt-28 md:pb-12 px-6 text-center">
@@ -147,21 +147,21 @@ export default function WhatMakesUsDifferentPage() {
           <div className="w-24 h-1.5 mx-auto bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mb-8" />
 
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#3F2965]/10 shadow-sm mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[#DD1764]" />
-            <span className="text-[10px] sm:text-xs font-bold tracking-widest text-[#3F2965] uppercase">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-sm mb-4">
+            <Sparkles className="w-3.5 h-3.5 text-[#eeb9ff]" />
+            <span className="text-[10px] sm:text-xs font-bold tracking-widest text-[#eeb9ff] uppercase">
               Beyond Standard Care
             </span>
           </div>
 
-          <h1 className="text-3xl md:text-5xl lg:text-7xl font-light text-[#2E2A36] tracking-tight mb-6">
+          <h1 className="text-3xl md:text-5xl lg:text-7xl font-light text-white tracking-tight mb-6">
             What Makes Us <br />
-            <span className="font-serif italic text-[#3F2965] relative inline-block">
+            <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff] relative inline-block">
               Different
             </span>
           </h1>
 
-           <p className="text-base md:text-xl text-[#5E5A6B] max-w-2xl mx-auto font-light leading-relaxed">
+           <p className="text-base md:text-xl text-gray-200 max-w-2xl mx-auto font-light leading-relaxed">
             We don't just offer sessions; we offer a carefully architected
             journey designed for sustainable emotional growth.
           </p>
@@ -196,7 +196,7 @@ export default function WhatMakesUsDifferentPage() {
                             alt="Conceptual illustration of the brain"
                             width={1024}
                             height={1024}
-                            className="w-full h-auto object-contain drop-shadow-sm mix-blend-multiply"
+                            className="w-full h-auto object-contain drop-shadow-sm mix-blend-multiply opacity-90"
                             priority
                         />
                     </motion.div>
@@ -214,11 +214,11 @@ export default function WhatMakesUsDifferentPage() {
       </section>
 
       {/* --- NEW ROTATING SECTION (Replicated) --- */}
-       <section className="py-20 sm:py-24 bg-[#F6F4FA] border-t border-b border-[#3F2965]/5 overflow-hidden">
+       <section className="py-20 sm:py-24 backdrop-blur-md bg-black/30 border-t border-b border-white/10 overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-[#2E2A36] leading-tight">
-              The Journey of <span className="font-medium italic text-[#DD1764]">Discovery</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-white leading-tight">
+              The Journey of <span className="font-medium italic text-[#eeb9ff]">Discovery</span>
             </h2>
           </div>
 
@@ -230,7 +230,7 @@ export default function WhatMakesUsDifferentPage() {
                 animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, x: -50, filter: "blur(5px)" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="w-full flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20"
+                className="w-full flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20 bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10"
               >
                 
                 {/* --- IMAGE DISPLAY --- */}
@@ -244,10 +244,10 @@ export default function WhatMakesUsDifferentPage() {
 
                 {/* --- TEXT DISPLAY --- */}
                 <div className="text-center md:text-left max-w-lg">
-                  <h3 className="text-3xl sm:text-4xl font-light text-[#2E2A36] mb-6">
+                  <h3 className="text-3xl sm:text-4xl font-light text-white mb-6">
                     {NEW_ROTATING_CONTENT[currentIndex].title}
                   </h3>
-                  <p className="text-lg text-[#5E5A6B] leading-relaxed mb-8 whitespace-pre-line">
+                  <p className="text-lg text-gray-200 leading-relaxed mb-8 whitespace-pre-line">
                     {NEW_ROTATING_CONTENT[currentIndex].text}
                   </p>
                   
@@ -257,7 +257,7 @@ export default function WhatMakesUsDifferentPage() {
                       <div 
                         key={i}
                         className={`h-1.5 rounded-full transition-all duration-500 ${
-                          i === currentIndex ? "w-12 bg-[#3F2965]" : "w-3 bg-[#3F2965]/20"
+                          i === currentIndex ? "w-12 bg-white" : "w-3 bg-white/20"
                         }`}
                       />
                     ))}

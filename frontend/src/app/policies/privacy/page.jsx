@@ -30,22 +30,22 @@ export default function PrivacyPolicyPage() {
   });
 
   return (
-    <div className="min-h-screen bg-white text-[#5E5A6B]">
+    <div className="min-h-screen relative overflow-x-hidden">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#F6F4FA] via-white to-[#F6F4FA] py-20 md:py-32 text-center">
+      <section className="relative z-10 pt-20 pb-8 md:pt-32 md:pb-12 text-center">
         <div className="max-w-4xl mx-auto px-6">
           <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mb-6" />
-          <h1 className="text-4xl md:text-6xl font-light text-[#2E2A36] mb-6">
-            Privacy <span className="font-medium text-[#3F2965]">Policy</span>
+          <h1 className="text-4xl md:text-6xl font-light text-white mb-6">
+            Privacy <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Policy</span>
           </h1>
-          <p className="text-xl">How we collect, use, and protect your information.</p>
+          <p className="text-xl text-gray-200">How we collect, use, and protect your information.</p>
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="py-16 md:py-24 max-w-4xl mx-auto px-6">
+      <section className="relative z-10 py-16 md:py-24 max-w-4xl mx-auto px-6">
         <div className="space-y-16">
-          <div className="flex items-center gap-2 text-sm font-medium text-[#3F2965]/60 uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-sm font-medium text-[#eeb9ff]/80 uppercase tracking-widest">
             <ShieldCheck size={16} /> Last Updated: {lastUpdated}
           </div>
 
@@ -53,33 +53,33 @@ export default function PrivacyPolicyPage() {
             {POLICY_DATA.map((section, i) => (
               <div key={i} className="group">
                 <div className="flex items-center gap-3 mb-6">
-                   <div className="p-2 rounded-lg bg-[#3F2965]/10 text-[#3F2965]">
+                   <div className="p-2 rounded-lg bg-white/10 text-[#eeb9ff]">
                      {section.icon}
                    </div>
-                   <h2 className="text-2xl font-medium text-[#2E2A36]">{section.title}</h2>
+                   <h2 className="text-2xl font-medium text-white">{section.title}</h2>
                 </div>
-                <p className="mb-4 leading-relaxed">{section.intro}</p>
+                <p className="mb-4 leading-relaxed text-gray-200">{section.intro}</p>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   {section.items.map((item, j) => (
-                    <li key={j} className="flex items-start gap-3 text-sm">
+                    <li key={j} className="flex items-start gap-3 text-sm text-gray-300">
                       <div className="w-1.5 h-1.5 rounded-full bg-[#DD1764] mt-1.5" />
                       {item}
                     </li>
                   ))}
                 </ul>
-                {section.extra && <p className="text-sm italic opacity-80">{section.extra}</p>}
+                {section.extra && <p className="text-sm italic text-gray-400 opacity-80">{section.extra}</p>}
               </div>
             ))}
           </div>
 
           {/* Contact Summary */}
-          <div className="p-8 rounded-3xl bg-[#F6F4FA] border border-[#3F2965]/10">
-            <h3 className="text-xl font-medium text-[#2E2A36] mb-4">Exercise Your Rights</h3>
-            <p className="text-sm leading-relaxed mb-6">
+          <div className="p-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20">
+            <h3 className="text-xl font-medium text-white mb-4">Exercise Your Rights</h3>
+            <p className="text-sm leading-relaxed mb-6 text-gray-200">
               You have the right to access, correct, or delete your personal information at any time. 
               To exercise these rights, please reach out to us.
             </p>
-            <a href="mailto:info@mindsettler.com" className="inline-flex items-center gap-2 text-[#3F2965] font-semibold hover:underline">
+            <a href="mailto:info@mindsettler.com" className="inline-flex items-center gap-2 text-[#eeb9ff] font-semibold hover:underline">
               <Mail size={16} /> info@mindsettler.com
             </a>
           </div>

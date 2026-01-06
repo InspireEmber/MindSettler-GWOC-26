@@ -17,28 +17,26 @@ const staggerContainer = {
 
 export default function FAQsPage() {
   return (
-    <div className="min-h-screen bg-white selection:bg-[#3F2965] selection:text-white">
+    <div className="min-h-screen relative overflow-x-hidden">
       
       {/* 1. Hero Section: Reveal on Load */}
-      <section className="relative bg-gradient-to-br from-[#F6F4FA] via-white to-[#F6F4FA] py-20 md:py-32 overflow-hidden">
-        {/* Subtle background glow */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#3F2965]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <section className="relative pt-20 pb-20 md:pt-32 md:pb-24 overflow-hidden text-center z-10">
         
         <motion.div 
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="max-w-4xl mx-auto px-6 text-center relative z-10"
+          className="max-w-4xl mx-auto px-6 relative z-10"
         >
-          <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#3F2965]/5 border border-[#3F2965]/10 text-[#3F2965] text-xs font-bold uppercase tracking-widest mb-8">
+          <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-[#eeb9ff] text-xs font-bold uppercase tracking-widest mb-8">
             <HelpCircle size={14} /> Knowledge Base
           </motion.div>
           
-          <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl font-light text-[#2E2A36] mb-8 leading-tight">
-            Frequently Asked <span className="font-medium text-[#3F2965]">Questions</span>
+          <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl font-light text-white mb-8 leading-tight">
+            Frequently Asked <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Questions</span>
           </motion.h1>
           
-          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-[#5E5A6B] leading-relaxed max-w-2xl mx-auto">
+          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl mx-auto">
             Everything you need to know about our psycho-education sessions, 
             privacy standards, and the journey toward emotional clarity.
           </motion.p>
@@ -51,7 +49,7 @@ export default function FAQsPage() {
       </section>
 
       {/* 2. FAQs Content: Scroll Reveal */}
-      <section className="py-20 md:py-32">
+      <section className="py-20 md:py-32 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -59,23 +57,23 @@ export default function FAQsPage() {
           transition={{ duration: 0.8 }}
           className="max-w-3xl mx-auto px-6"
         >
-          <div className="rounded-[2.5rem] bg-white border border-[#3F2965]/5 shadow-[0_20px_50px_rgba(63,41,101,0.03)] p-2 md:p-8">
+          <div className="rounded-[2.5rem] bg-white/10 backdrop-blur-md border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.2)] p-2 md:p-8">
             <FAQAccordion />
           </div>
         </motion.div>
       </section>
 
       {/* 3. CTA Section: Vibrant Story Ending */}
-      <section className="px-6 pb-20 md:pb-32">
+      <section className="px-6 pb-20 md:pb-32 relative z-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-10 md:p-24 text-center text-white shadow-2xl shadow-[#3F2965]/30"
+          className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] bg-white/5 backdrop-blur-md border border-white/10 p-10 md:p-24 text-center text-white shadow-2xl shadow-[#3F2965]/20"
         >
           {/* Decorative Brand Accents */}
-          <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" />
+          <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/20 rounded-full blur-[80px]" />
           <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
 
           <div className="relative z-10">
@@ -89,7 +87,7 @@ export default function FAQsPage() {
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link
                 href="/contact"
-                className="group px-10 py-4 rounded-full bg-white text-[#3F2965] font-bold text-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 active:scale-95"
+                className="group px-10 py-4 rounded-full bg-white text-[#3F2965] font-bold text-lg hover:shadow-xl hover:shadow-white/10 transition-all flex items-center justify-center gap-2 active:scale-95"
               >
                 <MessageCircle size={20} className="group-hover:rotate-12 transition-transform" />
                 Contact Us

@@ -36,38 +36,38 @@ const HELPFUL_RESOURCES = [
 
 export default function HelpfulLinksResourcesPage() {
   return (
-    <div className="min-h-screen bg-white text-[#5E5A6B]">
+    <div className="min-h-screen relative overflow-x-hidden">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#F6F4FA] via-white to-[#F6F4FA] py-16 md:py-24">
+      <section className="relative py-16 md:py-24 z-10">
         <div className="max-w-4xl mx-auto px-6">
           <Link
             href="/resources"
-            className="inline-flex items-center gap-2 text-sm font-medium text-[#3F2965] hover:gap-3 transition-all mb-8 group"
+            className="inline-flex items-center gap-2 text-sm font-medium text-gray-300 hover:gap-3 hover:text-white transition-all mb-8 group"
           >
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> 
             Back to Resources
           </Link>
-          <h1 className="text-4xl md:text-5xl font-light text-[#2E2A36] mb-6">
-            Helpful <span className="font-medium text-[#3F2965]">Links</span>
+          <h1 className="text-4xl md:text-5xl font-light text-white mb-6">
+            Helpful <span className="font-medium text-[#eeb9ff]">Links</span>
           </h1>
-          <p className="text-xl leading-relaxed">
+          <p className="text-xl leading-relaxed text-gray-200">
             A curated directory of trusted global organizations and support services.
           </p>
         </div>
       </section>
 
       {/* Links Grid */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 relative z-10">
         <div className="max-w-5xl mx-auto px-6 space-y-16">
           {HELPFUL_RESOURCES.map((section, i) => (
             <div key={i} className="group">
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-gray-50 border border-gray-100 shadow-sm">
+                <div className="p-2 rounded-lg bg-white/10 border border-white/20 shadow-sm backdrop-blur-md">
                   {section.icon}
                 </div>
-                <h2 className="text-2xl font-medium text-[#2E2A36]">{section.category}</h2>
+                <h2 className="text-2xl font-medium text-white">{section.category}</h2>
               </div>
-              <p className="text-[#5E5A6B] mb-6 leading-relaxed max-w-2xl">
+              <p className="text-gray-300 mb-6 leading-relaxed max-w-2xl">
                 {section.description}
               </p>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -77,10 +77,10 @@ export default function HelpfulLinksResourcesPage() {
                       href={link.url} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between p-4 rounded-xl border border-[#3F2965]/10 bg-[#F6F4FA] hover:bg-white hover:border-[#3F2965]/30 hover:shadow-md transition-all group/link"
+                      className="flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 hover:border-[#eeb9ff]/30 hover:shadow-lg transition-all group/link"
                     >
-                      <span className="text-[#3F2965] font-medium">{link.name}</span>
-                      <ExternalLink size={14} className="text-[#3F2965]/40 group-hover/link:text-[#DD1764] group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-all" />
+                      <span className="text-gray-100 font-medium group-hover/link:text-[#eeb9ff] transition-colors">{link.name}</span>
+                      <ExternalLink size={14} className="text-gray-400 group-hover/link:text-[#eeb9ff] group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-all" />
                     </a>
                   </li>
                 ))}
@@ -91,9 +91,9 @@ export default function HelpfulLinksResourcesPage() {
       </section>
 
       {/* Disclaimer */}
-      <section className="py-10 bg-white">
+      <section className="py-10 relative z-10">
         <div className="max-w-5xl mx-auto px-6">
-          <div className="rounded-2xl bg-[#F6F4FA] border border-[#3F2965]/10 p-6 text-sm italic leading-relaxed">
+          <div className="rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-6 text-sm italic leading-relaxed text-gray-400">
             <p>
               <strong>Disclaimer:</strong> This content is provided for awareness and educational purposes only. It does not replace professional
               diagnosis, treatment, or emergency care. MindSettler is not responsible for the content of external sites.
@@ -103,13 +103,13 @@ export default function HelpfulLinksResourcesPage() {
       </section>
 
       {/* Persistent Vibrant CTA */}
-      <section className="py-24 md:py-32 bg-[#F6F4FA]/50">
+      <section className="py-24 md:py-32 relative z-10">
         <div className="max-w-5xl mx-auto px-6 md:px-12">
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#3F2965] to-[#2E2A36] p-10 sm:p-12 md:p-20 text-center text-white shadow-2xl shadow-[#3F2965]/30">
+          <div className="relative overflow-hidden rounded-[2.5rem] bg-white/5 backdrop-blur-md border border-white/10 p-10 sm:p-12 md:p-20 text-center text-white shadow-2xl shadow-[#3F2965]/20">
             {/* Decorative Brand Accents */}
-            <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/15 rounded-full blur-[80px]" />
+            <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/20 rounded-full blur-[80px]" />
             <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
-
+            
             <div className="relative z-10">
               <h2 className="text-4xl md:text-5xl font-light text-white mb-6">
                 Ready to Begin Your Journey?
@@ -119,7 +119,7 @@ export default function HelpfulLinksResourcesPage() {
               </p>
               <Link
                 href="/book-session"
-                className="inline-flex px-10 py-4 md:px-12 md:py-5 rounded-full bg-white text-[#3F2965] font-medium text-lg hover:bg-white/95 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(255,255,255,0.2)] hover:scale-[1.03] active:scale-95 shadow-lg items-center justify-center"
+                className="inline-flex px-10 py-4 md:px-12 md:py-5 rounded-full bg-white text-[#3F2965] font-medium text-lg hover:bg-gray-100 transition-all duration-300 hover:shadow-lg hover:scale-[1.03] active:scale-95 shadow-md items-center justify-center"
               >
                 Book Your First Session
               </Link>

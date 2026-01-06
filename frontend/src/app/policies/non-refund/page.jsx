@@ -24,38 +24,38 @@ const POLICY_POINTS = [
 
 export default function NonRefundPolicyPage() {
   return (
-    <div className="min-h-screen bg-white text-[#5E5A6B]">
+    <div className="min-h-screen relative overflow-x-hidden">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#F6F4FA] via-white to-[#F6F4FA] py-20 md:py-32 text-center">
+      <section className="relative z-10 pt-20 pb-8 md:pt-32 md:pb-12 text-center">
         <div className="max-w-4xl mx-auto px-6">
           <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mb-6" />
-          <h1 className="text-4xl md:text-6xl font-light text-[#2E2A36] mb-6">
-            Non-Refund <span className="font-medium text-[#3F2965]">Policy</span>
+          <h1 className="text-4xl md:text-6xl font-light text-white mb-6">
+            Non-Refund <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Policy</span>
           </h1>
-          <p className="text-xl">Our policy regarding refunds and cancellations.</p>
+          <p className="text-xl text-gray-200">Our policy regarding refunds and cancellations.</p>
         </div>
       </section>
 
       {/* Policy Content */}
-      <section className="py-16 md:py-24 max-w-4xl mx-auto px-6">
+      <section className="relative z-10 py-16 md:py-24 max-w-4xl mx-auto px-6">
         <div className="space-y-12">
           {/* Important Alert */}
-          <div className="p-6 rounded-2xl bg-yellow-50 border border-yellow-200 flex items-center gap-4">
-            <AlertCircle className="text-yellow-700 shrink-0" />
-            <p className="text-yellow-900 font-medium">Please read this policy carefully before booking a session.</p>
+          <div className="p-6 rounded-2xl bg-yellow-900/20 border border-yellow-500/30 flex items-center gap-4">
+            <AlertCircle className="text-yellow-400 shrink-0" />
+            <p className="text-yellow-100 font-medium">Please read this policy carefully before booking a session.</p>
           </div>
 
           <div className="grid gap-12">
             {POLICY_POINTS.map((point, i) => (
               <div key={i} className="group">
-                <h2 className="text-2xl font-medium text-[#2E2A36] mb-4 group-hover:text-[#3F2965] transition-colors">
+                <h2 className="text-2xl font-medium text-white mb-4 group-hover:text-[#eeb9ff] transition-colors">
                   {point.title}
                 </h2>
-                <p className="leading-relaxed mb-4">{point.content}</p>
+                <p className="leading-relaxed mb-4 text-gray-200">{point.content}</p>
                 {point.items && (
                   <ul className="space-y-3">
                     {point.items.map((item, j) => (
-                      <li key={j} className="flex items-center gap-3 text-sm">
+                      <li key={j} className="flex items-center gap-3 text-sm text-gray-300">
                         <div className="w-1.5 h-1.5 rounded-full bg-[#DD1764]" />
                         {item}
                       </li>
@@ -66,13 +66,13 @@ export default function NonRefundPolicyPage() {
             ))}
           </div>
 
-          <div className="p-8 rounded-3xl bg-[#F6F4FA] border border-[#3F2965]/10">
-            <h3 className="text-xl font-medium text-[#2E2A36] mb-3 flex items-center gap-2">
-              <Info size={20} className="text-[#3F2965]"/> Contact Us
+          <div className="p-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20">
+            <h3 className="text-xl font-medium text-white mb-3 flex items-center gap-2">
+              <Info size={20} className="text-[#eeb9ff]"/> Contact Us
             </h3>
-            <p className="text-sm leading-relaxed mb-6">
+            <p className="text-sm leading-relaxed mb-6 text-gray-200">
               If you have questions or need to request a rescheduling, please contact us at 
-              <a href="mailto:info@mindsettler.com" className="text-[#3F2965] font-semibold hover:underline ml-1">
+              <a href="mailto:info@mindsettler.com" className="text-[#eeb9ff] font-semibold hover:underline ml-1">
                 info@mindsettler.com
               </a>.
             </p>
