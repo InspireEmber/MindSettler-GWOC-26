@@ -28,7 +28,9 @@ export default function LoginPage() {
 
     try {
       await api.userLogin(formData);
-      router.push("/book-session");
+      // Use window.location.href to force a full page reload
+      // This ensures the auth cookie is picked up by useAuth hook
+      window.location.href = "/book-session";
     } catch (err) {
       setError(err.message || "Login failed. Please check your credentials.");
       setLoading(false);
