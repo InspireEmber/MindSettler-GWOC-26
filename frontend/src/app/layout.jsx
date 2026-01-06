@@ -15,9 +15,13 @@ export default function RootLayout({ children }) {
   const isHowItWorks = pathname === "/how-it-works";
   const isLogin = pathname === "/login";
   
-  // Determine if we should show the global dark background
-  // We exclude Admin routes and How It Works page (which has its own background)
-  const showGlobalBackground = !isAdminRoute && !isHowItWorks && !isLogin;
+  // Routes that should NOT have the global parallax background
+  // Added /login and /signup to exclusion list as they have their own specific backgrounds
+  const isGlobalBackgroundExcluded = ["/how-it-works", "/admin", "/login", "/signup"].some((path) =>
+    pathname?.startsWith(path)
+  );
+
+  const showGlobalBackground = !isGlobalBackgroundExcluded;
 
   // Global Parallax Scroll Logic
   const { scrollYProgress: globalScroll } = useScroll();

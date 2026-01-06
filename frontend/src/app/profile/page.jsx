@@ -10,41 +10,6 @@ import { motion } from "framer-motion";
 import api from "../../services/api";
 import { ExternalLink } from "lucide-react";
 
-// --- COMPONENT: Soft Mesh Background (Pink & Gray Edition) ---
-const SoftBackground = () => {
-  return (
-    <div className="fixed inset-0 w-full h-full -z-10 overflow-hidden bg-[#FBF7FF]">
-      {/* 1. Top Left - Purple (Brand) */}
-      <motion.div 
-        animate={{ scale: [1, 1.2, 1], x: [0, 50, 0], y: [0, 30, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-purple-300/30 blur-[120px]"
-      />
-
-      {/* 2. Top Right - SOFT PINK (Replaced Mint) */}
-      <motion.div 
-        animate={{ scale: [1, 1.1, 1], x: [0, -30, 0], y: [0, 50, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute top-[-10%] right-[-10%] w-[45vw] h-[45vw] rounded-full bg-pink-300/25 blur-[120px]"
-      />
-
-      {/* 3. Bottom Left - Deep Brand Tint */}
-      <motion.div 
-        animate={{ scale: [1, 1.3, 1], x: [0, 40, 0], y: [0, -40, 0] }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        className="absolute bottom-[-20%] left-[10%] w-[60vw] h-[60vw] rounded-full bg-[#3F2965]/15 blur-[150px]"
-      />
-
-      {/* 4. Bottom Right - COOL GRAY (Replaced Emerald) */}
-      <motion.div 
-         animate={{ scale: [1, 1.2, 1], x: [0, -50, 0], y: [0, -20, 0] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-[10%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-gray-400/20 blur-[100px]"
-      />
-    </div>
-  );
-};
-
 export default function ProfilePage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -89,10 +54,9 @@ export default function ProfilePage() {
   }, []);
 
   if (loading) return (
-    <div className="min-h-screen bg-[#FBF7FF]/90 flex flex-col items-center justify-center space-y-4">
-      <SoftBackground />
-      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }} className="w-10 h-10 border-4 border-[#3F2965]/10 border-t-[#3F2965] rounded-full" />
-      <p className="text-[#3F2965] animate-pulse font-medium">Syncing your journey...</p>
+    <div className="min-h-screen flex flex-col items-center justify-center space-y-4 relative z-10">
+      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }} className="w-10 h-10 border-4 border-white/10 border-t-[#eeb9ff] rounded-full" />
+      <p className="text-white animate-pulse font-medium">Syncing your journey...</p>
     </div>
   );
 
@@ -102,19 +66,17 @@ export default function ProfilePage() {
   const rejected = sessions.filter(s => s.displayCategory === 'rejected');
 
   return (
-    <div className="min-h-screen relative font-sans text-[#2E2A36]">
-      <SoftBackground />
-
+    <div className="min-h-screen relative font-sans text-gray-200 overflow-x-hidden">
       <div className="relative z-10 py-12 px-6">
         <div className="max-w-5xl mx-auto">
           
           {/* Header Section */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-              <h1 className="text-3xl md:text-5xl font-light text-[#2E2A36]">
-                Hello, <span className="font-medium text-[#3F2965]">{profile?.name.split(' ')[0]}</span>
+              <h1 className="text-3xl md:text-5xl font-light text-white">
+                Hello, <span className="font-medium text-[#eeb9ff]">{profile?.name.split(' ')[0]}</span>
               </h1>
-              <p className="text-[#5E5A6B] mt-2 flex items-center gap-2">
+              <p className="text-gray-300 mt-2 flex items-center gap-2">
                 <Calendar size={14} /> {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
               </p>
             </motion.div>
@@ -123,8 +85,7 @@ export default function ProfilePage() {
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Link 
                      href="/corporate" 
-                     // Updated to Pink/Gray theme (Light gray bg with purple text)
-                     className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#E5E7EB] border border-gray-300 text-sm font-bold text-[#3F2965] shadow-sm hover:bg-gray-200 transition-colors cursor-pointer"
+                     className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-sm font-bold text-white shadow-sm hover:bg-white/20 transition-colors cursor-pointer backdrop-blur-md"
                   >
                       <Building2 size={16} /> Corporate Inquiry
                   </Link>
@@ -134,8 +95,7 @@ export default function ProfilePage() {
                  whileHover={{ scale: 1.05 }}
                  whileTap={{ scale: 0.95 }}
                  onClick={() => { /* Add your logout logic here */ }}
-                 // Updated to Pinkish-Red theme
-                 className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#FFE4E6] border border-pink-200 text-sm font-bold text-pink-700 shadow-sm hover:bg-pink-100 transition-colors"
+                 className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-500/20 border border-red-500/30 text-sm font-bold text-red-200 shadow-sm hover:bg-red-500/30 transition-colors backdrop-blur-md"
               >
                 <LogOut size={16} /> Sign Out
               </motion.button>
@@ -146,29 +106,28 @@ export default function ProfilePage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
             
             {/* Identity Card */}
-            <div className="lg:col-span-1 bg-[#FAF5FF]/90 rounded-[2rem] p-8 shadow-sm border border-[#E9D5FF] relative overflow-hidden group transition-all">
-              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity text-[#3F2965]">
+            <div className="lg:col-span-1 bg-white/10 backdrop-blur-md rounded-[2rem] p-8 shadow-lg border border-white/20 relative overflow-hidden group transition-all">
+              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity text-white">
                 <User size={100} />
               </div>
-              <h3 className="text-xs font-bold uppercase tracking-widest text-[#3F2965] mb-6">Identity</h3>
+              <h3 className="text-xs font-bold uppercase tracking-widest text-[#eeb9ff] mb-6">Identity</h3>
               <div className="space-y-4 relative z-10">
                  <div>
-                   <p className="text-[10px] text-[#5E5A6B] uppercase font-bold">Email Address</p>
-                   <p className="text-[#2E2A36] font-medium">{profile?.email}</p>
+                   <p className="text-[10px] text-gray-400 uppercase font-bold">Email Address</p>
+                   <p className="text-white font-medium">{profile?.email}</p>
                  </div>
                  <div>
-                   <p className="text-[10px] text-[#5E5A6B] uppercase font-bold">Member Since</p>
-                   <p className="text-[#2E2A36] font-medium">{new Date(profile?.createdAt).toLocaleDateString()}</p>
+                   <p className="text-[10px] text-gray-400 uppercase font-bold">Member Since</p>
+                   <p className="text-white font-medium">{new Date(profile?.createdAt).toLocaleDateString()}</p>
                  </div>
               </div>
             </div>
 
             <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <SummaryCard label="Total" value={summary?.totalSessions} icon={<Activity size={18}/>} color="bg-[#3F2965]" />
-              {/* Updated Colors for Stats */}
-              <SummaryCard label="Approved" value={summary?.approvedUpcomingSessions} icon={<CheckCircle2 size={18}/>} color="bg-pink-500" />
-              <SummaryCard label="Pending" value={summary?.pendingSessions} icon={<Clock size={18}/>} color="bg-gray-500" />
-              <SummaryCard label="Completed" value={summary?.completedSessions} icon={<CheckCircle2 size={18}/>} color="bg-purple-400" />
+              <SummaryCard label="Total" value={summary?.totalSessions} icon={<Activity size={18}/>} color="bg-[#eeb9ff]/20 text-[#eeb9ff] border-white/10" />
+              <SummaryCard label="Approved" value={summary?.approvedUpcomingSessions} icon={<CheckCircle2 size={18}/>} color="bg-green-500/20 text-green-300 border-white/10" />
+              <SummaryCard label="Pending" value={summary?.pendingSessions} icon={<Clock size={18}/>} color="bg-yellow-500/20 text-yellow-300 border-white/10" />
+              <SummaryCard label="Completed" value={summary?.completedSessions} icon={<CheckCircle2 size={18}/>} color="bg-blue-500/20 text-blue-300 border-white/10" />
             </div>
           </div>
 
@@ -189,30 +148,27 @@ export default function ProfilePage() {
 }
 
 function SummaryCard({ label, value, icon, color }) {
+  // Extract background and text color from the composite class string for icon styling logic if needed, 
+  // but here we just use the passed color class directly on the icon container
   return (
-    <div className="bg-[#FAF5FF]/80 rounded-[2rem] p-5 border border-[#E9D5FF] shadow-sm flex flex-col justify-between hover:bg-[#F3E8FF] transition-colors">
-      <div className={`w-10 h-10 rounded-xl ${color} text-white flex items-center justify-center mb-4 shadow-md`}>
+    <div className="bg-white/5 backdrop-blur-md rounded-[2rem] p-5 border border-white/10 shadow-sm flex flex-col justify-between hover:bg-white/10 transition-colors">
+      <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 shadow-md ${color}`}>
         {icon}
       </div>
       <div>
-        <p className="text-[10px] font-bold uppercase text-[#5E5A6B] tracking-tighter">{label}</p>
-        <p className="text-2xl font-bold text-[#2E2A36]">{value ?? 0}</p>
+        <p className="text-[10px] font-bold uppercase text-gray-400 tracking-tighter">{label}</p>
+        <p className="text-2xl font-bold text-white">{value ?? 0}</p>
       </div>
     </div>
   );
 }
 
 function SessionSection({ title, data, type, router }) {
-  // --- UPDATED COLOR LOGIC ---
-  // Approved = Pink (Warm/Welcoming)
-  // Pending = Gray (Neutral)
-  // Completed = Purple (Brand)
-  // Rejected = Red (Standard)
   const styles = {
-    approvedUpcoming: "bg-pink-100/60 text-pink-800 border-pink-200",
-    pendingUpcoming: "bg-gray-100/60 text-gray-700 border-gray-200",
-    completed: "bg-purple-100/60 text-purple-800 border-purple-200",
-    rejected: "bg-red-50 text-red-800 border-red-200",
+    approvedUpcoming: "bg-green-500/20 text-green-300 border-green-500/20",
+    pendingUpcoming: "bg-yellow-500/20 text-yellow-300 border-yellow-500/20",
+    completed: "bg-blue-500/20 text-blue-300 border-blue-500/20",
+    rejected: "bg-red-500/20 text-red-300 border-red-500/20",
   };
 
   const icons = {
@@ -224,9 +180,9 @@ function SessionSection({ title, data, type, router }) {
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-[#3F2965] mb-5 px-2 opacity-90">{title}</h2>
+      <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-[#eeb9ff] mb-5 px-2 opacity-90">{title}</h2>
       {data.length === 0 ? (
-        <div className="bg-[#3F2965]/5 rounded-3xl p-6 border border-dashed border-[#3F2965]/20 text-sm text-[#5E5A6B] text-center italic">
+        <div className="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-dashed border-white/10 text-sm text-gray-400 text-center italic">
           No records found in this category.
         </div>
       ) : (
@@ -234,8 +190,8 @@ function SessionSection({ title, data, type, router }) {
           {data.map((s) => (
             <motion.div 
               key={s._id || s.id}
-              whileHover={{ x: 5, backgroundColor: "#F3E8FF" }}
-              className="bg-[#FAF5FF]/90 rounded-2xl p-5 shadow-sm border border-[#E9D5FF] flex flex-col gap-4 group transition-colors"
+              whileHover={{ x: 5, backgroundColor: "rgba(255,255,255,0.15)" }}
+              className="bg-white/10 backdrop-blur-md rounded-2xl p-5 shadow-lg border border-white/20 flex flex-col gap-4 group transition-colors"
             >
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
@@ -244,8 +200,8 @@ function SessionSection({ title, data, type, router }) {
                       <span className="text-lg font-bold leading-none">{new Date(s.date || s.slot?.date).getDate()}</span>
                   </div>
                   <div>
-                    <p className="font-bold text-[#2E2A36]">{s.startTime || s.slot?.startTime} - {s.endTime || s.slot?.endTime}</p>
-                    <p className="text-xs text-[#5E5A6B] capitalize">{s.sessionType} Session</p>
+                    <p className="font-bold text-white">{s.startTime || s.slot?.startTime} - {s.endTime || s.slot?.endTime}</p>
+                    <p className="text-xs text-gray-400 capitalize">{s.sessionType} Session</p>
                   </div>
                 </div>
                 
@@ -260,7 +216,7 @@ function SessionSection({ title, data, type, router }) {
                         href={s.calendarEventLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-pink-100 text-pink-700 text-[10px] font-bold uppercase hover:bg-pink-200 transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold uppercase hover:bg-blue-500/30 transition-colors"
                       >
                         <ExternalLink size={12} />
                         Add to Calendar
@@ -269,7 +225,7 @@ function SessionSection({ title, data, type, router }) {
                     
                   <button 
                     onClick={() => router.push(`/appointment-status?id=${s._id || s.id}`)}
-                    className="p-2 rounded-full bg-[#F3E8FF] text-[#3F2965] hover:bg-[#E9D5FF] transition-colors shadow-sm border border-[#D8B4FE]"
+                    className="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors shadow-sm border border-white/20"
                     title="View Full Details"
                   >
                     <ChevronRight size={18} />
@@ -279,10 +235,10 @@ function SessionSection({ title, data, type, router }) {
 
               {/* REJECTION REASON PREVIEW */}
               {type === 'rejected' && s.rejectionReason && (
-                <div className="mt-2 p-3 rounded-xl bg-red-50 border border-red-100 flex items-start gap-3">
+                <div className="mt-2 p-3 rounded-xl bg-red-500/10 border border-red-500/20 flex items-start gap-3">
                   <MessageSquare size={14} className="text-red-400 mt-0.5 shrink-0" />
-                  <div className="text-xs text-red-800">
-                    <p className="font-bold mb-0.5">Reason for rejecting your appointment request:</p>
+                  <div className="text-xs text-red-200">
+                    <p className="font-bold mb-0.5 text-red-300">Reason for rejecting your appointment request:</p>
                     <p>{s.rejectionReason}</p>
                   </div>
                 </div>

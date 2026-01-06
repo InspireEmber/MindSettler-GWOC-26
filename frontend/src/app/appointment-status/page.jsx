@@ -8,10 +8,10 @@ import api from "../../services/api";
 
 function LoadingState({ message = "Loading..." }) {
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center text-center">
+    <div className="min-h-screen flex items-center justify-center text-center relative z-10">
       <div>
-        <Loader2 className="w-12 h-12 mx-auto mb-4 text-[#3F2965] animate-spin" />
-        <p className="text-[#5E5A6B]">{message}</p>
+        <Loader2 className="w-12 h-12 mx-auto mb-4 text-[#eeb9ff] animate-spin" />
+        <p className="text-white">{message}</p>
       </div>
     </div>
   );
@@ -47,11 +47,11 @@ function AppointmentStatusContent() {
 
   if (error || !booking) {
     return (
-      <div className="min-h-screen bg-white py-20 md:py-32 flex flex-col items-center justify-center px-6 text-center">
-        <XCircle className="w-20 h-20 text-red-500 mb-6" />
-        <h1 className="text-3xl font-light text-[#2E2A36] mb-4">Booking Not Found</h1>
-        <p className="text-[#5E5A6B] max-w-md mb-8">{error || "The booking doesn't exist or was removed."}</p>
-        <Link href="/book-session" className="px-8 py-4 rounded-full bg-[#3F2965] text-white hover:shadow-lg transition-all active:scale-95">
+      <div className="min-h-screen py-20 md:py-32 flex flex-col items-center justify-center px-6 text-center relative z-10">
+        <XCircle className="w-20 h-20 text-red-400 mb-6" />
+        <h1 className="text-3xl font-light text-white mb-4">Booking Not Found</h1>
+        <p className="text-gray-300 max-w-md mb-8">{error || "The booking doesn't exist or was removed."}</p>
+        <Link href="/book-session" className="px-8 py-4 rounded-full bg-white text-[#3F2965] hover:bg-white/90 hover:shadow-lg transition-all active:scale-95">
           Book a New Session
         </Link>
       </div>
@@ -59,20 +59,20 @@ function AppointmentStatusContent() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen relative overflow-x-hidden">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#F6F4FA] via-white to-[#F6F4FA] py-20 md:py-32 text-center">
+      <section className="relative py-20 md:py-32 text-center z-10">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mb-6" />
-          <h1 className="text-4xl md:text-6xl font-light text-[#2E2A36]">
-            Appointment <span className="font-medium text-[#3F2965]">Status</span>
+          <div className="h-1 w-16 bg-gradient-to-r from-[#eeb9ff] to-[#DD1764] rounded-full mx-auto mb-6" />
+          <h1 className="text-4xl md:text-6xl font-light text-white">
+            Appointment <span className="font-medium text-[#eeb9ff]">Status</span>
           </h1>
         </div>
       </section>
 
       {/* Status Card */}
-      <section className="py-16 md:py-24 max-w-3xl mx-auto px-6">
-        <div className="bg-white rounded-3xl p-1 md:p-6 border border-[#3F2965]/5 shadow-sm">
+      <section className="py-16 md:py-24 max-w-3xl mx-auto px-6 relative z-10">
+        <div className="bg-white/10 backdrop-blur-md rounded-3xl p-1 md:p-6 border border-white/20 shadow-lg">
           <SessionCard booking={booking} />
         </div>
       </section>
