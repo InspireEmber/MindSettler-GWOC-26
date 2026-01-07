@@ -2,6 +2,7 @@
 
 import { useSpring } from "framer-motion";
 import ReadyToBook from "@/components/ReadyToBook";
+import SeamlessVideo from "@/components/SeamlessVideo";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -25,9 +26,9 @@ export default function HomePage() {
   const { scrollY } = useScroll();
   const smoothY = useSpring(scrollY, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
-  const opacity = useTransform(smoothY, [0, 500], [1, 0]);
-  const scale = useTransform(smoothY, [0, 500], [1, 1.1]);
-  const blur = useTransform(smoothY, [0, 500], [0, 10]);
+  const opacity = useTransform(smoothY, [0, 1000], [1, 0]);
+  const scale = useTransform(smoothY, [0, 1000], [1, 1.1]);
+  const blur = useTransform(smoothY, [0, 1000], [0, 10]);
 
   return (
     <div className="relative overflow-x-hidden">
@@ -50,22 +51,22 @@ export default function HomePage() {
         {/* HERO SECTION – VIDEO BACKGROUND */}
         <section className="relative min-h-[70vh] lg:min-h-[100vh] flex items-center overflow-hidden">
           {/* Background Video Layer */}
+          {/* Replaced standard motion.video with SeamlessVideo for gapless looping */}
           <motion.div
             style={{ opacity, scale, filter: `blur(${blur}px)` }}
-            className="absolute inset-0 z-0 bg-[#0b0220]"
+            className="fixed inset-0 w-full h-full z-0 bg-[#0b0220] pointer-events-none"
           >
-            <motion.video
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5, ease: "easeOut" }}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full"
             >
-              <source src="/videos/herosec.mp4" type="video/mp4" />
-            </motion.video>
+              <SeamlessVideo
+                src="/videos/herosec.mp4"
+                className="w-full h-full"
+              />
+            </motion.div>
             {/* Dark/Gradient Overlay for blending */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#0b0220]/80 via-transparent to-[#0b0220] pointer-events-none" />
             <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-[#0b0220] to-transparent pointer-events-none" />
