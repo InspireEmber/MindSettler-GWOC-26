@@ -90,7 +90,7 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row flex-wrap gap-4">
                 <Link
                   href="/book-session"
-                  className="px-8 py-4 rounded-full bg-[#4a313e]/60 backdrop-blur-md text-white font-medium hover:shadow-2xl hover:scale-105 transition-all flex items-center justify-center gap-2 group shadow-xl ring-1 ring-inset ring-white/10"
+                  className="px-8 py-4 rounded-full bg-[#a167a5]/60 backdrop-blur-md text-white font-medium hover:shadow-2xl hover:scale-105 transition-all flex items-center justify-center gap-2 group shadow-xl ring-1 ring-inset ring-white/10"
                 >
                   Begin When You're Ready
                   <ArrowRight size={18} />
