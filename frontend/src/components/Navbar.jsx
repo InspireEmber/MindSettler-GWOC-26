@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import {
   Menu, X, User, LogOut, LogIn,
   Info, Sparkles, BookOpen, Map,
-  ChevronRight, CalendarCheck
+  ChevronRight, CalendarCheck, Brain, Star, HelpCircle, MessageCircle
 } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 import { motion, AnimatePresence } from "framer-motion";
@@ -49,11 +49,20 @@ export default function Navbar() {
     tap: { scale: 0.95 }
   };
 
-  const NavLink = ({ href, children, icon: Icon }) => {
+  const NavLink = ({ href, children, icon: Icon, dropdownItems }) => {
     const isActive = pathname === href;
 
+    // Dynamic dropdown styles based on scroll state - matches navbar exactly
+    const dropdownBg = scrolled
+      ? "bg-[#a167a5]/50 backdrop-blur-xl border-white/10"
+      : "bg-white/10 backdrop-blur-xl border-white/20";
+
+    const dropdownItemHover = scrolled
+      ? "hover:bg-[#a167a5]/40"
+      : "hover:bg-white/20";
+
     return (
-      <div className="relative">
+      <div className="relative group">
         <motion.div variants={navLinkVariants} whileHover="hover" whileTap="tap">
           <Link
             href={href}
@@ -72,6 +81,23 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           />
+        )}
+
+        {dropdownItems && (
+          <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 min-w-[220px]">
+            <div className={`${dropdownBg} border rounded-xl shadow-xl overflow-hidden p-1.5 flex flex-col gap-1 transition-all duration-500`}>
+              {dropdownItems.map((item, index) => (
+                <Link
+                  key={index}
+                  href={item.href}
+                  className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-white/80 hover:text-white ${dropdownItemHover} transition-colors`}
+                >
+                  {item.icon && <item.icon size={16} className="text-[#eeb9ff]" />}
+                  <span className="font-medium">{item.label}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
         )}
       </div>
     );
@@ -109,16 +135,46 @@ export default function Navbar() {
           </motion.div>
 
           <nav className="hidden md:flex items-center gap-2">
-            <NavLink href="/about" icon={Info}>About</NavLink>
-            <NavLink href="/journey" icon={Map}>Journey</NavLink>
-            <NavLink href="/how-it-works" icon={Sparkles}>How It Works</NavLink>
-            <NavLink href="/resources" icon={BookOpen}>Resources</NavLink>
+            <NavLink
+              href="/about"
+              icon={Info}
+              dropdownItems={[
+                { label: "About Us", href: "/about", icon: Info },
+                { label: "The Journey", href: "/journey", icon: Map },
+                { label: "How It Works", href: "/how-it-works", icon: Sparkles },
+                { label: "What Makes Us Different", href: "/what-makes-us-different", icon: Star }
+              ]}
+            >
+              About
+            </NavLink>
+
+            <NavLink
+              href="/resources"
+              icon={BookOpen}
+              dropdownItems={[
+                { label: "Resources", href: "/resources", icon: BookOpen },
+                { label: "Psycho-education", href: "/psycho-education", icon: Brain }
+              ]}
+            >
+              Resources
+            </NavLink>
+
+            <NavLink
+              href="/faqs"
+              icon={HelpCircle}
+              dropdownItems={[
+                { label: "FAQs", href: "/faqs", icon: HelpCircle },
+                { label: "Contact Us", href: "/contact", icon: MessageCircle }
+              ]}
+            >
+              FAQ
+            </NavLink>
 
             <div className="h-6 w-[1px] bg-white/20 mx-2" />
 
             <Link
               href="/book-session"
-              className="group relative flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#4a313e]/60 backdrop-blur-md text-white shadow-xl hover:shadow-[#4A313E]/30 transition-all overflow-hidden ring-1 ring-inset ring-white/10"
+              className="group relative flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#a167a5]/60 backdrop-blur-md text-white shadow-xl hover:shadow-[#4A313E]/30 transition-all overflow-hidden ring-1 ring-inset ring-white/10"
             >
               <div className="absolute inset-0 bg-white/20 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300" />
               <CalendarCheck size={18} className="relative z-10" />
@@ -139,12 +195,12 @@ export default function Navbar() {
                     href="/profile"
                     className="group flex items-center gap-2 p-1 pr-4 rounded-full bg-white/10 border border-white/10 hover:bg-white/20 transition-all"
                   >
-                    <div className="w-8 h-8 rounded-full bg-[#4a313e]/60 backdrop-blur-md text-white flex items-center justify-center ring-1 ring-inset ring-white/20">
+                    <div className="w-8 h-8 rounded-full bg-[#a167a5]/60 backdrop-blur-md text-white flex items-center justify-center ring-1 ring-inset ring-white/20">
                       <User size={14} />
                     </div>
                     <span className="text-xs font-bold text-white/90">Profile</span>
                   </Link>
-                  <button onClick={handleLogout} className="text-white/70 hover:text-[#EF4444] text-xs font-bold transition-colors uppercase tracking-wider">
+                  <button onClick={handleLogout} className="text-white/70 hover:text-[#a167a5] text-xs font-bold transition-colors uppercase tracking-wider">
                     Logout
                   </button>
                 </div>
@@ -167,7 +223,10 @@ export default function Navbar() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="md:hidden overflow-hidden mt-2 bg-[#1a0b2e]/95 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl"
+              className={`md:hidden overflow-hidden mt-2 backdrop-blur-xl rounded-2xl border shadow-2xl transition-all duration-500 ${scrolled
+                  ? "bg-[#a167a5]/50 border-white/10"
+                  : "bg-white/10 border-white/20"
+                }`}
             >
               <div className="flex flex-col gap-2 pb-6 pt-4 border-t border-white/10">
                 {[

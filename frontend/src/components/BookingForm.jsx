@@ -77,36 +77,35 @@ export default function BookingForm() {
 
   return (
     <div className="max-w-3xl mx-auto p-1">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-3xl bg-white border border-[#3F2965]/10 shadow-2xl overflow-hidden"
+        className="rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden"
       >
         {/* Progress Header */}
-        <div className="p-8 relative overflow-hidden group">
-          <BlobBackground />
+        <div className="p-8 relative overflow-hidden group bg-[#a167a5]">
           <div className="relative z-10">
-            <h2 className="text-3xl font-light mb-2 flex items-center gap-3 text-[#3F2965]">
-              <CheckCircle2 className="text-[#3F2965]" /> Reserve a Session
+            <h2 className="text-3xl font-light mb-2 flex items-center gap-3 text-white">
+              <CheckCircle2 className="text-white" /> Reserve a Session
             </h2>
-            <p className="text-[#3F2965]/80 text-sm">Choose your preferred mode and time to begin.</p>
+            <p className="text-white/80 text-sm">Choose your preferred mode and time to begin.</p>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 md:p-10 space-y-8">
-          
+
           {/* Step 1: Session Type */}
           <section className="space-y-4">
-            <h3 className="text-sm font-bold text-[#3F2965] uppercase tracking-widest flex items-center gap-2">
+            <h3 className="text-sm font-bold text-[#eeb9ff] uppercase tracking-widest flex items-center gap-2">
               <ShieldCheck size={16} /> 1. Select Mode
             </h3>
             <div className="grid grid-cols-2 gap-4">
               {["online", "offline"].map((type) => (
-                <label key={type} className={`relative p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col items-center justify-center gap-2 capitalize group ${formData.sessionType === type ? "border-[#3F2965] bg-[#F6F4FA] shadow-md" : "border-gray-100 hover:border-[#3F2965]/30"}`}>
+                <label key={type} className={`relative p-5 rounded-2xl border transition-all flex flex-col items-center justify-center gap-2 capitalize group cursor-pointer ${formData.sessionType === type ? "border-[#eeb9ff] bg-white/10 shadow-lg" : "border-white/5 hover:border-white/20 bg-white/5"}`}>
                   <input type="radio" name="sessionType" value={type} checked={formData.sessionType === type} onChange={handleChange} className="sr-only" />
-                  <span className={`text-lg font-medium ${formData.sessionType === type ? "text-[#3F2965]" : "text-gray-400"}`}>{type}</span>
-                {formData.sessionType === type && (
-                    <motion.div layoutId="activeType" className="absolute top-3 right-3 bg-[#DD1764] text-white p-1 rounded-full shadow-lg">
+                  <span className={`text-lg font-medium ${formData.sessionType === type ? "text-white" : "text-white/60"}`}>{type}</span>
+                  {formData.sessionType === type && (
+                    <motion.div layoutId="activeType" className="absolute top-3 right-3 bg-[#eeb9ff] text-[#3F2965] p-1 rounded-full shadow-lg">
                       <CheckCircle2 size={16} />
                     </motion.div>
                   )}
@@ -117,7 +116,7 @@ export default function BookingForm() {
 
           {/* Step 2: Date Selection */}
           <section className="space-y-4">
-            <h3 className="text-sm font-bold text-[#3F2965] uppercase tracking-widest flex items-center gap-2">
+            <h3 className="text-sm font-bold text-[#eeb9ff] uppercase tracking-widest flex items-center gap-2">
               <CalendarIcon size={16} /> 2. Choose Date
             </h3>
             <input
@@ -127,13 +126,13 @@ export default function BookingForm() {
               value={formData.preferredDate}
               onChange={handleChange}
               min={today}
-              className="w-full px-6 py-4 rounded-2xl border border-gray-100 focus:outline-none focus:border-[#3F2965] focus:ring-1 focus:ring-[#3F2965] bg-[#FAFAFA] text-lg font-medium text-[#2E2A36]"
+              className="w-full px-6 py-4 rounded-2xl border border-white/10 focus:outline-none focus:border-[#eeb9ff] focus:ring-1 focus:ring-[#eeb9ff] bg-white/5 text-lg font-medium text-white appearance-none"
             />
           </section>
 
           {/* Step 3: Time Slot Grid */}
           <section className="space-y-4">
-            <h3 className="text-sm font-bold text-[#3F2965] uppercase tracking-widest flex items-center gap-2">
+            <h3 className="text-sm font-bold text-[#eeb9ff] uppercase tracking-widest flex items-center gap-2">
               <Clock size={16} /> 3. Available Times
             </h3>
             {availableSlots.length > 0 ? (
@@ -143,16 +142,15 @@ export default function BookingForm() {
                     key={s.id}
                     type="button"
                     onClick={() => handleSlotSelect(s.id)}
-                    className={`p-3 rounded-xl border text-sm font-medium transition-all relative overflow-hidden ${formData.slotId === s.id ? "text-[#3F2965] border-transparent shadow-lg" : "bg-white border-gray-200 text-[#5E5A6B] hover:border-[#3F2965]"}`}
+                    className={`p-3 rounded-xl border text-sm font-serif italic transition-all relative overflow-hidden ${formData.slotId === s.id ? "text-[#3F2965] border-transparent shadow-lg" : "bg-white/5 border-white/10 text-white/80 hover:border-[#eeb9ff] hover:bg-white/10"}`}
                   >
-                    {formData.slotId === s.id && <BlobBackground />}
+                    {formData.slotId === s.id && <div className="absolute inset-0 bg-[#eeb9ff]" />}
                     <span className="relative z-10">{s.startTime}</span>
                   </button>
                 ))}
               </div>
             ) : (
-              <div className="p-8 text-[#3F2965] relative overflow-hidden rounded-2xl border border-gray-100">
-                <BlobBackground />
+              <div className="p-8 text-[#eeb9ff] relative overflow-hidden rounded-2xl border border-white/10 bg-white/5">
                 <span className="relative z-10">No slots available for this date.</span>
               </div>
             )}
@@ -160,14 +158,14 @@ export default function BookingForm() {
 
           {/* Additional Notes */}
           <section className="space-y-4">
-            <h3 className="text-sm font-bold text-[#3F2965] uppercase tracking-widest">Additional Context</h3>
-            <textarea 
-              name="message" 
-              value={formData.message} 
-              onChange={handleChange} 
-              rows={3} 
+            <h3 className="text-sm font-bold text-[#eeb9ff] uppercase tracking-widest">Additional Context</h3>
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              rows={3}
               placeholder="What would you like to focus on?"
-              className="w-full px-6 py-4 rounded-2xl border border-gray-100 focus:ring-2 focus:ring-[#3F2965]/20 outline-none bg-[#FAFAFA] resize-none" 
+              className="w-full px-6 py-4 rounded-2xl border border-white/10 focus:ring-2 focus:ring-[#eeb9ff]/20 outline-none bg-white/5 text-white placeholder-white/40 resize-none transition-all"
             />
           </section>
 
@@ -175,10 +173,10 @@ export default function BookingForm() {
           <div className="pt-4 space-y-6">
             <label className="flex items-start gap-4 cursor-pointer group">
               <div className="relative flex items-center">
-                <input type="checkbox" required className="peer h-6 w-6 rounded-md border-gray-300 text-[#3F2965] focus:ring-[#3F2965]" />
+                <input type="checkbox" required className="peer h-6 w-6 rounded-md border-white/20 bg-white/5 text-[#eeb9ff] focus:ring-[#eeb9ff] cursor-pointer" />
               </div>
-              <span className="text-xs text-[#5E5A6B] leading-relaxed">
-                I agree to the <a href="/policies/confidentiality" className="text-[#3F2965] font-bold hover:underline">Confidentiality Policy</a>. 
+              <span className="text-xs text-white/60 leading-relaxed font-light">
+                I agree to the <a href="/policies/confidentiality" className="text-[#eeb9ff] font-bold hover:underline">Confidentiality Policy</a>.
                 I understand this is an educational session, not medical treatment.
               </span>
             </label>
@@ -191,12 +189,11 @@ export default function BookingForm() {
               )}
             </AnimatePresence>
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={isSubmitting || !formData.slotId}
-              className="w-full py-5 rounded-full text-[#3F2965] font-bold text-lg hover:shadow-2xl transition-all disabled:opacity-30 disabled:grayscale active:scale-95 flex items-center justify-center gap-3 relative overflow-hidden"
+              className="w-full py-5 rounded-full bg-[#eeb9ff] text-[#3F2965] font-serif font-bold text-lg shadow-xl shadow-[#eeb9ff]/10 hover:shadow-[#eeb9ff]/20 hover:scale-[1.02] transition-all disabled:opacity-30 disabled:grayscale active:scale-95 flex items-center justify-center gap-3 relative overflow-hidden"
             >
-              <BlobBackground />
               <span className="relative z-10 flex items-center gap-3">
                 {isSubmitting ? <><Loader2 className="animate-spin" /> Processing...</> : "Confirm Request"}
               </span>

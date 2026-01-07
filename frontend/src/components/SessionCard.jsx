@@ -14,10 +14,10 @@ export default function SessionCard({ booking }) {
 
   const DetailItem = ({ label, value, icon: Icon }) => (
     <div>
-      <p className="text-sm font-medium text-gray-400 mb-1 flex items-center gap-2">
-        {Icon && <Icon size={14} />} {label}
+      <p className="text-xs font-bold text-[#eeb9ff] uppercase tracking-widest mb-1 flex items-center gap-2 opacity-80">
+        {Icon && <Icon size={12} />} {label}
       </p>
-      <p className="text-lg text-white capitalize">{value || "Not specified"}</p>
+      <p className="text-lg text-white capitalize font-serif italic">{value || "Not specified"}</p>
     </div>
   );
 
@@ -30,19 +30,19 @@ export default function SessionCard({ booking }) {
       </div>
 
       <div className="space-y-10">
-        <h2 className="text-3xl font-light text-white">Session Details</h2>
+        <h2 className="text-3xl font-serif italic text-white/90">Session Details</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
           <DetailItem label="Name" value={booking.name} icon={User} />
           <DetailItem label="Email" value={booking.email} icon={Mail} />
           <DetailItem label="Phone" value={booking.phone} icon={Phone} />
           <DetailItem label="Session Type" value={booking.sessionType} icon={booking.sessionType === "online" ? Laptop : MapPin} />
-          <DetailItem 
-            label="Date" 
+          <DetailItem
+            label="Date"
             icon={Calendar}
             value={booking.preferredDate && new Date(booking.preferredDate).toLocaleDateString('en-US', {
               weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'
-            })} 
+            })}
           />
           <DetailItem label="Time Slot" value={booking.preferredTime} icon={Clock} />
           <DetailItem label="Payment Status" value={booking.paymentStatus || 'pending'} icon={CheckCircle2} />
@@ -75,7 +75,7 @@ export default function SessionCard({ booking }) {
           <div className="flex gap-4">
             <div className="shrink-0 mt-1">{config.icon}</div>
             <div>
-              <h3 className="font-bold mb-2 capitalize">
+              <h3 className="font-serif italic text-lg mb-2 capitalize">
                 {status === "pending" ? "Awaiting Review" : `Booking ${status}`}
               </h3>
               <p className="text-sm leading-relaxed mb-4 text-white/90">
