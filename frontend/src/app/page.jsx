@@ -25,12 +25,24 @@ export default function HomePage() {
   const { scrollY } = useScroll();
   const smoothY = useSpring(scrollY, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
-  const opacity = useTransform(smoothY, [0, 500], [0.8, 0]);
+  const opacity = useTransform(smoothY, [0, 500], [1, 0]);
   const scale = useTransform(smoothY, [0, 500], [1, 1.1]);
   const blur = useTransform(smoothY, [0, 500], [0, 10]);
 
   return (
     <div className="relative overflow-x-hidden">
+
+      {/* BACKGROUND IMAGE bg4 */}
+      <div className="fixed inset-0 -z-10">
+        <Image
+          src="/images/bg4.jpg"
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
 
       {/* --- CONTENT LAYER --- */}
       <div className="relative z-10">
@@ -52,7 +64,7 @@ export default function HomePage() {
               playsInline
               className="w-full h-full object-cover"
             >
-              <source src="/videos/herosect.mp4" type="video/mp4" />
+              <source src="/videos/herosec.mp4" type="video/mp4" />
             </motion.video>
             {/* Dark/Gradient Overlay for blending */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#0b0220]/80 via-transparent to-[#0b0220] pointer-events-none" />
@@ -140,8 +152,8 @@ export default function HomePage() {
                 transition={{ duration: 0.6 }}
                 className="space-y-6"
               >
-                <motion.div 
-                  className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 sm:p-8 shadow-xl cursor-default"
+                <motion.div
+                  className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 shadow-xl cursor-default"
                   whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.15)" }}
                   transition={{ duration: 0.3 }}
                 >
@@ -188,49 +200,49 @@ export default function HomePage() {
                 className="space-y-6"
               >
                 <div>
-                    <h3 className="font-serif italic text-xl sm:text-2xl text-[#eeb9ff] mb-6 text-center">
-                      "MindSettler by Parnika"
-                    </h3>
+                  <h3 className="font-serif italic text-xl sm:text-2xl text-[#eeb9ff] mb-6 text-center">
+                    "MindSettler by Parnika"
+                  </h3>
 
-                    <p className="text-gray-200 leading-relaxed mb-6 text-center">
-                      MindSettler by Parnika is an amalgamation of two interconnected aspects of mental
-                      health followed by a common ground.
-                    </p>
+                  <p className="text-gray-200 leading-relaxed mb-6 text-center">
+                    MindSettler by Parnika is an amalgamation of two interconnected aspects of mental
+                    health followed by a common ground.
+                  </p>
 
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      {/* Mind */}
-                      <motion.div
-                        className="bg-white/10 rounded-2xl p-5 text-center group hover:bg-white/20 transition-all duration-300"
-                        whileHover={{ scale: 1.02 }}
-                      >
-                        <div className="w-14 h-14 mx-auto rounded-full bg-[#3F2965]/30 flex items-center justify-center mb-3 group-hover:bg-[#3F2965]/50 group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(63,41,101,0.6)] transition-all duration-300">
-                          <Brain className="w-7 h-7 text-[#eeb9ff] group-hover:text-white transition-colors duration-300" />
-                        </div>
-                        <h4 className="font-semibold text-[#eeb9ff] mb-2 group-hover:text-white group-hover:scale-110 transition-all duration-300">
-                          'Mind'
-                        </h4>
-                        <p className="text-sm text-gray-300 leading-relaxed">
-                          'Mind' refers to a person’s consciousness which is not a physical but
-                          a mental and emotional part.
-                        </p>
-                      </motion.div>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {/* Mind */}
+                    <motion.div
+                      className="bg-white/10 rounded-2xl p-5 text-center group hover:bg-white/20 transition-all duration-300"
+                      whileHover={{ scale: 1.02 }}
+                    >
+                      <div className="w-14 h-14 mx-auto rounded-full bg-[#3F2965]/30 flex items-center justify-center mb-3 group-hover:bg-[#3F2965]/50 group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(63,41,101,0.6)] transition-all duration-300">
+                        <Brain className="w-7 h-7 text-[#eeb9ff] group-hover:text-white transition-colors duration-300" />
+                      </div>
+                      <h4 className="font-semibold text-[#eeb9ff] mb-2 group-hover:text-white group-hover:scale-110 transition-all duration-300">
+                        'Mind'
+                      </h4>
+                      <p className="text-sm text-gray-300 leading-relaxed">
+                        'Mind' refers to a person’s consciousness which is not a physical but
+                        a mental and emotional part.
+                      </p>
+                    </motion.div>
 
-                      {/* Settler */}
-                      <motion.div
-                        className="bg-white/10 rounded-2xl p-5 text-center group hover:bg-white/20 transition-all duration-300"
-                        whileHover={{ scale: 1.02 }}
-                      >
-                        <div className="w-14 h-14 mx-auto rounded-full bg-[#DD1764]/30 flex items-center justify-center mb-3 group-hover:bg-[#DD1764]/50 group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(221,23,100,0.6)] transition-all duration-300">
-                          <Heart className="w-7 h-7 text-[#ff8ac0] group-hover:text-white transition-colors duration-300" />
-                        </div>
-                        <h4 className="font-semibold text-[#ff8ac0] mb-2 group-hover:text-white group-hover:scale-110 transition-all duration-300">
-                          'Settler'
-                        </h4>
-                        <p className="text-sm text-gray-300 leading-relaxed">
-                          'Settler' refers to us assisting you to settle your mind in times
-                          of distress or with any other mental health issues you may face.
-                        </p>
-                      </motion.div>
+                    {/* Settler */}
+                    <motion.div
+                      className="bg-white/10 rounded-2xl p-5 text-center group hover:bg-white/20 transition-all duration-300"
+                      whileHover={{ scale: 1.02 }}
+                    >
+                      <div className="w-14 h-14 mx-auto rounded-full bg-[#DD1764]/30 flex items-center justify-center mb-3 group-hover:bg-[#DD1764]/50 group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(221,23,100,0.6)] transition-all duration-300">
+                        <Heart className="w-7 h-7 text-[#ff8ac0] group-hover:text-white transition-colors duration-300" />
+                      </div>
+                      <h4 className="font-semibold text-[#ff8ac0] mb-2 group-hover:text-white group-hover:scale-110 transition-all duration-300">
+                        'Settler'
+                      </h4>
+                      <p className="text-sm text-gray-300 leading-relaxed">
+                        'Settler' refers to us assisting you to settle your mind in times
+                        of distress or with any other mental health issues you may face.
+                      </p>
+                    </motion.div>
                   </div>
                 </div>
               </motion.div>
@@ -263,7 +275,7 @@ export default function HomePage() {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all min-h-[44px]"
+                  className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 hover:bg-white/10 transition-all min-h-[44px]"
                 >
                   {/* Dot */}
                   <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#DD1764] shrink-0" />
