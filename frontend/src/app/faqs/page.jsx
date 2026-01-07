@@ -6,13 +6,13 @@ import { MessageCircle, HelpCircle, Sparkles } from "lucide-react";
 
 // Animation Variants
 const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+  hidden: { opacity: 0, y: 40, filter: "blur(10px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } }
 };
 
 const staggerContainer = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
+  visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 } }
 };
 
 export default function FAQsPage() {
@@ -20,7 +20,7 @@ export default function FAQsPage() {
     <div className="min-h-screen relative overflow-x-hidden">
 
       {/* 1. Hero Section: Reveal on Load */}
-      <section className="relative pt-20 pb-20 md:pt-32 md:pb-24 overflow-hidden text-center z-10">
+      <section className="relative pt-24 pb-8 md:pt-32 md:pb-10 overflow-hidden text-center z-10">
 
         <motion.div
           initial="hidden"
@@ -28,15 +28,15 @@ export default function FAQsPage() {
           variants={staggerContainer}
           className="max-w-4xl mx-auto px-6 relative z-10"
         >
-          <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-[#eeb9ff] text-xs font-bold uppercase tracking-widest mb-8">
-            <HelpCircle size={14} /> Knowledge Base
-          </motion.div>
-
-          <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl font-light text-white mb-8 leading-tight">
-            Frequently Asked <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Questions</span>
+          <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl font-serif text-white mb-6 leading-tight">
+            Frequently Asked <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Questions</span>
           </motion.h1>
 
-          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl mx-auto">
+          <motion.p variants={fadeInUp} className="text-xl md:text-2xl font-serif italic text-[#eeb9ff] mb-6">
+            "Welcome to a space of clarity. We are here to answer what's on your mind."
+          </motion.p>
+
+          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl mx-auto font-light">
             Everything you need to know about our psycho-education sessions,
             privacy standards, and the journey toward emotional clarity.
           </motion.p>
@@ -49,7 +49,7 @@ export default function FAQsPage() {
       </section>
 
       {/* 2. FAQs Content: Scroll Reveal */}
-      <section className="py-20 md:py-32 relative z-10">
+      <section className="py-10 md:py-16 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -64,7 +64,7 @@ export default function FAQsPage() {
       </section>
 
       {/* 3. CTA Section: Vibrant Story Ending */}
-      <section className="px-6 pb-20 md:pb-32 relative z-10">
+      <section className="px-6 pb-16 md:pb-24 relative z-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}

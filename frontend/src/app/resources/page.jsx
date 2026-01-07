@@ -45,26 +45,22 @@ export default function ResourcesPage() {
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
-      
-      <section className="relative pt-24 pb-20 overflow-hidden text-center z-10">
-        
-        <motion.div 
+
+      <section className="relative pt-24 pb-12 overflow-hidden text-center z-10">
+
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
           className="max-w-5xl mx-auto px-6 relative z-10"
         >
-          <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-[#eeb9ff] text-xs font-bold uppercase tracking-widest mb-8">
-            <Sparkles size={14} className="text-[#DD1764]" /> The Learning Hub
-          </motion.div>
-          
           <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-light text-white mb-8 leading-[1.1]">
             Empowerment through <br />
             <span className="font-medium text-[#eeb9ff]">Knowledge</span>
           </motion.h1>
-          
+
           <motion.p variants={fadeInUp} className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
-            Access our library of structured psycho-education content designed 
+            Access our library of structured psycho-education content designed
             to help you decode the complexity of your mind.
           </motion.p>
         </motion.div>
@@ -72,7 +68,7 @@ export default function ResourcesPage() {
 
       <section className="pb-24 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -98,7 +94,7 @@ export default function ResourcesPage() {
                     <p className="text-gray-200 text-sm leading-relaxed mb-10">
                       {category.description}
                     </p>
-                    
+
                     <div className="flex items-center gap-2 text-xs font-bold text-gray-300 group-hover:text-[#eeb9ff] transition-all">
                       View Section <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </div>
