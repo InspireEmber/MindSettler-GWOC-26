@@ -1,7 +1,7 @@
 "use client";
 import ReadyToBook from "@/components/ReadyToBook";
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { 
     Sparkles, 
     ShieldCheck, 
@@ -11,7 +11,7 @@ import {
     Lightbulb, 
     Heart 
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import Image from "next/image";
 
 // --- DATA ---
@@ -19,32 +19,38 @@ const BRAIN_ZONES = [
   {
     title: "Emotional Safety",
     desc: "A judgment-free zone for fearless expression and unconditional validation.",
-    icon: <ShieldCheck className="w-6 h-6 text-[#DD1764]" />,
+    icon: ShieldCheck,
+    color: "#DD1764",
   },
   {
     title: "Structured Thinking",
     desc: "Turning chaos into clarity with organized sessions and actionable pathways.",
-    icon: <LayoutGrid className="w-6 h-6 text-[#3F2965]" />,
+    icon: LayoutGrid,
+    color: "#a855f7", // Lightened purple for better visibility
   },
   {
     title: "Confidential Space",
     desc: "Strict ethical standards ensuring your story remains private and protected.",
-    icon: <Lock className="w-6 h-6 text-[#DD1764]" />,
+    icon: Lock,
+    color: "#DD1764",
   },
   {
     title: "Growth",
     desc: "Moving forward on your journey, tracking progress by life satisfaction.",
-    icon: <Sprout className="w-6 h-6 text-[#3F2965]" />,
+    icon: Sprout,
+    color: "#a855f7",
   },
   {
     title: "Self-Understanding",
     desc: "Unlocking the 'why' behind behaviors to empower deep, lasting transformation.",
-    icon: <Lightbulb className="w-6 h-6 text-[#DD1764]" />,
+    icon: Lightbulb,
+    color: "#DD1764",
   },
   {
     title: "Human Connection",
     desc: "Real empathy from dedicated professionals, bridging technology with healing presence.",
-    icon: <Heart className="w-6 h-6 text-[#3F2965]" />,
+    icon: Heart,
+    color: "#a855f7",
   },
 ];
 
@@ -85,18 +91,27 @@ const ZoneCard = ({ zone, className }) => (
   <motion.div
     variants={itemVariants}
     whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-    className={`relative overflow-hidden p-6 rounded-[2rem] bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl hover:bg-white/10 transition-all duration-300 h-full group ${className}`}
+    className={`relative overflow-hidden p-6 rounded-[2rem] bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl hover:bg-white/10 transition-all duration-300 h-full group flex flex-col ${className}`}
+    style={{ '--hover-color': zone.color }}
   >
-    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-        {zone.icon}
-    </div>
-    <div className="flex flex-col gap-3 relative z-10">
-        <h3 className="text-xl font-semibold text-white tracking-wide">
-            {zone.title}
-        </h3>
-        <p className="text-gray-300 text-sm leading-relaxed font-light">
-            {zone.desc}
-        </p>
+    <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none group-hover:bg-white/10 transition-colors" />
+    
+    <div className="relative z-10 flex flex-col gap-4">
+        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform duration-300">
+             <zone.icon 
+                className="w-6 h-6 text-white/50 transition-colors duration-300 group-hover:text-[var(--hover-color)] group-hover:drop-shadow-[0_0_8px_var(--hover-color)]" 
+                strokeWidth={1.5}
+             />
+        </div>
+        
+        <div className="flex flex-col gap-2">
+            <h3 className="text-xl font-semibold text-white tracking-wide group-hover:text-[var(--hover-color)] transition-colors">
+                {zone.title}
+            </h3>
+            <p className="text-gray-300 text-sm leading-relaxed font-light">
+                {zone.desc}
+            </p>
+        </div>
     </div>
   </motion.div>
 );
@@ -104,6 +119,8 @@ const ZoneCard = ({ zone, className }) => (
 // --- MAIN PAGE COMPONENT ---
 export default function WhatMakesUsDifferentPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const brainRef = useRef(null);
+  const isBrainInView = useInView(brainRef, { amount: 1, once: true });
 
   // Auto-rotate logic
   useEffect(() => {
@@ -117,29 +134,17 @@ export default function WhatMakesUsDifferentPage() {
     <div className="min-h-screen relative overflow-x-hidden">
       
       {/* HERO HEADER */}
-      <section className="relative z-10 pt-20 pb-8 md:pt-28 md:pb-12 px-6 text-center">
-          {/* Gradient Bar */}
-          <div className="w-24 h-1.5 mx-auto bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mb-8" />
-
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-sm mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[#eeb9ff]" />
-            <span className="text-[10px] sm:text-xs font-bold tracking-widest text-[#eeb9ff] uppercase">
-              Beyond Standard Care
-            </span>
-          </div>
+      <section className="relative z-10 pt-20 pb-8 md:pt-10 md:pb-12 px-6 text-center">
+          {/* Gradient Bar (Updated to match 'How It Works' style) */}
+          <div className="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full mx-auto mb-8" />
 
           <h1 className="text-3xl md:text-5xl lg:text-7xl font-light text-white tracking-tight mb-6">
             What Makes Us <br />
-            <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff] relative inline-block">
+            <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff] relative inline-block pr-3 pb-1">
               Different
             </span>
           </h1>
 
-           <p className="text-base md:text-xl text-gray-200 max-w-2xl mx-auto font-light leading-relaxed">
-            We don't just offer sessions; we offer a carefully architected
-            journey designed for sustainable emotional growth.
-          </p>
       </section>
 
       {/* CIRCULAR / ORBIT LAYOUT SECTION */}
@@ -177,6 +182,7 @@ export default function WhatMakesUsDifferentPage() {
              {/* Center Brain */}
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] z-10 flex items-center justify-center">
                  <motion.div
+                    ref={brainRef}
                     initial={{ scale: 0.8, opacity: 0 }}
                     whileInView={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 1 }}
@@ -220,8 +226,7 @@ export default function WhatMakesUsDifferentPage() {
                                 y: '-50%',
                             }}
                             initial={{ scaleX: 0, opacity: 0 }}
-                            whileInView={{ scaleX: 1, opacity: 1 }}
-                            viewport={{ once: true }}
+                            animate={isBrainInView ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
                             transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
                         />
 
@@ -229,8 +234,7 @@ export default function WhatMakesUsDifferentPage() {
                         <motion.div
                             className="absolute top-1/2 left-1/2 z-20 flex items-center justify-center p-0"
                             initial={{ opacity: 0, x: 0, y: 0, scale: 0.5 }}
-                            whileInView={{ opacity: 1, x: x - (cardWidth / 2), y: y - (cardHeight / 2), scale: 1 }}
-                            viewport={{ once: true }}
+                            animate={isBrainInView ? { opacity: 1, x: x - (cardWidth / 2), y: y - (cardHeight / 2), scale: 1 } : { opacity: 0, x: 0, y: 0, scale: 0.5 }}
                             transition={{ 
                                 duration: 0.8, 
                                 delay: index * 0.1, 

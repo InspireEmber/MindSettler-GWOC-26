@@ -161,12 +161,6 @@ export default function HowItWorksPage() {
             >
               How It <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Works</span>
             </motion.h1>
-            <motion.p
-              variants={fadeInUp}
-              className="text-lg sm:text-xl md:text-2xl px-2 text-gray-200 font-light max-w-2xl mx-auto"
-            >
-              A simple, structured journey toward emotional clarity and mental well-being.
-            </motion.p>
           </motion.div>
         </section>
 

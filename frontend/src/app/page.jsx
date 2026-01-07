@@ -104,31 +104,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 2. STORY CHAPTER: The Reality Check */}
-        <section className="py-12 sm:py-16 md:py-24 lg:py-32">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-            <div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-6 sm:mb-8 leading-tight px-2">
-                Mental health support shouldn't feel{" "}
-                <span className="italic font-serif text-[#DD1764]">
-                  confusing
-                </span>
-                .
-              </h2>
-              <p className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed px-2">
-                We replaced complex medical jargon with{" "}
-                <span className="text-white font-semibold">
-                  Structured Psycho-education
-                </span>
-                . By understanding the "Why" behind your feelings, you gain the
-                power to change the "How" of your life.
-              </p>
-            </div>
-          </div>
-        </section>
-
         {/* PURPOSE OF MINDSETTLER */}
-        <section className="py-12 sm:py-16 md:py-20 lg:py-28 backdrop-blur-md bg-black/30 border-t border-b border-white/10 relative overflow-hidden">
+        <section className="py-12 sm:py-16 md:py-20 lg:py-28 relative overflow-hidden">
           {/* Decorative background elements */}
           <div className="absolute top-0 left-0 w-96 h-96 bg-[#3F2965]/20 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl" />
           <div className="absolute bottom-0 right-0 w-80 h-80 bg-[#DD1764]/20 rounded-full translate-x-1/2 translate-y-1/2 blur-3xl" />
@@ -163,7 +140,11 @@ export default function HomePage() {
                 transition={{ duration: 0.6 }}
                 className="space-y-6"
               >
-                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 sm:p-8 shadow-xl">
+                <motion.div 
+                  className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 sm:p-8 shadow-xl cursor-default"
+                  whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.15)" }}
+                  transition={{ duration: 0.3 }}
+                >
                   <div className="flex items-start gap-4 mb-6">
                     <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center shrink-0">
                       <Lightbulb className="w-6 h-6 text-[#eeb9ff]" />
@@ -184,7 +165,7 @@ export default function HomePage() {
                     It is a medium to spread knowledge and an easier mode to
                     connect as well as reach out for help whenever in need.
                   </p>
-                </div>
+                </motion.div>
 
                 {/* Animated decorative element */}
                 <motion.div
@@ -206,52 +187,50 @@ export default function HomePage() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="space-y-6"
               >
-                <div className="bg-gradient-to-br from-[#3F2965] to-[#DD1764] p-[1px] rounded-3xl">
-                  <div className="bg-black/50 backdrop-blur-md rounded-3xl p-6 sm:p-8">
+                <div>
                     <h3 className="font-serif italic text-xl sm:text-2xl text-[#eeb9ff] mb-6 text-center">
                       "MindSettler by Parnika"
                     </h3>
 
                     <p className="text-gray-200 leading-relaxed mb-6 text-center">
-                      An amalgamation of two interconnected aspects of mental
+                      MindSettler by Parnika is an amalgamation of two interconnected aspects of mental
                       health followed by a common ground.
                     </p>
 
                     <div className="grid sm:grid-cols-2 gap-4">
                       {/* Mind */}
                       <motion.div
-                        className="bg-white/10 rounded-2xl p-5 text-center group hover:bg-white/20 transition-colors"
+                        className="bg-white/10 rounded-2xl p-5 text-center group hover:bg-white/20 transition-all duration-300"
                         whileHover={{ scale: 1.02 }}
                       >
-                        <div className="w-14 h-14 mx-auto rounded-full bg-[#3F2965]/30 flex items-center justify-center mb-3 group-hover:bg-[#3F2965]/50 transition-colors">
-                          <Brain className="w-7 h-7 text-[#eeb9ff]" />
+                        <div className="w-14 h-14 mx-auto rounded-full bg-[#3F2965]/30 flex items-center justify-center mb-3 group-hover:bg-[#3F2965]/50 group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(63,41,101,0.6)] transition-all duration-300">
+                          <Brain className="w-7 h-7 text-[#eeb9ff] group-hover:text-white transition-colors duration-300" />
                         </div>
-                        <h4 className="font-semibold text-[#eeb9ff] mb-2">
+                        <h4 className="font-semibold text-[#eeb9ff] mb-2 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                           'Mind'
                         </h4>
                         <p className="text-sm text-gray-300 leading-relaxed">
-                          Refers to a person's consciousness — not a physical but
+                          'Mind' refers to a person’s consciousness which is not a physical but
                           a mental and emotional part.
                         </p>
                       </motion.div>
 
                       {/* Settler */}
                       <motion.div
-                        className="bg-white/10 rounded-2xl p-5 text-center group hover:bg-white/20 transition-colors"
+                        className="bg-white/10 rounded-2xl p-5 text-center group hover:bg-white/20 transition-all duration-300"
                         whileHover={{ scale: 1.02 }}
                       >
-                        <div className="w-14 h-14 mx-auto rounded-full bg-[#DD1764]/30 flex items-center justify-center mb-3 group-hover:bg-[#DD1764]/50 transition-colors">
-                          <Heart className="w-7 h-7 text-[#ff8ac0]" />
+                        <div className="w-14 h-14 mx-auto rounded-full bg-[#DD1764]/30 flex items-center justify-center mb-3 group-hover:bg-[#DD1764]/50 group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(221,23,100,0.6)] transition-all duration-300">
+                          <Heart className="w-7 h-7 text-[#ff8ac0] group-hover:text-white transition-colors duration-300" />
                         </div>
-                        <h4 className="font-semibold text-[#ff8ac0] mb-2">
+                        <h4 className="font-semibold text-[#ff8ac0] mb-2 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                           'Settler'
                         </h4>
                         <p className="text-sm text-gray-300 leading-relaxed">
-                          Refers to us assisting you to settle your mind in times
-                          of distress or with any mental health issues.
+                          'Settler' refers to us assisting you to settle your mind in times
+                          of distress or with any other mental health issues you may face.
                         </p>
                       </motion.div>
-                    </div>
                   </div>
                 </div>
               </motion.div>
