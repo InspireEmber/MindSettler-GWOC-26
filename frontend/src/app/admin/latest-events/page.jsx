@@ -19,7 +19,7 @@ const ManageLatestEvents = () => {
 
   const fetchEvents = async () => {
     try {
-      const eventsData = await api.get('/latest-events');
+      const eventsData = await api.get('/latest-events/all');
       setEvents(eventsData);
     } catch (error) {
       console.error('Error fetching events:', error);
@@ -210,4 +210,3 @@ const ManageLatestEvents = () => {
 };
 
 export default ManageLatestEvents;
-

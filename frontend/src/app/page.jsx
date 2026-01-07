@@ -3,6 +3,7 @@
 import { useSpring } from "framer-motion";
 import ReadyToBook from "@/components/ReadyToBook";
 import SeamlessVideo from "@/components/SeamlessVideo";
+import LatestEvent from "@/components/LatestEvent";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -280,8 +281,10 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+        <LatestEvent />
         <ReadyToBook />
       </div>
     </div>
   );
 }
+
