@@ -236,24 +236,6 @@ export default function HomePage() {
               </motion.div>
             </div>
 
-            {/* Bottom decorative */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="text-center mt-12 sm:mt-16"
-            >
-              <p className="text-gray-300 text-sm sm:text-base mb-4">
-                A space where understanding meets care, and knowledge meets
-                healing.
-              </p>
-              <div className="flex items-center justify-center gap-3">
-                <span className="w-12 h-[1px] bg-gradient-to-r from-transparent to-white/50" />
-                <Sparkles className="w-4 h-4 text-white animate-pulse" />
-                <span className="w-12 h-[1px] bg-gradient-to-l from-transparent to-white/50" />
-              </div>
-            </motion.div>
           </div>
         </section>
 

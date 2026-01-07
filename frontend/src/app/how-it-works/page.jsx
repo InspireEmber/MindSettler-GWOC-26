@@ -222,7 +222,7 @@ export default function HowItWorksPage() {
         </section>
 
         {/* --- DYNAMIC "ALSO INCLUDES" SECTION --- */}
-        <section className="py-20 sm:py-24 border-t border-white/10 overflow-hidden bg-black/10 backdrop-blur-[2px]">
+        <section className="py-20 sm:py-24 overflow-hidden">
           <div className="max-w-5xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-white leading-tight">
@@ -274,7 +274,7 @@ export default function HowItWorksPage() {
         </section>
         
         {/* --- READY TO BOOK SECTION --- */}
-        <div className="backdrop-blur-md bg-black/30 border-t border-white/10">
+        <div>
             <ReadyToBook />
         </div>
 

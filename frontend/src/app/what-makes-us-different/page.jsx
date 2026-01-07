@@ -255,7 +255,7 @@ export default function WhatMakesUsDifferentPage() {
       </section>
 
       {/* --- NEW ROTATING SECTION (Replicated) --- */}
-       <section className="py-20 sm:py-24 backdrop-blur-md bg-black/30 border-t border-b border-white/10 overflow-hidden">
+       <section className="py-20 sm:py-24 overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-white leading-tight">
