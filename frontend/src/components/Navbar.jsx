@@ -6,7 +6,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
   Menu, X, User, LogOut, LogIn,
-  Info, Sparkles, BookOpen,
+  Info, Sparkles, BookOpen, Map,
   ChevronRight, CalendarCheck
 } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
@@ -110,6 +110,7 @@ export default function Navbar() {
 
           <nav className="hidden md:flex items-center gap-2">
             <NavLink href="/about" icon={Info}>About</NavLink>
+            <NavLink href="/journey" icon={Map}>Journey</NavLink>
             <NavLink href="/how-it-works" icon={Sparkles}>How It Works</NavLink>
             <NavLink href="/resources" icon={BookOpen}>Resources</NavLink>
 
@@ -171,6 +172,7 @@ export default function Navbar() {
               <div className="flex flex-col gap-2 pb-6 pt-4 border-t border-white/10">
                 {[
                   { href: "/about", label: "About", icon: Info },
+                  { href: "/journey", label: "Journey", icon: Map },
                   { href: "/how-it-works", label: "How It Works", icon: Sparkles },
                   { href: "/resources", label: "Resources", icon: BookOpen },
                   { href: "/book-session", label: "Book Session", icon: CalendarCheck, primary: true },

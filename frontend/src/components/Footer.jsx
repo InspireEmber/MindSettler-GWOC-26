@@ -9,6 +9,7 @@ export default function Footer() {
   const footerLinks = {
     "About": [
       { name: "About Us", href: "/about" },
+      { name: "The Journey", href: "/journey" },
       { name: "How It Works", href: "/how-it-works" },
       { name: "What Makes Us Different", href: "/what-makes-us-different" }
     ],
