@@ -76,7 +76,7 @@ export default function Navbar() {
 
         {dropdownItems && (
           <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 min-w-[220px]">
-            <div className="bg-[#2a1b3d]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-xl overflow-hidden p-1.5 flex flex-col gap-1">
+            <div className="bg-[#a167a5]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-xl overflow-hidden p-1.5 flex flex-col gap-1">
               {dropdownItems.map((item, index) => (
                 <Link
                   key={index}
