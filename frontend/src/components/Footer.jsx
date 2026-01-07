@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Instagram } from "lucide-react"; 
+import { Instagram } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,9 +14,8 @@ export default function Footer() {
       { name: "What Makes Us Different", href: "/what-makes-us-different" }
     ],
     "Resources": [
-      { name: "Psycho-Education", href: "/psycho-education" },
       { name: "Resources", href: "/resources" },
-      { name: "FAQs", href: "/faqs" }
+      { name: "Psycho-Education", href: "/psycho-education" }
     ],
     "Legal": [
       { name: "Privacy Policy", href: "/policies/privacy" },
@@ -30,7 +29,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Changed lg:grid-cols-5 to lg:grid-cols-6 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-10">
-          
+
           {/* Logo Section (Spans 2 columns) */}
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="inline-block hover:opacity-80 transition-opacity">
@@ -56,8 +55,8 @@ export default function Footer() {
               <ul className="space-y-4">
                 {links.map((link) => (
                   <li key={link.name}>
-                    <Link 
-                      href={link.href} 
+                    <Link
+                      href={link.href}
                       className="text-sm text-gray-400 hover:text-white transition-all flex items-center gap-1 group"
                     >
                       <span className="relative">
@@ -96,9 +95,9 @@ export default function Footer() {
             © {currentYear} MindSettler. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-             <Link href="/contact" className="text-[11px] text-gray-500 hover:text-white uppercase tracking-widest transition-colors">
-               Contact Support
-             </Link>
+            <Link href="/contact" className="text-[11px] text-gray-500 hover:text-white uppercase tracking-widest transition-colors">
+              Contact Support
+            </Link>
           </div>
         </div>
       </div>

@@ -97,9 +97,7 @@ export default function HowItWorksPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // 1. GLOBAL SCROLL FOR PARALLAX BACKGROUND
-  const { scrollYProgress: globalScroll } = useScroll();
-  const backgroundY = useTransform(globalScroll, [0, 1], ["0%", "-30%"]);
+
 
   // 2. TIMELINE RIBBON LOGIC
   const { scrollYProgress: timelineScroll } = useScroll({
@@ -118,27 +116,7 @@ export default function HowItWorksPage() {
       
       {/* --- BACKGROUND LAYER --- */}
       {/* UPDATED: Changed z-0 to -z-10. This forces the background BEHIND the layout footer. */}
-      <div className="fixed inset-0 -z-10 bg-black overflow-hidden">
-        
-        {/* PARALLAX CONTAINER */}
-        <motion.div 
-          style={{ y: backgroundY }}
-          className="absolute inset-0 w-full h-[160vh] -top-[10vh]"
-        >
-            <Image 
-                src="/images/howback.jpg" 
-                alt="Fluid Art Background"
-                fill
-                className="object-cover blur-[2px] opacity-60" 
-                priority
-            />
-        </motion.div>
-        
-        {/* FIXED OVERLAYS */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)] z-[1]" />
-        <div className="absolute inset-0 bg-black/10 z-[1]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#3F2965]/20 via-transparent to-[#3F2965]/40 z-[1]" />
-      </div>
+
 
       {/* --- CONTENT LAYER --- */}
       <div className="relative z-10">

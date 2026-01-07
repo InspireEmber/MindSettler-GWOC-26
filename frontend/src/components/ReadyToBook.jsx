@@ -5,26 +5,25 @@ export default function ReadyToBook() {
   return (
     <section className="py-10 sm:py-14 md:py-20 lg:py-24 px-4 sm:px-6">
       <div
-        className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 md:p-16 lg:p-24 text-center text-white shadow-2xl shadow-[#3F2965]/30 min-h-[400px] flex flex-col items-center justify-center isolate"
+        className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 md:p-16 lg:p-24 text-center text-[#eeb9ff] shadow-2xl shadow-[#3F2965]/30 min-h-[400px] flex flex-col items-center justify-center isolate"
       >
-        {/* --- Background Circle Pattern (Image) --- */}
+        {/* --- Background Image --- */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/cta-final-bg.png"
+            src="/images/StockCake-Purple_Mountain_Twilight-1827238-standard.jpg"
             alt="Background Pattern"
             className="w-full h-full object-cover"
           />
           {/* Blur Overlay */}
-          <div className="absolute inset-0 backdrop-blur-[2px] bg-black/30" />
+          <div className="absolute inset-0 backdrop-blur-[2px] bg-black/60" />
         </div>
 
         <div className="relative z-10">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light mb-6 sm:mb-8 leading-tight px-2">
-            Ready to write your next chapter?
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-serif italic mb-6 sm:mb-8 leading-tight px-2">
+            Begin Your Journey to Serenity
           </h2>
-          <p className="text-base sm:text-lg md:text-xl opacity-90 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-2">
-            Step into a space where your mental well-being is prioritized
-            through understanding and professional care.
+          <p className="text-base sm:text-lg md:text-xl font-serif italic opacity-90 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-2">
+            "A sanctuary where compassion meets professional care."
           </p>
           <Link
             href="/book-session"
@@ -34,6 +33,6 @@ export default function ReadyToBook() {
           </Link>
         </div>
       </div>
-    </section>
+    </section >
   );
 }

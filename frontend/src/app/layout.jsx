@@ -17,15 +17,11 @@ export default function RootLayout({ children }) {
 
   // Routes that should NOT have the global parallax background
   // Added /signup to exclusion list as it has its own specific backgrounds
-  const isGlobalBackgroundExcluded = ["/how-it-works", "/admin"].some((path) =>
+  const isGlobalBackgroundExcluded = ["/admin"].some((path) =>
     pathname?.startsWith(path)
   );
 
   const showGlobalBackground = !isGlobalBackgroundExcluded;
-
-  // Global Parallax Scroll Logic
-  const { scrollYProgress: globalScroll } = useScroll();
-  const backgroundY = useTransform(globalScroll, [0, 1], ["0%", "-30%"]);
 
   return (
     <html lang="en">
@@ -40,25 +36,15 @@ export default function RootLayout({ children }) {
       >
         {/* GLOBAL BACKGROUND LAYER (Only if active) */}
         {showGlobalBackground && (
-          <div className="fixed inset-0 -z-10 bg-black overflow-hidden pointer-events-none">
-            {/* PARALLAX CONTAINER */}
-            <motion.div
-              style={{ y: backgroundY }}
-              className="absolute inset-0 w-full h-[160vh] -top-[10vh]"
-            >
-              <Image
-                src="/images/bg2.jpg"
-                alt="Fluid Art Background"
-                fill
-                className="object-cover blur-[2px] opacity-50"
-                priority
-              />
-            </motion.div>
-
-            {/* FIXED OVERLAYS */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)] z-[1]" />
-            <div className="absolute inset-0 bg-black/10 z-[1]" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#3F2965]/20 via-transparent to-[#3F2965]/40 z-[1]" />
+          <div className="fixed inset-0 -z-10">
+            <Image
+              src="/images/bg4.jpg"
+              alt="Background"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-black/40" />
           </div>
         )}
 

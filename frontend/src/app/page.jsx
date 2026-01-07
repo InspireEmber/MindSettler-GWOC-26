@@ -33,17 +33,7 @@ export default function HomePage() {
   return (
     <div className="relative overflow-x-hidden">
 
-      {/* BACKGROUND IMAGE bg4 */}
-      <div className="fixed inset-0 -z-10">
-        <Image
-          src="/images/bg4.jpg"
-          alt="Background"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/40" />
-      </div>
+
 
       {/* --- CONTENT LAYER --- */}
       <div className="relative z-10">

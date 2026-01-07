@@ -18,11 +18,11 @@ const staggerContainer = {
 export default function FAQsPage() {
   return (
     <div className="min-h-screen relative overflow-x-hidden">
-      
+
       {/* 1. Hero Section: Reveal on Load */}
       <section className="relative pt-20 pb-20 md:pt-32 md:pb-24 overflow-hidden text-center z-10">
-        
-        <motion.div 
+
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
@@ -31,26 +31,26 @@ export default function FAQsPage() {
           <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-[#eeb9ff] text-xs font-bold uppercase tracking-widest mb-8">
             <HelpCircle size={14} /> Knowledge Base
           </motion.div>
-          
+
           <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl font-light text-white mb-8 leading-tight">
             Frequently Asked <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Questions</span>
           </motion.h1>
-          
+
           <motion.p variants={fadeInUp} className="text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl mx-auto">
-            Everything you need to know about our psycho-education sessions, 
+            Everything you need to know about our psycho-education sessions,
             privacy standards, and the journey toward emotional clarity.
           </motion.p>
-          
-          <motion.div 
+
+          <motion.div
             variants={fadeInUp}
-            className="h-1 w-20 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mt-10" 
+            className="h-1 w-20 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mt-10"
           />
         </motion.div>
       </section>
 
       {/* 2. FAQs Content: Scroll Reveal */}
       <section className="py-20 md:py-32 relative z-10">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -77,17 +77,17 @@ export default function FAQsPage() {
           <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
 
           <div className="relative z-10">
-            <h2 className="text-3xl md:text-5xl font-light mb-6">
-              Still Have Questions?
+            <h2 className="text-3xl md:text-5xl font-serif italic mb-6 text-white">
+              Still seeking clarity?
             </h2>
-            <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">
-              We understand that every journey is unique. If you couldn't find your answer here,
-              reach out and let's discuss how we can support you.
+            <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed font-light">
+              "Your journey is unique, and your questions deserve thoughtful answers.
+              We are here to listen and guide you."
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link
                 href="/contact"
-                className="group px-10 py-4 rounded-full bg-white text-[#3F2965] font-bold text-lg hover:shadow-xl hover:shadow-white/10 transition-all flex items-center justify-center gap-2 active:scale-95"
+                className="group px-10 py-4 rounded-full bg-white text-[#3F2965] font-serif font-bold text-lg hover:shadow-xl hover:shadow-white/10 transition-all flex items-center justify-center gap-2 active:scale-95"
               >
                 <MessageCircle size={20} className="group-hover:rotate-12 transition-transform" />
                 Contact Us
