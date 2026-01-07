@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import {
   Menu, X, User, LogOut, LogIn,
   Info, Sparkles, BookOpen, Map,
-  ChevronRight, CalendarCheck
+  ChevronRight, CalendarCheck, Brain, Star, HelpCircle, MessageCircle
 } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 import { motion, AnimatePresence } from "framer-motion";
@@ -49,11 +49,11 @@ export default function Navbar() {
     tap: { scale: 0.95 }
   };
 
-  const NavLink = ({ href, children, icon: Icon }) => {
+  const NavLink = ({ href, children, icon: Icon, dropdownItems }) => {
     const isActive = pathname === href;
 
     return (
-      <div className="relative">
+      <div className="relative group">
         <motion.div variants={navLinkVariants} whileHover="hover" whileTap="tap">
           <Link
             href={href}
@@ -72,6 +72,23 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           />
+        )}
+
+        {dropdownItems && (
+          <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 min-w-[220px]">
+            <div className="bg-[#2a1b3d]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-xl overflow-hidden p-1.5 flex flex-col gap-1">
+              {dropdownItems.map((item, index) => (
+                <Link
+                  key={index}
+                  href={item.href}
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-white/80 hover:text-white hover:bg-[#a167a5]/40 transition-colors"
+                >
+                  {item.icon && <item.icon size={16} className="text-[#eeb9ff]" />}
+                  <span className="font-medium">{item.label}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
         )}
       </div>
     );
@@ -109,10 +126,40 @@ export default function Navbar() {
           </motion.div>
 
           <nav className="hidden md:flex items-center gap-2">
-            <NavLink href="/about" icon={Info}>About</NavLink>
-            <NavLink href="/journey" icon={Map}>Journey</NavLink>
-            <NavLink href="/how-it-works" icon={Sparkles}>How It Works</NavLink>
-            <NavLink href="/resources" icon={BookOpen}>Resources</NavLink>
+            <NavLink
+              href="/about"
+              icon={Info}
+              dropdownItems={[
+                { label: "About Us", href: "/about", icon: Info },
+                { label: "The Journey", href: "/journey", icon: Map },
+                { label: "How It Works", href: "/how-it-works", icon: Sparkles },
+                { label: "What Makes Us Different", href: "/what-makes-us-different", icon: Star }
+              ]}
+            >
+              About
+            </NavLink>
+
+            <NavLink
+              href="/resources"
+              icon={BookOpen}
+              dropdownItems={[
+                { label: "Resources", href: "/resources", icon: BookOpen },
+                { label: "Psycho-education", href: "/psycho-education", icon: Brain }
+              ]}
+            >
+              Resources
+            </NavLink>
+
+            <NavLink
+              href="/faqs"
+              icon={HelpCircle}
+              dropdownItems={[
+                { label: "FAQs", href: "/faqs", icon: HelpCircle },
+                { label: "Contact Us", href: "/contact", icon: MessageCircle }
+              ]}
+            >
+              FAQ
+            </NavLink>
 
             <div className="h-6 w-[1px] bg-white/20 mx-2" />
 
