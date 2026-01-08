@@ -16,7 +16,7 @@ export default function Chatbot() {
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -103,7 +103,7 @@ export default function Chatbot() {
             onClick={() => setIsOpen(true)}
             className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-[#3F2965] shadow-[0_15px_35px_rgba(63,41,101,0.4)] flex items-center justify-center group overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#3F2965] via-[#3F2965] to-[#DD1764] opacity-90" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#a167a5] via-[#a167a5] to-[#DD1764] opacity-90" />
             <div className="relative z-10 transition-transform duration-300 group-hover:scale-110">
               <Brain size={30} className="text-white drop-shadow-md" />
             </div>
@@ -121,8 +121,8 @@ export default function Chatbot() {
             className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-2rem)] h-[620px] max-h-[calc(100vh-6rem)] bg-[#FDFCFD] rounded-2xl shadow-[0_25px_70px_rgba(46,42,54,0.15)] flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="relative bg-[#3F2965] p-6 text-white overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#DD1764] rounded-full blur-[60px] opacity-40 -mr-10 -mt-10" />
+            <div className="relative bg-gradient-to-r from-[#a167a5] to-[#DD1764] p-6 text-white overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white rounded-full blur-[60px] opacity-20 -mr-10 -mt-10" />
               <div className="relative z-10 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-md shadow-inner">
@@ -150,18 +150,17 @@ export default function Chatbot() {
                   key={index}
                   className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`max-w-[85%] px-5 py-4 text-sm leading-relaxed ${
-                    message.role === "user"
-                      ? "bg-[#3F2965] text-white rounded-[1.25rem] rounded-tr-none shadow-md"
+                  <div className={`max-w-[85%] px-5 py-4 text-sm leading-relaxed ${message.role === "user"
+                      ? "bg-[#a167a5] text-white rounded-[1.25rem] rounded-tr-none shadow-md"
                       : "bg-white text-[#2E2A36] border border-slate-100 rounded-[1.25rem] rounded-tl-none"
-                  }`}>
+                    }`}>
                     <div className="whitespace-pre-wrap">
                       {message.role === "assistant" ? renderMessageContent(message.content) : message.content}
                     </div>
                   </div>
                 </motion.div>
               ))}
-              
+
               {isLoading && (
                 <div className="flex justify-start">
                   <div className="bg-white border border-slate-100 rounded-[1.25rem] rounded-tl-none px-6 py-4 flex gap-1.5 items-center">
@@ -185,7 +184,7 @@ export default function Chatbot() {
                   onKeyPress={handleKeyPress}
                   placeholder="Ask me anything..."
                   disabled={isLoading}
-                  className="w-full pl-6 pr-14 py-4 rounded-2xl bg-[#F6F4FA] border-none focus:ring-2 focus:ring-[#3F2965]/10 outline-none text-sm transition-all"
+                  className="w-full pl-6 pr-14 py-4 rounded-2xl bg-[#F6F4FA] border-none focus:ring-2 focus:ring-[#a167a5]/20 outline-none text-sm text-[#2E2A36] placeholder:text-[#2E2A36]/50 transition-all"
                 />
                 <button
                   onClick={handleSendMessage}
