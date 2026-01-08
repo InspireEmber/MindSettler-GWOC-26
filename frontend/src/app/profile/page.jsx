@@ -90,15 +90,6 @@ export default function ProfilePage() {
                   <Building2 size={16} /> Corporate Inquiry
                 </Link>
               </motion.div>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => { /* Add your logout logic here */ }}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-500/20 border border-red-500/30 text-sm font-bold text-red-200 shadow-sm hover:bg-red-500/30 transition-colors backdrop-blur-md"
-              >
-                <LogOut size={16} /> Sign Out
-              </motion.button>
             </div>
           </div>
 
