@@ -7,6 +7,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true,
+  },
   email: {
     type: String,
     required: true,
@@ -16,8 +21,9 @@ const userSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    required: true,
+    required: false, // Made optional for Google Auth users
     trim: true,
+    default: "",
   },
   password: {
     type: String,

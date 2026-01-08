@@ -6,6 +6,8 @@ const { validateBody } = require('../middleware/validationMiddleware');
 const { loginSchema, userSignupSchema, userLoginSchema } = require('../validation/authValidation');
 const { isAuthenticated } = require('../middleware/authMiddleware');
 
+const passport = require('passport');
+
 // Admin login
 router.post('/login', validateBody(loginSchema), authController.login);
 
@@ -20,5 +22,17 @@ router.post('/user/signup', validateBody(userSignupSchema), wrapAsync(authContro
 
 // User login
 router.post('/user/login', validateBody(userLoginSchema), wrapAsync(authController.userLogin));
+
+// Google Auth Routes
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login?error=GoogleAuthFailed' }),
+  (req, res) => {
+    // Successful authentication, redirect to frontend dashboard/booking page
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    res.redirect(`${frontendUrl}/book-session`);
+  }
+);
 
 module.exports = router;

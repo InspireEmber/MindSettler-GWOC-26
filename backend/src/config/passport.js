@@ -6,6 +6,40 @@ const User = require('../models/User');
 // Configure passport-local-mongoose plugin strategy on Admin model (admin login)
 passport.use(new LocalStrategy(Admin.authenticate()));
 
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID",
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET || "YOUR_GOOGLE_CLIENT_SECRET",
+    callbackURL: "http://localhost:5000/api/auth/google/callback",
+    scope: ['profile', 'email']
+  },
+  async (accessToken, refreshToken, profile, done) => {
+    console.log("Google Auth Strategy Initialized. Checking User...");
+    try {
+      const email = profile.emails[0].value;
+      let user = await User.findOne({ googleId: profile.id });
+
+      if (!user) {
+        user = await User.findOne({ email });
+        if (user) {
+          user.googleId = profile.id;
+          await user.save();
+        } else {
+          user = await User.create({
+            name: profile.displayName,
+            email: email,
+            googleId: profile.id,
+          });
+        }
+      }
+      return done(null, user);
+    } catch (err) {
+      return done(err);
+    }
+  }
+));
+
 // Serialize both Admin and User instances into the session
 passport.serializeUser((user, done) => {
   const type = user.role === 'admin' ? 'admin' : 'user';

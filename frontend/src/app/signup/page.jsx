@@ -188,6 +188,7 @@ export default function SignupPage() {
         <div className="grid grid-cols-2 gap-4 mb-8">
           <button
             type="button"
+            onClick={() => window.location.href = "http://localhost:5000/api/auth/google"}
             className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-white/20 bg-white/5 text-white font-medium text-sm hover:bg-white/10 transition-all"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
