@@ -127,6 +127,7 @@ export default function HomePage() {
               <h2 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight">
                 The Heart of <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">MindSettler</span>
               </h2>
+              <p className="text-lg font-bold text-[#eeb9ff] uppercase tracking-widest mb-6">Our Purpose</p>
               <div className="h-1 w-24 bg-gradient-to-r from-transparent via-[#eeb9ff] to-transparent mx-auto rounded-full opacity-50" />
             </motion.div>
 
@@ -162,11 +163,9 @@ export default function HomePage() {
                   <h3 className="text-4xl md:text-6xl font-serif italic text-white/90 peer-hover:text-white mb-10 tracking-tight transition-colors duration-700">"Beyond Consultation"</h3>
 
                   <div className="space-y-8 text-xl md:text-3xl text-gray-300 peer-hover:text-white leading-relaxed font-light max-w-4xl mx-auto drop-shadow-sm transition-colors duration-700">
-                    <p>
-                      MindSettler is more than a platform for consultation—it is a <span className="text-[#eeb9ff] font-medium border-b border-[#eeb9ff]/30 pb-1 peer-hover:text-white peer-hover:border-white transition-colors">sanctuary for self-discovery</span>.
-                    </p>
                     <p className="md:px-20">
-                      We exist to illuminate the path back to yourself, spreading knowledge to make mental well-being accessible and free from stigma. Here, clarity is the first step toward <span className="italic font-serif text-white peer-hover:text-[#eeb9ff] transition-colors">tranquility</span>.
+                      This page is not just meant for online consultation; we intend to create more awareness about mental well-being and psycho-education. It is a medium to spread knowledge and an easier mode to connect as well as reach out for help whenever in
+                      <span className="italic font-serif text-white peer-hover:text-[#eeb9ff] transition-colors"> need</span>.
                     </p>
                   </div>
                 </div>
@@ -199,42 +198,75 @@ export default function HomePage() {
               </motion.div>
 
               {/* Cards Container */}
-              <div className="grid gap-6 sm:grid-cols-2">
+              <div className="grid gap-6 sm:grid-cols-2 items-stretch">
 
-                {/* MIND CARD */}
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  whileHover={{ y: -10 }}
-                  className="bg-gradient-to-b from-[#3F2965]/40 to-[#0b0220]/40 backdrop-blur-xl border border-[#3F2965]/30 rounded-[2.5rem] p-8 text-center shadow-xl group"
+                  whileHover={{ y: -8 }}
+                  className="h-full overflow-hidden
+    bg-gradient-to-b from-[#4b2d7f]/30 to-[#14082d]/30
+    backdrop-blur-lg
+    border border-white/10
+    rounded-[2.5rem]
+    p-8 text-center shadow-xl
+    flex flex-col justify-between
+    group"
                 >
-                  <div className="w-20 h-20 mx-auto bg-[#3F2965]/50 rounded-full flex items-center justify-center mb-6 shadow-[0_0_40px_rgba(63,41,101,0.5)] group-hover:shadow-[0_0_60px_rgba(63,41,101,0.7)] transition-all">
-                    <Brain className="w-10 h-10 text-[#eeb9ff]" />
+                  <div>
+                    <div className="w-20 h-20 mx-auto bg-[#4b2d7f]/40 rounded-full flex items-center justify-center mb-6
+      shadow-[0_0_35px_rgba(120,80,200,0.45)]
+      group-hover:shadow-[0_0_55px_rgba(120,80,200,0.65)]
+      transition-all">
+                      <Brain className="w-10 h-10 text-[#f1c7ff]" />
+                    </div>
+
+                    <h4 className="text-2xl font-serif italic text-white mb-4">
+                      Mind
+                    </h4>
+
+                    <p className="text-sm text-gray-300 leading-relaxed font-light">
+                      ‘Mind’ refers to a person’s consciousness which is not physical,
+                      but a mental and emotional part.
+                    </p>
                   </div>
-                  <h4 className="text-2xl font-serif italic text-white mb-4">Mind</h4>
-                  <p className="text-sm text-gray-300 leading-relaxed font-light">
-                    Your consciousness—the mental and emotional landscape where thoughts drift and emotions take shape.
-                  </p>
                 </motion.div>
 
-                {/* SETTLER CARD */}
+
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  whileHover={{ y: -10 }}
-                  className="bg-gradient-to-b from-[#DD1764]/20 to-[#0b0220]/40 backdrop-blur-xl border border-[#DD1764]/30 rounded-[2.5rem] p-8 text-center shadow-xl mt-0 sm:mt-12 group"
+                  whileHover={{ y: -8 }}
+                  className="h-full overflow-hidden
+    bg-gradient-to-b from-[#ff4d8d]/25 to-[#14082d]/30
+    backdrop-blur-lg
+    border border-white/10
+    rounded-[2.5rem]
+    p-8 text-center shadow-xl
+    flex flex-col justify-between
+    group"
                 >
-                  <div className="w-20 h-20 mx-auto bg-[#DD1764]/30 rounded-full flex items-center justify-center mb-6 shadow-[0_0_40px_rgba(221,23,100,0.5)] group-hover:shadow-[0_0_60px_rgba(221,23,100,0.7)] transition-all">
-                    <Heart className="w-10 h-10 text-[#ff8ac0]" />
+                  <div>
+                    <div className="w-20 h-20 mx-auto bg-[#ff4d8d]/35 rounded-full flex items-center justify-center mb-6
+      shadow-[0_0_35px_rgba(255,80,140,0.45)]
+      group-hover:shadow-[0_0_55px_rgba(255,80,140,0.65)]
+      transition-all">
+                      <Heart className="w-10 h-10 text-[#ffd0e2]" />
+                    </div>
+
+                    <h4 className="text-2xl font-serif italic text-white mb-4">
+                      Settler
+                    </h4>
+
+                    <p className="text-sm text-gray-300 leading-relaxed font-light">
+                      ‘Settler’ refers to assisting you in settling your mind
+                      during distress or other mental health challenges.
+                    </p>
                   </div>
-                  <h4 className="text-2xl font-serif italic text-white mb-4">Settler</h4>
-                  <p className="text-sm text-gray-300 leading-relaxed font-light">
-                    The act of grounding. Assisting you to find balance, calm the storm, and settle in times of distress.
-                  </p>
                 </motion.div>
 
               </div>
@@ -270,7 +302,7 @@ export default function HomePage() {
                 </motion.span>{" "}
                 <motion.span
                   variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1 } }}
-                  className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] via-white to-[#eeb9ff] inline-block"
+                  className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] via-white to-[#eeb9ff] inline-block pb-2"
                 >
                   navigate
                 </motion.span>
