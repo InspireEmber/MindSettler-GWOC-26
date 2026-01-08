@@ -17,4 +17,7 @@ router.post(
 // Get booking status (public)
 router.get('/:id', wrapAsync(bookingController.getBookingStatus));
 
+// Add to Google Calendar (Authenticated)
+router.post('/:id/calendar', isUserAuthenticated, wrapAsync(bookingController.addToGoogleCalendar));
+
 module.exports = router;

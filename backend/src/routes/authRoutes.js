@@ -24,7 +24,10 @@ router.post('/user/signup', validateBody(userSignupSchema), wrapAsync(authContro
 router.post('/user/login', validateBody(userLoginSchema), wrapAsync(authController.userLogin));
 
 // Google Auth Routes
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+// Google Auth Routes
+router.get('/google', passport.authenticate('google', { 
+  scope: ['profile', 'email']
+}));
 
 router.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login?error=GoogleAuthFailed' }),

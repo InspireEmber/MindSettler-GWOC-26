@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
-import { 
-  User, Calendar, CheckCircle2, Clock, 
+import {
+  User, Calendar, CheckCircle2, Clock,
   XCircle, ChevronRight, Activity, LogOut, MessageSquare, Building2
 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -69,7 +69,7 @@ export default function ProfilePage() {
     <div className="min-h-screen relative font-sans text-gray-200 overflow-x-hidden">
       <div className="relative z-10 py-12 px-6">
         <div className="max-w-5xl mx-auto">
-          
+
           {/* Header Section */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
@@ -81,30 +81,22 @@ export default function ProfilePage() {
               </p>
             </motion.div>
             <div className="flex items-center gap-4">
-              
+
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Link 
-                     href="/corporate" 
-                     className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-sm font-bold text-white shadow-sm hover:bg-white/20 transition-colors cursor-pointer backdrop-blur-md"
-                  >
-                      <Building2 size={16} /> Corporate Inquiry
-                  </Link>
+                <Link
+                  href="/corporate"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-sm font-bold text-white shadow-sm hover:bg-white/20 transition-colors cursor-pointer backdrop-blur-md"
+                >
+                  <Building2 size={16} /> Corporate Inquiry
+                </Link>
               </motion.div>
 
-              <motion.button 
-                 whileHover={{ scale: 1.05 }}
-                 whileTap={{ scale: 0.95 }}
-                 onClick={() => { /* Add your logout logic here */ }}
-                 className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-500/20 border border-red-500/30 text-sm font-bold text-red-200 shadow-sm hover:bg-red-500/30 transition-colors backdrop-blur-md"
-              >
-                <LogOut size={16} /> Sign Out
-              </motion.button>
             </div>
           </div>
 
           {/* Stats Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-            
+
             {/* Identity Card */}
             <div className="lg:col-span-1 bg-white/10 backdrop-blur-md rounded-[2rem] p-8 shadow-lg border border-white/20 relative overflow-hidden group transition-all">
               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity text-white">
@@ -112,22 +104,22 @@ export default function ProfilePage() {
               </div>
               <h3 className="text-xs font-bold uppercase tracking-widest text-[#eeb9ff] mb-6">Identity</h3>
               <div className="space-y-4 relative z-10">
-                 <div>
-                   <p className="text-[10px] text-gray-400 uppercase font-bold">Email Address</p>
-                   <p className="text-white font-medium">{profile?.email}</p>
-                 </div>
-                 <div>
-                   <p className="text-[10px] text-gray-400 uppercase font-bold">Member Since</p>
-                   <p className="text-white font-medium">{new Date(profile?.createdAt).toLocaleDateString()}</p>
-                 </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase font-bold">Email Address</p>
+                  <p className="text-white font-medium">{profile?.email}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase font-bold">Member Since</p>
+                  <p className="text-white font-medium">{new Date(profile?.createdAt).toLocaleDateString()}</p>
+                </div>
               </div>
             </div>
 
             <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <SummaryCard label="Total" value={summary?.totalSessions} icon={<Activity size={18}/>} color="bg-[#eeb9ff]/20 text-[#eeb9ff] border-white/10" />
-              <SummaryCard label="Approved" value={summary?.approvedUpcomingSessions} icon={<CheckCircle2 size={18}/>} color="bg-green-500/20 text-green-300 border-white/10" />
-              <SummaryCard label="Pending" value={summary?.pendingSessions} icon={<Clock size={18}/>} color="bg-yellow-500/20 text-yellow-300 border-white/10" />
-              <SummaryCard label="Completed" value={summary?.completedSessions} icon={<CheckCircle2 size={18}/>} color="bg-blue-500/20 text-blue-300 border-white/10" />
+              <SummaryCard label="Total" value={summary?.totalSessions} icon={<Activity size={18} />} color="bg-[#eeb9ff]/20 text-[#eeb9ff] border-white/10" />
+              <SummaryCard label="Approved" value={summary?.approvedUpcomingSessions} icon={<CheckCircle2 size={18} />} color="bg-green-500/20 text-green-300 border-white/10" />
+              <SummaryCard label="Pending" value={summary?.pendingSessions} icon={<Clock size={18} />} color="bg-yellow-500/20 text-yellow-300 border-white/10" />
+              <SummaryCard label="Completed" value={summary?.completedSessions} icon={<CheckCircle2 size={18} />} color="bg-blue-500/20 text-blue-300 border-white/10" />
             </div>
           </div>
 
@@ -135,7 +127,7 @@ export default function ProfilePage() {
           <div className="space-y-12">
             <SessionSection title="Confirmed Appointments" data={approvedUpcoming} type="approvedUpcoming" router={router} />
             <SessionSection title="Waiting for Approval" data={pendingUpcoming} type="pendingUpcoming" router={router} />
-            
+
             <div className="grid md:grid-cols-2 gap-8">
               <SessionSection title="History" data={completed} type="completed" router={router} />
               <SessionSection title="Archive" data={rejected} type="rejected" router={router} />
@@ -188,7 +180,7 @@ function SessionSection({ title, data, type, router }) {
       ) : (
         <div className="grid gap-3">
           {data.map((s) => (
-            <motion.div 
+            <motion.div
               key={s._id || s.id}
               whileHover={{ x: 5, backgroundColor: "rgba(255,255,255,0.15)" }}
               className="bg-white/10 backdrop-blur-md rounded-2xl p-5 shadow-lg border border-white/20 flex flex-col gap-4 group transition-colors"
@@ -196,34 +188,50 @@ function SessionSection({ title, data, type, router }) {
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
                   <div className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center ${styles[type]}`}>
-                      <span className="text-[10px] font-bold uppercase">{new Date(s.date || s.slot?.date).toLocaleDateString('en-US', { month: 'short' })}</span>
-                      <span className="text-lg font-bold leading-none">{new Date(s.date || s.slot?.date).getDate()}</span>
+                    <span className="text-[10px] font-bold uppercase">{new Date(s.date || s.slot?.date).toLocaleDateString('en-US', { month: 'short' })}</span>
+                    <span className="text-lg font-bold leading-none">{new Date(s.date || s.slot?.date).getDate()}</span>
                   </div>
                   <div>
                     <p className="font-bold text-white">{s.startTime || s.slot?.startTime} - {s.endTime || s.slot?.endTime}</p>
                     <p className="text-xs text-gray-400 capitalize">{s.sessionType} Session</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-3 self-end md:self-auto">
                   <span className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${styles[type]} shadow-sm`}>
                     {icons[type]} {type === 'approvedUpcoming' ? 'Approved' : type === 'pendingUpcoming' ? 'Pending' : type}
                   </span>
 
                   {/* ADD TO GOOGLE CALENDAR BUTTON */}
-                   {type === "approvedUpcoming" && s.calendarEventLink && (
-                      <a
-                        href={s.calendarEventLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold uppercase hover:bg-blue-500/30 transition-colors"
-                      >
-                        <ExternalLink size={12} />
-                        Add to Calendar
-                      </a>
-                    )}
-                    
-                  <button 
+                  {type === "approvedUpcoming" && (
+                    <a
+                      href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=MindSettler+Session&details=Psycho-education+session+(${s.sessionType}).&dates=${(() => {
+                        // Helper to format dates for Google Calendar URL (YYYYMMDDTHHmmss)
+                        const getDateStr = (d, time) => {
+                          const dateObj = new Date(d);
+                          const [hours, mins] = time.split(':');
+                          dateObj.setHours(parseInt(hours), parseInt(mins), 0);
+                          return dateObj.toISOString().replace(/-|:|\.\d\d\d/g, "");
+                        };
+
+                        const baseDate = s.date || s.slot?.date;
+                        const startT = s.startTime || s.slot?.startTime;
+                        const endT = s.endTime || s.slot?.endTime;
+
+                        if (!baseDate || !startT || !endT) return "";
+
+                        return `${getDateStr(baseDate, startT)}/${getDateStr(baseDate, endT)}`;
+                      })()}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold uppercase hover:bg-blue-500/30 transition-colors cursor-pointer"
+                    >
+                      <ExternalLink size={12} />
+                      Add to Calendar
+                    </a>
+                  )}
+
+                  <button
                     onClick={() => router.push(`/appointment-status?id=${s._id || s.id}`)}
                     className="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors shadow-sm border border-white/20"
                     title="View Full Details"

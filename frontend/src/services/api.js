@@ -144,6 +144,9 @@ class ApiService {
   getUserSessionsSummary() { return this.request('/users/sessions-summary'); }
   getUserSessions() { return this.request('/users/sessions'); }
 
+  // Calendar
+  addToGoogleCalendar(bookingId) { return this.request(`/bookings/${bookingId}/calendar`, { method: 'POST' }); }
+
   // Chatbot - Uses the 'fullResponse' flag to match your backend logic
   sendChatMessage(body) { 
     return this.request('/chatbot/chat', { method: 'POST', body }, true); 

@@ -12,7 +12,7 @@ passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID",
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || "YOUR_GOOGLE_CLIENT_SECRET",
     callbackURL: "http://localhost:5000/api/auth/google/callback",
-    scope: ['profile', 'email']
+    scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar']
   },
   async (accessToken, refreshToken, profile, done) => {
     console.log("Google Auth Strategy Initialized. Checking User...");
@@ -24,15 +24,20 @@ passport.use(new GoogleStrategy({
         user = await User.findOne({ email });
         if (user) {
           user.googleId = profile.id;
-          await user.save();
         } else {
-          user = await User.create({
+          user = new User({
             name: profile.displayName,
             email: email,
             googleId: profile.id,
           });
         }
       }
+      
+      // Always update tokens on login
+      user.googleAccessToken = accessToken;
+      if (refreshToken) user.googleRefreshToken = refreshToken;
+      
+      await user.save();
       return done(null, user);
     } catch (err) {
       return done(err);

@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema({
     unique: true,
     sparse: true,
   },
+  googleAccessToken: { type: String, select: false },
+  googleRefreshToken: { type: String, select: false },
   email: {
     type: String,
     required: true,
