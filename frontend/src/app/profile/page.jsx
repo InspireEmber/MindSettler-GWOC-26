@@ -91,11 +91,11 @@ export default function ProfilePage() {
                 </Link>
               </motion.div>
 
-              <motion.button 
-                 whileHover={{ scale: 1.05 }}
-                 whileTap={{ scale: 0.95 }}
-                 onClick={() => { /* Add your logout logic here */ }}
-                 className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-500/20 border border-red-500/30 text-sm font-bold text-red-200 shadow-sm hover:bg-red-500/30 transition-colors backdrop-blur-md"
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => { /* Add your logout logic here */ }}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-500/20 border border-red-500/30 text-sm font-bold text-red-200 shadow-sm hover:bg-red-500/30 transition-colors backdrop-blur-md"
               >
                 <LogOut size={16} /> Sign Out
               </motion.button>
@@ -112,14 +112,14 @@ export default function ProfilePage() {
               </div>
               <h3 className="text-xs font-bold uppercase tracking-widest text-[#eeb9ff] mb-6">Identity</h3>
               <div className="space-y-4 relative z-10">
-                 <div>
-                   <p className="text-[10px] text-gray-400 uppercase font-bold">Email Address</p>
-                   <p className="text-white font-medium">{profile?.email}</p>
-                 </div>
-                 <div>
-                   <p className="text-[10px] text-gray-400 uppercase font-bold">Member Since</p>
-                   <p className="text-white font-medium">{new Date(profile?.createdAt).toLocaleDateString()}</p>
-                 </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase font-bold">Email Address</p>
+                  <p className="text-white font-medium">{profile?.email}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase font-bold">Member Since</p>
+                  <p className="text-white font-medium">{new Date(profile?.createdAt).toLocaleDateString()}</p>
+                </div>
               </div>
             </div>
 
@@ -133,12 +133,12 @@ export default function ProfilePage() {
 
           {/* Sessions Sections */}
           <div className="space-y-12">
-            <SessionSection title="Confirmed Appointments" data={approvedUpcoming} type="approvedUpcoming" router={router} />
-            <SessionSection title="Waiting for Approval" data={pendingUpcoming} type="pendingUpcoming" router={router} />
+            <SessionSection title="Confirmed Appointments" data={approvedUpcoming} type="approvedUpcoming" router={router} profile={profile} />
+            <SessionSection title="Waiting for Approval" data={pendingUpcoming} type="pendingUpcoming" router={router} profile={profile} />
 
             <div className="grid md:grid-cols-2 gap-8">
-              <SessionSection title="History" data={completed} type="completed" router={router} />
-              <SessionSection title="Archive" data={rejected} type="rejected" router={router} />
+              <SessionSection title="History" data={completed} type="completed" router={router} profile={profile} />
+              <SessionSection title="Archive" data={rejected} type="rejected" router={router} profile={profile} />
             </div>
           </div>
         </div>
@@ -163,7 +163,7 @@ function SummaryCard({ label, value, icon, color }) {
   );
 }
 
-function SessionSection({ title, data, type, router }) {
+function SessionSection({ title, data, type, router, profile }) {
   const styles = {
     approvedUpcoming: "bg-green-500/20 text-green-300 border-green-500/20",
     pendingUpcoming: "bg-yellow-500/20 text-yellow-300 border-yellow-500/20",
@@ -211,19 +211,34 @@ function SessionSection({ title, data, type, router }) {
                   </span>
 
                   {/* ADD TO GOOGLE CALENDAR BUTTON */}
-                   {type === "approvedUpcoming" && s.calendarEventLink && (
-                      <a
-                        href={s.calendarEventLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold uppercase hover:bg-blue-500/30 transition-colors"
-                      >
-                        <ExternalLink size={12} />
-                        Add to Calendar
-                      </a>
-                    )}
-                    
-                  <button 
+                  {type === "approvedUpcoming" && (
+                    <a
+                      href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=MindSettler+Session&details=Psycho-education+session+(${s.sessionType}).&dates=${(() => {
+                        const getDateStr = (d, time) => {
+                          const dateObj = new Date(d);
+                          const [hours, mins] = time.split(':');
+                          dateObj.setHours(parseInt(hours), parseInt(mins), 0);
+                          return dateObj.toISOString().replace(/-|:|\.\d\d\d/g, "");
+                        };
+
+                        const baseDate = s.date || s.slot?.date;
+                        const startT = s.startTime || s.slot?.startTime;
+                        const endT = s.endTime || s.slot?.endTime;
+
+                        if (!baseDate || !startT || !endT) return "";
+
+                        return `${getDateStr(baseDate, startT)}/${getDateStr(baseDate, endT)}`;
+                      })()}${profile?.email ? `&authuser=${profile.email}` : ''}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold uppercase hover:bg-blue-500/30 transition-colors cursor-pointer"
+                    >
+                      <ExternalLink size={12} />
+                      Add to Calendar
+                    </a>
+                  )}
+
+                  <button
                     onClick={() => router.push(`/appointment-status?id=${s._id || s.id}`)}
                     className="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors shadow-sm border border-white/20"
                     title="View Full Details"
