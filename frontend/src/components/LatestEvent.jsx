@@ -61,7 +61,7 @@ const LatestEvent = () => {
                     <h2 className="text-4xl md:text-5xl font-light text-white mb-6">
                         Upcoming <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-white">Events</span>
                     </h2>
-                    <p className="text-lg text-gray-300 font-light max-w-2xl mx-auto">
+                    <p className="text-lg text-gray-300 font-light max-w-2xl mx-auto font-redhat">
                         Opportunities to learn, connect, and grow together.
                     </p>
                 </motion.div>
@@ -100,7 +100,7 @@ const LatestEvent = () => {
                                     {event.title}
                                 </h3>
 
-                                <p className="text-gray-300 font-light leading-relaxed mb-8 line-clamp-3 text-sm flex-grow">
+                                <p className="text-gray-300 font-light leading-relaxed mb-8 line-clamp-3 text-sm flex-grow font-redhat">
                                     {event.description}
                                 </p>
 

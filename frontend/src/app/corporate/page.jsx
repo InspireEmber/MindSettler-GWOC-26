@@ -221,7 +221,7 @@ export default function CorporatePage() {
           <option value="custom">Custom</option>
         </select>
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium text-gray-300 mb-2">Proposed Contribution / Collaboration Idea (optional)</label>
         <textarea
@@ -257,7 +257,7 @@ export default function CorporatePage() {
           <h1 className="text-4xl md:text-6xl font-light text-white mb-4">
             Corporate <span className="font-medium text-[#eeb9ff]">Partnerships</span>
           </h1>
-          <p className="text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto font-redhat">
             Explore opportunities for corporate wellness services or sponsor our programs to make a positive impact.
           </p>
         </div>
@@ -267,11 +267,11 @@ export default function CorporatePage() {
       <section className="py-16 relative z-10">
         <div className="max-w-3xl mx-auto px-6">
           <div className="p-8 md:p-12 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg">
-            
+
             {/* Inquiry Type Selector */}
             <div className="flex justify-center mb-8">
               <div className="flex rounded-full bg-white/5 p-1 border border-white/10">
-                <button 
+                <button
                   onClick={() => setInquiryType('services')}
                   className={`px-6 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-all ${inquiryType === 'services' ? 'bg-[#eeb9ff] text-[#2E2A36]' : 'text-gray-300 hover:text-white'}`}
                 >
@@ -296,9 +296,9 @@ export default function CorporatePage() {
                 <h2 className="text-2xl font-light text-white">
                   {inquiryType === 'services' ? 'Corporate Services Inquiry' : 'Sponsorship Inquiry'}
                 </h2>
-                <p className="text-sm text-gray-400">
-                  {inquiryType === 'services' 
-                    ? 'Provide basic details and we’ll follow up with a discovery call.' 
+                <p className="text-sm text-gray-400 font-redhat">
+                  {inquiryType === 'services'
+                    ? 'Provide basic details and we’ll follow up with a discovery call.'
                     : 'Let us know how you’d like to partner with us.'}
                 </p>
               </div>

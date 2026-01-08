@@ -48,7 +48,7 @@ export default function ContactPage() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white mb-4 sm:mb-6 leading-tight">
             Get in <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Touch</span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl leading-relaxed px-2 text-gray-200">Have questions? We're here to help. Reach out and we'll get back to you soon.</p>
+          <p className="text-base sm:text-lg md:text-xl leading-relaxed px-2 text-gray-200 font-redhat">Have questions? We're here to help. Reach out and we'll get back to you soon.</p>
         </div>
       </section>
 
@@ -73,7 +73,7 @@ export default function ContactPage() {
 
           <div className="p-6 sm:p-8 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
             <h3 className="text-lg sm:text-xl font-medium text-white mb-3 sm:mb-4">Response Time</h3>
-            <p className="text-sm sm:text-base leading-relaxed text-gray-200">Typically 24-48 hours. For urgent booking matters, please mention it in your message.</p>
+            <p className="text-sm sm:text-base leading-relaxed text-gray-200 font-redhat">Typically 24-48 hours. For urgent booking matters, please mention it in your message.</p>
           </div>
         </div>
 

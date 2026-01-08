@@ -100,7 +100,7 @@ export default function ArticlesResourcesPage() {
           >
             Articles & <span className="font-medium text-[#eeb9ff]">Blogs</span>
           </motion.h1>
-          <p className="text-xl leading-relaxed max-w-2xl text-gray-200">
+          <p className="text-xl leading-relaxed max-w-2xl text-gray-200 font-redhat">
             Verified external resources to support your learning journey in mental well-being and emotional clarity.
           </p>
         </div>
@@ -142,7 +142,7 @@ export default function ArticlesResourcesPage() {
                       {post.title}
                     </h2>
 
-                    <p className="text-sm leading-relaxed mb-8 flex-grow text-gray-300 group-hover:text-gray-100 transition-colors duration-300">
+                    <p className="text-sm leading-relaxed mb-8 flex-grow text-gray-300 group-hover:text-gray-100 transition-colors duration-300 font-redhat">
                       {post.excerpt}
                     </p>
 
@@ -173,7 +173,7 @@ export default function ArticlesResourcesPage() {
       <section className="py-10 relative z-10">
         <div className="max-w-4xl mx-auto px-6">
           <div className="rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-6 text-sm italic leading-relaxed text-gray-400">
-            <p>
+            <p className="font-redhat">
               <strong>Disclaimer:</strong> These are external educational resources. MindSettler is not responsible for the content on third-party websites. This content does not replace professional diagnosis or emergency care.
             </p>
           </div>

@@ -108,7 +108,7 @@ const ZoneCard = ({ zone, className }) => (
         <h3 className="text-2xl font-semibold text-white tracking-wide group-hover:text-white group-hover:drop-shadow-[0_0_15px_var(--hover-color)] transition-all">
           {zone.title}
         </h3>
-        <p className="text-gray-300 text-base leading-relaxed font-light">
+        <p className="text-gray-300 text-base leading-relaxed font-light font-redhat">
           {zone.desc}
         </p>
       </div>
@@ -288,7 +288,7 @@ export default function WhatMakesUsDifferentPage() {
                   <h3 className="text-3xl sm:text-4xl font-light text-white mb-6">
                     {NEW_ROTATING_CONTENT[currentIndex].title}
                   </h3>
-                  <p className="text-lg text-gray-200 leading-relaxed mb-8 whitespace-pre-line">
+                  <p className="text-lg text-gray-200 leading-relaxed mb-8 whitespace-pre-line font-redhat">
                     {NEW_ROTATING_CONTENT[currentIndex].text}
                   </p>
 

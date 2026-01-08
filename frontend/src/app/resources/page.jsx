@@ -59,7 +59,7 @@ export default function ResourcesPage() {
             <span className="font-medium text-[#eeb9ff]">Knowledge</span>
           </motion.h1>
 
-          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
+          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed font-redhat">
             Access our library of structured psycho-education content designed
             to help you decode the complexity of your mind.
           </motion.p>
@@ -106,7 +106,7 @@ export default function ResourcesPage() {
                       </h3>
 
                       {/* Content that 'opens' / becomes clearer on hover */}
-                      <p className="text-gray-400 text-sm leading-relaxed mb-8 flex-grow group-hover:text-gray-200 transition-colors duration-500">
+                      <p className="text-gray-400 text-sm leading-relaxed mb-8 flex-grow group-hover:text-gray-200 transition-colors duration-500 font-redhat">
                         {category.description}
                       </p>
 

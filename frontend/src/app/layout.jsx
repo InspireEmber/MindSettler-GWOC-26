@@ -8,12 +8,13 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { Antic } from "next/font/google";
+import { Red_Hat_Text } from "next/font/google";
 
-const antic = Antic({
-  weight: "400",
+const redHatText = Red_Hat_Text({
   subsets: ["latin"],
-  variable: "--font-antic",
+  variable: "--font-redhat",
+  weight: "variable", // Supports variable weights
+  display: "swap",
 });
 
 export default function RootLayout({ children }) {
@@ -38,7 +39,7 @@ export default function RootLayout({ children }) {
       <body
         className={clsx(
           "w-full transition-colors duration-300",
-          antic.variable,
+          redHatText.variable,
           showGlobalBackground ? "bg-black text-white selection:bg-[#DD1764] selection:text-white" : "bg-[#F6F4FA] text-[#2E2A36]"
         )}
       >

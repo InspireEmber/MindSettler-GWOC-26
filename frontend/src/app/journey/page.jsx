@@ -294,7 +294,7 @@ export default function JourneyPage() {
                   </h2>
 
                   <div className="relative pl-6 border-l border-white/10">
-                    <p className="text-lg text-gray-300 leading-relaxed italic font-light">
+                    <p className="text-lg text-gray-300 leading-relaxed italic font-light font-redhat">
                       "{step.desc}"
                     </p>
                   </div>

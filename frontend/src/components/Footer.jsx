@@ -41,7 +41,7 @@ export default function Footer() {
                 className="h-12 w-auto object-contain brightness-0 invert"
               />
             </Link>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
+            <p className="text-gray-400 text-sm leading-relaxed max-w-xs font-redhat">
               Settle the mind, understand the self. A dedicated space for structured psycho-education.
             </p>
           </div>
@@ -91,7 +91,7 @@ export default function Footer() {
 
         {/* Bottom Copyright Bar */}
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[11px] text-gray-500 font-medium tracking-widest uppercase">
+          <p className="text-[11px] text-gray-500 font-medium tracking-widest uppercase font-redhat">
             © {currentYear} MindSettler. All rights reserved.
           </p>
           <div className="flex items-center gap-4">

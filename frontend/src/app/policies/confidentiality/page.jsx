@@ -35,7 +35,7 @@ export default function ConfidentialityPolicyPage() {
           <h1 className="text-4xl md:text-6xl font-light text-white mb-6">
             Confidentiality <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Policy</span>
           </h1>
-          <p className="text-xl text-gray-200">Your privacy and confidentiality are our top priorities.</p>
+          <p className="text-xl text-gray-200 font-redhat">Your privacy and confidentiality are our top priorities.</p>
         </div>
       </section>
 
@@ -45,12 +45,12 @@ export default function ConfidentialityPolicyPage() {
           {/* Pre-session Alert */}
           <div className="p-6 rounded-2xl bg-[#3F2965]/20 border border-[#3F2965]/40 flex items-center gap-4">
             <ShieldAlert className="text-[#eeb9ff] shrink-0" />
-            <p className="text-[#eeb9ff] font-medium">This policy must be acknowledged before your first session.</p>
+            <p className="text-[#eeb9ff] font-medium font-redhat">This policy must be acknowledged before your first session.</p>
           </div>
 
           <div className="space-y-6">
             <h2 className="text-3xl font-light text-white">Our Commitment</h2>
-            <p className="leading-relaxed text-gray-200">MindSettler is committed to maintaining the highest standards of privacy. All information shared is treated with the utmost respect and protection.</p>
+            <p className="leading-relaxed text-gray-200 font-redhat">MindSettler is committed to maintaining the highest standards of privacy. All information shared is treated with the utmost respect and protection.</p>
           </div>
 
           {/* Dynamic Sections */}
@@ -58,7 +58,7 @@ export default function ConfidentialityPolicyPage() {
             {POLICY_SECTIONS.map((section, i) => (
               <div key={i} className="group">
                 <h2 className="text-2xl font-medium text-white mb-4 group-hover:text-[#eeb9ff] transition-colors">{section.title}</h2>
-                <p className="mb-4 text-gray-200">{section.content}</p>
+                <p className="mb-4 text-gray-200 font-redhat">{section.content}</p>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {section.items.map((item, j) => (
                     <li key={j} className="flex items-center gap-3 text-sm text-gray-300">
@@ -73,14 +73,14 @@ export default function ConfidentialityPolicyPage() {
 
           <div className="space-y-6">
             <h2 className="text-2xl font-medium text-white">Session Privacy & Records</h2>
-            <p className="leading-relaxed text-sm text-gray-200">Online sessions use encrypted platforms, and offline sessions take place in confidential spaces. We maintain minimal records necessary and retain them only as long as required for legal purposes.</p>
+            <p className="leading-relaxed text-sm text-gray-200 font-redhat">Online sessions use encrypted platforms, and offline sessions take place in confidential spaces. We maintain minimal records necessary and retain them only as long as required for legal purposes.</p>
           </div>
 
           <div className="p-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20">
             <h3 className="text-xl font-medium text-white mb-2">Acknowledgment</h3>
-            <p className="text-sm leading-relaxed mb-6 text-gray-200">By booking a session with MindSettler, you acknowledge that you have read, understood, and agree to this confidentiality policy.</p>
+            <p className="text-sm leading-relaxed mb-6 text-gray-200 font-redhat">By booking a session with MindSettler, you acknowledge that you have read, understood, and agree to this confidentiality policy.</p>
             <Link href="/contact" className="text-[#eeb9ff] font-medium hover:underline inline-flex items-center gap-2">
-               Questions? Contact Us <Lock size={14}/>
+              Questions? Contact Us <Lock size={14} />
             </Link>
           </div>
         </div>

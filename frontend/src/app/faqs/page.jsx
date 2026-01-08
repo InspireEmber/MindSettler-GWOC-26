@@ -36,7 +36,7 @@ export default function FAQsPage() {
             "Welcome to a space of clarity. We are here to answer what's on your mind."
           </motion.p>
 
-          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl mx-auto font-light">
+          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl mx-auto font-light font-redhat">
             Everything you need to know about our psycho-education sessions,
             privacy standards, and the journey toward emotional clarity.
           </motion.p>
@@ -80,7 +80,7 @@ export default function FAQsPage() {
             <h2 className="text-3xl md:text-5xl font-serif italic mb-6 text-white">
               Still seeking clarity?
             </h2>
-            <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed font-light">
+            <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed font-light font-redhat">
               "Your journey is unique, and your questions deserve thoughtful answers.
               We are here to listen and guide you."
             </p>
