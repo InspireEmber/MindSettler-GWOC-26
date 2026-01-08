@@ -76,27 +76,44 @@ export default function ResourcesPage() {
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
           >
             {resourceCategories.map((category, index) => (
-              <motion.div key={index} variants={fadeInUp}>
-                <Link href={category.href} className="group block h-full">
-                  <div className="h-full p-8 rounded-[2rem] bg-white/10 backdrop-blur-md border border-white/20 shadow-lg hover:bg-white/20 hover:shadow-[#eeb9ff]/10 transition-all duration-500">
-                    <div className="flex justify-between items-start mb-10">
-                      <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-[#eeb9ff] group-hover:bg-[#eeb9ff] group-hover:text-[#3F2965] transition-all duration-500">
-                        {category.icon}
+              <motion.div key={index} variants={fadeInUp} className="h-full">
+                <Link href={category.href} className="group block h-full relative perspective-1000">
+                  <div className="h-full p-8 rounded-[2rem] bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl relative overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
+
+                    {/* Hover Glow Background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#eeb9ff]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    {/* Video Specific: Rotating Light / Film Roll Effect */}
+                    {category.tag === "Watch" && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent w-[200%] h-full -translate-x-[150%] skew-x-12 group-hover:animate-[shine_1.5s_infinite] pointer-events-none" />
+                    )}
+
+                    <div className="relative z-10 flex flex-col h-full">
+                      <div className="flex justify-between items-start mb-8">
+                        <div className={`w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-[#eeb9ff] transition-all duration-500 shadow-inner group-hover:scale-110 group-hover:bg-[#eeb9ff] group-hover:text-[#3F2965] ${category.tag === 'Read' ? 'group-hover:[transform:rotateY(180deg)]' : ''}`}>
+                          <div className={category.tag === 'Read' ? 'transition-all duration-500 group-hover:[transform:rotateY(-180deg)]' : ''}>
+                            {category.icon}
+                          </div>
+                        </div>
+
+                        <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 text-[10px] font-bold uppercase tracking-wider group-hover:bg-[#eeb9ff] group-hover:text-[#3F2965] transition-colors">
+                          {category.tag}
+                        </span>
                       </div>
-                      <span className="px-4 py-1.5 rounded-xl bg-white/10 border border-white/10 text-white text-[10px] font-bold uppercase tracking-wider">
-                        {category.tag}
-                      </span>
-                    </div>
 
-                    <h3 className="text-2xl font-medium text-white mb-4 group-hover:text-[#eeb9ff] transition-colors">
-                      {category.title}
-                    </h3>
-                    <p className="text-gray-200 text-sm leading-relaxed mb-10">
-                      {category.description}
-                    </p>
+                      <h3 className="text-2xl font-serif text-white mb-4 group-hover:text-[#eeb9ff] transition-colors">
+                        {category.title}
+                      </h3>
 
-                    <div className="flex items-center gap-2 text-xs font-bold text-gray-300 group-hover:text-[#eeb9ff] transition-all">
-                      View Section <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                      {/* Content that 'opens' / becomes clearer on hover */}
+                      <p className="text-gray-400 text-sm leading-relaxed mb-8 flex-grow group-hover:text-gray-200 transition-colors duration-500">
+                        {category.description}
+                      </p>
+
+                      <div className="flex items-center gap-2 text-xs font-bold text-gray-500 group-hover:text-white transition-all mt-auto border-t border-white/5 pt-4 group-hover:border-white/20">
+                        <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">Explore Now</span>
+                        <ArrowRight size={14} className="ml-auto group-hover:-rotate-45 transition-transform duration-500" />
+                      </div>
                     </div>
                   </div>
                 </Link>

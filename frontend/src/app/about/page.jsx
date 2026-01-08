@@ -1,6 +1,6 @@
+"use client";
 import Link from "next/link";
 import ReadyToBook from "@/components/ReadyToBook";
-
 const APPROACHES = [
   {
     title: "Structured Learning",

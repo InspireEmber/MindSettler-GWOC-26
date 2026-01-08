@@ -44,7 +44,7 @@ export default function HelpfulLinksResourcesPage() {
             href="/resources"
             className="inline-flex items-center gap-2 text-sm font-medium text-gray-300 hover:gap-3 hover:text-white transition-all mb-8 group"
           >
-            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> 
+            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
             Back to Resources
           </Link>
           <h1 className="text-4xl md:text-5xl font-light text-white mb-6">
@@ -73,9 +73,9 @@ export default function HelpfulLinksResourcesPage() {
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {section.links.map((link, j) => (
                   <li key={j}>
-                    <a 
-                      href={link.url} 
-                      target="_blank" 
+                    <a
+                      href={link.url}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 hover:border-[#eeb9ff]/30 hover:shadow-lg transition-all group/link"
                     >
@@ -102,26 +102,27 @@ export default function HelpfulLinksResourcesPage() {
         </div>
       </section>
 
-      {/* Persistent Vibrant CTA */}
+      {/* Custom Resource Navigation CTA */}
       <section className="py-24 md:py-32 relative z-10">
         <div className="max-w-5xl mx-auto px-6 md:px-12">
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-white/5 backdrop-blur-md border border-white/10 p-10 sm:p-12 md:p-20 text-center text-white shadow-2xl shadow-[#3F2965]/20">
+          <div className="relative overflow-hidden rounded-[2.5rem] bg-white/5 backdrop-blur-md border border-white/10 p-10 sm:p-12 md:p-20 text-center text-white shadow-2xl shadow-[#3F2965]/20 isolate">
             {/* Decorative Brand Accents */}
-            <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#DD1764]/20 rounded-full blur-[80px]" />
-            <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#3F2965]/40 rounded-full blur-[80px]" />
-            
+            <div className="absolute -top-32 -right-32 w-96 h-96 bg-[#DD1764]/20 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-[#3F2965]/40 rounded-full blur-[100px] pointer-events-none" />
+
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl font-light text-white mb-6">
-                Ready to Begin Your Journey?
+              <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">
+                Continue Your <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-white">Exploration</span>
               </h2>
-              <p className="text-xl text-white/90 mb-8 leading-relaxed max-w-2xl mx-auto">
-                Take the first step toward understanding your mind and building emotional clarity.
+              <p className="text-xl text-gray-200 mb-10 leading-relaxed max-w-2xl mx-auto font-light">
+                Our library is vast. Discover more articles, guides, and tools designed to support your path to clarity.
               </p>
               <Link
-                href="/book-session"
-                className="inline-flex px-10 py-4 md:px-12 md:py-5 rounded-full bg-white text-[#3F2965] font-medium text-lg hover:bg-gray-100 transition-all duration-300 hover:shadow-lg hover:scale-[1.03] active:scale-95 shadow-md items-center justify-center"
+                href="/resources"
+                className="inline-flex px-10 py-4 md:px-12 md:py-5 rounded-full bg-[#eeb9ff] text-[#3F2965] font-bold text-lg hover:bg-[#eeb9ff]/90 hover:shadow-[0_0_30px_rgba(238,185,255,0.4)] transition-all duration-300 hover:scale-[1.03] active:scale-95 shadow-xl items-center justify-center gap-2 group"
               >
-                Book Your First Session
+                Browse All Resources
+                <ArrowLeft size={20} className="rotate-180 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>
