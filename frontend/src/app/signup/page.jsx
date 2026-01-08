@@ -92,7 +92,7 @@ export default function SignupPage() {
           <h1 className="text-3xl font-light text-white mb-2">
             Create an Account
           </h1>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-gray-300 font-redhat">
             Sign up to book and track your psycho-education sessions more easily.
           </p>
         </div>
@@ -222,7 +222,7 @@ export default function SignupPage() {
           </button>
         </div>
 
-        <p className="text-sm text-gray-400 text-center">
+        <p className="text-sm text-gray-400 text-center font-redhat">
           Already have an account?{" "}
           <Link href="/login" className="text-[#eeb9ff] font-medium hover:text-white transition-colors">
             Log in
