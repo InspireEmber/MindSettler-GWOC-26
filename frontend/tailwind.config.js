@@ -26,7 +26,7 @@ module.exports = {
           "linear-gradient(135deg, #25164B, #4C1D95, #BE185D)",
       },
       fontFamily: {
-        antic: ["var(--font-antic)"],
+        redhat: ["var(--font-redhat)"],
       },
     },
   },

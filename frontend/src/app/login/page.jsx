@@ -50,7 +50,7 @@ export default function LoginPage() {
           <h1 className="text-3xl font-light text-white mb-2">
             Welcome Back
           </h1>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-gray-300 font-redhat">
             Sign in to your account
           </p>
         </div>
@@ -185,7 +185,7 @@ export default function LoginPage() {
           </button>
         </div>
 
-        <p className="text-sm text-gray-400 text-center">
+        <p className="text-sm text-gray-400 text-center font-redhat">
           Don&apos;t have any account?{" "}
           <Link href="/signup" className="text-[#eeb9ff] font-medium hover:text-white transition-colors">
             Register

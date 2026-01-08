@@ -88,7 +88,7 @@ export default function BookingForm() {
             <h2 className="text-3xl font-light mb-2 flex items-center gap-3 text-white">
               <CheckCircle2 className="text-white" /> Reserve a Session
             </h2>
-            <p className="text-white/80 text-sm">Choose your preferred mode and time to begin.</p>
+            <p className="text-white/80 text-sm font-redhat">Choose your preferred mode and time to begin.</p>
           </div>
         </div>
 

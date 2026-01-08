@@ -54,7 +54,7 @@ function AppointmentStatusContent() {
       <div className="min-h-screen py-20 md:py-32 flex flex-col items-center justify-center px-6 text-center relative z-10">
         <XCircle className="w-20 h-20 text-red-400/80 mb-6" />
         <h1 className="text-3xl font-serif text-white mb-4">Booking Not Found</h1>
-        <p className="text-white/60 max-w-sm mb-8 font-light leading-relaxed">{error || "The booking doesn't exist or was removed."}</p>
+        <p className="text-white/60 max-w-sm mb-8 font-light leading-relaxed font-redhat">{error || "The booking doesn't exist or was removed."}</p>
         <Link href="/book-session" className="px-10 py-4 rounded-full bg-[#eeb9ff] text-[#3F2965] font-serif font-bold shadow-xl shadow-[#eeb9ff]/10 hover:shadow-[#eeb9ff]/20 hover:scale-105 transition-all active:scale-95">
           Try Again
         </Link>

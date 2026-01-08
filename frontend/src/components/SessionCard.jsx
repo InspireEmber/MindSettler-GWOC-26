@@ -14,7 +14,7 @@ export default function SessionCard({ booking }) {
 
   const DetailItem = ({ label, value, icon: Icon }) => (
     <div>
-      <p className="text-xs font-bold text-[#eeb9ff] uppercase tracking-widest mb-1 flex items-center gap-2 opacity-80">
+      <p className="text-xs font-bold text-[#eeb9ff] uppercase tracking-widest mb-1 flex items-center gap-2 opacity-80 font-redhat">
         {Icon && <Icon size={12} />} {label}
       </p>
       <p className="text-lg text-white capitalize font-serif italic">{value || "Not specified"}</p>
@@ -48,7 +48,7 @@ export default function SessionCard({ booking }) {
           <DetailItem label="Payment Status" value={booking.paymentStatus || 'pending'} icon={CheckCircle2} />
           {booking.meetingLink && (
             <div className="md:col-span-2">
-              <p className="text-sm font-medium text-gray-400 mb-1 flex items-center gap-2">
+              <p className="text-sm font-medium text-gray-400 mb-1 flex items-center gap-2 font-redhat">
                 <Calendar size={14} /> Meeting Link
               </p>
               <a
@@ -78,7 +78,7 @@ export default function SessionCard({ booking }) {
               <h3 className="font-serif italic text-lg mb-2 capitalize">
                 {status === "pending" ? "Awaiting Review" : `Booking ${status}`}
               </h3>
-              <p className="text-sm leading-relaxed mb-4 text-white/90">
+              <p className="text-sm leading-relaxed mb-4 text-white/90 font-redhat">
                 {status === "pending" && "Your request is under review. Expect an email confirmation within 24-48 hours."}
                 {status === "confirmed" && "Success! Detailed session information and meeting links will arrive via email shortly."}
                 {status === "rejected" && (

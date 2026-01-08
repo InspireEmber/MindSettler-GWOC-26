@@ -76,7 +76,7 @@ export default function BookSessionPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto font-light"
+            className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto font-light font-redhat"
           >
             "Take the first step toward understanding and tranquility in a supportive, professional environment."
           </motion.p>
@@ -104,7 +104,7 @@ export default function BookSessionPage() {
                     </div>
                     <div>
                       <h4 className="font-bold text-sm text-white/90">{step.title}</h4>
-                      <p className="text-xs text-white/50">{step.desc}</p>
+                      <p className="text-xs text-white/50 font-redhat">{step.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -119,7 +119,7 @@ export default function BookSessionPage() {
               <h3 className="text-lg font-serif italic mb-4 flex items-center gap-2 relative z-10">
                 <CheckCircle size={20} className="text-[#eeb9ff]" /> Confidentiality
               </h3>
-              <p className="text-sm leading-relaxed text-white/70 font-light relative z-10">
+              <p className="text-sm leading-relaxed text-white/70 font-light relative z-10 font-redhat">
                 Your safety is our priority. Every session is conducted via secure, end-to-end encrypted channels.
               </p>
             </div>

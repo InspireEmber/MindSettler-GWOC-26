@@ -25,8 +25,8 @@ const POLICY_DATA = [
 ];
 
 export default function PrivacyPolicyPage() {
-  const lastUpdated = new Date().toLocaleDateString('en-US', { 
-    year: 'numeric', month: 'long', day: 'numeric' 
+  const lastUpdated = new Date().toLocaleDateString('en-US', {
+    year: 'numeric', month: 'long', day: 'numeric'
   });
 
   return (
@@ -38,7 +38,7 @@ export default function PrivacyPolicyPage() {
           <h1 className="text-4xl md:text-6xl font-light text-white mb-6">
             Privacy <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Policy</span>
           </h1>
-          <p className="text-xl text-gray-200">How we collect, use, and protect your information.</p>
+          <p className="text-xl text-gray-200 font-redhat">How we collect, use, and protect your information.</p>
         </div>
       </section>
 
@@ -53,12 +53,12 @@ export default function PrivacyPolicyPage() {
             {POLICY_DATA.map((section, i) => (
               <div key={i} className="group">
                 <div className="flex items-center gap-3 mb-6">
-                   <div className="p-2 rounded-lg bg-white/10 text-[#eeb9ff]">
-                     {section.icon}
-                   </div>
-                   <h2 className="text-2xl font-medium text-white">{section.title}</h2>
+                  <div className="p-2 rounded-lg bg-white/10 text-[#eeb9ff]">
+                    {section.icon}
+                  </div>
+                  <h2 className="text-2xl font-medium text-white">{section.title}</h2>
                 </div>
-                <p className="mb-4 leading-relaxed text-gray-200">{section.intro}</p>
+                <p className="mb-4 leading-relaxed text-gray-200 font-redhat">{section.intro}</p>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   {section.items.map((item, j) => (
                     <li key={j} className="flex items-start gap-3 text-sm text-gray-300">
@@ -67,7 +67,7 @@ export default function PrivacyPolicyPage() {
                     </li>
                   ))}
                 </ul>
-                {section.extra && <p className="text-sm italic text-gray-400 opacity-80">{section.extra}</p>}
+                {section.extra && <p className="text-sm italic text-gray-400 opacity-80 font-redhat">{section.extra}</p>}
               </div>
             ))}
           </div>
@@ -75,8 +75,8 @@ export default function PrivacyPolicyPage() {
           {/* Contact Summary */}
           <div className="p-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20">
             <h3 className="text-xl font-medium text-white mb-4">Exercise Your Rights</h3>
-            <p className="text-sm leading-relaxed mb-6 text-gray-200">
-              You have the right to access, correct, or delete your personal information at any time. 
+            <p className="text-sm leading-relaxed mb-6 text-gray-200 font-redhat">
+              You have the right to access, correct, or delete your personal information at any time.
               To exercise these rights, please reach out to us.
             </p>
             <a href="mailto:info@mindsettler.com" className="inline-flex items-center gap-2 text-[#eeb9ff] font-semibold hover:underline">

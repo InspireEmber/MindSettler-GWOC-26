@@ -113,7 +113,7 @@ export default function HowItWorksPage() {
 
   return (
     <div className="min-h-screen relative text-white overflow-x-hidden selection:bg-[#DD1764] selection:text-white">
-      
+
       {/* --- BACKGROUND LAYER --- */}
       {/* UPDATED: Changed z-0 to -z-10. This forces the background BEHIND the layout footer. */}
 
@@ -168,13 +168,13 @@ export default function HowItWorksPage() {
                     <span className="text-5xl sm:text-6xl font-thin text-white/30 group-hover:text-white/60 transition-colors duration-500">{step.num}</span>
                     <div className="h-0.5 w-12 sm:w-16 bg-white/30 rounded-full" />
                   </div>
-                  
+
                   {/* Glass Card */}
                   <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 sm:p-8 rounded-2xl shadow-xl hover:bg-white/15 transition-all duration-300">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-normal text-white mb-4 leading-tight">
                       {step.title}
                     </h2>
-                    <p className="text-base sm:text-lg leading-relaxed text-gray-200">
+                    <p className="text-base sm:text-lg leading-relaxed text-gray-200 font-redhat">
                       {step.desc}
                     </p>
                   </div>
@@ -232,7 +232,7 @@ export default function HowItWorksPage() {
                     <h3 className="text-3xl sm:text-4xl font-light text-white mb-6">
                       {ROTATING_CONTENT[currentIndex].title}
                     </h3>
-                    <p className="text-lg text-gray-200 leading-relaxed mb-8 whitespace-pre-line">
+                    <p className="text-lg text-gray-200 leading-relaxed mb-8 whitespace-pre-line font-redhat">
                       {ROTATING_CONTENT[currentIndex].text}
                     </p>
                     {/* Progress Indicators */}
@@ -250,10 +250,10 @@ export default function HowItWorksPage() {
             </div>
           </div>
         </section>
-        
+
         {/* --- READY TO BOOK SECTION --- */}
         <div>
-            <ReadyToBook />
+          <ReadyToBook />
         </div>
 
       </div>

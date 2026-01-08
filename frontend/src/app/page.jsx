@@ -77,7 +77,7 @@ export default function HomePage() {
 
             {/* RIGHT CONTENT - DESC & BUTTONS */}
             <div className="flex flex-col gap-8">
-              <p className="text-lg sm:text-xl text-gray-200 leading-relaxed">
+              <p className="text-lg sm:text-xl text-gray-200 leading-relaxed font-redhat">
                 MindSettler by Parnika is a safe space to understand your mind,
                 settle emotional distress, and begin your mental well-being
                 journey.
@@ -127,7 +127,7 @@ export default function HomePage() {
               <h2 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight">
                 The Heart of <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">MindSettler</span>
               </h2>
-              <p className="text-lg font-bold text-[#eeb9ff] uppercase tracking-widest mb-6">Our Purpose</p>
+              <p className="text-lg font-bold text-[#eeb9ff] uppercase tracking-widest mb-6 font-redhat">Our Purpose</p>
               <div className="h-1 w-24 bg-gradient-to-r from-transparent via-[#eeb9ff] to-transparent mx-auto rounded-full opacity-50" />
             </motion.div>
 
@@ -163,7 +163,7 @@ export default function HomePage() {
                   <h3 className="text-4xl md:text-6xl font-serif italic text-white/90 peer-hover:text-white mb-10 tracking-tight transition-colors duration-700">"Beyond Consultation"</h3>
 
                   <div className="space-y-8 text-xl md:text-3xl text-gray-300 peer-hover:text-white leading-relaxed font-light max-w-4xl mx-auto drop-shadow-sm transition-colors duration-700">
-                    <p className="md:px-20">
+                    <p className="md:px-20 font-redhat">
                       This page is not just meant for online consultation; we intend to create more awareness about mental well-being and psycho-education. It is a medium to spread knowledge and an easier mode to connect as well as reach out for help whenever in
                       <span className="italic font-serif text-white peer-hover:text-[#eeb9ff] transition-colors"> need</span>.
                     </p>
@@ -189,7 +189,7 @@ export default function HomePage() {
                   Deciphering <br />
                   <span className="font-serif italic">Our Essence</span>
                 </h3>
-                <p className="text-lg text-gray-300 leading-relaxed max-w-md mx-auto md:mx-0">
+                <p className="text-lg text-gray-300 leading-relaxed max-w-md mx-auto md:mx-0 font-redhat">
                   MindSettler by Parnika is an amalgamation of two interconnected aspects of human experience, bridged by a common ground of understanding.
                 </p>
 
@@ -227,7 +227,7 @@ export default function HomePage() {
                       Mind
                     </h4>
 
-                    <p className="text-sm text-gray-300 leading-relaxed font-light">
+                    <p className="text-sm text-gray-300 leading-relaxed font-light font-redhat">
                       ‘Mind’ refers to a person’s consciousness which is not physical,
                       but a mental and emotional part.
                     </p>
@@ -262,7 +262,7 @@ export default function HomePage() {
                       Settler
                     </h4>
 
-                    <p className="text-sm text-gray-300 leading-relaxed font-light">
+                    <p className="text-sm text-gray-300 leading-relaxed font-light font-redhat">
                       ‘Settler’ refers to assisting you in settling your mind
                       during distress or other mental health challenges.
                     </p>
@@ -310,7 +310,7 @@ export default function HomePage() {
 
               <motion.p
                 variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 1, delay: 0.5 } } }}
-                className="text-lg md:text-2xl text-gray-200 font-light max-w-3xl mx-auto leading-relaxed"
+                className="text-lg md:text-2xl text-gray-200 font-light max-w-3xl mx-auto leading-relaxed font-redhat"
               >
                 Finding your anchor in the storm, and guiding you towards <span className="text-[#eeb9ff] font-medium">calmer waters</span> with gentle, tailored support.
               </motion.p>
@@ -346,7 +346,7 @@ export default function HomePage() {
                         className="p-6 md:p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 hover:bg-white/10 hover:border-[#eeb9ff]/30 hover:shadow-[0_0_30px_rgba(238,185,255,0.1)] transition-all group"
                       >
                         <h3 className="text-xl md:text-2xl font-serif text-white mb-2 group-hover:text-[#eeb9ff] transition-colors">{item.title}</h3>
-                        <p className="text-sm md:text-base text-gray-300 font-light leading-relaxed">{item.detail}</p>
+                        <p className="text-sm md:text-base text-gray-300 font-light leading-relaxed font-redhat">{item.detail}</p>
                       </motion.div>
                     </div>
 

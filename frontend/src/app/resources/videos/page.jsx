@@ -22,7 +22,7 @@ export default function VideosResourcesPage() {
           >
             Videos &amp; <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-white">Guides</span>
           </motion.h1>
-          <p className="text-base sm:text-lg text-gray-200 leading-relaxed max-w-2xl">
+          <p className="text-base sm:text-lg text-gray-200 leading-relaxed max-w-2xl font-redhat">
             Gentle video explanations and guided walk-throughs to support your mental well-being journey.
           </p>
         </div>
@@ -64,17 +64,17 @@ export default function VideosResourcesPage() {
                 <div className="space-y-3 text-sm sm:text-base text-gray-200 leading-relaxed">
                   <div>
                     <h3 className="font-semibold text-[#eeb9ff] mb-1.5 text-base sm:text-lg">Panic Attack:</h3>
-                    <p>Triggers: Often linked to specific stressors or situations, or a general feeling of worry.</p>
+                    <p className="font-redhat">Triggers: Often linked to specific stressors or situations, or a general feeling of worry.</p>
                   </div>
                   <div>
                     <h3 className="font-semibold text-[#eeb9ff] mb-1.5 text-base sm:text-lg">Anxiety Attack:</h3>
-                    <p>Triggers: Can occur without a clear external threat; often linked to the body's fight-or-flight response being activated inappropriately.</p>
+                    <p className="font-redhat">Triggers: Can occur without a clear external threat; often linked to the body's fight-or-flight response being activated inappropriately.</p>
                   </div>
                 </div>
 
                 {/* Links Section */}
                 <div className="pt-4 border-t border-white/10">
-                  <p className="text-sm sm:text-base font-medium text-white mb-3">Related Links:</p>
+                  <p className="text-sm sm:text-base font-medium text-white mb-3 font-redhat">Related Links:</p>
                   <ul className="space-y-2">
                     <li>
                       <a
@@ -121,7 +121,7 @@ export default function VideosResourcesPage() {
               {/* Video Information */}
               <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 space-y-4 hover:bg-white/10 transition-all duration-300">
                 <div className="text-sm sm:text-base text-gray-200 leading-relaxed">
-                  <p>
+                  <p className="font-redhat">
                     Whether you're dealing with romantic partners, family, friends, or coworkers,
                     maintaining healthy boundaries can help you strengthen relationships,
                     avoid unhealthy connections, and improve your self-esteem and overall well-being.
@@ -130,7 +130,7 @@ export default function VideosResourcesPage() {
 
                 {/* Links Section */}
                 <div className="pt-4 border-t border-white/10">
-                  <p className="text-sm sm:text-base font-medium text-white mb-3">Related Links:</p>
+                  <p className="text-sm sm:text-base font-medium text-white mb-3 font-redhat">Related Links:</p>
                   <ul className="space-y-2">
                     <li>
                       <a
@@ -154,7 +154,7 @@ export default function VideosResourcesPage() {
       <section className="py-10 sm:py-12 relative z-10">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12">
           <div className="rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-6 sm:p-8 text-xs sm:text-sm text-gray-400 leading-relaxed italic text-center">
-            <p>
+            <p className="font-redhat">
               This content is provided for awareness and educational purposes only. It does not replace professional
               diagnosis, treatment, or emergency care.
             </p>

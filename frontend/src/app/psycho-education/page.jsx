@@ -1,6 +1,6 @@
 "use client";
 import ReadyToBook from "@/components/ReadyToBook";
- // Required for framer-motion in Next.js App Router
+// Required for framer-motion in Next.js App Router
 
 import Link from "next/link";
 import { BookOpen, Brain, Sparkles, ShieldCheck, Users2 } from "lucide-react";
@@ -31,7 +31,7 @@ export default function PsychoEducationPage() {
           <h1 className="text-4xl md:text-6xl font-light text-white mb-6">
             Psycho-<span className="font-medium text-[#eeb9ff]">Education</span>
           </h1>
-          <p className="text-xl leading-relaxed text-gray-300">Understanding mental health through education, awareness, and structured guidance.</p>
+          <p className="text-xl leading-relaxed text-gray-300 font-redhat">Understanding mental health through education, awareness, and structured guidance.</p>
         </div>
       </section>
 
@@ -39,8 +39,8 @@ export default function PsychoEducationPage() {
       <section className="py-16 md:py-24 max-w-4xl mx-auto px-6 relative z-10">
         <h2 className="text-3xl md:text-4xl font-light text-white mb-8">What is Psycho-Education?</h2>
         <div className="space-y-6 text-lg leading-relaxed mb-12 text-gray-300">
-          <p>Psycho-education combines psychological principles with educational methods to help individuals understand their emotions and behaviors. It empowers you with tools to navigate your mental well-being journey.</p>
-          <p>Unlike traditional therapy, we focus on the "why" behind your thoughts, helping you build a foundation for meaningful change.</p>
+          <p className="font-redhat">Psycho-education combines psychological principles with educational methods to help individuals understand their emotions and behaviors. It empowers you with tools to navigate your mental well-being journey.</p>
+          <p className="font-redhat">Unlike traditional therapy, we focus on the "why" behind your thoughts, helping you build a foundation for meaningful change.</p>
         </div>
         <div className="h-64 rounded-3xl bg-white/5 backdrop-blur-md flex flex-col items-center justify-center border border-white/10 shadow-lg">
           <div className="w-16 h-16 rounded-full bg-[#eeb9ff]/10 flex items-center justify-center text-[#eeb9ff] mb-4 border border-[#eeb9ff]/20">
@@ -55,7 +55,7 @@ export default function PsychoEducationPage() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-light text-white mb-4">Key Concepts We Explore</h2>
-            <p className="text-lg text-gray-300">Foundational knowledge for building emotional clarity</p>
+            <p className="text-lg text-gray-300 font-redhat">Foundational knowledge for building emotional clarity</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {CONCEPTS.map((c, i) => {
@@ -66,7 +66,7 @@ export default function PsychoEducationPage() {
                     <IconComponent className="w-6 h-6" />
                   </div>
                   <h3 className={`text-2xl font-medium mb-4 ${c.color}`}>{c.title}</h3>
-                  <p className="leading-relaxed text-gray-300">{c.desc}</p>
+                  <p className="leading-relaxed text-gray-300 font-redhat">{c.desc}</p>
                 </div>
               );
             })}
@@ -85,7 +85,7 @@ export default function PsychoEducationPage() {
               </div>
               <div>
                 <h3 className="text-xl font-medium text-white mb-2">{b.title}</h3>
-                <p className="leading-relaxed text-gray-300">{b.desc}</p>
+                <p className="leading-relaxed text-gray-300 font-redhat">{b.desc}</p>
               </div>
             </div>
           ))}

@@ -64,8 +64,8 @@ export default function FAQAccordion() {
                 <div
                   key={qIdx}
                   className={`group relative rounded-[1.5rem] md:rounded-[2rem] transition-all duration-500 overflow-hidden border ${isOpen
-                      ? 'bg-white/10 backdrop-blur-md border-white/20 shadow-lg'
-                      : 'bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/10'
+                    ? 'bg-white/10 backdrop-blur-md border-white/20 shadow-lg'
+                    : 'bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/10'
                     }`}
                 >
                   <button
@@ -97,7 +97,7 @@ export default function FAQAccordion() {
                         <div className="px-6 sm:px-7 pb-8 text-sm sm:text-base text-white/80 leading-relaxed font-light">
                           <div className="pt-4 border-t border-white/10 flex gap-3">
                             <Sparkles size={16} className="text-[#eeb9ff] mt-1 shrink-0" />
-                            <p>{faq.a}</p>
+                            <p className="font-redhat">{faq.a}</p>
                           </div>
                         </div>
                       </motion.div>

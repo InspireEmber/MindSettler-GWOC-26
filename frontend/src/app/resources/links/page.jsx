@@ -50,7 +50,7 @@ export default function HelpfulLinksResourcesPage() {
           <h1 className="text-4xl md:text-5xl font-light text-white mb-6">
             Helpful <span className="font-medium text-[#eeb9ff]">Links</span>
           </h1>
-          <p className="text-xl leading-relaxed text-gray-200">
+          <p className="text-xl leading-relaxed text-gray-200 font-redhat">
             A curated directory of trusted global organizations and support services.
           </p>
         </div>
@@ -67,7 +67,7 @@ export default function HelpfulLinksResourcesPage() {
                 </div>
                 <h2 className="text-2xl font-medium text-white">{section.category}</h2>
               </div>
-              <p className="text-gray-300 mb-6 leading-relaxed max-w-2xl">
+              <p className="text-gray-300 mb-6 leading-relaxed max-w-2xl font-redhat">
                 {section.description}
               </p>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -94,7 +94,7 @@ export default function HelpfulLinksResourcesPage() {
       <section className="py-10 relative z-10">
         <div className="max-w-5xl mx-auto px-6">
           <div className="rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-6 text-sm italic leading-relaxed text-gray-400">
-            <p>
+            <p className="font-redhat">
               <strong>Disclaimer:</strong> This content is provided for awareness and educational purposes only. It does not replace professional
               diagnosis, treatment, or emergency care. MindSettler is not responsible for the content of external sites.
             </p>
@@ -114,7 +114,7 @@ export default function HelpfulLinksResourcesPage() {
               <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">
                 Continue Your <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-white">Exploration</span>
               </h2>
-              <p className="text-xl text-gray-200 mb-10 leading-relaxed max-w-2xl mx-auto font-light">
+              <p className="text-xl text-gray-200 mb-10 leading-relaxed max-w-2xl mx-auto font-light font-redhat">
                 Our library is vast. Discover more articles, guides, and tools designed to support your path to clarity.
               </p>
               <Link
