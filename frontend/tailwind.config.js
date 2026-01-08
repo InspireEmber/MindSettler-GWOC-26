@@ -25,6 +25,9 @@ module.exports = {
           "radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.35), transparent 55%)," +
           "linear-gradient(135deg, #25164B, #4C1D95, #BE185D)",
       },
+      fontFamily: {
+        antic: ["var(--font-antic)"],
+      },
     },
   },
   plugins: [],

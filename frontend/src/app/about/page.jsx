@@ -36,7 +36,7 @@ export default function AboutPage() {
 
           {/* Right – Text */}
           <div className="flex flex-col justify-center">
-            <p className="text-[16px] leading-[1.7] text-gray-200 m-0">
+            <p className="text-lg sm:text-xl leading-[1.8] text-gray-200 m-0 font-antic">
               Hello, I’m{" "}
               <span className="font-semibold text-[#eeb9ff]">
                 Parnika Bajaj
@@ -69,7 +69,7 @@ export default function AboutPage() {
             The Meaning Behind Our Logo & Colours
           </h2>
 
-          <p className="text-base sm:text-lg leading-relaxed text-gray-200 mb-5">
+          <p className="text-lg sm:text-xl leading-relaxed text-gray-200 mb-5 font-antic">
             The MindSettler logo is a mindful representation of the balance
             between emotion and logic that every individual inevitably needs.
             The purple in the logo represents wisdom and spirituality, while
@@ -77,7 +77,7 @@ export default function AboutPage() {
             softness and vulnerability of the heart.
           </p>
 
-          <p className="text-base sm:text-lg leading-relaxed text-gray-200">
+          <p className="text-lg sm:text-xl leading-relaxed text-gray-200 font-antic">
             While the heart is commonly associated with emotions, the geometric
             heart in the logo reflects the presence of logic within emotional
             experiences. The brain represents the physical and cognitive aspects
@@ -130,12 +130,12 @@ export default function AboutPage() {
 
               {s.label === "Our Mission" ? (
                 <>
-                  <p className="text-base sm:text-lg leading-relaxed mb-3 sm:mb-4 text-gray-200">
+                  <p className="text-lg sm:text-xl leading-relaxed mb-3 sm:mb-4 text-gray-200 font-antic">
                     MindSettler’s mission is to support individuals in
                     understanding their mental and emotional experiences in a
                     structured, informed, and compassionate manner.
                   </p>
-                  <p className="text-base sm:text-lg leading-relaxed text-gray-200">
+                  <p className="text-lg sm:text-xl leading-relaxed text-gray-200 font-antic">
                     Through psycho-education and guided exploration, we help
                     people develop clarity around their thoughts, emotions, and
                     behavioural patterns—empowering them to build emotional
@@ -144,11 +144,11 @@ export default function AboutPage() {
                 </>
               ) : (
                 <>
-                  <p className="text-base sm:text-lg leading-relaxed mb-3 sm:mb-4 text-gray-200">
+                  <p className="text-lg sm:text-xl leading-relaxed mb-3 sm:mb-4 text-gray-200 font-antic">
                     Our vision is a world where mental health awareness feels
                     natural, accessible, and free from stigma.
                   </p>
-                  <p className="text-base sm:text-lg leading-relaxed text-gray-200">
+                  <p className="text-lg sm:text-xl leading-relaxed text-gray-200 font-antic">
                     We aspire to foster a culture where emotional understanding
                     is valued, self-awareness is encouraged, and individuals
                     feel confident in caring for their mental well-being with
@@ -159,9 +159,8 @@ export default function AboutPage() {
             </div>
 
             <div
-              className={`${
-                s.reverse ? "md:order-1" : ""
-              } h-48 sm:h-64 md:h-80 rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex flex-col items-center justify-center mt-6 md:mt-0`}
+              className={`${s.reverse ? "md:order-1" : ""
+                } h-48 sm:h-64 md:h-80 rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex flex-col items-center justify-center mt-6 md:mt-0`}
             >
               <div
                 className="w-16 h-16 sm:w-20 sm:h-20 mb-3 sm:mb-4 rounded-full flex items-center justify-center bg-white/10"
@@ -180,7 +179,7 @@ export default function AboutPage() {
                   />
                 </svg>
               </div>
-              <p className="font-medium text-sm sm:text-base text-white">{s.label}</p>
+              <p className="font-medium text-base sm:text-lg text-white font-antic">{s.label}</p>
             </div>
           </div>
         </section>
@@ -189,7 +188,7 @@ export default function AboutPage() {
       {/* Approach Section */}
       <section className="relative z-10 py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
-          
+
           <div className="text-center mb-16 md:mb-24">
             <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mb-8" />
 
@@ -219,7 +218,7 @@ export default function AboutPage() {
               <h3 className="text-xl font-medium text-white mb-4">
                 Thoughtful & Structured Sessions
               </h3>
-              <p className="text-sm sm:text-base leading-relaxed text-gray-200">
+              <p className="text-base sm:text-lg leading-relaxed text-gray-200 font-antic">
                 Sessions at MindSettler follow a thoughtful and structured
                 format, designed to help individuals better understand mental
                 health concepts in a clear and accessible way.
@@ -239,7 +238,7 @@ export default function AboutPage() {
               <h3 className="text-xl font-medium text-white mb-4">
                 Guided Reflection with Parnika
               </h3>
-              <p className="text-sm sm:text-base leading-relaxed text-gray-200">
+              <p className="text-base sm:text-lg leading-relaxed text-gray-200 font-antic">
                 Each session is personally guided by me, offering a safe,
                 non-judgmental space. The focus remains on understanding
                 thoughts and emotions at one’s own pace.
@@ -259,7 +258,7 @@ export default function AboutPage() {
               <h3 className="text-xl font-medium text-white mb-4">
                 Practical Awareness for Daily Life
               </h3>
-              <p className="text-sm sm:text-base leading-relaxed text-gray-200">
+              <p className="text-base sm:text-lg leading-relaxed text-gray-200 font-antic">
                 The approach emphasises practical awareness—helping individuals
                 apply insights from sessions to everyday situations to support
                 emotional balance and mindful decision-making.

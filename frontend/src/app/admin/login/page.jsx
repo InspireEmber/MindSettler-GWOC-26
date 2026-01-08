@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
-import api from "../../services/api";
+import api from "@/services/api";
 
 export default function LoginPage() {
   const router = useRouter();
