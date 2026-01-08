@@ -1,13 +1,44 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, Minimize2, Sparkles, Brain } from "lucide-react";
+import { Send, Minimize2, Sparkles, Brain, CalendarCheck, Info, BookOpen, HelpCircle, MessageCircle, GraduationCap, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import api from "../services/api";
 
 const DEFAULT_GREETING = "Hi! I'm your MindSettler guide. 🌿\n\nI can help you understand our methodology or assist you in booking your first session. How can I support you today?";
+
+// Quick access page mapping - keywords to routes
+const QUICK_ACCESS_PAGES = [
+  { keywords: ["book", "session", "appointment", "schedule", "booking"], label: "Book Session", href: "/book-session", icon: CalendarCheck },
+  { keywords: ["how it works", "process", "methodology", "steps"], label: "How It Works", href: "/how-it-works", icon: Sparkles },
+  { keywords: ["about", "who we are", "mindsettler", "parnika"], label: "About Us", href: "/about", icon: Info },
+  { keywords: ["resource", "article", "reading", "material"], label: "Resources", href: "/resources", icon: BookOpen },
+  { keywords: ["faq", "question", "help", "common"], label: "FAQs", href: "/faqs", icon: HelpCircle },
+  { keywords: ["contact", "reach out", "get in touch", "email", "message"], label: "Contact Us", href: "/contact", icon: MessageCircle },
+  { keywords: ["psycho-education", "learn", "education", "understand"], label: "Psycho-education", href: "/psycho-education", icon: GraduationCap },
+];
+
+// Helper to get the single best quick access button based on user's question
+const getQuickAccessButton = (userQuestion) => {
+  if (!userQuestion) return null;
+  const lowerQuestion = userQuestion.toLowerCase();
+
+  // Score each page by keyword matches in the user's question
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const page of QUICK_ACCESS_PAGES) {
+    const matchCount = page.keywords.filter(keyword => lowerQuestion.includes(keyword)).length;
+    if (matchCount > bestScore) {
+      bestScore = matchCount;
+      bestMatch = page;
+    }
+  }
+
+  return bestMatch;
+};
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -143,23 +174,45 @@ export default function Chatbot() {
 
             {/* Conversation Flow */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-[#FDFCFD] scroll-smooth">
-              {messages.map((message, index) => (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  key={index}
-                  className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
-                >
-                  <div className={`max-w-[85%] px-5 py-4 text-sm leading-relaxed ${message.role === "user"
+              {messages.map((message, index) => {
+                // Get the previous user message for context
+                const prevUserMessage = message.role === "assistant" && index > 0
+                  ? messages.slice(0, index).reverse().find(m => m.role === "user")?.content
+                  : null;
+                const quickAccessButton = message.role === "assistant" ? getQuickAccessButton(prevUserMessage) : null;
+
+                return (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    key={index}
+                    className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                  >
+                    <div className={`max-w-[85%] px-5 py-4 text-sm leading-relaxed ${message.role === "user"
                       ? "bg-[#a167a5] text-white rounded-[1.25rem] rounded-tr-none shadow-md"
                       : "bg-white text-[#2E2A36] border border-slate-100 rounded-[1.25rem] rounded-tl-none"
-                    }`}>
-                    <div className="whitespace-pre-wrap">
-                      {message.role === "assistant" ? renderMessageContent(message.content) : message.content}
+                      }`}>
+                      <div className="whitespace-pre-wrap">
+                        {message.role === "assistant" ? renderMessageContent(message.content) : message.content}
+                      </div>
+                      {/* Quick Access Button - based on user's question */}
+                      {quickAccessButton && (
+                        <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-slate-100">
+                          <Link
+                            href={quickAccessButton.href}
+                            onClick={() => setIsOpen(false)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#a167a5] bg-[#a167a5]/10 hover:bg-[#a167a5]/20 rounded-full transition-colors"
+                          >
+                            <quickAccessButton.icon size={12} />
+                            {quickAccessButton.label}
+                            <ArrowRight size={10} className="opacity-60" />
+                          </Link>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                )
+              })}
 
               {isLoading && (
                 <div className="flex justify-start">
