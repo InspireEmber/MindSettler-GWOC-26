@@ -15,63 +15,90 @@ import {
 import Image from "next/image";
 import ReadyToBook from "@/components/ReadyToBook";
 
-const Flower = ({ color }) => (
+const Spore = ({ color }) => (
   <svg
     width="100%"
     height="100%"
     viewBox="0 0 24 24"
-    fill={color}
+    fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className="opacity-60"
   >
-    <path d="M12 2C13.1 4.5 15 6 18 6C15 8 13.5 11 12 14C10.5 11 9 8 6 6C9 6 10.9 4.5 12 2Z" opacity="0.5" />
-    <path d="M22 12C19.5 13.1 18 15 18 18C16 15 13 13.5 10 12C13 10.5 16 9 18 6C18 9 19.5 10.9 22 12Z" opacity="0.5" />
-    <path d="M12 22C10.9 19.5 9 18 6 18C9 16 10.5 13 12 10C13.5 13 15 16 18 18C15 18 13.1 19.5 12 22Z" opacity="0.5" />
-    <path d="M2 12C4.5 10.9 6 9 6 6C8 9 11 10.5 14 12C11 13.5 8 15 6 18C6 15 4.5 13.1 2 12Z" opacity="0.5" />
-    <circle cx="12" cy="12" r="2" />
+    {/* Seed Body */}
+    <path d="M12 21L12 18" stroke={color} strokeWidth="1" strokeLinecap="round" />
+    <circle cx="12" cy="22" r="1.5" fill={color} />
+
+    {/* Stem */}
+    <path d="M12 18L12 8" stroke={color} strokeWidth="0.5" />
+
+    {/* Pappus (Fluff) Center */}
+    <circle cx="12" cy="8" r="1" fill={color} />
+
+    {/* Radiating Filaments */}
+    <path d="M12 8L6 2" stroke={color} strokeWidth="0.5" opacity="0.8" />
+    <path d="M12 8L9 2" stroke={color} strokeWidth="0.5" opacity="0.8" />
+    <path d="M12 8L12 1" stroke={color} strokeWidth="0.5" opacity="0.8" />
+    <path d="M12 8L15 2" stroke={color} strokeWidth="0.5" opacity="0.8" />
+    <path d="M12 8L18 2" stroke={color} strokeWidth="0.5" opacity="0.8" />
+
+    <path d="M12 8L4 5" stroke={color} strokeWidth="0.5" opacity="0.8" />
+    <path d="M12 8L20 5" stroke={color} strokeWidth="0.5" opacity="0.8" />
   </svg>
 );
 
-const FlowersRain = () => {
-  const [flowers, setFlowers] = useState([]);
+const SporesRain = () => {
+  const [spores, setSpores] = useState([]);
 
   useEffect(() => {
-    const newFlowers = Array.from({ length: 20 }).map((_, i) => ({
+    const newSpores = Array.from({ length: 30 }).map((_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,
-      delay: Math.random() * 5,
-      duration: 10 + Math.random() * 15,
-      size: 20 + Math.random() * 30,
-      color: ["#eeb9ff", "#DD1764", "#ffffff"][Math.floor(Math.random() * 3)]
+      delay: Math.random() * 10,
+      duration: 15 + Math.random() * 20, // Slower, more floaty
+      size: 20 + Math.random() * 20,
+      color: ["#eeb9ff", "#DD1764", "#ffffff"][Math.floor(Math.random() * 3)],
+      sway: Math.random() * 100 - 50
     }));
-    setFlowers(newFlowers);
+    setSpores(newSpores);
   }, []);
 
   return (
     <div className="fixed inset-0 h-full w-full overflow-hidden pointer-events-none z-0">
-      {flowers.map((flower) => (
+      {spores.map((spore) => (
         <motion.div
-          key={flower.id}
+          key={spore.id}
           className="absolute top-[-10%]"
           style={{
-            left: flower.left,
-            width: flower.size,
-            height: flower.size,
-            color: flower.color
+            left: spore.left,
+            width: spore.size,
+            height: spore.size * 1.5, // Slightly taller for the stem
+            color: spore.color
           }}
           animate={{
             y: ["0vh", "120vh"],
-            rotate: [0, 360],
-            x: [0, Math.random() * 100 - 50, 0]
+            x: [0, spore.sway, 0], // Gentle swaying
+            rotate: [-10, 10, -10] // Subtle rotation
           }}
           transition={{
-            duration: flower.duration,
+            duration: spore.duration,
             repeat: Infinity,
-            delay: flower.delay,
-            ease: "linear"
+            delay: spore.delay,
+            ease: "linear",
+            x: {
+              duration: spore.duration * 0.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            },
+            rotate: {
+              duration: 5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }
           }}
         >
-          <Flower color={flower.color} />
+          <Spore color={spore.color} />
         </motion.div>
       ))}
     </div>
@@ -149,7 +176,7 @@ export default function JourneyPage() {
 
   return (
     <div className="min-h-screen relative text-white selection:bg-[#DD1764] selection:text-white overflow-hidden">
-      <FlowersRain />
+      <SporesRain />
 
       {/* 1. HERO HEADER */}
       <section className="relative z-20 pt-32 pb-12 px-6 text-center">
@@ -294,7 +321,7 @@ export default function JourneyPage() {
                   </h2>
 
                   <div className="relative pl-6 border-l border-white/10">
-                    <p className="text-lg text-gray-300 leading-relaxed italic font-light font-redhat">
+                    <p className="text-lg text-gray-300 leading-relaxed italic font-light">
                       "{step.desc}"
                     </p>
                   </div>

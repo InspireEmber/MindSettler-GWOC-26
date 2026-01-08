@@ -190,4 +190,12 @@ main {
     pointer-events: none;
     background-image: url("https://grainy-gradients.vercel.app/noise.svg");
   }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
