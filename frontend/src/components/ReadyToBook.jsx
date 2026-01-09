@@ -1,12 +1,42 @@
+"use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 
 export default function ReadyToBook() {
+  const divRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    if (!divRef.current) return;
+    const rect = divRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    divRef.current.style.setProperty("--mouse-x", `${x}px`);
+    divRef.current.style.setProperty("--mouse-y", `${y}px`);
+  };
+
   return (
     <section className="py-10 sm:py-14 md:py-20 lg:py-24 px-4 sm:px-6">
       <div
-        className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 md:p-16 lg:p-24 text-center text-[#eeb9ff] shadow-2xl shadow-[#3F2965]/30 min-h-[400px] flex flex-col items-center justify-center isolate"
+        ref={divRef}
+        onMouseMove={handleMouseMove}
+        className="max-w-5xl mx-auto relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 md:p-16 lg:p-24 text-center text-[#eeb9ff] shadow-2xl shadow-[#3F2965]/30 min-h-[400px] flex flex-col items-center justify-center isolate group"
+        style={{
+          "--mouse-x": "50%",
+          "--mouse-y": "50%",
+          "--spotlight-color": "rgba(238, 185, 255, 0.25)",
+        }}
       >
+        {/* Spotlight Overlay */}
+        <div
+          className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-500 opacity-0 group-hover:opacity-100"
+          style={{
+            background:
+              "radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 80%)",
+          }}
+        />
+
         {/* --- Background Image --- */}
         <div className="absolute inset-0 z-0">
           <img
@@ -18,7 +48,7 @@ export default function ReadyToBook() {
           <div className="absolute inset-0 backdrop-blur-[2px] bg-black/60" />
         </div>
 
-        <div className="relative z-10">
+        <div className="relative z-20">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-serif italic mb-6 sm:mb-8 leading-tight px-2">
             Start Your Path to Peace
           </h2>
@@ -33,6 +63,6 @@ export default function ReadyToBook() {
           </Link>
         </div>
       </div>
-    </section >
+    </section>
   );
 }
