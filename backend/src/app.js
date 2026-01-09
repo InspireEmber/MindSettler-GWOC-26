@@ -114,7 +114,6 @@ const chatbotRoutes = require('./routes/chatbotRoutes');
 const latestEventRoutes = require('./routes/latestEventRoutes');
 
 const app = express();
-app.set('trust proxy', 1);
 
 // Basic security headers
 app.use(helmet());
