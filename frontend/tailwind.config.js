@@ -27,6 +27,7 @@ module.exports = {
       },
       fontFamily: {
         redhat: ["var(--font-redhat)"],
+        baskervville: ["var(--font-baskervville)", "serif"],
       },
     },
   },

@@ -8,12 +8,20 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { Red_Hat_Text } from "next/font/google";
+import { Red_Hat_Text, Baskervville } from "next/font/google";
 
 const redHatText = Red_Hat_Text({
   subsets: ["latin"],
   variable: "--font-redhat",
   weight: "variable", // Supports variable weights
+  display: "swap",
+});
+
+const baskervville = Baskervville({
+  weight: "400",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  variable: "--font-baskervville",
   display: "swap",
 });
 
@@ -40,6 +48,7 @@ export default function RootLayout({ children }) {
         className={clsx(
           "w-full transition-colors duration-300",
           redHatText.variable,
+          baskervville.variable,
           showGlobalBackground ? "bg-black text-white selection:bg-[#DD1764] selection:text-white" : "bg-[#F6F4FA] text-[#2E2A36]"
         )}
       >

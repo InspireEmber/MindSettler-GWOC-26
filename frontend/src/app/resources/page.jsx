@@ -376,7 +376,7 @@ export default function ResourcesPage() {
                   </div>
                   <h3 className="text-xl font-serif font-medium text-white tracking-wide">{section.category}</h3>
                 </div>
-                <p className="text-sm text-gray-400 font-light font-redhat max-w-xl leading-relaxed">
+                <p className="text-sm text-gray-200 font-light font-redhat max-w-xl leading-relaxed">
                   {section.description}
                 </p>
               </div>
@@ -395,15 +395,15 @@ export default function ResourcesPage() {
                     <div>
                       <div className="flex justify-between items-start mb-3">
                         <div className="p-2 bg-white/5 rounded-full">
-                          <ExternalLink size={14} className="text-gray-500 group-hover/link:text-[#eeb9ff] transition-colors" />
+                          <ExternalLink size={14} className="text-gray-300 group-hover/link:text-[#eeb9ff] transition-colors" />
                         </div>
-                        <ArrowRight size={14} className="text-gray-600 group-hover/link:text-white -rotate-45 group-hover/link:rotate-0 transition-transform duration-300" />
+                        <ArrowRight size={14} className="text-gray-300 group-hover/link:text-white -rotate-45 group-hover/link:rotate-0 transition-transform duration-300" />
                       </div>
                       <span className="text-lg font-serif font-medium text-gray-100 group-hover/link:text-white transition-colors line-clamp-2 leading-tight">
                         {link.name}
                       </span>
                     </div>
-                    <div className="text-xs font-bold text-gray-500 uppercase tracking-widest font-redhat group-hover/link:text-[#eeb9ff] transition-colors">
+                    <div className="text-xs font-bold text-gray-300 uppercase tracking-widest font-redhat group-hover/link:text-[#eeb9ff] transition-colors">
                       Visit Resource
                     </div>
                   </motion.a>

@@ -65,9 +65,9 @@ export default function HomePage() {
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12 sm:gap-16 items-center text-center pt-32 pb-16 md:pb-24 lg:pb-32">
             {/* LEFT CONTENT - QUOTE */}
-            <div className="max-w-xl">
+            <div className="max-w-2xl text-left">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff] via-[#fff] to-[#fff] italic font-serif">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff] via-[#fff] to-[#fff] italic font-baskervville pr-4 pb-2 inline-block">
                   "It's okay to not be okay.
                   <br />
                   It's okay to ask for help."
