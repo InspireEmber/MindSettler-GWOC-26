@@ -10,7 +10,7 @@ export default function ReadyToBook() {
         {/* --- Background Image --- */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/StockCake-Purple_Mountain_Twilight-1827238-standard.jpg"
+            src="https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978724/mindsettler_assets/StockCake-Purple_Mountain_Twilight-1827238-standard.jpg"
             alt="Background Pattern"
             className="w-full h-full object-cover"
           />

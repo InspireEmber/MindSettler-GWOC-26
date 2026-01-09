@@ -54,7 +54,7 @@ export default function HomePage() {
               className="absolute inset-0 w-full h-full"
             >
               <SeamlessVideo
-                src="/videos/herosec.mp4"
+                src="https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978793/mindsettler_assets/herosec.mp4"
                 className="w-full h-full"
               />
             </motion.div>

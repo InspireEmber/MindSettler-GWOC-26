@@ -59,19 +59,19 @@ const NEW_ROTATING_CONTENT = [
     id: 1,
     title: "Understanding Deeper",
     text: "Sometimes words aren't enough. We look beyond the surface to understand what your mind is truly asking for.",
-    imageSrc: "/images/4b.svg"
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978641/mindsettler_assets/4b.svg"
   },
   {
     id: 2,
     title: "Finding Balance",
     text: "Life is a balancing act. We help you find the equilibrium between your responsibilities and your well-being.",
-    imageSrc: "/images/5b.svg"
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978645/mindsettler_assets/5b.svg"
   },
   {
     id: 3,
     title: "Moving Forward",
     text: "The past informs us, but it doesn't define us. We focus on building a future that aligns with your values.",
-    imageSrc: "/images/6b.svg"
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978648/mindsettler_assets/6b.svg"
   }
 ];
 
@@ -160,7 +160,7 @@ export default function WhatMakesUsDifferentPage() {
               className="relative w-64 h-64 sm:w-80 sm:h-80"
             >
               <Image
-                src="/images/brain_illustration.png"
+                src="https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978668/mindsettler_assets/brain_illustration.jpg"
                 alt="Brain Illustration"
                 width={600}
                 height={600}
@@ -190,7 +190,7 @@ export default function WhatMakesUsDifferentPage() {
               className="relative w-full h-full"
             >
               <Image
-                src="/images/brain_illustration.png"
+                src="https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978668/mindsettler_assets/brain_illustration.jpg"
                 alt="Central Brain"
                 fill
                 className="object-contain mix-blend-screen invert contrast-125 opacity-90"

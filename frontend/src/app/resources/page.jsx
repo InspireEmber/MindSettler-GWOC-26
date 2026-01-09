@@ -120,14 +120,14 @@ const ALL_RESOURCES = {
       title: "Panic Attack vs Anxiety Attack",
       desc: "Understanding the difference between panic and anxiety attacks, and their specific triggers.",
       tag: "WATCH",
-      href: "/videos/panicanx.mp4"
+      href: "https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978906/mindsettler_assets/panicanx.mp4"
     },
     {
       id: "v2",
       title: "Walls vs Boundaries",
       desc: "How healthy boundaries strengthen relationships and improve self-esteem compared to building walls.",
       tag: "WATCH",
-      href: "/videos/wallbound.mp4"
+      href: "https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978922/mindsettler_assets/wallbound.mp4"
     }
   ],
   links: [

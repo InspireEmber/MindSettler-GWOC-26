@@ -27,7 +27,7 @@ export default function AboutPage() {
           <div className="flex justify-center md:justify-start">
             <div className="w-60 h-60 rounded-full overflow-hidden shadow-2xl border-4 border-white/10 flex-shrink-0">
               <img
-                src="/images/parnika.jpeg"
+                src="https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978718/mindsettler_assets/parnika.jpg"
                 alt="Parnika Bajaj – Psychotherapist"
                 className="w-full h-full object-cover"
               />
@@ -164,7 +164,7 @@ export default function AboutPage() {
             >
               {s.label === "Our Mission" ? (
                 <img
-                  src="/images/empowering.jpg"
+                  src="https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978675/mindsettler_assets/empowering.jpg"
                   alt="Our Mission"
                   className="w-full h-full object-cover"
                 />

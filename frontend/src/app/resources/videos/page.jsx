@@ -54,7 +54,7 @@ export default function VideosResourcesPage() {
                   preload="metadata"
                   poster=""
                 >
-                  <source src="/videos/panicanx.mp4" type="video/mp4" />
+                  <source src="https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978906/mindsettler_assets/panicanx.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -113,7 +113,7 @@ export default function VideosResourcesPage() {
                   preload="metadata"
                   poster=""
                 >
-                  <source src="/videos/wallbound.mp4" type="video/mp4" />
+                  <source src="https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978922/mindsettler_assets/wallbound.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>

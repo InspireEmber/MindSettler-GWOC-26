@@ -47,7 +47,7 @@ export default function RootLayout({ children }) {
         {showGlobalBackground && (
           <div className="fixed inset-0 -z-10">
             <Image
-              src="/images/bg4.jpg"
+              src="https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978664/mindsettler_assets/bg4.jpg"
               alt="Background"
               fill
               className="object-cover"
