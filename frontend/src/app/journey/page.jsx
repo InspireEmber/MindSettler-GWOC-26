@@ -113,7 +113,7 @@ const JOURNEY_STEPS = [
     desc: "It starts with a feeling—something isn't right. Thoughts feel tangled, emotions overwhelming. You stand at the base of a mountain, looking up at the clouds.",
     // icon: HelpCircle,
     color: "#a855f7", // Purple
-    imageSrc: "/images/firstj.jpg",
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978687/mindsettler_assets/firstj.jpg",
     align: "left"
   },
   {
@@ -123,7 +123,7 @@ const JOURNEY_STEPS = [
     desc: "A moment of insight. You acknowledge that seeking help isn't weakness—it's the first step toward strength. You spot the path forward.",
     // icon: Lightbulb,
     color: "#eeb9ff", // Light Pink/Purple
-    imageSrc: "/images/spark of awarness.jpg",
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978720/mindsettler_assets/spark_of_awarness.jpg",
     align: "right"
   },
   {
@@ -143,7 +143,7 @@ const JOURNEY_STEPS = [
     desc: "Knowledge turns into wisdom. You pause at a high camp to reflect, letting the insights settle deep within your mind. The air is clearer here.",
     // icon: Sprout,
     color: "#a855f7", // Purple
-    imageSrc: "/images/incubation.jpg",
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978708/mindsettler_assets/incubation.jpg",
     align: "right"
   },
   {
@@ -153,7 +153,7 @@ const JOURNEY_STEPS = [
     desc: "You stand on solid ground. Armed with understanding and resilience, you face the horizon with a renewed sense of self and purpose.",
     // icon: Mountain,
     color: "#DD1764", // Pink
-    imageSrc: "/images/fifthj.jpg",
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978679/mindsettler_assets/fifthj.jpg",
     align: "center"
   }
 ];

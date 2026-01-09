@@ -160,26 +160,42 @@ export default function AboutPage() {
 
             <div
               className={`${s.reverse ? "md:order-1" : ""
-                } h-48 sm:h-64 md:h-80 rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex flex-col items-center justify-center mt-6 md:mt-0`}
+                } h-48 sm:h-64 md:h-80 rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex flex-col items-center justify-center mt-6 md:mt-0 overflow-hidden`}
             >
-              <div
-                className="w-16 h-16 sm:w-20 sm:h-20 mb-3 sm:mb-4 rounded-full flex items-center justify-center bg-white/10"
-              >
-                <svg
-                  className="w-8 h-8 sm:w-10 sm:h-10"
-                  fill="none"
-                  stroke={s.color}
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d={s.icon}
-                  />
-                </svg>
-              </div>
-              <p className="font-medium text-base sm:text-lg text-white font-antic">{s.label}</p>
+              {s.label === "Our Mission" ? (
+                <img
+                  src="/images/empowering.jpg"
+                  alt="Our Mission"
+                  className="w-full h-full object-cover"
+                />
+              ) : s.label === "Our Vision" ? (
+                <img
+                  src="/images/emo7.jpg"
+                  alt="Our Vision"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <>
+                  <div
+                    className="w-16 h-16 sm:w-20 sm:h-20 mb-3 sm:mb-4 rounded-full flex items-center justify-center bg-white/10"
+                  >
+                    <svg
+                      className="w-8 h-8 sm:w-10 sm:h-10"
+                      fill="none"
+                      stroke={s.color}
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d={s.icon}
+                      />
+                    </svg>
+                  </div>
+                  <p className="font-medium text-base sm:text-lg text-white font-antic">{s.label}</p>
+                </>
+              )}
             </div>
           </div>
         </section>

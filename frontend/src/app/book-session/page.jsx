@@ -8,16 +8,16 @@ import { getCurrentUser } from "../../services/auth";
 import { motion } from "framer-motion";
 
 const SESSION_PHOTOS = [
-  "/images/5.jpeg",
-  "/images/6.jpeg",
-  "/images/7.jpeg",
-  "/images/8.jpeg",
-  "/images/9.jpeg",
-  "/images/10.jpeg",
-  "/images/11.jpeg",
-  "/images/12.jpeg",
-  "/images/13.jpeg",
-  "/images/14.jpeg",
+  "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978643/mindsettler_assets/5.jpg",
+  "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978646/mindsettler_assets/6.jpg",
+  "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978650/mindsettler_assets/7.jpg",
+  "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978651/mindsettler_assets/8.jpg",
+  "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978652/mindsettler_assets/9.jpg",
+  "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978629/mindsettler_assets/10.jpg",
+  "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978630/mindsettler_assets/11.jpg",
+  "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978631/mindsettler_assets/12.jpg",
+  "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978632/mindsettler_assets/13.jpg",
+  "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978633/mindsettler_assets/14.jpg",
 ];
 
 const STEPS = [

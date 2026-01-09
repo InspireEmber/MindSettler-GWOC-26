@@ -13,19 +13,19 @@ const ROTATING_CONTENT = [
     id: 1,
     title: "Breaking the Silence",
     text: "An Awkward First Start. We're Both Humans After All.",
-    imageSrc: "/images/1b.png"
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978636/mindsettler_assets/1b.png"
   },
   {
     id: 2,
     title: "No Script Required",
     text: "Not being sure \n What to talk about.",
-    imageSrc: "/images/2b.png"
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978637/mindsettler_assets/2b.png"
   },
   {
     id: 3,
     title: "Where the Story Begins",
     text: "Having so much to talk about you dont know where to begin.",
-    imageSrc: "/images/3b.png"
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978640/mindsettler_assets/3b.png"
   }
 ];
 
@@ -36,25 +36,25 @@ const STEPS = [
     num: "01",
     title: "Book Your Session",
     desc: "Choose between online or offline sessions and select a convenient time slot that works for you.",
-    imageSrc: "/images/ilu2.png"
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978697/mindsettler_assets/ilu2.png"
   },
   {
     num: "02",
     title: "Confirmation & Preparation",
     desc: "Once your booking is confirmed, you'll receive session details and a brief guide to help you prepare.",
-    imageSrc: "/images/ilu3.png"
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978700/mindsettler_assets/ilu3.png"
   },
   {
     num: "03",
     title: "Attend Your Session",
     desc: "Join your structured psycho-education session in a calm, confidential environment focused on awareness.",
-    imageSrc: "/images/ilu4.png"
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978703/mindsettler_assets/ilu4.png"
   },
   {
     num: "04",
     title: "Reflect & Apply",
     desc: "Take time to reflect on what you've learned and apply the insights in your daily life to build emotional clarity.",
-    imageSrc: "/images/ilu5.png"
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978707/mindsettler_assets/ilu5.png"
   }
 ];
 

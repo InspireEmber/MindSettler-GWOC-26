@@ -17,7 +17,46 @@ export default function Navbar() {
   const pathname = usePathname();
   const { user, loading, logout } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [expandedItem, setExpandedItem] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+
+  const mobileNavItems = [
+    {
+      label: "About",
+      href: "/about",
+      icon: Info,
+      children: [
+        { label: "About Us", href: "/about", icon: Info },
+        { label: "The Journey", href: "/journey", icon: Map },
+        { label: "How It Works", href: "/how-it-works", icon: Sparkles },
+        { label: "What Makes Us Different", href: "/what-makes-us-different", icon: Star }
+      ]
+    },
+    {
+      label: "Resources",
+      href: "/resources",
+      icon: BookOpen,
+      children: [
+        { label: "Resources", href: "/resources", icon: BookOpen },
+        { label: "Psycho-education", href: "/psycho-education", icon: Brain }
+      ]
+    },
+    {
+      label: "FAQ",
+      href: "/faqs",
+      icon: HelpCircle,
+      children: [
+        { label: "FAQs", href: "/faqs", icon: HelpCircle },
+        { label: "Contact Us", href: "/contact", icon: MessageCircle }
+      ]
+    },
+    {
+      label: "Book Session",
+      href: "/book-session",
+      icon: CalendarCheck,
+      primary: true
+    }
+  ];
 
   // Scroll listener for glass effect
   useEffect(() => {
@@ -174,7 +213,7 @@ export default function Navbar() {
 
             <Link
               href="/book-session"
-              className="group relative flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#a167a5]/60 backdrop-blur-md text-white shadow-xl hover:shadow-[#4A313E]/30 transition-all overflow-hidden ring-1 ring-inset ring-white/10"
+              className="group relative flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#a167a5]/30 backdrop-blur-md text-white shadow-xl hover:shadow-[#4A313E]/30 transition-all overflow-hidden ring-1 ring-inset ring-white/10"
             >
               <div className="absolute inset-0 bg-white/20 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300" />
               <CalendarCheck size={18} className="relative z-10" />
@@ -187,10 +226,9 @@ export default function Navbar() {
                   <Link href="/login" className="px-3 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors">Log in</Link>
                   <Link
                     href="/signup"
-                    className="group relative px-6 py-2.5 rounded-full bg-[#a167a5]/60 backdrop-blur-md text-white shadow-xl hover:shadow-[#4A313E]/30 transition-all overflow-hidden ring-1 ring-inset ring-white/10"
+                    className="px-6 py-2.5 rounded-full bg-[#a167a5]/10 backdrop-blur-md text-white shadow-xl hover:bg-[#a167a5]/20 hover:shadow-[#4A313E]/30 transition-all ring-1 ring-inset ring-white/10 font-semibold text-sm text-center"
                   >
-                    <div className="absolute inset-0 bg-white/20 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300" />
-                    <span className="relative z-10 font-semibold text-sm">Signup</span>
+                    Signup
                   </Link>
                 </div>
               )}
@@ -229,45 +267,112 @@ export default function Navbar() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className={`md:hidden overflow-hidden mt-2 backdrop-blur-xl rounded-2xl border shadow-2xl transition-all duration-500 ${scrolled
-                ? "bg-[#a167a5]/50 border-white/10"
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className={`md:hidden overflow-hidden mt-2 backdrop-blur-xl rounded-2xl border shadow-2xl transition-colors duration-500 ${scrolled
+                ? "bg-[#a167a5]/10 border-white/20"
                 : "bg-white/10 border-white/20"
                 }`}
             >
               <div className="flex flex-col gap-2 pb-6 pt-4 border-t border-white/10">
-                {[
-                  { href: "/about", label: "About", icon: Info },
-                  { href: "/journey", label: "Journey", icon: Map },
-                  { href: "/how-it-works", label: "How It Works", icon: Sparkles },
-                  { href: "/resources", label: "Resources", icon: BookOpen },
-                  { href: "/book-session", label: "Book Session", icon: CalendarCheck, primary: true },
-                ].map((item) => {
+                {mobileNavItems.map((item, index) => {
                   const isActive = pathname === item.href;
+                  const isExpanded = expandedItem === index;
+                  const hasChildren = item.children && item.children.length > 0;
+
                   return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`flex items-center justify-between px-5 py-4 rounded-xl transition-all ${item.primary
-                        ? "bg-[#4a313e]/60 backdrop-blur-md text-white mx-2 ring-1 ring-inset ring-white/10"
-                        : isActive
-                          ? "bg-white/5 text-white mx-2 border-l-2 border-[#eeb9ff]"
-                          : "text-white/80 hover:bg-white/10 hover:text-white"
-                        }`}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <div className="flex items-center gap-3 font-medium">
-                        <item.icon size={20} className={item.primary ? "text-white" : isActive ? "text-[#eeb9ff]" : "text-[#eeb9ff]/70"} />
-                        {item.label}
-                      </div>
-                      <ChevronRight size={16} className={isActive ? "opacity-100 text-[#eeb9ff]" : "opacity-50"} />
-                    </Link>
+                    <div key={index} className="flex flex-col">
+                      <motion.div
+                        whileHover={{ x: 6 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                        className={`flex items-center justify-between mx-2 rounded-xl transition-colors ${item.primary
+                          ? "bg-[#4a313e]/60 backdrop-blur-md text-white ring-1 ring-inset ring-white/10 mt-2"
+                          : isActive
+                            ? "bg-white/5 text-white border-l-2 border-[#eeb9ff]"
+                            : "text-white/80 hover:bg-white/10 hover:text-white"
+                          }`}>
+
+                        <Link
+                          href={item.href}
+                          className={`flex items-center gap-3 flex-1 px-5 py-4 font-medium`}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          <item.icon size={20} className={item.primary ? "text-white" : isActive ? "text-[#eeb9ff]" : "text-[#eeb9ff]/70"} />
+                          {item.label}
+                        </Link>
+
+                        {hasChildren ? (
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setExpandedItem(isExpanded ? null : index);
+                            }}
+                            className="p-4 hover:bg-white/10 rounded-r-xl transition-colors border-l border-white/5"
+                          >
+                            <ChevronRight size={16} className={`transition-transform duration-300 ${isExpanded ? "rotate-90 text-[#eeb9ff]" : "opacity-50"}`} />
+                          </button>
+                        ) : (
+                          !item.primary && <div className="pr-5 opacity-50"><ChevronRight size={16} /></div>
+                        )}
+                      </motion.div>
+
+                      <AnimatePresence>
+                        {isExpanded && hasChildren && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden bg-black/5 mx-4 mb-2 rounded-b-xl border-x border-b border-white/5"
+                          >
+                            {item.children.map((child, idx) => (
+                              <motion.div
+                                key={idx}
+                                whileHover={{ x: 6 }}
+                                whileTap={{ scale: 0.98 }}
+                              >
+                                <Link
+                                  href={child.href}
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                  className="flex items-center gap-3 px-6 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 border-t border-white/5 first:border-0 transition-colors"
+                                >
+                                  <child.icon size={16} className="text-[#eeb9ff]/60" />
+                                  {child.label}
+                                </Link>
+                              </motion.div>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   );
                 })}
 
                 {!loading && !user && (
                   <div className="flex gap-3 p-4 mt-2 border-t border-white/10">
                     <Link href="/login" className="flex-1 py-3 text-center text-sm font-bold text-white/90 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10">Log In</Link>
-                    <Link href="/signup" className="flex-1 py-3 text-center text-sm font-bold text-[#3F2965] bg-white rounded-xl shadow-lg">Sign Up</Link>
+                    <Link href="/signup" className="flex-1 py-3 text-center text-sm font-bold text-white bg-[#a167a5]/60 backdrop-blur-md rounded-xl shadow-xl hover:bg-[#a167a5]/80 transition-all ring-1 ring-inset ring-white/10">Sign Up</Link>
+                  </div>
+                )}
+
+                {!loading && user && (
+                  <div className="flex gap-3 p-4 mt-2 border-t border-white/10">
+                    <Link
+                      href="/profile"
+                      className="flex-1 flex items-center justify-center gap-2 py-3 text-center text-sm font-bold text-white bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <User size={16} />
+                      Profile
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="flex-1 flex items-center justify-center gap-2 py-3 text-center text-sm font-bold text-white/90 bg-white/5 rounded-xl border border-white/10 hover:bg-[#a167a5]/10 hover:text-[#eeb9ff] hover:border-[#a167a5]/30 transition-all"
+                    >
+                      <LogOut size={16} />
+                      Logout
+                    </button>
                   </div>
                 )}
               </div>

@@ -121,33 +121,120 @@ const MixedRain = () => {
   );
 };
 
-// --- Specialized Resource Components ---
-
-// 1. Video Card with Direct Playback
-const VideoResourceCard = ({ video, onClick }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    const videoEl = videoRef.current;
-    if (!videoEl) return;
-
-    if (isHovered) {
-      videoEl.muted = false;
-      const playPromise = videoEl.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          videoEl.muted = true;
-          videoEl.play().catch(e => console.error("Autoplay failed:", e));
-        });
-      }
-    } else {
-      videoEl.pause();
-      videoEl.currentTime = 0;
-      videoEl.muted = true;
+// --- Mock Data ---
+const ALL_RESOURCES = {
+  articles: [
+    {
+      id: "a1",
+      title: "Understanding Emotional Regulation",
+      desc: "Learn how to manage and respond to an emotional experience with a range of healthy strategies.",
+      tag: "Basics",
+      href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10460911/"
+    },
+    {
+      id: "a2",
+      title: "The Architecture of Anxiety",
+      desc: "Breaking down how the brain's 'alarm system' works and the role of the amygdala in stress responses.",
+      tag: "Deep Dive",
+      href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7774415/"
+    },
+    {
+      id: "a3",
+      title: "Boundaries as Self-Care",
+      desc: "A practical guide on how to establish healthy boundaries to protect your time, energy, and mental health.",
+      tag: "Relationships",
+      href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5178866/"
     }
-  }, [isHovered]);
+  ],
+  videos: [
+    {
+      id: "v1",
+      title: "Panic Attack vs Anxiety Attack",
+      desc: "Understanding the difference between panic and anxiety attacks, and their specific triggers.",
+      tag: "WATCH",
+      href: "/videos/panicanx.mp4"
+    },
+    {
+      id: "v2",
+      title: "Walls vs Boundaries",
+      desc: "How healthy boundaries strengthen relationships and improve self-esteem compared to building walls.",
+      tag: "WATCH",
+      href: "/videos/wallbound.mp4"
+    }
+  ],
+  links: [
+    // Emergency & Global Helplines
+    {
+      id: "l1",
+      title: "Find A Helpline (Global)",
+      desc: "Instant access to verified mental health helplines in your country.",
+      tag: "EXPLORE",
+      href: "https://findahelpline.com/"
+    },
+    {
+      id: "l2",
+      title: "Befrienders Worldwide",
+      desc: "Emotional support to prevent suicide worldwide.",
+      tag: "EXPLORE",
+      href: "https://www.befrienders.org/"
+    },
+    {
+      id: "l3",
+      title: "Intl. Assoc. for Suicide Prevention",
+      desc: "Resources and crisis centres for suicide prevention globally.",
+      tag: "EXPLORE",
+      href: "https://www.iasp.info/resources/Crisis_Centres/"
+    },
+    // World-Leading Organizations
+    {
+      id: "l4",
+      title: "WHO - Mental Health",
+      desc: "Global mental health data, policies, and information from the World Health Organization.",
+      tag: "EXPLORE",
+      href: "https://www.who.int/health-topics/mental-health"
+    },
+    {
+      id: "l5",
+      title: "NIMH - National Inst. of Mental Health",
+      desc: "The lead federal agency for research on mental disorders.",
+      tag: "EXPLORE",
+      href: "https://www.nimh.nih.gov/"
+    },
+    {
+      id: "l6",
+      title: "Mental Health Foundation",
+      desc: "UK's charity for everyone's mental health.",
+      tag: "EXPLORE",
+      href: "https://www.mentalhealth.org.uk/"
+    },
+    // Student & Youth Support
+    {
+      id: "l7",
+      title: "The Trevor Project",
+      desc: "Crisis intervention and suicide prevention services for LGBTQ+ youth.",
+      tag: "EXPLORE",
+      href: "https://www.thetrevorproject.org/"
+    },
+    {
+      id: "l8",
+      title: "Active Minds",
+      desc: "Supporting mental health awareness and education for students.",
+      tag: "EXPLORE",
+      href: "https://www.activeminds.org/"
+    },
+    {
+      id: "l9",
+      title: "Youth Mental Health Advisory",
+      desc: "U.S. Surgeon General’s Advisory on protecting youth mental health.",
+      tag: "EXPLORE",
+      href: "https://www.hhs.gov/surgeongeneral/reports-and-publications/youth-mental-health/index.html"
+    }
+  ]
+};
 
+// --- Components ---
+
+const ResourceCard = ({ resource, icon: Icon }) => {
   return (
     <motion.div
       whileHover={{ y: -5, scale: 1.02 }}
