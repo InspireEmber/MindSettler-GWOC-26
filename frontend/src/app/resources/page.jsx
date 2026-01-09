@@ -322,7 +322,7 @@ export default function ResourcesPage() {
   ]);
 
   return (
-    <main className="min-h-screen text-white overflow-x-hidden pt-32 relative">
+    <main className="min-h-screen text-white overflow-x-hidden pt-24 relative">
       <MixedRain />
 
       {/* Video Modal */}
@@ -333,8 +333,8 @@ export default function ResourcesPage() {
       {/* 1. ARTICLES: Auto-Scrolling Infinite Marquee */}
       <section className="mb-20">
         <div className="px-6 md:px-12 mb-4">
-          <h2 className="text-3xl font-thin tracking-wider">
-            Trending <span className="italic font-serif text-[#eeb9ff]">Articles</span>
+          <h2 className="text-5xl md:text-6xl font-serif tracking-wide text-[#eeb9ff]">
+            Articles
           </h2>
         </div>
         <ArticleMarquee articles={articles} />
@@ -343,71 +343,78 @@ export default function ResourcesPage() {
       {/* 2. VIDEOS: Direct Playback Row */}
       <section className="mb-20">
         <div className="px-6 md:px-12 mb-8">
-          <h2 className="text-3xl font-thin tracking-wider">
-            Visual <span className="italic font-serif text-[#DD1764]">Guides</span>
+          <h2 className="text-5xl md:text-6xl font-serif tracking-wide text-white">
+            Visual <span className="italic text-[#DD1764]">Guides</span>
           </h2>
-          <p className="text-sm text-gray-400 mt-2 font-light">Hover to preview directly</p>
         </div>
 
         <VideoMarquee videos={videoData} onVideoClick={setSelectedVideo} />
       </section>
 
       {/* 3. HELPFUL LINKS GRID: Categorized Resource List */}
-      <section className="mb-32">
-        <div className="px-6 md:px-12 mb-8">
-          <h2 className="text-3xl font-thin tracking-wider">Helpful <span className="italic font-serif">Links</span></h2>
+      <section className="mb-16">
+        <div className="px-6 md:px-12 mb-6">
+          <h2 className="text-5xl md:text-6xl font-serif tracking-wide text-white">
+            Helpful <span className="italic text-[#DD1764]">Links</span>
+          </h2>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 grid gap-16">
+        <div className="flex flex-col gap-10">
           {HELPFUL_RESOURCES.map((section, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: i * 0.1 }}
               className="group"
             >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="p-3 rounded-xl bg-white/10 border border-white/20 shadow-lg backdrop-blur-md group-hover:bg-white/20 transition-colors">
-                  {section.icon}
+              <div className="px-6 md:px-12 mb-4">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md text-[#eeb9ff]">
+                    {section.icon}
+                  </div>
+                  <h3 className="text-xl font-serif font-medium text-white tracking-wide">{section.category}</h3>
                 </div>
-                <h2 className="text-2xl font-serif text-white">{section.category}</h2>
+                <p className="text-sm text-gray-400 font-light font-redhat max-w-xl leading-relaxed">
+                  {section.description}
+                </p>
               </div>
-              <p className="text-gray-400 mb-6 leading-relaxed max-w-2xl font-redhat font-light text-sm">
-                {section.description}
-              </p>
-              <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+              {/* Horizontal Scroll Container */}
+              <div className="flex overflow-x-auto gap-4 px-6 md:px-12 pb-6 scrollbar-hide snap-x">
                 {section.links.map((link, j) => (
-                  <motion.li key={j} whileHover={{ y: -3, scale: 1.01 }}>
-                    <a
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-between p-4 rounded-2xl border border-white/5 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-[#eeb9ff]/30 hover:shadow-lg hover:shadow-[#eeb9ff]/5 transition-all group/link h-full"
-                    >
-                      <span className="text-gray-200 text-sm font-medium font-redhat group-hover/link:text-[#eeb9ff] transition-colors">{link.name}</span>
-                      <ExternalLink size={14} className="text-gray-500 group-hover/link:text-[#eeb9ff] group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-all ml-4 flex-shrink-0" />
-                    </a>
-                  </motion.li>
+                  <motion.a
+                    key={j}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ y: -5, scale: 1.02 }}
+                    className="min-w-[280px] md:min-w-[320px] p-6 rounded-[1.5rem] bg-white/5 border border-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-[#eeb9ff]/20 hover:shadow-xl hover:shadow-[#eeb9ff]/5 transition-all group/link flex flex-col justify-between h-[150px] snap-start"
+                  >
+                    <div>
+                      <div className="flex justify-between items-start mb-3">
+                        <div className="p-2 bg-white/5 rounded-full">
+                          <ExternalLink size={14} className="text-gray-500 group-hover/link:text-[#eeb9ff] transition-colors" />
+                        </div>
+                        <ArrowRight size={14} className="text-gray-600 group-hover/link:text-white -rotate-45 group-hover/link:rotate-0 transition-transform duration-300" />
+                      </div>
+                      <span className="text-lg font-serif font-medium text-gray-100 group-hover/link:text-white transition-colors line-clamp-2 leading-tight">
+                        {link.name}
+                      </span>
+                    </div>
+                    <div className="text-xs font-bold text-gray-500 uppercase tracking-widest font-redhat group-hover/link:text-[#eeb9ff] transition-colors">
+                      Visit Resource
+                    </div>
+                  </motion.a>
                 ))}
-              </ul>
+              </div>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Disclaimer */}
-      <section className="py-10 relative z-10 px-6 md:px-12 mb-20">
-        <div className="max-w-5xl mx-auto">
-          <div className="rounded-2xl bg-white/5 backdrop-blur-sm border border-white/5 p-6 text-xs italic leading-relaxed text-gray-500 hover:text-gray-400 transition-colors">
-            <p className="font-redhat">
-              <strong className="text-[#DD1764]">Disclaimer:</strong> This content is provided for awareness and educational purposes only. It does not replace professional
-              diagnosis, treatment, or emergency care. MindSettler is not responsible for the content of external sites.
-            </p>
-          </div>
-        </div>
-      </section>
+
 
       <ReadyToBook />
     </main>

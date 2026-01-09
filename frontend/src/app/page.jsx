@@ -164,7 +164,7 @@ export default function HomePage() {
 
                   <div className="space-y-8 text-xl md:text-3xl text-gray-300 peer-hover:text-white leading-relaxed font-light max-w-4xl mx-auto drop-shadow-sm transition-colors duration-700">
                     <p className="md:px-20 font-redhat">
-                      This page is not just meant for online consultation; we intend to create more awareness about mental well-being and psycho-education. It is a medium to spread knowledge and an easier mode to connect as well as reach out for help whenever in
+                      This page is not just meant for online consultation; we intend to create more awareness about mental well-being and learning about mental health. It is a medium to spread knowledge and an easier mode to connect as well as reach out for help whenever in
                       <span className="italic font-serif text-white peer-hover:text-[#eeb9ff] transition-colors"> need</span>.
                     </p>
                   </div>
@@ -186,11 +186,11 @@ export default function HomePage() {
               >
                 <h3 className="text-3xl md:text-5xl font-light text-white leading-tight">
                   <span className="block text-lg font-bold text-[#eeb9ff] uppercase tracking-widest mb-4">The Name</span>
-                  Deciphering <br />
-                  <span className="font-serif italic">Our Essence</span>
+                  Understanding <br />
+                  <span className="font-serif italic">Our Meaning</span>
                 </h3>
                 <p className="text-lg text-gray-300 leading-relaxed max-w-md mx-auto md:mx-0 font-redhat">
-                  MindSettler by Parnika is an amalgamation of two interconnected aspects of human experience, bridged by a common ground of understanding.
+                  MindSettler by Parnika is a blend of two connected parts of human experience, bridged by a common ground of understanding.
                 </p>
 
                 {/* Decorative Line */}
@@ -228,8 +228,8 @@ export default function HomePage() {
                     </h4>
 
                     <p className="text-sm text-gray-300 leading-relaxed font-light font-redhat">
-                      ‘Mind’ refers to a person’s consciousness which is not physical,
-                      but a mental and emotional part.
+                      ‘Mind’ refers to your inner thoughts and feelings,
+                      not just your physical body.
                     </p>
                   </div>
                 </motion.div>
@@ -264,7 +264,7 @@ export default function HomePage() {
 
                     <p className="text-sm text-gray-300 leading-relaxed font-light font-redhat">
                       ‘Settler’ refers to assisting you in settling your mind
-                      during distress or other mental health challenges.
+                      during stress or hard times.
                     </p>
                   </div>
                 </motion.div>

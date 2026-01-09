@@ -20,10 +20,10 @@ export default function ReadyToBook() {
 
         <div className="relative z-10">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-serif italic mb-6 sm:mb-8 leading-tight px-2">
-            Begin Your Journey to Serenity
+            Start Your Path to Peace
           </h2>
           <p className="text-base sm:text-lg md:text-xl font-serif italic opacity-90 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-2">
-            "A sanctuary where compassion meets professional care."
+            "A safe place for kind and professional help."
           </p>
           <Link
             href="/book-session"
