@@ -34,7 +34,7 @@ export default function PrivacyPolicyPage() {
       {/* Hero Section */}
       <section className="relative z-10 pt-20 pb-8 md:pt-32 md:pb-12 text-center">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mb-6" />
+          <div className="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full mx-auto mb-6" />
           <h1 className="text-4xl md:text-6xl font-light text-white mb-6">
             Privacy <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Policy</span>
           </h1>

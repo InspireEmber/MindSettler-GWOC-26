@@ -134,7 +134,7 @@ export default function WhatMakesUsDifferentPage() {
     <div className="min-h-screen relative overflow-x-hidden">
 
       {/* HERO HEADER */}
-      <section className="relative z-10 pt-20 pb-8 md:pt-10 md:pb-12 px-6 text-center">
+      <section className="relative z-10 pt-20 pb-8 md:pt-20 md:pb-12 px-6 text-center">
         {/* Gradient Bar (Updated to match 'How It Works' style) */}
         <div className="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full mx-auto mb-8" />
 

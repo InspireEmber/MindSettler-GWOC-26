@@ -42,9 +42,9 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen relative overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative z-10 py-12 sm:py-16 md:py-20 lg:py-32 text-center">
+      <section className="relative z-10 py-12 sm:py-16 md:py-20 lg:py-20 text-center">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mb-4 sm:mb-6" />
+          <div className="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full mx-auto mb-6 sm:mb-8" />
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white mb-4 sm:mb-6 leading-tight">
             Get in <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Touch</span>
           </h1>
@@ -53,7 +53,7 @@ export default function ContactPage() {
       </section>
 
       {/* Main Content */}
-      <section className="relative z-10 py-12 sm:py-16 md:py-20 lg:py-24 max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
+      <section className="relative z-10 py-8 sm:py-12 md:py-16 lg:py-20 max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
         {/* Sidebar Info */}
         <div className="space-y-6 sm:space-y-8">
           <h2 className="text-2xl sm:text-3xl font-light text-white">Contact Information</h2>
@@ -78,8 +78,9 @@ export default function ContactPage() {
         </div>
 
         {/* Form */}
-        <div className="space-y-6 sm:space-y-8">
-          <h2 className="text-2xl sm:text-3xl font-light text-white">Send Us a Message</h2>
+        {/* Form Container */}
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl">
+          <h2 className="text-2xl sm:text-3xl font-light text-white mb-8">Send Us a Message</h2>
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
             {[
               { label: "Name", name: "name", type: "text", ph: "Your name" },
@@ -93,7 +94,7 @@ export default function ContactPage() {
                   value={formData[field.name]}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:ring-2 focus:ring-[#eeb9ff]/50 focus:border-[#eeb9ff]/50 outline-none transition-all min-h-[44px] text-sm sm:text-base"
+                  className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/10 text-white placeholder-white/60 focus:ring-2 focus:ring-[#eeb9ff]/50 focus:border-[#eeb9ff]/50 outline-none transition-all min-h-[44px] text-sm sm:text-base"
                   placeholder={field.ph}
                 />
               </div>
@@ -107,7 +108,7 @@ export default function ContactPage() {
                 onChange={handleChange}
                 required
                 rows={5}
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:ring-2 focus:ring-[#eeb9ff]/50 focus:border-[#eeb9ff]/50 outline-none resize-none transition-all text-sm sm:text-base min-h-[120px]"
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/10 text-white placeholder-white/60 focus:ring-2 focus:ring-[#eeb9ff]/50 focus:border-[#eeb9ff]/50 outline-none resize-none transition-all text-sm sm:text-base min-h-[120px]"
                 placeholder="Your message..."
               />
             </div>
@@ -120,7 +121,7 @@ export default function ContactPage() {
 
             <button
               disabled={isSubmitting}
-              className="w-full py-4 rounded-full bg-gradient-to-r from-[#3F2965] to-[#DD1764] text-white font-medium hover:shadow-lg hover:shadow-[#DD1764]/20 transition-all disabled:opacity-50 flex items-center justify-center gap-2 min-h-[44px] text-sm sm:text-base"
+              className="w-full py-5 rounded-full bg-[#eeb9ff] text-[#3F2965] font-serif font-bold text-lg shadow-xl shadow-[#eeb9ff]/10 hover:shadow-[#eeb9ff]/20 hover:scale-[1.02] transition-all disabled:opacity-30 disabled:grayscale active:scale-95 flex items-center justify-center gap-3 relative overflow-hidden"
             >
               {isSubmitting ? "Sending..." : <><Send size={18} /> Send Message</>}
             </button>

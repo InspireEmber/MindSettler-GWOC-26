@@ -179,7 +179,7 @@ export default function JourneyPage() {
       <SporesRain />
 
       {/* 1. HERO HEADER */}
-      <section className="relative z-20 pt-32 pb-12 px-6 text-center">
+      <section className="relative z-20 pt-20 pb-12 px-6 text-center">
 
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -191,7 +191,7 @@ export default function JourneyPage() {
         </motion.div>
 
         <h1 className="text-5xl md:text-7xl font-light mb-8 leading-tight">
-          The <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-b from-[#eeb9ff] to-[#DD1764] px-2 py-1">Climb</span>
+          The <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Climb</span>
         </h1>
 
         <p className="text-2xl md:text-3xl font-serif italic text-gray-200 max-w-3xl mx-auto leading-relaxed font-light">

@@ -21,7 +21,7 @@ export default function AboutPage() {
     <div className="min-h-screen relative overflow-x-hidden">
       {/* Founder Intro Section */}
 
-      <section className="relative z-10 py-10 sm:py-12 bg-white/5 backdrop-blur-sm border-b border-white/10">
+      <section className="relative z-10 py-10 sm:py-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 grid md:grid-cols-[240px_1fr] gap-10 items-center">
           {/* Left – Profile Image */}
           <div className="flex justify-center md:justify-start">
@@ -56,10 +56,10 @@ export default function AboutPage() {
       </section>
 
       {/* Brand Identity Section */}
-      <section className="relative z-10 py-12 sm:py-16 md:py-20 bg-black/20 backdrop-blur-sm">
+      <section className="relative z-10 py-12 sm:py-16 md:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <div className="flex justify-center items-center gap-3 mb-4">
-            <div className="h-1 w-10 rounded-full bg-gradient-to-r from-[#3F2965] to-[#DD1764]" />
+            <div className="h-1 w-12 rounded-full bg-gradient-to-r from-white/20 via-white to-white/20" />
             <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-[#eeb9ff]">
               Our Identity
             </span>
@@ -190,7 +190,7 @@ export default function AboutPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
 
           <div className="text-center mb-16 md:mb-24">
-            <div className="h-1 w-16 bg-gradient-to-r from-[#3F2965] to-[#DD1764] rounded-full mx-auto mb-8" />
+            <div className="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full mx-auto mb-8" />
 
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-white leading-[1.1] tracking-tight mb-4">
               Our Psycho-Education <br className="hidden sm:block" />

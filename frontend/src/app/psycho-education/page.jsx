@@ -25,9 +25,9 @@ export default function PsychoEducationPage() {
   return (
     <div className="min-h-screen relative text-gray-200 overflow-x-hidden">
       {/* Hero */}
-      <section className="relative py-20 md:py-32 text-center z-10">
+      <section className="relative py-20 md:py-20 text-center z-10">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="h-1 w-16 bg-gradient-to-r from-[#eeb9ff] to-[#DD1764] rounded-full mx-auto mb-6" />
+          <div className="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full mx-auto mb-6" />
           <h1 className="text-4xl md:text-6xl font-light text-white mb-6">
             Psycho-<span className="font-medium text-[#eeb9ff]">Education</span>
           </h1>
