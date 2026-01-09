@@ -121,120 +121,33 @@ const MixedRain = () => {
   );
 };
 
-// --- Mock Data ---
-const ALL_RESOURCES = {
-  articles: [
-    {
-      id: "a1",
-      title: "Understanding Emotional Regulation",
-      desc: "Learn how to manage and respond to an emotional experience with a range of healthy strategies.",
-      tag: "Basics",
-      href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10460911/"
-    },
-    {
-      id: "a2",
-      title: "The Architecture of Anxiety",
-      desc: "Breaking down how the brain's 'alarm system' works and the role of the amygdala in stress responses.",
-      tag: "Deep Dive",
-      href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7774415/"
-    },
-    {
-      id: "a3",
-      title: "Boundaries as Self-Care",
-      desc: "A practical guide on how to establish healthy boundaries to protect your time, energy, and mental health.",
-      tag: "Relationships",
-      href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5178866/"
-    }
-  ],
-  videos: [
-    {
-      id: "v1",
-      title: "Panic Attack vs Anxiety Attack",
-      desc: "Understanding the difference between panic and anxiety attacks, and their specific triggers.",
-      tag: "WATCH",
-      href: "/videos/panicanx.mp4"
-    },
-    {
-      id: "v2",
-      title: "Walls vs Boundaries",
-      desc: "How healthy boundaries strengthen relationships and improve self-esteem compared to building walls.",
-      tag: "WATCH",
-      href: "/videos/wallbound.mp4"
-    }
-  ],
-  links: [
-    // Emergency & Global Helplines
-    {
-      id: "l1",
-      title: "Find A Helpline (Global)",
-      desc: "Instant access to verified mental health helplines in your country.",
-      tag: "EXPLORE",
-      href: "https://findahelpline.com/"
-    },
-    {
-      id: "l2",
-      title: "Befrienders Worldwide",
-      desc: "Emotional support to prevent suicide worldwide.",
-      tag: "EXPLORE",
-      href: "https://www.befrienders.org/"
-    },
-    {
-      id: "l3",
-      title: "Intl. Assoc. for Suicide Prevention",
-      desc: "Resources and crisis centres for suicide prevention globally.",
-      tag: "EXPLORE",
-      href: "https://www.iasp.info/resources/Crisis_Centres/"
-    },
-    // World-Leading Organizations
-    {
-      id: "l4",
-      title: "WHO - Mental Health",
-      desc: "Global mental health data, policies, and information from the World Health Organization.",
-      tag: "EXPLORE",
-      href: "https://www.who.int/health-topics/mental-health"
-    },
-    {
-      id: "l5",
-      title: "NIMH - National Inst. of Mental Health",
-      desc: "The lead federal agency for research on mental disorders.",
-      tag: "EXPLORE",
-      href: "https://www.nimh.nih.gov/"
-    },
-    {
-      id: "l6",
-      title: "Mental Health Foundation",
-      desc: "UK's charity for everyone's mental health.",
-      tag: "EXPLORE",
-      href: "https://www.mentalhealth.org.uk/"
-    },
-    // Student & Youth Support
-    {
-      id: "l7",
-      title: "The Trevor Project",
-      desc: "Crisis intervention and suicide prevention services for LGBTQ+ youth.",
-      tag: "EXPLORE",
-      href: "https://www.thetrevorproject.org/"
-    },
-    {
-      id: "l8",
-      title: "Active Minds",
-      desc: "Supporting mental health awareness and education for students.",
-      tag: "EXPLORE",
-      href: "https://www.activeminds.org/"
-    },
-    {
-      id: "l9",
-      title: "Youth Mental Health Advisory",
-      desc: "U.S. Surgeon General’s Advisory on protecting youth mental health.",
-      tag: "EXPLORE",
-      href: "https://www.hhs.gov/surgeongeneral/reports-and-publications/youth-mental-health/index.html"
-    }
-  ]
-};
+// --- Specialized Resource Components ---
 
-// --- Components ---
+// 1. Video Card with Direct Playback
+const VideoResourceCard = ({ video, onClick }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const videoRef = useRef(null);
 
-const ResourceCard = ({ resource, icon: Icon }) => {
+  useEffect(() => {
+    const videoEl = videoRef.current;
+    if (!videoEl) return;
+
+    if (isHovered) {
+      videoEl.muted = false;
+      const playPromise = videoEl.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          videoEl.muted = true;
+          videoEl.play().catch(e => console.error("Autoplay failed:", e));
+        });
+      }
+    } else {
+      videoEl.pause();
+      videoEl.currentTime = 0;
+      videoEl.muted = true;
+    }
+  }, [isHovered]);
+
   return (
     <motion.div
       whileHover={{ y: -5, scale: 1.02 }}
@@ -445,56 +358,40 @@ export default function ResourcesPage() {
           <h2 className="text-3xl font-thin tracking-wider">Helpful <span className="italic font-serif">Links</span></h2>
         </div>
 
-        <div className="flex flex-col gap-16">
+        <div className="max-w-7xl mx-auto px-6 grid gap-16">
           {HELPFUL_RESOURCES.map((section, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
               className="group"
             >
-              <div className="px-6 md:px-12 mb-6">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-2 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md text-[#eeb9ff]">
-                    {section.icon}
-                  </div>
-                  <h3 className="text-xl font-medium text-white tracking-wide">{section.category}</h3>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 rounded-xl bg-white/10 border border-white/20 shadow-lg backdrop-blur-md group-hover:bg-white/20 transition-colors">
+                  {section.icon}
                 </div>
-                <p className="text-sm text-gray-400 font-light font-redhat max-w-xl">
-                  {section.description}
-                </p>
+                <h2 className="text-2xl font-serif text-white">{section.category}</h2>
               </div>
-
-              {/* Horizontal Scroll Container */}
-              <div className="flex overflow-x-auto gap-4 px-6 md:px-12 pb-8 scrollbar-hide snap-x">
+              <p className="text-gray-400 mb-6 leading-relaxed max-w-2xl font-redhat font-light text-sm">
+                {section.description}
+              </p>
+              <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {section.links.map((link, j) => (
-                  <motion.a
-                    key={j}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ y: -5, scale: 1.02 }}
-                    className="min-w-[280px] md:min-w-[320px] p-6 rounded-[1.5rem] bg-white/5 border border-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-[#eeb9ff]/20 hover:shadow-xl hover:shadow-[#eeb9ff]/5 transition-all group/link flex flex-col justify-between h-[160px] snap-start"
-                  >
-                    <div>
-                      <div className="flex justify-between items-start mb-3">
-                        <div className="p-2 bg-white/5 rounded-full">
-                          <ExternalLink size={14} className="text-gray-500 group-hover/link:text-[#eeb9ff] transition-colors" />
-                        </div>
-                        <ArrowRight size={14} className="text-gray-600 group-hover/link:text-white -rotate-45 group-hover/link:rotate-0 transition-transform duration-300" />
-                      </div>
-                      <span className="text-lg font-medium text-gray-100 group-hover/link:text-white transition-colors line-clamp-2 leading-tight">
-                        {link.name}
-                      </span>
-                    </div>
-                    <div className="text-xs font-bold text-gray-500 uppercase tracking-widest font-redhat group-hover/link:text-[#eeb9ff] transition-colors">
-                      Visit Resource
-                    </div>
-                  </motion.a>
+                  <motion.li key={j} whileHover={{ y: -3, scale: 1.01 }}>
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between p-4 rounded-2xl border border-white/5 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-[#eeb9ff]/30 hover:shadow-lg hover:shadow-[#eeb9ff]/5 transition-all group/link h-full"
+                    >
+                      <span className="text-gray-200 text-sm font-medium font-redhat group-hover/link:text-[#eeb9ff] transition-colors">{link.name}</span>
+                      <ExternalLink size={14} className="text-gray-500 group-hover/link:text-[#eeb9ff] group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-all ml-4 flex-shrink-0" />
+                    </a>
+                  </motion.li>
                 ))}
-              </div>
+              </ul>
             </motion.div>
           ))}
         </div>
