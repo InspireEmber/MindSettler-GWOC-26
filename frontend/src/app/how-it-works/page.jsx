@@ -224,7 +224,10 @@ export default function HowItWorksPage() {
                     <img
                       src={ROTATING_CONTENT[currentIndex].imageSrc}
                       alt={ROTATING_CONTENT[currentIndex].title}
-                      className="w-56 h-56 sm:w-64 sm:h-64 object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.5)]"
+                      className="w-56 h-56 sm:w-64 sm:h-64 object-contain drop-shadow-[0_0_15px_rgba(238,185,255,0.4)]"
+                      style={{
+                        filter: "brightness(0) saturate(100%) invert(67%) sepia(61%) saturate(464%) hue-rotate(237deg) brightness(95%) contrast(93%) drop-shadow(0 0 5px rgba(238, 185, 255, 0.5))"
+                      }}
                     />
                   </div>
                   {/* Text Display */}

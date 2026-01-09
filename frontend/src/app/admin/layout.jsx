@@ -16,7 +16,7 @@ export default function AdminLayout({ children }) {
     if (isLoginPage) return;
     if (loading) return;
     if (!isAdmin) {
-      router.replace("/admin/login");
+      router.replace("/login");
     }
   }, [loading, isAdmin, router, isLoginPage]);
 
@@ -34,7 +34,7 @@ export default function AdminLayout({ children }) {
 
   return (
     <div className="min-h-screen bg-slate-50 relative font-sans text-slate-800 selection:bg-rose-200 overflow-x-hidden">
-      
+
       {/* BACKGROUND LAYER */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute -top-[20%] -left-[10%] w-[70rem] h-[70rem] rounded-full bg-indigo-500/25 blur-[150px] mix-blend-multiply animate-blob filter"></div>
@@ -45,7 +45,7 @@ export default function AdminLayout({ children }) {
       {/* Main Content */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <AdminHeader />
-        
+
         <main className="flex-1 w-full max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-8 animate-in fade-in duration-700">
           {children}
         </main>

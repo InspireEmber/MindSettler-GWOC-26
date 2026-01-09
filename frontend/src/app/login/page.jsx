@@ -26,6 +26,34 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
 
+    // Check for hardcoded admin credentials
+    if (formData.email === "warp799@gmail.com" && formData.password === "admin123") {
+      try {
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+        const res = await fetch(`${API_BASE_URL}/auth/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            username: "admin", // Map known email to default admin username
+            password: formData.password
+          }),
+        });
+
+        if (!res.ok) {
+          throw new Error("Admin login failed");
+        }
+
+        // Force reload to ensure auth state is picked up
+        window.location.href = "/admin/dashboard";
+        return;
+      } catch (err) {
+        setError("Admin login failed. Please check credentials.");
+        setLoading(false);
+        return;
+      }
+    }
+
     try {
       await api.userLogin(formData);
       // Use window.location.href to force a full page reload
