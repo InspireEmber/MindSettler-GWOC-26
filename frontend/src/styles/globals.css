@@ -35,7 +35,8 @@ body {
     Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.6;
   background-color: #0b0220;
-  color: #1f2937; /* neutral-800 like */
+  color: #1f2937;
+  /* neutral-800 like */
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   /* Prevent horizontal scroll on mobile */
@@ -64,7 +65,8 @@ body {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.08; /* 8% for subtle grain */
+  opacity: 0.08;
+  /* 8% for subtle grain */
   mix-blend-mode: soft-light;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.8'/%3E%3C/svg%3E");
 }
@@ -101,7 +103,8 @@ img {
 
 /* ---------- Accessibility ---------- */
 :focus-visible {
-  outline: 2px solid #3b82f6; /* calm focus ring */
+  outline: 2px solid #3b82f6;
+  /* calm focus ring */
   outline-offset: 2px;
 }
 
@@ -111,6 +114,7 @@ img {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -121,6 +125,7 @@ img {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -145,6 +150,7 @@ main {
 
 /* Ensure touch targets are at least 44px on mobile */
 @media (max-width: 768px) {
+
   button,
   a,
   input[type="button"],
@@ -153,12 +159,13 @@ main {
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   /* Improve text readability on mobile */
   body {
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: 16px;
+    /* Prevents zoom on iOS */
   }
-  
+
   /* Better spacing on mobile */
   section {
     padding-left: 1rem;
@@ -194,8 +201,26 @@ main {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+}
+
+/* Ensure fullscreen videos are not cropped */
+video:fullscreen {
+  object-fit: contain !important;
+}
+
+video:-webkit-full-screen {
+  object-fit: contain !important;
+}
+
+video:-moz-full-screen {
+  object-fit: contain !important;
+}
+
+video:-ms-fullscreen {
+  object-fit: contain !important;
 }

@@ -90,18 +90,6 @@ export default function HelpfulLinksResourcesPage() {
         </div>
       </section>
 
-      {/* Disclaimer */}
-      <section className="py-10 relative z-10">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-6 text-sm italic leading-relaxed text-gray-400">
-            <p className="font-redhat">
-              <strong>Disclaimer:</strong> This content is provided for awareness and educational purposes only. It does not replace professional
-              diagnosis, treatment, or emergency care. MindSettler is not responsible for the content of external sites.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Custom Resource Navigation CTA */}
       <section className="py-24 md:py-32 relative z-10">
         <div className="max-w-5xl mx-auto px-6 md:px-12">

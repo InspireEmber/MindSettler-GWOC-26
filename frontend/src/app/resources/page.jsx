@@ -1,18 +1,50 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { BookOpen, Video, Link2, ArrowRight } from "lucide-react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { BookOpen, Play, Link2, ArrowRight, ExternalLink, Maximize, X, PhoneCall, Globe, GraduationCap } from "lucide-react";
 import ReadyToBook from "@/components/ReadyToBook";
 
-// --- Animation Components ---
+const HELPFUL_RESOURCES = [
+  {
+    category: "Emergency & Global Helplines",
+    icon: <PhoneCall className="w-5 h-5 text-[#DD1764]" />,
+    description: "If you are in immediate danger or need urgent crisis support, please contact these services.",
+    links: [
+      { name: "Find A Helpline (Global Search)", url: "https://findahelpline.com/" },
+      { name: "Befrienders Worldwide", url: "https://www.befrienders.org/" },
+      { name: "International Association for Suicide Prevention", url: "https://www.iasp.info/resources/Crisis_Centres/" }
+    ]
+  },
+  {
+    category: "World-Leading Organizations",
+    icon: <Globe className="w-5 h-5 text-[#3F2965]" />,
+    description: "Reliable global authorities for mental health information and research.",
+    links: [
+      { name: "World Health Organization (WHO) - Mental Health", url: "https://www.who.int/health-topics/mental-health" },
+      { name: "National Institute of Mental Health (NIMH)", url: "https://www.nimh.nih.gov/" },
+      { name: "Mental Health Foundation", url: "https://www.mentalhealth.org.uk/" }
+    ]
+  },
+  {
+    category: "Student & Youth Support",
+    icon: <GraduationCap className="w-5 h-5 text-[#3F2965]" />,
+    description: "Resources specifically designed for students and young adults navigating transitions.",
+    links: [
+      { name: "The Trevor Project (LGBTQ+ Youth)", url: "https://www.thetrevorproject.org/" },
+      { name: "Active Minds (Student Mental Health)", url: "https://www.activeminds.org/" },
+      { name: "Surgeon General’s Advisory on Youth Mental Health", url: "https://www.hhs.gov/surgeongeneral/reports-and-publications/youth-mental-health/index.html" }
+    ]
+  }
+];
+
+// --- Animation Components (Restored) ---
 
 const FloatingPageParticle = ({ width, height, color }) => (
   <div
     className="w-full h-full bg-white/10 backdrop-blur-[1px] border border-white/20 rounded-[2px]"
     style={{ borderColor: color }}
   >
-    {/* Lines to simulate text */}
     <div className="w-[80%] h-[1px] bg-white/30 mx-auto mt-[20%]" />
     <div className="w-[80%] h-[1px] bg-white/30 mx-auto mt-2" />
     <div className="w-[60%] h-[1px] bg-white/30 mx-auto mt-2" />
@@ -24,7 +56,6 @@ const FilmStripParticle = ({ width, height, color }) => (
     className="w-full h-full bg-black/20 backdrop-blur-[1px] border border-white/20 flex flex-col justify-between py-[2px]"
     style={{ borderColor: color }}
   >
-    {/* Sprocket holes */}
     <div className="flex justify-between px-[2px]">
       <div className="w-[2px] h-[3px] bg-white/40 rounded-full" />
       <div className="w-[2px] h-[3px] bg-white/40 rounded-full" />
@@ -41,6 +72,7 @@ const MixedRain = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
+    // Only run on client
     const newItems = Array.from({ length: 25 }).map((_, i) => ({
       id: i,
       type: Math.random() > 0.5 ? "page" : "film",
@@ -63,7 +95,7 @@ const MixedRain = () => {
           style={{
             left: item.left,
             width: item.size,
-            height: item.size * 1.4, // Aspect ratio for rect
+            height: item.size * 1.4,
             opacity: 0.4
           }}
           animate={{
@@ -89,233 +121,311 @@ const MixedRain = () => {
   );
 };
 
-// --- Mock Data ---
-const ALL_RESOURCES = {
-  articles: [
-    {
-      id: "a1",
-      title: "Understanding Emotional Regulation",
-      desc: "Learn how to manage and respond to an emotional experience with a range of healthy strategies.",
-      tag: "Basics",
-      href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10460911/"
-    },
-    {
-      id: "a2",
-      title: "The Architecture of Anxiety",
-      desc: "Breaking down how the brain's 'alarm system' works and the role of the amygdala in stress responses.",
-      tag: "Deep Dive",
-      href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7774415/"
-    },
-    {
-      id: "a3",
-      title: "Boundaries as Self-Care",
-      desc: "A practical guide on how to establish healthy boundaries to protect your time, energy, and mental health.",
-      tag: "Relationships",
-      href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5178866/"
-    }
-  ],
-  videos: [
-    {
-      id: "v1",
-      title: "Panic Attack vs Anxiety Attack",
-      desc: "Understanding the difference between panic and anxiety attacks, and their specific triggers.",
-      tag: "WATCH",
-      href: "/videos/panicanx.mp4"
-    },
-    {
-      id: "v2",
-      title: "Walls vs Boundaries",
-      desc: "How healthy boundaries strengthen relationships and improve self-esteem compared to building walls.",
-      tag: "WATCH",
-      href: "/videos/wallbound.mp4"
-    }
-  ],
-  links: [
-    // Emergency & Global Helplines
-    {
-      id: "l1",
-      title: "Find A Helpline (Global)",
-      desc: "Instant access to verified mental health helplines in your country.",
-      tag: "EXPLORE",
-      href: "https://findahelpline.com/"
-    },
-    {
-      id: "l2",
-      title: "Befrienders Worldwide",
-      desc: "Emotional support to prevent suicide worldwide.",
-      tag: "EXPLORE",
-      href: "https://www.befrienders.org/"
-    },
-    {
-      id: "l3",
-      title: "Intl. Assoc. for Suicide Prevention",
-      desc: "Resources and crisis centres for suicide prevention globally.",
-      tag: "EXPLORE",
-      href: "https://www.iasp.info/resources/Crisis_Centres/"
-    },
-    // World-Leading Organizations
-    {
-      id: "l4",
-      title: "WHO - Mental Health",
-      desc: "Global mental health data, policies, and information from the World Health Organization.",
-      tag: "EXPLORE",
-      href: "https://www.who.int/health-topics/mental-health"
-    },
-    {
-      id: "l5",
-      title: "NIMH - National Inst. of Mental Health",
-      desc: "The lead federal agency for research on mental disorders.",
-      tag: "EXPLORE",
-      href: "https://www.nimh.nih.gov/"
-    },
-    {
-      id: "l6",
-      title: "Mental Health Foundation",
-      desc: "UK's charity for everyone's mental health.",
-      tag: "EXPLORE",
-      href: "https://www.mentalhealth.org.uk/"
-    },
-    // Student & Youth Support
-    {
-      id: "l7",
-      title: "The Trevor Project",
-      desc: "Crisis intervention and suicide prevention services for LGBTQ+ youth.",
-      tag: "EXPLORE",
-      href: "https://www.thetrevorproject.org/"
-    },
-    {
-      id: "l8",
-      title: "Active Minds",
-      desc: "Supporting mental health awareness and education for students.",
-      tag: "EXPLORE",
-      href: "https://www.activeminds.org/"
-    },
-    {
-      id: "l9",
-      title: "Youth Mental Health Advisory",
-      desc: "U.S. Surgeon General’s Advisory on protecting youth mental health.",
-      tag: "EXPLORE",
-      href: "https://www.hhs.gov/surgeongeneral/reports-and-publications/youth-mental-health/index.html"
-    }
-  ]
-};
+// --- Specialized Resource Components ---
 
-// --- Components ---
+// 1. Video Card with Direct Playback
+const VideoResourceCard = ({ video, onClick }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const videoRef = useRef(null);
 
-const ResourceCard = ({ resource, icon: Icon }) => {
+  useEffect(() => {
+    const videoEl = videoRef.current;
+    if (!videoEl) return;
+
+    if (isHovered) {
+      videoEl.muted = false;
+      const playPromise = videoEl.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          videoEl.muted = true;
+          videoEl.play().catch(e => console.error("Autoplay failed:", e));
+        });
+      }
+    } else {
+      videoEl.pause();
+      videoEl.currentTime = 0;
+      videoEl.muted = true;
+    }
+  }, [isHovered]);
+
   return (
     <motion.div
-      whileHover={{ scale: 1.02, y: -5 }}
-      whileTap={{ scale: 0.98 }}
-      className="min-w-[300px] md:min-w-[340px] h-[220px] p-6 rounded-[1.5rem] bg-white/5 backdrop-blur-md border border-white/10 relative overflow-hidden group cursor-pointer flex flex-col justify-between transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:shadow-[0_10px_30px_rgba(238,185,255,0.1)] snap-start"
+      whileHover={{ y: -5, scale: 1.02 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      // Mobile "Hold" support
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={() => setIsHovered(false)}
+      onContextMenu={(e) => e.preventDefault()} // Prevent menu
+      onClick={onClick}
+      className="relative min-w-[320px] md:min-w-[400px] h-[260px] rounded-[2rem] bg-black/40 overflow-hidden group cursor-pointer border border-white/5 snap-start shadow-lg hover:shadow-2xl hover:shadow-[#DD1764]/20 transition-all duration-300"
     >
-      {/* Hover Glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#eeb9ff]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      {/* Background Video Preview */}
+      <video
+        ref={videoRef}
+        src={video.href}
+        muted // Start muted
+        loop
+        playsInline
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${isHovered ? 'opacity-100' : 'opacity-40'}`}
+      />
 
-      <div className="relative z-10">
-        <div className="flex justify-between items-start mb-4">
-          <span className="bg-white/10 text-[10px] font-bold tracking-widest uppercase text-[#eeb9ff] px-3 py-1 rounded-full border border-white/5">
-            {resource.tag}
-          </span>
-          <div className="text-white/20 group-hover:text-[#eeb9ff] transition-colors duration-300">
-            <Icon size={20} />
-          </div>
+      {/* Static Thumbnail (Optional Overlay) */}
+      {!isHovered && (
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10" />
+      )}
+
+      {/* Content Overlay */}
+      <div className="absolute inset-0 z-20 p-6 flex flex-col justify-between pointer-events-none">
+        <div className="flex justify-between items-start">
+          {/* Tag Removed */}
         </div>
 
-        <h3 className="text-xl font-medium text-white mb-2 line-clamp-2 group-hover:text-[#eeb9ff] transition-colors">{resource.title}</h3>
-        <p className="text-sm text-gray-400 font-light leading-relaxed line-clamp-2 group-hover:text-gray-200 font-redhat">{resource.desc}</p>
-      </div>
-
-      <div className="relative z-10 flex items-center gap-2 text-xs font-medium text-gray-500 group-hover:text-white transition-colors mt-4">
-        <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">Open Resource</span>
-        <ArrowRight size={14} className="ml-auto group-hover:translate-x-1 transition-transform" />
+        <div>
+          <h3 className="text-2xl font-serif text-white mb-2 group-hover:text-[#eeb9ff] transition-colors drop-shadow-md">
+            {video.title}
+          </h3>
+          <p className="text-sm text-gray-200 line-clamp-2 opacity-0 group-hover:opacity-100 transition-all duration-500 font-redhat font-light leading-relaxed">
+            {video.desc}
+          </p>
+        </div>
       </div>
     </motion.div>
   );
 };
 
-const ResourceRow = ({ title, resources, icon }) => {
-  return (
-    <section className="mb-16 last:mb-0">
-      <div className="flex items-center justify-between px-6 md:px-12 mb-6">
-        <h2 className="text-2xl md:text-3xl font-light text-white flex items-center gap-3">
-          {title}
-        </h2>
-      </div>
+// 2. Video Modal (Instagram Reel Style)
+const VideoModal = ({ video, onClose }) => {
+  if (!video) return null;
 
-      {/* Scroll Container */}
-      <div className="flex overflow-x-auto gap-6 px-6 md:px-12 pb-8 scrollbar-hide snap-x snap-mandatory">
-        {resources.map((item) => {
-          const isExternal = item.href.startsWith("http");
-          return (
-            <Link
-              key={item.id}
-              href={item.href}
-              target={isExternal ? "_blank" : "_self"}
-              rel={isExternal ? "noopener noreferrer" : ""}
-              passHref
-            >
-              <ResourceCard resource={item} icon={icon} />
-            </Link>
-          );
-        })}
-        {/* Spacer for right padding */}
-        <div className="min-w-[1px] h-1" />
-      </div>
-    </section>
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        className="relative w-full max-w-[500px] aspect-[9/16] bg-black rounded-3xl overflow-hidden shadow-2xl border border-white/10"
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking player
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-50 p-2 bg-black/50 rounded-full text-white hover:bg-white/20 transition-colors"
+        >
+          <X size={24} />
+        </button>
+        <video
+          src={video.href}
+          autoPlay
+          controls
+          className="w-full h-full object-contain"
+        />
+        <div className="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-black/90 to-transparent pointer-events-none">
+          <h3 className="text-xl font-bold text-white mb-1">{video.title}</h3>
+          <p className="text-sm text-gray-300 font-light">{video.desc}</p>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
-export default function ResourcesPage() {
+// 3. Auto-Scrolling Marquee for Articles
+const ArticleMarquee = ({ articles }) => {
+  // Triple the items to ensure seamless infinite loop
+  const tripleArticles = [...articles, ...articles, ...articles];
+
   return (
-    <div className="min-h-screen relative overflow-x-hidden selection:bg-[#eeb9ff] selection:text-[#3F2965]">
+    <div className="relative w-full overflow-hidden py-10">
+      <motion.div
+        className="flex gap-6 px-6"
+        animate={{ x: [0, -1000] }}
+        transition={{
+          duration: 30, // Faster
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        style={{ width: "fit-content" }}
+      >
+        {tripleArticles.map((article, idx) => (
+          <motion.div
+            key={`${article.id}-${idx}`}
+            whileHover={{ y: -10, scale: 1.02 }}
+            className="min-w-[320px] h-[220px] p-8 rounded-[2rem] bg-white/5 backdrop-blur-md border border-white/10 flex flex-col justify-between group hover:bg-white/10 transition-all cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-[#eeb9ff]/10"
+          >
+            <div>
+              <div className="flex justify-between mb-4">
+                <span className="text-[11px] text-[#eeb9ff] font-bold tracking-widest uppercase font-redhat bg-white/5 px-3 py-1 rounded-full">{article.tag}</span>
+                <BookOpen size={20} className="text-white/20 group-hover:text-[#eeb9ff] transition-colors" />
+              </div>
+              <h3 className="text-2xl text-white font-serif tracking-wide group-hover:text-[#eeb9ff] transition-colors duration-300">{article.title}</h3>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-gray-400 font-bold uppercase tracking-widest group-hover:text-white transition-colors font-redhat">
+              Read Article <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform duration-300" />
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+// 4. Auto-Scrolling Marquee for Videos
+const VideoMarquee = ({ videos, onVideoClick }) => {
+  // Triple the items to ensure seamless infinite loop
+  const tripleVideos = [...videos, ...videos, ...videos];
+
+  return (
+    <div className="relative w-full overflow-hidden py-10">
+      <motion.div
+        className="flex gap-8 px-6"
+        animate={{ x: [0, -1000] }}
+        transition={{
+          duration: 30, // Faster
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        style={{ width: "fit-content" }}
+      >
+        {tripleVideos.map((video, idx) => (
+          <VideoResourceCard
+            key={`${video.id}-${idx}`}
+            video={video}
+            onClick={() => onVideoClick(video)}
+          />
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+// --- Main Page Component ---
+
+export default function ResourcesPage() {
+  const [selectedVideo, setSelectedVideo] = useState(null);
+
+  const [videoData] = useState([
+    { id: 'v1', title: 'Managing Anxiety Attacks', desc: 'Direct breathing techniques for immediate relief.', tag: 'WATCH NOW', href: '/videos/panicanx.mp4' },
+    { id: 'v2', title: 'Walls vs Boundaries', desc: 'How to build healthy relationship structures.', tag: 'WATCH NOW', href: '/videos/wallbound.mp4' },
+    { id: 'v4', title: "Your Therapist's Memory", desc: "Insights into how therapists recall details of your sessions.", tag: 'WATCH NOW', href: '/videos/IMG_6361.MOV' },
+    { id: 'v3', title: 'Myths in Therapy', desc: 'Common misconceptions about therapy debunked.', tag: 'WATCH NOW', href: '/videos/IMG_0992.MOV' },
+  ]);
+
+  const [articles] = useState([
+    { id: 'a1', title: 'Emotional Regulation', tag: 'GUIDE' },
+    { id: 'a2', title: 'The Architecture of Anxiety', tag: 'DEEP DIVE' },
+    { id: 'a3', title: 'Boundaries as Self-Care', tag: 'HEALTH' },
+  ]);
+
+  return (
+    <main className="min-h-screen text-white overflow-x-hidden pt-32 relative">
       <MixedRain />
 
-      {/* Header */}
-      <section className="pt-32 pb-12 px-6 md:px-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl"
-        >
-          <h1 className="text-5xl md:text-7xl font-thin text-white mb-6">
-            Resource <span className="font-serif italic text-[#eeb9ff]">Library</span>
-          </h1>
-          <p className="text-lg md:text-xl text-gray-300 font-light max-w-2xl font-redhat">
-            Curated tools for your mental well-being journey. Swipe through our collections of articles, exercises, and trusted external links.
-          </p>
-        </motion.div>
+      {/* Video Modal */}
+      <AnimatePresence>
+        {selectedVideo && <VideoModal video={selectedVideo} onClose={() => setSelectedVideo(null)} />}
+      </AnimatePresence>
+
+      {/* 1. ARTICLES: Auto-Scrolling Infinite Marquee */}
+      <section className="mb-20">
+        <div className="px-6 md:px-12 mb-4">
+          <h2 className="text-3xl font-thin tracking-wider">
+            Trending <span className="italic font-serif text-[#eeb9ff]">Articles</span>
+          </h2>
+        </div>
+        <ArticleMarquee articles={articles} />
       </section>
 
-      {/* Rows */}
-      <div className="pb-24">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <ResourceRow
-            title="Articles & Blogs"
-            resources={ALL_RESOURCES.articles}
-            icon={BookOpen}
-          />
+      {/* 2. VIDEOS: Direct Playback Row */}
+      <section className="mb-20">
+        <div className="px-6 md:px-12 mb-8">
+          <h2 className="text-3xl font-thin tracking-wider">
+            Visual <span className="italic font-serif text-[#DD1764]">Guides</span>
+          </h2>
+          <p className="text-sm text-gray-400 mt-2 font-light">Hover to preview directly</p>
+        </div>
 
-          <ResourceRow
-            title="Videos & Guides"
-            resources={ALL_RESOURCES.videos}
-            icon={Video}
-          />
+        <VideoMarquee videos={videoData} onVideoClick={setSelectedVideo} />
+      </section>
 
-          <ResourceRow
-            title="Curated Links"
-            resources={ALL_RESOURCES.links}
-            icon={Link2}
-          />
-        </motion.div>
-      </div>
+      {/* 3. HELPFUL LINKS GRID: Categorized Resource List */}
+      <section className="mb-32">
+        <div className="px-6 md:px-12 mb-8">
+          <h2 className="text-3xl font-thin tracking-wider">Helpful <span className="italic font-serif">Links</span></h2>
+        </div>
+
+        <div className="flex flex-col gap-16">
+          {HELPFUL_RESOURCES.map((section, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: i * 0.1 }}
+              className="group"
+            >
+              <div className="px-6 md:px-12 mb-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md text-[#eeb9ff]">
+                    {section.icon}
+                  </div>
+                  <h3 className="text-xl font-medium text-white tracking-wide">{section.category}</h3>
+                </div>
+                <p className="text-sm text-gray-400 font-light font-redhat max-w-xl">
+                  {section.description}
+                </p>
+              </div>
+
+              {/* Horizontal Scroll Container */}
+              <div className="flex overflow-x-auto gap-4 px-6 md:px-12 pb-8 scrollbar-hide snap-x">
+                {section.links.map((link, j) => (
+                  <motion.a
+                    key={j}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ y: -5, scale: 1.02 }}
+                    className="min-w-[280px] md:min-w-[320px] p-6 rounded-[1.5rem] bg-white/5 border border-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-[#eeb9ff]/20 hover:shadow-xl hover:shadow-[#eeb9ff]/5 transition-all group/link flex flex-col justify-between h-[160px] snap-start"
+                  >
+                    <div>
+                      <div className="flex justify-between items-start mb-3">
+                        <div className="p-2 bg-white/5 rounded-full">
+                          <ExternalLink size={14} className="text-gray-500 group-hover/link:text-[#eeb9ff] transition-colors" />
+                        </div>
+                        <ArrowRight size={14} className="text-gray-600 group-hover/link:text-white -rotate-45 group-hover/link:rotate-0 transition-transform duration-300" />
+                      </div>
+                      <span className="text-lg font-medium text-gray-100 group-hover/link:text-white transition-colors line-clamp-2 leading-tight">
+                        {link.name}
+                      </span>
+                    </div>
+                    <div className="text-xs font-bold text-gray-500 uppercase tracking-widest font-redhat group-hover/link:text-[#eeb9ff] transition-colors">
+                      Visit Resource
+                    </div>
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Disclaimer */}
+      <section className="py-10 relative z-10 px-6 md:px-12 mb-20">
+        <div className="max-w-5xl mx-auto">
+          <div className="rounded-2xl bg-white/5 backdrop-blur-sm border border-white/5 p-6 text-xs italic leading-relaxed text-gray-500 hover:text-gray-400 transition-colors">
+            <p className="font-redhat">
+              <strong className="text-[#DD1764]">Disclaimer:</strong> This content is provided for awareness and educational purposes only. It does not replace professional
+              diagnosis, treatment, or emergency care. MindSettler is not responsible for the content of external sites.
+            </p>
+          </div>
+        </div>
+      </section>
 
       <ReadyToBook />
-    </div>
+    </main>
   );
 }
