@@ -47,12 +47,7 @@ export default function LoginPage() {
         className="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden relative z-10 p-8 md:p-10"
       >
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-light text-white mb-2">
-            Welcome Back
-          </h1>
-          <p className="text-sm text-gray-300 font-redhat">
-            Sign in to your account
-          </p>
+          <img src="/logo.svg" alt="Logo" className="h-20 mx-auto mb-6 w-auto" />
         </div>
 
         {error && (

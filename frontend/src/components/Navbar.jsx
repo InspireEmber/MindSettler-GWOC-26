@@ -185,7 +185,13 @@ export default function Navbar() {
               {!loading && !user && (
                 <div className="flex items-center gap-3">
                   <Link href="/login" className="px-3 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors">Log in</Link>
-                  <Link href="/signup" className="px-4 py-2 text-sm font-bold text-[#3F2965] bg-white rounded-full hover:bg-gray-100 transition-colors shadow-lg shadow-white/10">Signup</Link>
+                  <Link
+                    href="/signup"
+                    className="group relative px-6 py-2.5 rounded-full bg-[#a167a5]/60 backdrop-blur-md text-white shadow-xl hover:shadow-[#4A313E]/30 transition-all overflow-hidden ring-1 ring-inset ring-white/10"
+                  >
+                    <div className="absolute inset-0 bg-white/20 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300" />
+                    <span className="relative z-10 font-semibold text-sm">Signup</span>
+                  </Link>
                 </div>
               )}
 
@@ -224,8 +230,8 @@ export default function Navbar() {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               className={`md:hidden overflow-hidden mt-2 backdrop-blur-xl rounded-2xl border shadow-2xl transition-all duration-500 ${scrolled
-                  ? "bg-[#a167a5]/50 border-white/10"
-                  : "bg-white/10 border-white/20"
+                ? "bg-[#a167a5]/50 border-white/10"
+                : "bg-white/10 border-white/20"
                 }`}
             >
               <div className="flex flex-col gap-2 pb-6 pt-4 border-t border-white/10">

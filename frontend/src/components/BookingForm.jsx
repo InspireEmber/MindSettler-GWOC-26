@@ -83,12 +83,12 @@ export default function BookingForm() {
         className="rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden"
       >
         {/* Progress Header */}
-        <div className="p-8 relative overflow-hidden group bg-[#a167a5]">
+        <div className="p-8 relative overflow-hidden group bg-[#eeb9ff]">
           <div className="relative z-10">
-            <h2 className="text-3xl font-light mb-2 flex items-center gap-3 text-white">
-              <CheckCircle2 className="text-white" /> Reserve a Session
+            <h2 className="text-3xl font-light mb-2 flex items-center gap-3 text-[#3F2965]">
+              <CheckCircle2 className="text-[#3F2965]" /> Reserve a Session
             </h2>
-            <p className="text-white/80 text-sm font-redhat">Choose your preferred mode and time to begin.</p>
+            <p className="text-[#3F2965]/80 text-sm font-redhat">Choose your preferred mode and time to begin.</p>
           </div>
         </div>
 
