@@ -70,5 +70,7 @@ async function processDirectory(dirName) {
     await processDirectory(dir);
   }
   
-  console.log(JSON.stringify(urlMap, null, 2));
+  const outputPath = path.join(__dirname, 'asset_map_utf8.json');
+  fs.writeFileSync(outputPath, JSON.stringify(urlMap, null, 2), 'utf8');
+  console.log(`Map saved to ${outputPath}`);
 })();

@@ -133,7 +133,7 @@ const JOURNEY_STEPS = [
     desc: "This is where the work begins. Through structured psycho-education, you navigate the steep terrain, building the muscles of resilience and understanding.",
     // icon: BookOpen,
     color: "#DD1764", // Pink
-    imageSrc: "/images/thirdj.jpg",
+    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767982949/mindsettler_assets/thirdj.jpg",
     align: "left"
   },
   {

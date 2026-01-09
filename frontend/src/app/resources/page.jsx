@@ -309,10 +309,10 @@ export default function ResourcesPage() {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   const [videoData] = useState([
-    { id: 'v1', title: 'Managing Anxiety Attacks', desc: 'Direct breathing techniques for immediate relief.', tag: 'WATCH NOW', href: '/videos/panicanx.mp4' },
-    { id: 'v2', title: 'Walls vs Boundaries', desc: 'How to build healthy relationship structures.', tag: 'WATCH NOW', href: '/videos/wallbound.mp4' },
-    { id: 'v4', title: "Your Therapist's Memory", desc: "Insights into how therapists recall details of your sessions.", tag: 'WATCH NOW', href: '/videos/IMG_6361.MOV' },
-    { id: 'v3', title: 'Myths in Therapy', desc: 'Common misconceptions about therapy debunked.', tag: 'WATCH NOW', href: '/videos/IMG_0992.MOV' },
+    { id: 'v1', title: 'Managing Anxiety Attacks', desc: 'Direct breathing techniques for immediate relief.', tag: 'WATCH NOW', href: 'https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978906/mindsettler_assets/panicanx.mp4' },
+    { id: 'v2', title: 'Walls vs Boundaries', desc: 'How to build healthy relationship structures.', tag: 'WATCH NOW', href: 'https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978922/mindsettler_assets/wallbound.mp4' },
+    { id: 'v4', title: "Your Therapist's Memory", desc: "Insights into how therapists recall details of your sessions.", tag: 'WATCH NOW', href: 'https://res.cloudinary.com/dlplhnb7o/video/upload/v1767983067/mindsettler_assets/IMG_6361.mov' },
+    { id: 'v3', title: 'Myths in Therapy', desc: 'Common misconceptions about therapy debunked.', tag: 'WATCH NOW', href: 'https://res.cloudinary.com/dlplhnb7o/video/upload/v1767983026/mindsettler_assets/IMG_0992.mov' },
   ]);
 
   const [articles] = useState([

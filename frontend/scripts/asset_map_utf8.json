@@ -1,4 +1,4 @@
-﻿{
+{
   "/images/10.jpeg": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978629/mindsettler_assets/10.jpg",
   "/images/11.jpeg": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978630/mindsettler_assets/11.jpg",
   "/images/12.jpeg": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978631/mindsettler_assets/12.jpg",
@@ -21,6 +21,7 @@
   "/images/brain_illustration.png": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978668/mindsettler_assets/brain_illustration.jpg",
   "/images/cta-bg-pattern.png": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978670/mindsettler_assets/cta-bg-pattern.png",
   "/images/cta-final-bg.png": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978671/mindsettler_assets/cta-final-bg.png",
+  "/images/emo7.jpg": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767982900/mindsettler_assets/emo7.jpg",
   "/images/empowering.jpg": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978675/mindsettler_assets/empowering.jpg",
   "/images/fifthj.jpg": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978679/mindsettler_assets/fifthj.jpg",
   "/images/firstj.jpg": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978687/mindsettler_assets/firstj.jpg",
@@ -42,9 +43,12 @@
   "/images/spark of awarness.jpg": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978720/mindsettler_assets/spark_of_awarness.jpg",
   "/images/StockCake-Purple_Mountain_Twilight-1827238-standard.jpg": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978724/mindsettler_assets/StockCake-Purple_Mountain_Twilight-1827238-standard.jpg",
   "/images/structured learning.jpg": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978725/mindsettler_assets/structured_learning.jpg",
+  "/images/thirdj.jpg": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767982949/mindsettler_assets/thirdj.jpg",
   "/images/unsettled mind.jpg": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978768/mindsettler_assets/unsettled_mind.jpg",
   "/videos/herosec.mp4": "https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978793/mindsettler_assets/herosec.mp4",
   "/videos/herosect.mp4": "https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978869/mindsettler_assets/herosect.mp4",
+  "/videos/IMG_0992.MOV": "https://res.cloudinary.com/dlplhnb7o/video/upload/v1767983026/mindsettler_assets/IMG_0992.mov",
+  "/videos/IMG_6361.MOV": "https://res.cloudinary.com/dlplhnb7o/video/upload/v1767983067/mindsettler_assets/IMG_6361.mov",
   "/videos/panicanx.mp4": "https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978906/mindsettler_assets/panicanx.mp4",
   "/videos/wallbound.mp4": "https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978922/mindsettler_assets/wallbound.mp4"
 }
