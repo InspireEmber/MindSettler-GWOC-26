@@ -1,4 +1,7 @@
 "use client";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Brain, Sparkles, Leaf, ArrowRight, LayoutGrid, Sun } from "lucide-react";
 import Link from "next/link";
 import ReadyToBook from "@/components/ReadyToBook";
 const APPROACHES = [
@@ -15,6 +18,124 @@ const APPROACHES = [
     desc: "Focus on practical tools and strategies you can apply daily to build emotional resilience.",
   },
 ];
+
+const APPROACH_ITEMS = [
+  {
+    id: 1,
+    title: "Thoughtful & Structured",
+    subtitle: "A Foundation for Clarity",
+    description: "Our sessions rely on a structured, evidence-based framework. We break down complex mental health concepts into clear, digestible insights, making the 'why' and 'how' of your emotions easy to understand.",
+    icon: LayoutGrid,
+    gradient: "from-[#3F2965] to-[#7c3aed]",
+    image: "/images/bk.jpg"
+  },
+  {
+    id: 2,
+    title: "Guided Reflection",
+    subtitle: "Personal Guidance with Parnika",
+    description: "This isn't just about theory. It's a personally guided journey offering a safe, non-judgmental space to explore your inner world at your own pace.",
+    icon: Sparkles,
+    //gradient: "from-[#DD1764] to-[#ff8ac0]",
+    image: "/images/refl.jpg"
+  },
+  {
+    id: 3,
+    title: "Practical Awareness",
+    subtitle: "Bridging Therapy & Daily Life",
+    description: "The ultimate goal is application. We equip you with practical tools to apply insights in real-time, supporting emotional balance and mindful decision-making every single day.",
+    icon: Leaf,
+    //gradient: "from-[#10b981] to-[#34d399]",
+    image: "/images/phy.jpg"
+  }
+];
+
+const ApproachAccordion = () => {
+  const [activeId, setActiveId] = useState(null); // Default: None expanded, all equal
+
+  return (
+    <div className="flex flex-col lg:flex-row gap-4 h-auto lg:h-[500px] w-full" onMouseLeave={() => setActiveId(null)}>
+      {APPROACH_ITEMS.map((item) => {
+        const isActive = activeId === item.id;
+        const isIdle = activeId === null; // No card is being hovered
+
+        return (
+          <motion.div
+            key={item.id}
+            layout
+            onMouseEnter={() => setActiveId(item.id)}
+            className={`relative rounded-3xl overflow-hidden cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] 
+              ${isIdle ? 'lg:flex-1' : isActive ? 'lg:flex-[2]' : 'lg:flex-[0.5]'} 
+            `}
+            style={{ minHeight: '350px' }} // Unified height
+          >
+            {/* Background Image & Overlay */}
+            <div className="absolute inset-0 z-0">
+              <img src={item.image} alt={item.title} className={`w-full h-full object-cover transition-transform duration-700 ${isActive || isIdle ? 'scale-100 grayscale-0' : 'scale-125 grayscale opacity-50'}`} />
+              <div className={`absolute inset-0 bg-gradient-to-b ${item.gradient} opacity-80 mix-blend-multiply`} />
+              <div className="absolute inset-0 bg-black/20" />
+            </div>
+
+            {/* Content Layer */}
+            <div className="relative z-10 h-full p-6 lg:p-8 flex flex-col justify-end">
+
+              {/* Collapsed State Visual (Only when another card is active) */}
+              {!isActive && !isIdle && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="hidden lg:flex flex-col items-center justify-center h-full gap-4 text-center absolute inset-0 p-4"
+                >
+                  <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
+                    <item.icon className="text-white w-6 h-6" />
+                  </div>
+                  <span className="text-xl font-light text-white rotate-270 whitespace-nowrap writing-mode-vertical">{item.title}</span>
+                </motion.div>
+              )}
+
+              {/* Expanded Content (Visible when Active OR Idle) */}
+              <div className={`${(!isActive && !isIdle) ? 'lg:hidden' : ''} h-full flex flex-col justify-end`}>
+                <div className="mb-auto hidden lg:block">
+                  <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center mb-6">
+                    <item.icon className="w-7 h-7 text-white" />
+                  </div>
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  <span className="text-xs font-bold tracking-widest uppercase text-white/70 mb-2 block">{item.subtitle}</span>
+                  <h3 className="text-2xl md:text-3xl font-light text-white mb-4 leading-tight">{item.title}</h3>
+
+                  {/* Description only shows when hovering (Active) or on Mobile, to keep idle state clean */}
+                  <AnimatePresence>
+                    {(isActive) && (
+                      <motion.p
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="text-gray-200 text-base lg:text-lg leading-relaxed max-w-lg mb-6 font-antic block"
+                      >
+                        {item.description}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+
+                  <div className={`inline-flex items-center gap-2 text-white/50 text-sm group group-hover:text-white transition-colors ${!isActive && isIdle ? 'opacity-0' : 'opacity-100'}`}>
+                    <span className="group-hover:translate-x-1 transition-transform">Explore Concept</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+};
 
 export default function AboutPage() {
   return (
@@ -201,86 +322,20 @@ export default function AboutPage() {
         </section>
       ))}
 
-      {/* Approach Section */}
-      <section className="relative z-10 py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
-
-          <div className="text-center mb-16 md:mb-24">
-            <div className="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full mx-auto mb-8" />
-
+      {/* Creative Approach Section - Horizontal Accordion */}
+      <section className="relative z-10 py-20 lg:py-32 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-white leading-[1.1] tracking-tight mb-4">
               Our Psycho-Education <br className="hidden sm:block" />
               <span className="font-light italic text-[#eeb9ff]">Approach</span>
             </h2>
-
-            <p className="text-[#eeb9ff]/80 font-light tracking-[0.2em] uppercase text-[10px] sm:text-xs mt-6 opacity-80">
-              A World of Emotional Understanding
+            <p className="text-[#eeb9ff]/80 font-light tracking-[0.2em] uppercase text-xs mt-6 opacity-80">
+              Interactive & Personalised Growth
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            <div className="hidden md:block absolute top-1/2 left-0 w-full h-[1px] bg-white/10 -translate-y-1/2 z-0" />
-
-            {/* Card 1 */}
-            <div className="group relative z-10 bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-[#eeb9ff]/10">
-              <div className="mb-6 flex items-center justify-between">
-                <span className="text-4xl font-serif italic text-white/20">
-                  01
-                </span>
-                <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center shadow-inner border border-white/10">
-                  <div className="h-2 w-2 rounded-full bg-[#3F2965]" />
-                </div>
-              </div>
-              <h3 className="text-xl font-medium text-white mb-4">
-                Thoughtful & Structured Sessions
-              </h3>
-              <p className="text-base sm:text-lg leading-relaxed text-gray-200 font-antic">
-                Sessions at MindSettler follow a thoughtful and structured
-                format, designed to help individuals better understand mental
-                health concepts in a clear and accessible way.
-              </p>
-            </div>
-
-            {/* Card 2 */}
-            <div className="group relative z-10 bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-[#DD1764]/10 md:mt-8">
-              <div className="mb-6 flex items-center justify-between">
-                <span className="text-4xl font-serif italic text-white/20">
-                  02
-                </span>
-                <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center shadow-inner border border-white/10">
-                  <div className="h-2 w-2 rounded-full bg-[#DD1764]" />
-                </div>
-              </div>
-              <h3 className="text-xl font-medium text-white mb-4">
-                Guided Reflection with Parnika
-              </h3>
-              <p className="text-base sm:text-lg leading-relaxed text-gray-200 font-antic">
-                Each session is personally guided by me, offering a safe,
-                non-judgmental space. The focus remains on understanding
-                thoughts and emotions at one’s own pace.
-              </p>
-            </div>
-
-            {/* Card 3 */}
-            <div className="group relative z-10 bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-[#3F2965]/10">
-              <div className="mb-6 flex items-center justify-between">
-                <span className="text-4xl font-serif italic text-white/20">
-                  03
-                </span>
-                <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center shadow-inner border border-white/10">
-                  <div className="h-2 w-2 rounded-full bg-[#3F2965]" />
-                </div>
-              </div>
-              <h3 className="text-xl font-medium text-white mb-4">
-                Practical Awareness for Daily Life
-              </h3>
-              <p className="text-base sm:text-lg leading-relaxed text-gray-200 font-antic">
-                The approach emphasises practical awareness—helping individuals
-                apply insights from sessions to everyday situations to support
-                emotional balance and mindful decision-making.
-              </p>
-            </div>
-          </div>
+          <ApproachAccordion />
         </div>
       </section>
       <ReadyToBook />
