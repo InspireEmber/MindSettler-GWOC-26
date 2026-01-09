@@ -113,7 +113,7 @@ const JOURNEY_STEPS = [
     desc: "It starts with a feeling—something isn't right. Thoughts feel tangled, emotions overwhelming. You stand at the base of a mountain, looking up at the clouds.",
     // icon: HelpCircle,
     color: "#a855f7", // Purple
-    imageSrc: "/images/unsettled mind.jpg",
+    imageSrc: "/images/firstj.jpg",
     align: "left"
   },
   {
@@ -133,7 +133,7 @@ const JOURNEY_STEPS = [
     desc: "This is where the work begins. Through structured psycho-education, you navigate the steep terrain, building the muscles of resilience and understanding.",
     // icon: BookOpen,
     color: "#DD1764", // Pink
-    imageSrc: "/images/structured learning.jpg",
+    imageSrc: "/images/thirdj.jpg",
     align: "left"
   },
   {
@@ -153,7 +153,7 @@ const JOURNEY_STEPS = [
     desc: "You stand on solid ground. Armed with understanding and resilience, you face the horizon with a renewed sense of self and purpose.",
     // icon: Mountain,
     color: "#DD1764", // Pink
-    imageSrc: "/images/moving forward.jpg",
+    imageSrc: "/images/fifthj.jpg",
     align: "center"
   }
 ];
