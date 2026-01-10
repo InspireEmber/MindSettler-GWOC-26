@@ -96,24 +96,26 @@ class ApiService {
       body: options.body && typeof options.body === 'object' ? JSON.stringify(options.body) : options.body,
     };
 
+    const url = `${API_BASE_URL}${endpoint}`;
+
     try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+      const response = await fetch(url, config);
       if (!response) throw new Error('Network error: Unable to connect to server.');
 
       const contentType = response.headers.get('content-type');
       if (!contentType?.includes('application/json')) {
         const text = await response.text();
-        throw new Error(text || `Server Error ${response.status}`);
+        throw new Error(`Server Error ${response.status} at ${url}. Response: ${text.slice(0, 100)}`);
       }
 
       const data = await response.json();
-      if (!response.ok) throw new Error(data.message || data.error || `Error ${response.status}`);
+      if (!response.ok) throw new Error(data.message || data.error || `Error ${response.status} at ${url}`);
 
       // Return full object if requested (needed for Chatbot/Auth), otherwise extract .data
       return fullResponse ? data : (data.data !== undefined ? data.data : data);
     } catch (error) {
       if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        throw new Error('Connection refused. Please ensure backend is running on port 5000.');
+        throw new Error(`Connection refused to ${url}. Please check if the backend is running.`);
       }
       throw error;
     }
