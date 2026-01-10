@@ -114,7 +114,7 @@ const chatbotRoutes = require('./routes/chatbotRoutes');
 const latestEventRoutes = require('./routes/latestEventRoutes');
 
 const app = express();
-app.set('trust proxy', 1); // Required for secure cookies behind Render proxy
+app.set('trust proxy', 1); // Required for secure cookies behind proxies (Render/Railway)
 // Basic security headers
 app.use(helmet());
 
@@ -144,13 +144,13 @@ app.use(session({
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  proxy: true, // Required for secure cookies behind a proxy like Render
+  proxy: true, // Required for secure cookies behind a proxy like Render or Railway
   cookie: {
     httpOnly: true,
-    // Enable secure cookies if on Render or in production
-    secure: process.env.NODE_ENV === 'production' || !!process.env.RENDER,
+    // Enable secure cookies if on Render, Railway or in production
+    secure: process.env.NODE_ENV === 'production' || !!process.env.RENDER || !!process.env.RAILWAY_STATIC_URL,
     // Cross-site cookies require SameSite: 'none'
-    sameSite: (process.env.NODE_ENV === 'production' || !!process.env.RENDER) ? 'none' : 'lax',
+    sameSite: (process.env.NODE_ENV === 'production' || !!process.env.RENDER || !!process.env.RAILWAY_STATIC_URL) ? 'none' : 'lax',
   },
   store: MongoStore.create({
     mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/mindsettler',
