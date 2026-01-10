@@ -73,12 +73,23 @@
 
 
 'use client'
-let base_url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-// Ensure the URL ends with /api but NOT /api/
-if (base_url.endsWith('/')) base_url = base_url.slice(0, -1);
-if (!base_url.endsWith('/api')) base_url += '/api';
+// Robust URL construction to prevent double /api issues
+let base_url = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').trim();
 
-const API_BASE_URL = base_url;
+// Strip trailing slashes
+while (base_url.endsWith('/')) {
+  base_url = base_url.slice(0, -1);
+}
+
+// Strip /api suffix if present (we'll add it back cleanly)
+if (base_url.endsWith('/api')) {
+  base_url = base_url.slice(0, -4); // Remove '/api'
+}
+
+// Always add /api at the end
+const API_BASE_URL = `${base_url}/api`;
+
+console.log('[API Service] Using API_BASE_URL:', API_BASE_URL);
 
 class ApiService {
   /**
