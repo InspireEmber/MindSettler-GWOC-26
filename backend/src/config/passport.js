@@ -9,11 +9,11 @@ passport.use(new LocalStrategy(Admin.authenticate()));
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID",
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET || "YOUR_GOOGLE_CLIENT_SECRET",
-    callbackURL: "http://localhost:5000/api/auth/google/callback",
-    scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar']
-  },
+  clientID: process.env.GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID",
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET || "YOUR_GOOGLE_CLIENT_SECRET",
+  callbackURL: process.env.GOOGLE_CALLBACK_URL || "http://localhost:5000/api/auth/google/callback",
+  scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar']
+},
   async (accessToken, refreshToken, profile, done) => {
     console.log("Google Auth Strategy Initialized. Checking User...");
     try {
@@ -32,11 +32,11 @@ passport.use(new GoogleStrategy({
           });
         }
       }
-      
+
       // Always update tokens on login
       user.googleAccessToken = accessToken;
       if (refreshToken) user.googleRefreshToken = refreshToken;
-      
+
       await user.save();
       return done(null, user);
     } catch (err) {

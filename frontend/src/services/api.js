@@ -73,7 +73,12 @@
 
 
 'use client'
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+let base_url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+// Ensure the URL ends with /api but NOT /api/
+if (base_url.endsWith('/')) base_url = base_url.slice(0, -1);
+if (!base_url.endsWith('/api')) base_url += '/api';
+
+const API_BASE_URL = base_url;
 
 class ApiService {
   /**
@@ -85,7 +90,7 @@ class ApiService {
   async request(endpoint, options = {}, fullResponse = false) {
     const config = {
       credentials: 'include',
-      cache:'no-store',
+      cache: 'no-store',
       headers: { 'Content-Type': 'application/json', ...options.headers },
       ...options,
       body: options.body && typeof options.body === 'object' ? JSON.stringify(options.body) : options.body,
@@ -113,7 +118,7 @@ class ApiService {
       throw error;
     }
   }
-  
+
   // Generic methods
   get(endpoint, options) { return this.request(endpoint, { method: 'GET', ...options }); }
   post(endpoint, body, options) { return this.request(endpoint, { method: 'POST', body, ...options }); }
@@ -124,14 +129,14 @@ class ApiService {
   // Booking & Slots
   createBooking(body) { return this.request('/bookings', { method: 'POST', body }); }
   getBookingStatus(id) { return this.request(`/bookings/${id}`); }
-  getAvailableSlots(filters = {}) { 
-    return this.request(`/slots/available?${new URLSearchParams(filters)}`); 
+  getAvailableSlots(filters = {}) {
+    return this.request(`/slots/available?${new URLSearchParams(filters)}`);
   }
 
   // Corporate
   createCorporateInquiry(body) { return this.request('/corporate/inquiries', { method: 'POST', body }); }
-  getCorporateInquiries(query = {}) { 
-    return this.request(`/corporate/inquiries?${new URLSearchParams(query)}`); 
+  getCorporateInquiries(query = {}) {
+    return this.request(`/corporate/inquiries?${new URLSearchParams(query)}`);
   }
   updateCorporateInquiryStatus(id, status) {
     return this.request(`/corporate/inquiries/${id}/status`, { method: 'PUT', body: { status } });
@@ -148,8 +153,8 @@ class ApiService {
   addToGoogleCalendar(bookingId) { return this.request(`/bookings/${bookingId}/calendar`, { method: 'POST' }); }
 
   // Chatbot - Uses the 'fullResponse' flag to match your backend logic
-  sendChatMessage(body) { 
-    return this.request('/chatbot/chat', { method: 'POST', body }, true); 
+  sendChatMessage(body) {
+    return this.request('/chatbot/chat', { method: 'POST', body }, true);
   }
 }
 

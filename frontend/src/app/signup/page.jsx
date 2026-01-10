@@ -183,7 +183,12 @@ export default function SignupPage() {
         <div className="flex justify-center mb-8">
           <button
             type="button"
-            onClick={() => window.location.href = "http://localhost:5000/api/auth/google"}
+            onClick={() => {
+              let baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+              if (baseUrl.endsWith('/')) baseUrl = baseUrl.slice(0, -1);
+              if (!baseUrl.endsWith('/api')) baseUrl += '/api';
+              window.location.href = `${baseUrl}/auth/google`;
+            }}
             className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-white/20 bg-white/5 text-white font-medium text-sm hover:bg-white/10 transition-all"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
