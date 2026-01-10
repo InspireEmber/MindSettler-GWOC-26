@@ -7,6 +7,9 @@ import { Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
 import api from "../../services/api";
 
+// Shared API base URL for client-side auth flows
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+
 export default function LoginPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -29,7 +32,6 @@ export default function LoginPage() {
     // Check for hardcoded admin credentials
     if (formData.email === "warp799@gmail.com" && formData.password === "admin123") {
       try {
-        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
         const res = await fetch(`${API_BASE_URL}/auth/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
