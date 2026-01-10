@@ -40,7 +40,7 @@
 
 //   return (
 //     <div className="space-y-6 md:space-y-8">
-      
+
 //       {/* Header */}
 //       <div className="flex flex-col gap-2">
 //         <h1 className="text-2xl md:text-3xl font-bold text-[#334155] tracking-tight">
@@ -92,7 +92,7 @@
 //       {/* Action Hub */}
 //       <div className="w-full">
 //         <div className="bg-white/60 backdrop-blur-xl rounded-[24px] md:rounded-[30px] p-6 md:p-8 border border-white/50 shadow-sm relative overflow-hidden group">
-          
+
 //           {/* Subtle decoration - Hidden on mobile to save space/performance */}
 //           <div className="absolute -right-10 -top-10 text-rose-500/5 group-hover:scale-110 transition-transform duration-1000 hidden md:block">
 //             <TrendingUp size={350} />
@@ -103,7 +103,7 @@
 //             <p className="text-sm md:text-base text-[#64748B] mb-6 md:mb-8 max-w-md">
 //               Navigate to your most frequent administrative tasks.
 //             </p>
-            
+
 //             {/* Grid of actions */}
 //             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 max-w-4xl">
 //               <ActionButton 
@@ -141,7 +141,7 @@
 //     blue:    { bg: "bg-sky-50/80",     icon: "text-sky-600",     border: "border-sky-100",     trend: "bg-sky-100 text-sky-700" },
 //     emerald: { bg: "bg-emerald-50/80", icon: "text-emerald-600", border: "border-emerald-100", trend: "bg-emerald-100 text-emerald-700" },
 //   };
-  
+
 //   const t = themes[theme] || themes.blue;
 
 //   return (
@@ -188,13 +188,12 @@
 'use client';
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { 
-  Users, CalendarCheck, Clock, TrendingUp, 
+import {
+  Users, CalendarCheck, Clock, TrendingUp,
   DollarSign, Activity, ArrowRight, Newspaper
 } from "lucide-react";
 import { motion } from "framer-motion";
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+import { API_BASE_URL } from "../../../config/api";
 
 export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(true);
@@ -227,7 +226,7 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="space-y-6 md:space-y-8">
-      
+
       {/* Header */}
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl md:text-3xl font-bold text-[#334155] tracking-tight">
@@ -246,32 +245,32 @@ export default function AdminDashboardPage() {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-        <StatCard 
-          label="Total Appointments" 
-          value={stats?.totalAppointments} 
-          icon={<CalendarCheck size={22} />} 
-          trend="+12%" 
+        <StatCard
+          label="Total Appointments"
+          value={stats?.totalAppointments}
+          icon={<CalendarCheck size={22} />}
+          trend="+12%"
           theme="rose"
         />
-        <StatCard 
-          label="Pending Review" 
-          value={stats?.pendingReview || stats?.upcomingAppointments} 
-          icon={<Clock size={22} />} 
-          trend="Action" 
+        <StatCard
+          label="Pending Review"
+          value={stats?.pendingReview || stats?.upcomingAppointments}
+          icon={<Clock size={22} />}
+          trend="Action"
           theme="amber"
         />
-        <StatCard 
-          label="Total Users" 
-          value={stats?.totalUsers} 
-          icon={<Users size={22} />} 
-          trend="Active" 
+        <StatCard
+          label="Total Users"
+          value={stats?.totalUsers}
+          icon={<Users size={22} />}
+          trend="Active"
           theme="blue"
         />
-        <StatCard 
-          label="Total Revenue" 
-          value={`₹${stats?.revenue || 0}`} 
-          icon={<DollarSign size={22} />} 
-          trend="Net" 
+        <StatCard
+          label="Total Revenue"
+          value={`₹${stats?.revenue || 0}`}
+          icon={<DollarSign size={22} />}
+          trend="Net"
           theme="emerald"
         />
       </div>
@@ -279,7 +278,7 @@ export default function AdminDashboardPage() {
       {/* Action Hub */}
       <div className="w-full">
         <div className="bg-white/60 backdrop-blur-xl rounded-[24px] md:rounded-[30px] p-6 md:p-8 border border-white/50 shadow-sm relative overflow-hidden group">
-          
+
           {/* Subtle decoration - Hidden on mobile to save space/performance */}
           <div className="absolute -right-10 -top-10 text-rose-500/5 group-hover:scale-110 transition-transform duration-1000 hidden md:block">
             <TrendingUp size={350} />
@@ -290,29 +289,29 @@ export default function AdminDashboardPage() {
             <p className="text-sm md:text-base text-[#64748B] mb-6 md:mb-8 max-w-md">
               Navigate to your most frequent administrative tasks.
             </p>
-            
+
             {/* Grid of actions */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 max-w-4xl">
-              <ActionButton 
-                href="/admin/appointments" 
-                icon={<CalendarCheck size={24} />} 
-                title="Review Appointments" 
+              <ActionButton
+                href="/admin/appointments"
+                icon={<CalendarCheck size={24} />}
+                title="Review Appointments"
                 desc="Manage incoming bookings"
                 colorClass="bg-rose-50 text-rose-600 group-hover:bg-rose-500 group-hover:text-white"
                 arrowColor="text-rose-300"
               />
-              <ActionButton 
-                href="/admin/slots" 
-                icon={<Clock size={24} />} 
-                title="Manage Slots" 
+              <ActionButton
+                href="/admin/slots"
+                icon={<Clock size={24} />}
+                title="Manage Slots"
                 desc="Update weekly availability"
                 colorClass="bg-sky-50 text-sky-600 group-hover:bg-sky-500 group-hover:text-white"
                 arrowColor="text-sky-300"
               />
-              <ActionButton 
-                href="/admin/latest-events" 
-                icon={<Newspaper size={24} />} 
-                title="Manage Events" 
+              <ActionButton
+                href="/admin/latest-events"
+                icon={<Newspaper size={24} />}
+                title="Manage Events"
                 desc="Create and update latest events"
                 colorClass="bg-purple-50 text-purple-600 group-hover:bg-purple-500 group-hover:text-white"
                 arrowColor="text-purple-300"
@@ -330,22 +329,22 @@ export default function AdminDashboardPage() {
 
 function StatCard({ label, value, icon, trend, theme }) {
   const themes = {
-    rose:    { bg: "bg-rose-50/80",    icon: "text-rose-600",    border: "border-rose-100",    trend: "bg-rose-100 text-rose-700" },
-    teal:    { bg: "bg-teal-50/80",    icon: "text-teal-600",    border: "border-teal-100",    trend: "bg-teal-100 text-teal-700" },
-    amber:   { bg: "bg-amber-50/80",   icon: "text-amber-600",   border: "border-amber-100",   trend: "bg-amber-100 text-amber-700" },
-    blue:    { bg: "bg-sky-50/80",     icon: "text-sky-600",     border: "border-sky-100",     trend: "bg-sky-100 text-sky-700" },
+    rose: { bg: "bg-rose-50/80", icon: "text-rose-600", border: "border-rose-100", trend: "bg-rose-100 text-rose-700" },
+    teal: { bg: "bg-teal-50/80", icon: "text-teal-600", border: "border-teal-100", trend: "bg-teal-100 text-teal-700" },
+    amber: { bg: "bg-amber-50/80", icon: "text-amber-600", border: "border-amber-100", trend: "bg-amber-100 text-amber-700" },
+    blue: { bg: "bg-sky-50/80", icon: "text-sky-600", border: "border-sky-100", trend: "bg-sky-100 text-sky-700" },
     emerald: { bg: "bg-emerald-50/80", icon: "text-emerald-600", border: "border-emerald-100", trend: "bg-emerald-100 text-emerald-700" },
   };
-  
+
   const t = themes[theme] || themes.blue;
 
   return (
-    <motion.div 
+    <motion.div
       whileHover={{ y: -4 }}
       className={`${t.bg} backdrop-blur-md rounded-[20px] md:rounded-[24px] p-5 md:p-6 border ${t.border} shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-lg transition-all`}
     >
       <div className="flex items-center justify-between mb-4">
-         <div className={`p-3 rounded-xl bg-white/60 shadow-sm ${t.icon}`}>
+        <div className={`p-3 rounded-xl bg-white/60 shadow-sm ${t.icon}`}>
           {icon}
         </div>
         <span className={`text-[10px] md:text-[11px] font-bold px-2 md:px-3 py-1 rounded-full ${t.trend} uppercase tracking-wider`}>
@@ -373,7 +372,7 @@ function ActionButton({ href, icon, title, desc, colorClass, arrowColor }) {
         </div>
       </div>
       <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-50 flex items-center justify-center shrink-0 ${arrowColor} opacity-0 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-4 transition-all hidden sm:flex`}>
-         <ArrowRight size={18} />
+        <ArrowRight size={18} />
       </div>
     </Link>
   );

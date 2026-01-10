@@ -73,23 +73,7 @@
 
 
 'use client'
-// Robust URL construction to prevent double /api issues
-let base_url = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').trim();
-
-// Strip trailing slashes
-while (base_url.endsWith('/')) {
-  base_url = base_url.slice(0, -1);
-}
-
-// Strip /api suffix if present (we'll add it back cleanly)
-if (base_url.endsWith('/api')) {
-  base_url = base_url.slice(0, -4); // Remove '/api'
-}
-
-// Always add /api at the end
-const API_BASE_URL = `${base_url}/api`;
-
-console.log('[API Service] Using API_BASE_URL:', API_BASE_URL);
+import { API_BASE_URL } from '../config/api';
 
 class ApiService {
   /**
