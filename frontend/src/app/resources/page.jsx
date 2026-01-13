@@ -133,17 +133,18 @@ const VideoResourceCard = ({ video, onClick }) => {
     if (!videoEl) return;
 
     if (isHovered) {
-      videoEl.muted = false;
+      // Play on hover, but KEEP MUTED
       const playPromise = videoEl.play();
       if (playPromise !== undefined) {
         playPromise.catch((error) => {
-          videoEl.muted = true;
-          videoEl.play().catch(e => console.error("Autoplay failed:", e));
+          // Auto-play was prevented
+          console.error("Preview autoplay prevented:", error);
         });
       }
     } else {
       videoEl.pause();
       videoEl.currentTime = 0;
+      // Ensure it stays muted
       videoEl.muted = true;
     }
   }, [isHovered]);
@@ -194,7 +195,7 @@ const VideoResourceCard = ({ video, onClick }) => {
   );
 };
 
-// 2. Video Modal (Instagram Reel Style)
+// 2. Video Modal (Split View: Video Left | Text Right)
 const VideoModal = ({ video, onClose }) => {
   if (!video) return null;
 
@@ -203,102 +204,118 @@ const VideoModal = ({ video, onClose }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-black/90 backdrop-blur-md"
       onClick={onClose}
     >
       <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
+        initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        className="relative w-full max-w-[500px] aspect-[9/16] bg-black rounded-3xl overflow-hidden shadow-2xl border border-white/10"
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking player
+        exit={{ scale: 0.95, opacity: 0 }}
+        className="relative w-full max-w-6xl h-[85vh] bg-[#150a1f] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col lg:flex-row"
+        onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-50 p-2 bg-black/50 rounded-full text-white hover:bg-white/20 transition-colors"
+          className="absolute top-4 right-4 z-50 p-2 bg-black/50 hover:bg-white/20 rounded-full text-white transition-colors"
         >
           <X size={24} />
         </button>
-        <video
-          src={video.href}
-          autoPlay
-          controls
-          className="w-full h-full object-contain"
-        />
-        <div className="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-black/90 to-transparent pointer-events-none">
-          <h3 className="text-xl font-bold text-white mb-1">{video.title}</h3>
-          <p className="text-sm text-gray-300 font-light">{video.desc}</p>
+
+        {/* LEFT: Video Player */}
+        <div className="lg:w-[65%] h-[40vh] lg:h-full bg-black relative flex items-center justify-center">
+          <video
+            src={video.href}
+            autoPlay
+            controls
+            className="w-full h-full object-contain"
+          />
+        </div>
+
+        {/* RIGHT: Related Article/Text */}
+        <div className="lg:w-[35%] h-full overflow-y-auto custom-scrollbar border-l border-white/10 bg-[#1a1025]">
+          <div className="p-8">
+            <div className="mb-6">
+              <span className="text-xs font-bold text-[#eeb9ff] tracking-widest uppercase mb-2 block">Related Guide</span>
+              <h3 className="text-3xl font-serif text-white mb-2 leading-tight">{video.relatedTitle || video.title}</h3>
+              <p className="text-gray-400 text-sm font-light font-redhat">{video.desc}</p>
+            </div>
+
+            <div className="h-px w-full bg-white/10 mb-6" />
+
+            <div className="prose prose-invert prose-sm md:prose-base max-w-none text-gray-300 font-redhat font-light leading-relaxed space-y-4">
+              {video.relatedContent ? (
+                video.relatedContent.split('\n\n').map((paragraph, idx) => (
+                  <p key={idx}>{paragraph}</p>
+                ))
+              ) : (
+                <p>No text guide available for this video.</p>
+              )}
+            </div>
+
+            <div className="mt-8 p-4 bg-white/5 rounded-xl border border-white/5">
+              <p className="text-xs text-gray-400 italic">
+                "This visual guide is designed to be a companion to your practice. Revisit this video whenever you need a refresher."
+              </p>
+            </div>
+          </div>
         </div>
       </motion.div>
     </motion.div>
   );
 };
 
-// 3. Auto-Scrolling Marquee for Articles
-const ArticleMarquee = ({ articles }) => {
-  // Triple the items to ensure seamless infinite loop
-  const tripleArticles = [...articles, ...articles, ...articles];
 
+// 4. Standalone Article Marquee
+const ArticleMarquee = ({ articles }) => {
   return (
-    <div className="relative w-full overflow-hidden py-10">
-      <motion.div
-        className="flex gap-6 px-6"
-        animate={{ x: [0, -1000] }}
-        transition={{
-          duration: 30, // Faster
-          repeat: Infinity,
-          ease: "linear"
-        }}
-        style={{ width: "fit-content" }}
+    <div className="relative w-full py-10">
+      <div
+        className="flex gap-6 px-6 overflow-x-auto scrollbar-hide snap-x"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {tripleArticles.map((article, idx) => (
-          <motion.div
+        {articles.map((article, idx) => (
+          <motion.a
             key={`${article.id}-${idx}`}
+            href={article.href}
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ y: -10, scale: 1.02 }}
-            className="min-w-[320px] h-[220px] p-8 rounded-[2rem] bg-white/5 backdrop-blur-md border border-white/10 flex flex-col justify-between group hover:bg-white/10 transition-all cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-[#eeb9ff]/10"
+            className="min-w-[320px] h-[220px] p-8 rounded-[2rem] bg-white/5 backdrop-blur-md border border-white/10 flex flex-col justify-between group hover:bg-white/10 transition-all cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-[#eeb9ff]/10 snap-center"
           >
             <div>
               <div className="flex justify-between mb-4">
                 <span className="text-[11px] text-[#eeb9ff] font-bold tracking-widest uppercase font-redhat bg-white/5 px-3 py-1 rounded-full">{article.tag}</span>
-                <BookOpen size={20} className="text-white/20 group-hover:text-[#eeb9ff] transition-colors" />
+                <ExternalLink size={20} className="text-white/20 group-hover:text-[#eeb9ff] transition-colors" />
               </div>
               <h3 className="text-2xl text-white font-serif tracking-wide group-hover:text-[#eeb9ff] transition-colors duration-300">{article.title}</h3>
             </div>
             <div className="flex items-center gap-2 text-xs text-gray-400 font-bold uppercase tracking-widest group-hover:text-white transition-colors font-redhat">
-              Read Article <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform duration-300" />
+              Visit Source <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform duration-300" />
             </div>
-          </motion.div>
+          </motion.a>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 };
 
-// 4. Auto-Scrolling Marquee for Videos
+// 5. Video Marquee (Visual Guides)
 const VideoMarquee = ({ videos, onVideoClick }) => {
-  // Triple the items to ensure seamless infinite loop
-  const tripleVideos = [...videos, ...videos, ...videos];
-
   return (
-    <div className="relative w-full overflow-hidden py-10">
-      <motion.div
-        className="flex gap-8 px-6"
-        animate={{ x: [0, -1000] }}
-        transition={{
-          duration: 30, // Faster
-          repeat: Infinity,
-          ease: "linear"
-        }}
-        style={{ width: "fit-content" }}
+    <div className="relative w-full py-10">
+      <div
+        className="flex gap-8 px-6 overflow-x-auto scrollbar-hide snap-x"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {tripleVideos.map((video, idx) => (
-          <VideoResourceCard
-            key={`${video.id}-${idx}`}
-            video={video}
-            onClick={() => onVideoClick(video)}
-          />
+        {videos.map((video, idx) => (
+          <div key={`${video.id}-${idx}`} className="snap-center">
+            <VideoResourceCard
+              video={video}
+              onClick={() => onVideoClick(video)}
+            />
+          </div>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 };
@@ -308,50 +325,112 @@ const VideoMarquee = ({ videos, onVideoClick }) => {
 export default function ResourcesPage() {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
+  // 1. VISUAL GUIDES DATA (Includes the Related Text that appears in the modal)
   const [videoData] = useState([
-    { id: 'v1', title: 'Managing Anxiety Attacks', desc: 'Direct breathing techniques for immediate relief.', tag: 'WATCH NOW', href: 'https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978906/mindsettler_assets/panicanx.mp4' },
-    { id: 'v2', title: 'Walls vs Boundaries', desc: 'How to build healthy relationship structures.', tag: 'WATCH NOW', href: 'https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978922/mindsettler_assets/wallbound.mp4' },
-    { id: 'v4', title: "Your Therapist's Memory", desc: "Insights into how therapists recall details of your sessions.", tag: 'WATCH NOW', href: 'https://res.cloudinary.com/dlplhnb7o/video/upload/v1767983067/mindsettler_assets/IMG_6361.mov' },
-    { id: 'v3', title: 'Myths in Therapy', desc: 'Common misconceptions about therapy debunked.', tag: 'WATCH NOW', href: 'https://res.cloudinary.com/dlplhnb7o/video/upload/v1767983026/mindsettler_assets/IMG_0992.mov' },
+    {
+      id: 'v1',
+      title: 'Managing Anxiety Attacks',
+      desc: 'Direct breathing techniques for immediate relief.',
+      tag: 'WATCH NOW',
+      href: 'https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978906/mindsettler_assets/panicanx.mp4',
+      relatedTitle: 'The Physiology of Panic',
+      relatedContent: "Panic attacks can feel life-threatening, but they are essentially a false alarm in your body's survival system. The techniques shown in this video—specifically the 4-7-8 breathing method—work by hacking your vagus nerve.\n\nWhen you extend your exhale, you send a direct signal to your parasympathetic nervous system to initiate the 'rest and digest' response. This physically forces your heart rate to slow down, overriding the adrenaline rush.\n\nPractice these breaths when you are calm so that the neural pathway is strong enough to access when you are in distress."
+    },
+    {
+      id: 'v2',
+      title: 'Walls vs Boundaries',
+      desc: 'How to build healthy relationship structures.',
+      tag: 'WATCH NOW',
+      href: 'https://res.cloudinary.com/dlplhnb7o/video/upload/v1767978922/mindsettler_assets/wallbound.mp4',
+      relatedTitle: 'Understanding Relational Space',
+      relatedContent: "There is a distinct difference between a wall (which keeps everyone out to protect a fragile self) and a boundary (which shows people where the door is). The video illustrates this dynamic visually.\n\nHealthy boundaries are permeable—they allow love and connection in while keeping disrespect and harm out. Walls are impermeable; they create safety at the cost of connection, leading to isolation.\n\nMoving from walls to boundaries requires the courage to say 'this is who I am' and 'this is what I need' without the fear of rejection."
+    },
+    {
+      id: 'v4',
+      title: "Your Therapist's Memory",
+      desc: "Insights into how therapists recall details of your sessions.",
+      tag: 'WATCH NOW',
+      href: 'https://res.cloudinary.com/dlplhnb7o/video/upload/v1767983067/mindsettler_assets/IMG_6361.mov',
+      relatedTitle: 'The Therapeutic Alliance',
+      relatedContent: "Research shows that the relationship between therapist and client—the therapeutic alliance—is one of the strongest predictors of successful treatment outcome, often more so than the specific type of therapy used.\n\nThis relationship is built on trust, empathy, and consistency. Part of this bond is the therapist's ability to hold your story in their mind, connecting dots across sessions that you might not see yourself.\n\nFeeling 'known' and 'remembered' by your therapist creates a safe container where deep healing work can occur."
+    },
+    {
+      id: 'v3',
+      title: 'Myths in Therapy',
+      desc: 'Common misconceptions about therapy debunked.',
+      tag: 'WATCH NOW',
+      href: 'https://res.cloudinary.com/dlplhnb7o/video/upload/v1767983026/mindsettler_assets/IMG_0992.mov',
+      relatedTitle: 'Demystifying the Process',
+      relatedContent: "Many people avoid therapy because they believe it means they are 'broken' or that they will be forced to relive trauma immediately. This video addresses the reality: therapy is a collaborative process.\n\nIt is not something done 'to' you, but something done 'with' you. You set the pace. Another common myth is that therapists possess a magical ability to read minds; in reality, we are trained to read patterns.\n\nSuccess in therapy often looks like gradual shifts in perspective rather than sudden, dramatic breakthroughs."
+    }
   ]);
 
-  const [articles] = useState([
-    { id: 'a1', title: 'Emotional Regulation', tag: 'GUIDE' },
-    { id: 'a2', title: 'The Architecture of Anxiety', tag: 'DEEP DIVE' },
-    { id: 'a3', title: 'Boundaries as Self-Care', tag: 'HEALTH' },
+  // 2. RESEARCH & PAPERS DATA (Standalone articles)
+  const [researchArticles] = useState([
+    {
+      id: 'r1',
+      title: 'Neuroplasticity: Rewiring Your Brain',
+      tag: 'RESEARCH',
+      href: "https://www.ncbi.nlm.nih.gov/books/NBK557811/"
+    },
+    {
+      id: 'r2',
+      title: 'The Gut-Brain Axis',
+      tag: 'STUDY',
+      href: "https://www.health.harvard.edu/diseases-and-conditions/the-gut-brain-connection"
+    },
+    {
+      id: 'r3',
+      title: 'Sleep & Emotional Resilience',
+      tag: 'PAPER',
+      href: "https://www.sleepfoundation.org/mental-health"
+    },
+    {
+      id: 'r4',
+      title: 'The Psychology of Color',
+      tag: 'INSIGHT',
+      href: "https://www.verywellmind.com/color-psychology-2795824"
+    },
   ]);
 
   return (
     <main className="min-h-screen text-white overflow-x-hidden pt-24 relative">
       <MixedRain />
 
-      {/* Video Modal */}
+      {/* Video Modal with Split View */}
       <AnimatePresence>
         {selectedVideo && <VideoModal video={selectedVideo} onClose={() => setSelectedVideo(null)} />}
       </AnimatePresence>
 
-      {/* 1. ARTICLES: Auto-Scrolling Infinite Marquee */}
-      <section className="mb-20">
-        <div className="px-6 md:px-12 mb-4">
-          <h2 className="text-5xl md:text-6xl font-serif tracking-wide text-[#eeb9ff]">
-            Articles
-          </h2>
-        </div>
-        <ArticleMarquee articles={articles} />
-      </section>
-
-      {/* 2. VIDEOS: Direct Playback Row */}
+      {/* 1. VISUAL GUIDES (Video Only Marquee) */}
       <section className="mb-20">
         <div className="px-6 md:px-12 mb-8">
           <h2 className="text-5xl md:text-6xl font-serif tracking-wide text-white">
             Visual <span className="italic text-[#DD1764]">Guides</span>
           </h2>
+          <p className="mt-4 text-gray-300 font-light max-w-2xl">
+            Click on any guide to watch and read the companion insight in our interactive player.
+          </p>
         </div>
 
         <VideoMarquee videos={videoData} onVideoClick={setSelectedVideo} />
       </section>
 
-      {/* 3. HELPFUL LINKS GRID: Categorized Resource List */}
+      {/* 2. RESEARCH & INSIGHTS (Standalone Articles) */}
+      <section className="mb-20">
+        <div className="px-6 md:px-12 mb-8">
+          <h2 className="text-5xl md:text-6xl font-serif tracking-wide text-white">
+            Research <span className="italic text-[#eeb9ff]">&</span> Insights
+          </h2>
+          <p className="mt-4 text-gray-300 font-light max-w-2xl">
+            Deep dives, study papers, and scientific context for your mental health journey.
+          </p>
+        </div>
+
+        <ArticleMarquee articles={researchArticles} />
+      </section>
+
+      {/* 3. HELPFUL LINKS GRID */}
       <section className="mb-16">
         <div className="px-6 md:px-12 mb-6">
           <h2 className="text-5xl md:text-6xl font-serif tracking-wide text-white">
@@ -382,7 +461,7 @@ export default function ResourcesPage() {
               </div>
 
               {/* Horizontal Scroll Container */}
-              <div className="flex overflow-x-auto gap-4 px-6 md:px-12 pb-6 scrollbar-hide snap-x">
+              <div className="flex overflow-x-auto gap-4 px-6 md:px-12 pb-6 scrollbar-hide snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 {section.links.map((link, j) => (
                   <motion.a
                     key={j}
@@ -417,6 +496,22 @@ export default function ResourcesPage() {
 
 
       <ReadyToBook />
+
+      {/* Global CSS for utilities used */}
+      <style jsx global>{`
+        .perspective-1000 { perspective: 1000px; }
+        .preserve-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .shadow-3xl { box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.7); }
+        .rotateY-180 { transform: rotateY(180deg); }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </main>
   );
 }
