@@ -63,11 +63,11 @@ export default function HomePage() {
             <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-[#0b0220] to-transparent pointer-events-none" />
           </motion.div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12 sm:gap-16 items-center text-center pt-32 pb-16 md:pb-24 lg:pb-32">
-            {/* LEFT CONTENT - QUOTE */}
-            <div className="max-w-2xl text-left">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff] via-[#fff] to-[#fff] italic font-baskervville pr-4 pb-2 inline-block">
+          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center justify-center min-h-[80vh] gap-6 pt-10">
+            {/* QUOTE - Positioned Above the Horizon */}
+            <div className="max-w-4xl mb-2 sm:mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] via-[#ffffff] to-[#eeb9ff] italic font-baskervville inline-block pb-4 pr-8">
                   "It's okay to not be okay.
                   <br />
                   It's okay to ask for help."
@@ -75,33 +75,27 @@ export default function HomePage() {
               </h1>
             </div>
 
-            {/* RIGHT CONTENT - DESC & BUTTONS */}
-            <div className="flex flex-col gap-8">
-              <p className="text-lg sm:text-xl text-gray-200 leading-relaxed font-redhat">
+            {/* CONTENT - Positioned Below the Horizon */}
+            <div className="flex flex-col gap-6 mt-2 sm:mt-6 max-w-4xl mx-auto">
+              <p className="text-xl md:text-3xl text-white font-light leading-relaxed font-redhat drop-shadow-md">
                 MindSettler by Parnika is a safe space to understand your mind,
                 settle emotional distress, and begin your mental well-being
                 journey.
                 <br />
                 <br />
-                <span className="font-semibold text-white text-base sm:text-lg">
+                <span className="font-semibold text-white text-lg md:text-2xl tracking-wide">
                   Confidential · Non-judgmental · Guided support
                 </span>
               </p>
 
-              <div className="flex flex-col sm:flex-row flex-wrap gap-4">
+              <div className="flex justify-center gap-4 w-full">
                 <Link
                   href="/book-session"
-                  className="px-8 py-4 rounded-full bg-[#a167a5]/60 backdrop-blur-md text-white font-medium hover:shadow-2xl hover:scale-105 transition-all flex items-center justify-center gap-2 group shadow-xl ring-1 ring-inset ring-white/10"
+                  className="group relative flex items-center gap-3 px-8 py-4 rounded-full bg-[#a167a5]/30 backdrop-blur-md text-white shadow-xl hover:shadow-[#4A313E]/30 transition-all overflow-hidden ring-1 ring-inset ring-white/10"
                 >
-                  Begin When You're Ready
-                  <ArrowRight size={18} />
-                </Link>
-
-                <Link
-                  href="/how-it-works"
-                  className="px-8 py-4 rounded-full bg-white/5 backdrop-blur-md border border-white/20 text-white hover:bg-white/10 transition-all text-center"
-                >
-                  Learn More
+                  <div className="absolute inset-0 bg-white/20 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300" />
+                  <span className="font-semibold text-lg relative z-10">Begin When You're Ready</span>
+                  <ArrowRight size={20} className="relative z-10" />
                 </Link>
               </div>
             </div>
@@ -122,10 +116,10 @@ export default function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-20 md:mb-28"
+              className="text-center mb-10 md:mb-16"
             >
-              <h2 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight">
-                The Heart of <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">MindSettler</span>
+              <h2 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight tracking-tight">
+                The Heart of MindSettler
               </h2>
               <p className="text-lg font-bold text-[#eeb9ff] uppercase tracking-widest mb-6 font-redhat">Our Purpose</p>
               <div className="h-1 w-24 bg-gradient-to-r from-transparent via-[#eeb9ff] to-transparent mx-auto rounded-full opacity-50" />
@@ -160,12 +154,11 @@ export default function HomePage() {
                   {/* Ambient Light Beam Background */}
                   <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[120%] h-[150%] bg-gradient-to-b from-white/5 to-transparent blur-3xl opacity-0 peer-hover:opacity-100 transition-opacity duration-1000 pointer-events-none -z-10" />
 
-                  <h3 className="text-4xl md:text-6xl font-serif italic text-white/90 peer-hover:text-white mb-10 tracking-tight transition-colors duration-700">"Beyond Consultation"</h3>
+                  <h3 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight tracking-tight">Beyond Consultation</h3>
 
-                  <div className="space-y-8 text-xl md:text-3xl text-gray-300 peer-hover:text-white leading-relaxed font-light max-w-4xl mx-auto drop-shadow-sm transition-colors duration-700">
+                  <div className="space-y-8 text-xl md:text-3xl text-white peer-hover:text-white leading-relaxed font-light max-w-4xl mx-auto drop-shadow-sm transition-colors duration-700">
                     <p className="md:px-20 font-redhat">
-                      This page is not just meant for online consultation; we intend to create more awareness about mental well-being and learning about mental health. It is a medium to spread knowledge and an easier mode to connect as well as reach out for help whenever in
-                      <span className="italic font-serif text-white peer-hover:text-[#eeb9ff] transition-colors"> need</span>.
+                      This page is not just meant for online consultation; we intend to create more awareness about mental well-being and learning about mental health. It is a medium to spread knowledge and an easier mode to connect as well as reach out for help whenever in need.
                     </p>
                   </div>
                 </div>
@@ -184,12 +177,12 @@ export default function HomePage() {
                 transition={{ duration: 0.8 }}
                 className="text-center md:text-left space-y-8"
               >
-                <h3 className="text-3xl md:text-5xl font-light text-white leading-tight">
+                <h3 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight tracking-tight">
                   <span className="block text-lg font-bold text-[#eeb9ff] uppercase tracking-widest mb-4">The Name</span>
                   Understanding <br />
-                  <span className="font-serif italic">Our Meaning</span>
+                  Our Meaning
                 </h3>
-                <p className="text-lg text-gray-300 leading-relaxed max-w-md mx-auto md:mx-0 font-redhat">
+                <p className="text-xl md:text-3xl text-white font-light leading-relaxed max-w-xl mx-auto md:mx-0 font-redhat">
                   MindSettler by Parnika is a blend of two connected parts of human experience, bridged by a common ground of understanding.
                 </p>
 
@@ -223,7 +216,7 @@ export default function HomePage() {
                       <Brain className="w-10 h-10 text-[#f1c7ff]" />
                     </div>
 
-                    <h4 className="text-2xl font-serif italic text-white mb-4">
+                    <h4 className="block text-lg font-bold text-[#eeb9ff] uppercase tracking-widest mb-4">
                       Mind
                     </h4>
 
@@ -280,9 +273,7 @@ export default function HomePage() {
         <section className="pt-10 pb-20 md:pt-12 md:pb-32 relative overflow-hidden">
 
           {/* Background Ambient Flow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-7xl opacity-30 pointer-events-none">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#3F2965] rounded-full blur-[120px] mix-blend-screen animate-pulse" style={{ animationDuration: '8s' }} />
-          </div>
+
 
           <div className="max-w-5xl mx-auto px-6 relative z-10">
 
@@ -298,19 +289,13 @@ export default function HomePage() {
             >
               <h2 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight tracking-tight">
                 <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-                  We help you
+                  We help you navigate
                 </motion.span>{" "}
-                <motion.span
-                  variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1 } }}
-                  className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] via-white to-[#eeb9ff] inline-block pb-2"
-                >
-                  navigate
-                </motion.span>
               </h2>
 
               <motion.p
                 variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 1, delay: 0.5 } } }}
-                className="text-lg md:text-2xl text-gray-200 font-light max-w-3xl mx-auto leading-relaxed font-redhat"
+                className="text-xl md:text-3xl text-white font-light max-w-4xl mx-auto leading-relaxed font-redhat"
               >
                 Finding your anchor in the storm, and guiding you towards <span className="text-[#eeb9ff] font-medium">calmer waters</span> with gentle, tailored support.
               </motion.p>

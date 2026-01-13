@@ -42,7 +42,7 @@ const LatestEvent = () => {
     return (
         <section className="py-20 md:py-32 relative overflow-hidden">
             {/* Decorative Background Elements */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#3F2965]/10 rounded-full blur-[100px] pointer-events-none" />
+
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#DD1764]/10 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="max-w-6xl mx-auto px-6 relative z-10">
@@ -58,10 +58,10 @@ const LatestEvent = () => {
                         <span className="text-[#eeb9ff] text-xs font-bold uppercase tracking-[0.2em]">Join Us</span>
                         <span className="h-px w-8 bg-[#eeb9ff]/50"></span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-light text-white mb-6">
-                        Upcoming <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-white">Events</span>
+                    <h2 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight tracking-tight">
+                        Upcoming Events
                     </h2>
-                    <p className="text-lg text-gray-300 font-light max-w-2xl mx-auto font-redhat">
+                    <p className="text-xl md:text-3xl text-white font-light max-w-3xl mx-auto font-redhat leading-relaxed">
                         Opportunities to learn, connect, and grow together.
                     </p>
                 </motion.div>
