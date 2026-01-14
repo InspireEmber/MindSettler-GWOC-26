@@ -58,7 +58,7 @@ const LatestEvent = () => {
                         <span className="text-[#eeb9ff] text-xs font-bold uppercase tracking-[0.2em]">Join Us</span>
                         <span className="h-px w-8 bg-[#eeb9ff]/50"></span>
                     </div>
-                    <h2 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight tracking-tight">
+                    <h2 className="text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6 leading-tight tracking-tight">
                         Upcoming Events
                     </h2>
                     <p className="text-xl md:text-3xl text-white font-light max-w-3xl mx-auto font-redhat leading-relaxed">

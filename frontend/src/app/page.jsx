@@ -118,10 +118,8 @@ export default function HomePage() {
               transition={{ duration: 0.8 }}
               className="text-center mb-10 md:mb-16"
             >
-              <h2 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight tracking-tight">
-                The Heart of MindSettler
-              </h2>
-              <p className="text-lg font-bold text-[#eeb9ff] uppercase tracking-widest mb-6 font-redhat">Our Purpose</p>
+
+              <h2 className="text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6">Our Purpose</h2>
               <div className="h-1 w-24 bg-gradient-to-r from-transparent via-[#eeb9ff] to-transparent mx-auto rounded-full opacity-50" />
             </motion.div>
 
@@ -154,7 +152,7 @@ export default function HomePage() {
                   {/* Ambient Light Beam Background */}
                   <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[120%] h-[150%] bg-gradient-to-b from-white/5 to-transparent blur-3xl opacity-0 peer-hover:opacity-100 transition-opacity duration-1000 pointer-events-none -z-10" />
 
-                  <h3 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight tracking-tight">Beyond Consultation</h3>
+                  <h3 className="text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6 leading-tight tracking-tight">Beyond Consultation</h3>
 
                   <div className="space-y-8 text-xl md:text-3xl text-white peer-hover:text-white leading-relaxed font-light max-w-4xl mx-auto drop-shadow-sm transition-colors duration-700">
                     <p className="md:px-20 font-redhat">
@@ -177,7 +175,7 @@ export default function HomePage() {
                 transition={{ duration: 0.8 }}
                 className="text-center md:text-left space-y-8"
               >
-                <h3 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight tracking-tight">
+                <h3 className="text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6 leading-tight tracking-tight">
                   <span className="block text-lg font-bold text-[#eeb9ff] uppercase tracking-widest mb-4">The Name</span>
                   Understanding <br />
                   Our Meaning
@@ -287,7 +285,7 @@ export default function HomePage() {
               }}
               className="text-center mb-16 md:mb-24"
             >
-              <h2 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight tracking-tight">
+              <h2 className="text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6 leading-tight tracking-tight">
                 <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
                   We help you navigate
                 </motion.span>{" "}

@@ -405,10 +405,10 @@ export default function ResourcesPage() {
       {/* 1. VISUAL GUIDES (Video Only Marquee) */}
       <section className="mb-20">
         <div className="px-6 md:px-12 mb-8">
-          <h2 className="text-5xl md:text-6xl font-serif tracking-wide text-white">
-            Visual <span className="italic text-[#DD1764]">Guides</span>
+          <h2 className="block text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6">
+            Visual Guides
           </h2>
-          <p className="mt-4 text-gray-300 font-light max-w-2xl">
+          <p className="text-xl md:text-3xl text-gray-300 font-light leading-relaxed max-w-xl mx-auto md:mx-0 font-redhat">
             Click on any guide to watch and read the companion insight in our interactive player.
           </p>
         </div>
@@ -419,10 +419,10 @@ export default function ResourcesPage() {
       {/* 2. RESEARCH & INSIGHTS (Standalone Articles) */}
       <section className="mb-20">
         <div className="px-6 md:px-12 mb-8">
-          <h2 className="text-5xl md:text-6xl font-serif tracking-wide text-white">
-            Research <span className="italic text-[#eeb9ff]">&</span> Insights
+          <h2 className="block text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6">
+            Research & Insights
           </h2>
-          <p className="mt-4 text-gray-300 font-light max-w-2xl">
+          <p className="text-xl md:text-3xl text-gray-300 font-light leading-relaxed max-w-xl mx-auto md:mx-0 font-redhat">
             Deep dives, study papers, and scientific context for your mental health journey.
           </p>
         </div>
@@ -433,8 +433,8 @@ export default function ResourcesPage() {
       {/* 3. HELPFUL LINKS GRID */}
       <section className="mb-16">
         <div className="px-6 md:px-12 mb-6">
-          <h2 className="text-5xl md:text-6xl font-serif tracking-wide text-white">
-            Helpful <span className="italic text-[#DD1764]">Links</span>
+          <h2 className="block text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6">
+            Helpful Links
           </h2>
         </div>
 

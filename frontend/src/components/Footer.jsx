@@ -25,7 +25,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#3A3545] text-white pt-16 pb-8 border-t border-white/5">
+    <footer className="bg-[#3A3545] text-white pt-16 pb-8 border-t border-white/5 relative z-10">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Changed lg:grid-cols-5 to lg:grid-cols-6 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-10">

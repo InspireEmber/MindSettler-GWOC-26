@@ -271,7 +271,7 @@ export default function WhatMakesUsDifferentPage() {
                 animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, x: -50, filter: "blur(5px)" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="w-full flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20 bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10"
+                className="w-full flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20 bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl"
               >
 
                 {/* --- IMAGE DISPLAY --- */}
@@ -279,7 +279,10 @@ export default function WhatMakesUsDifferentPage() {
                   <img
                     src={NEW_ROTATING_CONTENT[currentIndex].imageSrc}
                     alt={NEW_ROTATING_CONTENT[currentIndex].title}
-                    className="w-64 h-64 object-contain drop-shadow-2xl"
+                    className="w-56 h-56 sm:w-64 sm:h-64 object-contain drop-shadow-[0_0_15px_rgba(238,185,255,0.4)]"
+                    style={{
+                      filter: "brightness(0) saturate(100%) invert(67%) sepia(61%) saturate(464%) hue-rotate(237deg) brightness(95%) contrast(93%) drop-shadow(0 0 5px rgba(238, 185, 255, 0.5))"
+                    }}
                   />
                 </div>
 
