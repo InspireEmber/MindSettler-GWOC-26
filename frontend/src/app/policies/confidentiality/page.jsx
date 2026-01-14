@@ -32,7 +32,7 @@ export default function ConfidentialityPolicyPage() {
       <section className="relative z-10 pt-20 pb-8 md:pt-32 md:pb-12 text-center">
         <div className="max-w-4xl mx-auto px-6">
           <div className="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full mx-auto mb-6" />
-          <h1 className="text-4xl md:text-6xl font-light text-white mb-6">
+          <h1 className="text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6">
             Confidentiality <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Policy</span>
           </h1>
           <p className="text-xl text-gray-200 font-redhat">Your privacy and confidentiality are our top priorities.</p>
@@ -49,7 +49,7 @@ export default function ConfidentialityPolicyPage() {
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-3xl font-light text-white">Our Commitment</h2>
+            <h2 className="text-3xl font-light text-[#eeb9ff]">Our Commitment</h2>
             <p className="leading-relaxed text-gray-200 font-redhat">MindSettler is committed to maintaining the highest standards of privacy. All information shared is treated with the utmost respect and protection.</p>
           </div>
 
@@ -57,7 +57,7 @@ export default function ConfidentialityPolicyPage() {
           <div className="grid gap-12">
             {POLICY_SECTIONS.map((section, i) => (
               <div key={i} className="group">
-                <h2 className="text-2xl font-medium text-white mb-4 group-hover:text-[#eeb9ff] transition-colors">{section.title}</h2>
+                <h2 className="text-2xl font-medium text-[#eeb9ff] mb-4 group-hover:text-white transition-colors">{section.title}</h2>
                 <p className="mb-4 text-gray-200 font-redhat">{section.content}</p>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {section.items.map((item, j) => (
@@ -72,12 +72,12 @@ export default function ConfidentialityPolicyPage() {
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-2xl font-medium text-white">Session Privacy & Records</h2>
+            <h2 className="text-2xl font-medium text-[#eeb9ff]">Session Privacy & Records</h2>
             <p className="leading-relaxed text-sm text-gray-200 font-redhat">Online sessions use encrypted platforms, and offline sessions take place in confidential spaces. We maintain minimal records necessary and retain them only as long as required for legal purposes.</p>
           </div>
 
           <div className="p-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20">
-            <h3 className="text-xl font-medium text-white mb-2">Acknowledgment</h3>
+            <h3 className="text-xl font-medium text-[#eeb9ff] mb-2">Acknowledgment</h3>
             <p className="text-sm leading-relaxed mb-6 text-gray-200 font-redhat">By booking a session with MindSettler, you acknowledge that you have read, understood, and agree to this confidentiality policy.</p>
             <Link href="/contact" className="text-[#eeb9ff] font-medium hover:underline inline-flex items-center gap-2">
               Questions? Contact Us <Lock size={14} />

@@ -186,7 +186,7 @@ export default function AboutPage() {
             </span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-white mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-[#eeb9ff] mb-6">
             The Meaning Behind Our Logo & Colours
           </h2>
 
@@ -245,7 +245,7 @@ export default function AboutPage() {
                 </span>
               </div>
 
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-white mb-4 sm:mb-6 leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-[#eeb9ff] mb-4 sm:mb-6 leading-tight">
                 {s.title}
               </h2>
 
@@ -326,9 +326,9 @@ export default function AboutPage() {
       <section className="relative z-10 py-20 lg:py-32 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-white leading-[1.1] tracking-tight mb-4">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-[#eeb9ff] leading-[1.1] tracking-tight mb-4">
               Our Psycho-Education <br className="hidden sm:block" />
-              <span className="font-light italic text-[#eeb9ff]">Approach</span>
+              Approach
             </h2>
             <p className="text-[#eeb9ff]/80 font-light tracking-[0.2em] uppercase text-xs mt-6 opacity-80">
               Interactive & Personalised Growth

@@ -138,7 +138,7 @@ export default function WhatMakesUsDifferentPage() {
         {/* Gradient Bar (Updated to match 'How It Works' style) */}
         <div className="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full mx-auto mb-8" />
 
-        <h1 className="text-3xl md:text-5xl lg:text-7xl font-light text-white tracking-tight mb-6">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-[#eeb9ff] tracking-tight mb-6">
           What Makes Us <br />
           <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff] relative inline-block pr-3 pb-1">
             Different
@@ -258,8 +258,8 @@ export default function WhatMakesUsDifferentPage() {
       <section className="py-20 sm:py-24 overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-white leading-tight">
-              The Journey of <span className="font-medium italic text-[#eeb9ff]">Discovery</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-[#eeb9ff] leading-tight">
+              The Journey of <span className="font-medium italic text-[#ff8ac0]">Discovery</span>
             </h2>
           </div>
 
@@ -288,7 +288,7 @@ export default function WhatMakesUsDifferentPage() {
 
                 {/* --- TEXT DISPLAY --- */}
                 <div className="text-center md:text-left max-w-lg">
-                  <h3 className="text-3xl sm:text-4xl font-light text-white mb-6">
+                  <h3 className="text-3xl sm:text-4xl font-light text-[#eeb9ff] mb-6">
                     {NEW_ROTATING_CONTENT[currentIndex].title}
                   </h3>
                   <p className="text-lg text-gray-200 leading-relaxed mb-8 whitespace-pre-line font-redhat">

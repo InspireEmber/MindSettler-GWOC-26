@@ -50,7 +50,7 @@ export default function FAQAccordion() {
             <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-[#eeb9ff]">
               <HelpCircle size={18} />
             </div>
-            <h2 className="text-xl sm:text-2xl font-serif text-white/90">
+            <h2 className="text-xl sm:text-2xl font-serif text-[#eeb9ff]">
               {cat.category}
             </h2>
           </div>

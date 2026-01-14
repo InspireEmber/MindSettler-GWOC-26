@@ -190,7 +190,7 @@ export default function JourneyPage() {
           <div className="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full mx-auto" />
         </motion.div>
 
-        <h1 className="text-5xl md:text-7xl font-light mb-8 leading-tight">
+        <h1 className="text-5xl md:text-7xl font-light text-[#eeb9ff] mb-8 leading-tight">
           The <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Climb</span>
         </h1>
 
@@ -316,7 +316,7 @@ export default function JourneyPage() {
                     <span className={`h-px w-8 bg-gradient-to-r ${isEven ? 'from-[#DD1764] to-transparent' : 'from-transparent to-[#DD1764]'} ${step.align === 'center' ? 'hidden' : ''}`} />
                   </div>
 
-                  <h2 className="text-3xl md:text-5xl font-light text-white mb-6 leading-tight">
+                  <h2 className="text-3xl md:text-5xl font-light text-[#eeb9ff] mb-6 leading-tight">
                     {step.title}
                   </h2>
 

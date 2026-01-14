@@ -29,7 +29,7 @@ export default function NonRefundPolicyPage() {
       <section className="relative z-10 pt-20 pb-8 md:pt-32 md:pb-12 text-center">
         <div className="max-w-4xl mx-auto px-6">
           <div className="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full mx-auto mb-6" />
-          <h1 className="text-4xl md:text-6xl font-light text-white mb-6">
+          <h1 className="text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6">
             Non-Refund <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Policy</span>
           </h1>
           <p className="text-xl text-gray-200 font-redhat">Our policy regarding refunds and cancellations.</p>
@@ -48,7 +48,7 @@ export default function NonRefundPolicyPage() {
           <div className="grid gap-12">
             {POLICY_POINTS.map((point, i) => (
               <div key={i} className="group">
-                <h2 className="text-2xl font-medium text-white mb-4 group-hover:text-[#eeb9ff] transition-colors">
+                <h2 className="text-2xl font-medium text-[#eeb9ff] mb-4 group-hover:text-white transition-colors">
                   {point.title}
                 </h2>
                 <p className="leading-relaxed mb-4 text-gray-200 font-redhat">{point.content}</p>
@@ -67,7 +67,7 @@ export default function NonRefundPolicyPage() {
           </div>
 
           <div className="p-8 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20">
-            <h3 className="text-xl font-medium text-white mb-3 flex items-center gap-2">
+            <h3 className="text-xl font-medium text-[#eeb9ff] mb-3 flex items-center gap-2">
               <Info size={20} className="text-[#eeb9ff]" /> Contact Us
             </h3>
             <p className="text-sm leading-relaxed mb-6 text-gray-200 font-redhat">

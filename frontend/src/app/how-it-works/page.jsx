@@ -135,7 +135,7 @@ export default function HowItWorksPage() {
             />
             <motion.h1
               variants={fadeInUp}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white mb-6 sm:mb-8 leading-tight drop-shadow-lg"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-[#eeb9ff] mb-6 sm:mb-8 leading-tight drop-shadow-lg"
             >
               How It <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Works</span>
             </motion.h1>
@@ -171,7 +171,7 @@ export default function HowItWorksPage() {
 
                   {/* Glass Card */}
                   <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 sm:p-8 rounded-2xl shadow-xl hover:bg-white/15 transition-all duration-300">
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-normal text-white mb-4 leading-tight">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-normal text-[#eeb9ff] mb-4 leading-tight">
                       {step.title}
                     </h2>
                     <p className="text-base sm:text-lg leading-relaxed text-gray-200 font-redhat">
@@ -203,7 +203,7 @@ export default function HowItWorksPage() {
         <section className="py-20 sm:py-24 overflow-hidden">
           <div className="max-w-5xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-white leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-[#eeb9ff] leading-tight">
                 A Good Therapy Session <span className="font-semibold italic text-[#ff8ac0]">Also Includes</span>
               </h2>
             </div>
@@ -232,7 +232,7 @@ export default function HowItWorksPage() {
                   </div>
                   {/* Text Display */}
                   <div className="text-center md:text-left max-w-lg">
-                    <h3 className="text-3xl sm:text-4xl font-light text-white mb-6">
+                    <h3 className="text-3xl sm:text-4xl font-light text-[#eeb9ff] mb-6">
                       {ROTATING_CONTENT[currentIndex].title}
                     </h3>
                     <p className="text-lg text-gray-200 leading-relaxed mb-8 whitespace-pre-line font-redhat">

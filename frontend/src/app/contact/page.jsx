@@ -45,7 +45,7 @@ export default function ContactPage() {
       <section className="relative z-10 py-12 sm:py-16 md:py-20 lg:py-20 text-center">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full mx-auto mb-6 sm:mb-8" />
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white mb-4 sm:mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-[#eeb9ff] mb-4 sm:mb-6 leading-tight">
             Get in <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Touch</span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl leading-relaxed px-2 text-gray-200 font-redhat">Have questions? We're here to help. Reach out and we'll get back to you soon.</p>
@@ -56,7 +56,7 @@ export default function ContactPage() {
       <section className="relative z-10 py-8 sm:py-12 md:py-16 lg:py-20 max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
         {/* Sidebar Info */}
         <div className="space-y-6 sm:space-y-8">
-          <h2 className="text-2xl sm:text-3xl font-light text-white">Contact Information</h2>
+          <h2 className="text-2xl sm:text-3xl font-light text-[#eeb9ff]">Contact Information</h2>
           <div className="space-y-5 sm:space-y-6">
             {CONTACT_INFO.map((info, idx) => (
               <div key={idx} className="flex items-start gap-3 sm:gap-4">
@@ -72,7 +72,7 @@ export default function ContactPage() {
           </div>
 
           <div className="p-6 sm:p-8 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
-            <h3 className="text-lg sm:text-xl font-medium text-white mb-3 sm:mb-4">Response Time</h3>
+            <h3 className="text-lg sm:text-xl font-medium text-[#eeb9ff] mb-3 sm:mb-4">Response Time</h3>
             <p className="text-sm sm:text-base leading-relaxed text-gray-200 font-redhat">Typically 24-48 hours. For urgent booking matters, please mention it in your message.</p>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function ContactPage() {
         {/* Form */}
         {/* Form Container */}
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl">
-          <h2 className="text-2xl sm:text-3xl font-light text-white mb-8">Send Us a Message</h2>
+          <h2 className="text-2xl sm:text-3xl font-light text-[#eeb9ff] mb-8">Send Us a Message</h2>
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
             {[
               { label: "Name", name: "name", type: "text", ph: "Your name" },

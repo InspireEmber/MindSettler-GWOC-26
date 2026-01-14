@@ -183,10 +183,10 @@ const VideoResourceCard = ({ video, onClick }) => {
         </div>
 
         <div>
-          <h3 className="text-2xl font-serif text-white mb-2 group-hover:text-[#eeb9ff] transition-colors drop-shadow-md">
+          <h3 className="text-xl md:text-2xl font-serif text-white mb-2 group-hover:text-[#eeb9ff] transition-colors drop-shadow-md leading-tight">
             {video.title}
           </h3>
-          <p className="text-sm text-gray-200 line-clamp-2 opacity-0 group-hover:opacity-100 transition-all duration-500 font-redhat font-light leading-relaxed">
+          <p className="text-sm md:text-base text-gray-200 line-clamp-2 opacity-0 group-hover:opacity-100 transition-all duration-500 font-redhat font-light leading-relaxed">
             {video.desc}
           </p>
         </div>
@@ -287,7 +287,7 @@ const ArticleMarquee = ({ articles }) => {
                 <span className="text-[11px] text-[#eeb9ff] font-bold tracking-widest uppercase font-redhat bg-white/5 px-3 py-1 rounded-full">{article.tag}</span>
                 <ExternalLink size={20} className="text-white/20 group-hover:text-[#eeb9ff] transition-colors" />
               </div>
-              <h3 className="text-2xl text-white font-serif tracking-wide group-hover:text-[#eeb9ff] transition-colors duration-300">{article.title}</h3>
+              <h3 className="text-xl md:text-2xl text-white font-serif tracking-wide group-hover:text-[#eeb9ff] transition-colors duration-300 leading-tight">{article.title}</h3>
             </div>
             <div className="flex items-center gap-2 text-xs text-gray-400 font-bold uppercase tracking-widest group-hover:text-white transition-colors font-redhat">
               Visit Source <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform duration-300" />
@@ -432,7 +432,7 @@ export default function ResourcesPage() {
 
       {/* 3. HELPFUL LINKS GRID */}
       <section className="mb-16">
-        <div className="px-6 md:px-12 mb-6">
+        <div className="px-6 md:px-12 mb-20">
           <h2 className="block text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6">
             Helpful Links
           </h2>
@@ -453,9 +453,9 @@ export default function ResourcesPage() {
                   <div className="p-2 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md text-[#eeb9ff]">
                     {section.icon}
                   </div>
-                  <h3 className="text-xl font-serif font-medium text-white tracking-wide">{section.category}</h3>
+                  <h3 className="text-2xl md:text-3xl font-serif font-medium text-white tracking-wide">{section.category}</h3>
                 </div>
-                <p className="text-sm text-gray-200 font-light font-redhat max-w-xl leading-relaxed">
+                <p className="text-base md:text-lg text-gray-200 font-light font-redhat max-w-xl leading-relaxed">
                   {section.description}
                 </p>
               </div>
@@ -478,7 +478,7 @@ export default function ResourcesPage() {
                         </div>
                         <ArrowRight size={14} className="text-gray-300 group-hover/link:text-white -rotate-45 group-hover/link:rotate-0 transition-transform duration-300" />
                       </div>
-                      <span className="text-lg font-serif font-medium text-gray-100 group-hover/link:text-white transition-colors line-clamp-2 leading-tight">
+                      <span className="text-lg md:text-xl font-serif font-medium text-gray-100 group-hover/link:text-white transition-colors line-clamp-2 leading-tight">
                         {link.name}
                       </span>
                     </div>

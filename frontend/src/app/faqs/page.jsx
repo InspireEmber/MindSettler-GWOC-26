@@ -33,7 +33,7 @@ export default function FAQsPage() {
             variants={fadeInUp}
             className="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full mx-auto mb-6 sm:mb-8"
           />
-          <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl font-serif text-white mb-6 leading-tight">
+          <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl font-serif text-[#eeb9ff] mb-6 leading-tight">
             Frequently Asked <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Questions</span>
           </motion.h1>
 
