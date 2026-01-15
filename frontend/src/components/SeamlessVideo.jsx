@@ -3,10 +3,20 @@ import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 
 export default function SeamlessVideo({ src, className }) {
+     const [isMounted, setIsMounted] = useState(false);
      const [activeVideo, setActiveVideo] = useState(0);
+
+     useEffect(() => {
+          setIsMounted(true);
+     }, []);
+
      const videoRefs = [useRef(null), useRef(null)];
      const durationRef = useRef(0);
      const CROSSFADE_DURATION = 1.0; // seconds
+
+     if (!isMounted) {
+          return <div className={`relative w-full h-full overflow-hidden ${className}`} />;
+     }
 
      const handleTimeUpdate = (index) => {
           // Only verify looping if we are the active video
