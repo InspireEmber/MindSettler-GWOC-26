@@ -35,11 +35,12 @@ export default function Navbar() {
     {
       label: "Resources",
       href: "/resources",
-      icon: BookOpen,
-      children: [
-        { label: "Resources", href: "/resources", icon: BookOpen },
-        { label: "Awareness", href: "/awareness", icon: Brain }
-      ]
+      icon: BookOpen
+    },
+    {
+      label: "Awareness",
+      href: "/awareness",
+      icon: Brain
     },
     {
       label: "FAQ",
@@ -190,12 +191,15 @@ export default function Navbar() {
             <NavLink
               href="/resources"
               icon={BookOpen}
-              dropdownItems={[
-                { label: "Resources", href: "/resources", icon: BookOpen },
-                { label: "Awareness", href: "/awareness", icon: Brain }
-              ]}
             >
               Resources
+            </NavLink>
+
+            <NavLink
+              href="/awareness"
+              icon={Brain}
+            >
+              Awareness
             </NavLink>
 
             <NavLink
