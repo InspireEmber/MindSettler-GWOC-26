@@ -1,23 +1,22 @@
-const { Resend } = require('resend');
+const SibApiV3Sdk = require('@getbrevo/brevo');
 
-// Initialize Resend with API key
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Brevo API client
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+const apiKey = apiInstance.authentications['apiKey'];
+apiKey.apiKey = process.env.BREVO_API_KEY;
 
-// Sender email - Use your verified domain or Resend's test domain
-const FROM_EMAIL = process.env.EMAIL_FROM || 'MindSettler <onboarding@resend.dev>';
+// Sender email - Must be the email you signed up with in Brevo
+const FROM_EMAIL = process.env.EMAIL_USER || 'tirthsutariya49@gmail.com';
 
 exports.sendWelcomeEmail = async (userEmail, bookingDetails) => {
-  if (!process.env.RESEND_API_KEY) {
-    console.warn('Email service skipped: RESEND_API_KEY not set in environment');
+  if (!process.env.BREVO_API_KEY) {
+    console.warn('Email service skipped: BREVO_API_KEY not set in environment');
     return;
   }
 
-  try {
-    const { data, error } = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: userEmail,
-      subject: 'Welcome to MindSettler - Booking Received',
-      html: `
+  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+  sendSmtpEmail.subject = "Welcome to MindSettler - Booking Received";
+  sendSmtpEmail.htmlContent = `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 20px; color: #333; line-height: 1.6;">
         <div style="text-align: center; margin-bottom: 30px;">
           <h1 style="color: #3F2965; margin: 0; font-style: italic;">MindSettler</h1>
@@ -35,28 +34,24 @@ exports.sendWelcomeEmail = async (userEmail, bookingDetails) => {
         </div>
         <p>Stay mindful,<br><strong>Team MindSettler</strong></p>
       </div>
-    `,
-    });
+    `;
+  sendSmtpEmail.sender = { "name": "MindSettler", "email": FROM_EMAIL };
+  sendSmtpEmail.to = [{ "email": userEmail }];
 
-    if (error) {
-      console.error('Error sending welcome email:', error);
-      return;
-    }
-    console.log(`Welcome email sent to ${userEmail}`, data);
+  try {
+    const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
+    console.log(`Welcome email sent to ${userEmail} via Brevo`, data.body);
   } catch (error) {
-    console.error('Error sending welcome email:', error);
+    console.error('Error sending welcome email via Brevo:', error.response ? error.response.body : error.message);
   }
 };
 
 exports.sendPaymentConfirmationEmail = async (userEmail, paymentDetails) => {
-  if (!process.env.RESEND_API_KEY) return;
+  if (!process.env.BREVO_API_KEY) return;
 
-  try {
-    const { data, error } = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: userEmail,
-      subject: 'Payment Confirmed - MindSettler',
-      html: `
+  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+  sendSmtpEmail.subject = "Payment Confirmed - MindSettler";
+  sendSmtpEmail.htmlContent = `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 20px; color: #333; line-height: 1.6;">
         <h2 style="color: #059669;">Payment Successful</h2>
         <p>Hello,</p>
@@ -68,28 +63,24 @@ exports.sendPaymentConfirmationEmail = async (userEmail, paymentDetails) => {
         </div>
         <p>Warmly,<br><strong>Team MindSettler</strong></p>
       </div>
-    `,
-    });
+    `;
+  sendSmtpEmail.sender = { "name": "MindSettler", "email": FROM_EMAIL };
+  sendSmtpEmail.to = [{ "email": userEmail }];
 
-    if (error) {
-      console.error('Error sending payment email:', error);
-      return;
-    }
-    console.log(`Payment confirmation email sent to ${userEmail}`, data);
+  try {
+    const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
+    console.log(`Payment email sent to ${userEmail} via Brevo`, data.body);
   } catch (error) {
-    console.error('Error sending payment email:', error);
+    console.error('Error sending payment email via Brevo:', error.response ? error.response.body : error.message);
   }
 };
 
 exports.sendSessionConfirmationEmail = async (userEmail, sessionDetails) => {
-  if (!process.env.RESEND_API_KEY) return;
+  if (!process.env.BREVO_API_KEY) return;
 
-  try {
-    const { data, error } = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: userEmail,
-      subject: 'Session Confirmed - MindSettler',
-      html: `
+  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+  sendSmtpEmail.subject = "Session Confirmed - MindSettler";
+  sendSmtpEmail.htmlContent = `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 20px; color: #333; line-height: 1.6;">
         <div style="text-align: center; margin-bottom: 30px;">
           <h1 style="color: #3F2965; margin: 0; font-style: italic;">MindSettler</h1>
@@ -130,15 +121,14 @@ exports.sendSessionConfirmationEmail = async (userEmail, sessionDetails) => {
         <p>If you have any questions, feel free to reach out to us.</p>
         <p>Stay mindful,<br><strong>Team MindSettler</strong></p>
       </div>
-    `,
-    });
+    `;
+  sendSmtpEmail.sender = { "name": "MindSettler", "email": FROM_EMAIL };
+  sendSmtpEmail.to = [{ "email": userEmail }];
 
-    if (error) {
-      console.error('Error sending session confirmation email:', error);
-      return;
-    }
-    console.log(`Session confirmation email sent to ${userEmail}`, data);
+  try {
+    const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
+    console.log(`Session email sent to ${userEmail} via Brevo`, data.body);
   } catch (error) {
-    console.error('Error sending session confirmation email:', error);
+    console.error('Error sending session email via Brevo:', error.response ? error.response.body : error.message);
   }
 };
