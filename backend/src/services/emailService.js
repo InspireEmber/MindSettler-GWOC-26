@@ -132,3 +132,33 @@ exports.sendSessionConfirmationEmail = async (userEmail, sessionDetails) => {
     console.error('Error sending session email via Brevo:', error.response ? error.response.body : error.message);
   }
 };
+
+exports.sendPasswordResetEmail = async (userEmail, resetUrl) => {
+  if (!process.env.BREVO_API_KEY) return;
+
+  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+  sendSmtpEmail.subject = "Password Reset Request - MindSettler";
+  sendSmtpEmail.htmlContent = `
+      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 20px; color: #333; line-height: 1.6;">
+        <h2 style="color: #3F2965;">Password Reset Request</h2>
+        <p>Hello,</p>
+        <p>You requested a password reset. Please click the link below to reset your password. This link will expire in 1 hour.</p>
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${resetUrl}" style="background-color: #eeb9ff; color: #2E2A36; padding: 12px 24px; text-decoration: none; border-radius: 50px; font-weight: bold; display: inline-block;">Reset Password</a>
+        </div>
+        <p style="font-size: 12px; color: #666;">Or copy and paste this link into your browser:</p>
+        <p style="font-size: 12px; color: #666; word-break: break-all;"><a href="${resetUrl}" style="color: #666;">${resetUrl}</a></p>
+        <p>If you didn't request this, please ignore this email.</p>
+        <p>Warmly,<br><strong>Team MindSettler</strong></p>
+      </div>
+    `;
+  sendSmtpEmail.sender = { "name": "MindSettler", "email": FROM_EMAIL };
+  sendSmtpEmail.to = [{ "email": userEmail }];
+
+  try {
+    const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
+    console.log(`Password reset email sent to ${userEmail} via Brevo`, data.body);
+  } catch (error) {
+    console.error('Error sending password reset email via Brevo:', error.response ? error.response.body : error.message);
+  }
+};

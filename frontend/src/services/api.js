@@ -142,6 +142,8 @@ class ApiService {
   // Auth & Profile
   userSignup(body) { return this.request('/auth/user/signup', { method: 'POST', body }, true); }
   userLogin(body) { return this.request('/auth/user/login', { method: 'POST', body }, true); }
+  forgotPassword(email) { return this.request('/auth/forgot-password', { method: 'POST', body: { email } }, true); }
+  resetPassword(token, password) { return this.request(`/auth/reset-password/${token}`, { method: 'POST', body: { password } }, true); }
   getUserProfile() { return this.request('/users/profile'); }
   updateUserProfile(body) { return this.request('/users/profile', { method: 'PUT', body }); }
   getUserSessionsSummary() { return this.request('/users/sessions-summary'); }

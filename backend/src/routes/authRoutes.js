@@ -38,4 +38,10 @@ router.get('/google/callback',
   }
 );
 
+// Forgot Password
+router.post('/forgot-password', wrapAsync(authController.forgotPassword));
+
+// Reset Password
+router.post('/reset-password/:token', wrapAsync(authController.resetPassword));
+
 module.exports = router;
