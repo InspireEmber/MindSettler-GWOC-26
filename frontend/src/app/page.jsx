@@ -38,30 +38,6 @@ export default function HomePage() {
 
       {/* --- CONTENT LAYER --- */}
       <div className="relative z-10">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "MentalHealthService",
-              "name": "MindSettler",
-              "alternateName": "MindSettler by Parnika",
-              "url": "https://mindsettler.com",
-              "logo": "https://mindsettler.com/logo.png",
-              "image": "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978664/mindsettler_assets/bg4.jpg",
-              "description": "MindSettler by Parnika is a safe space to understand your mind, settle emotional distress, and begin your mental well-being journey.",
-              "address": {
-                "@type": "PostalAddress",
-                "addressCountry": "IN"
-              },
-              "priceRange": "$$",
-              "offers": {
-                "@type": "Offer",
-                "description": "Mental health consultation and support sessions"
-              }
-            })
-          }}
-        />
 
         {/* HERO SECTION – VIDEO BACKGROUND */}
         <section className="relative min-h-[70vh] lg:min-h-[100vh] flex items-center overflow-hidden">
