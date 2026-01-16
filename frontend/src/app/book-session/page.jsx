@@ -85,7 +85,7 @@ export default function BookSessionPage() {
             viewport={{ once: true }}
             className="lg:col-span-4 space-y-8"
           >
-            <div className="bg-white/5 backdrop-blur-xl p-8 rounded-[2rem] shadow-2xl border border-white/10">
+            <div className="bg-white/5 backdrop-blur-xl p-8 rounded-[2rem] shadow-2xl border border-white/15">
               <h2 className="text-xl font-serif italic mb-8 text-white/90">How it works</h2>
               <div className="space-y-8 relative">
                 <div className="absolute left-4 top-2 bottom-2 w-[1px] bg-white/10 -z-0" />
@@ -104,7 +104,7 @@ export default function BookSessionPage() {
             </div>
 
             <div
-              className="p-8 rounded-[2rem] text-white shadow-2xl relative overflow-hidden bg-white/5 backdrop-blur-xl border border-white/10"
+              className="p-8 rounded-[2rem] text-white shadow-2xl relative overflow-hidden bg-white/5 backdrop-blur-xl border border-white/15"
             >
               <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#eeb9ff]/10 rounded-full blur-2xl" />
               <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-[#3F2965]/20 rounded-full blur-2xl" />

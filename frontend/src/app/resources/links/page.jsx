@@ -62,7 +62,7 @@ export default function HelpfulLinksResourcesPage() {
           {HELPFUL_RESOURCES.map((section, i) => (
             <div key={i} className="group">
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-white/10 border border-white/20 shadow-sm backdrop-blur-md">
+                <div className="p-2 rounded-lg bg-white/10 border border-white/15 shadow-sm backdrop-blur-md">
                   {section.icon}
                 </div>
                 <h2 className="text-2xl font-medium text-white">{section.category}</h2>
@@ -77,7 +77,7 @@ export default function HelpfulLinksResourcesPage() {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 hover:border-[#eeb9ff]/30 hover:shadow-lg transition-all group/link"
+                      className="flex items-center justify-between p-4 rounded-xl border border-white/15 bg-white/5 backdrop-blur-md hover:bg-white/10 hover:border-[#eeb9ff]/30 hover:shadow-lg transition-all group/link"
                     >
                       <span className="text-gray-100 font-medium group-hover/link:text-[#eeb9ff] transition-colors">{link.name}</span>
                       <ExternalLink size={14} className="text-gray-400 group-hover/link:text-[#eeb9ff] group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-all" />
@@ -93,7 +93,7 @@ export default function HelpfulLinksResourcesPage() {
       {/* Custom Resource Navigation CTA */}
       <section className="py-24 md:py-32 relative z-10">
         <div className="max-w-5xl mx-auto px-6 md:px-12">
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-white/5 backdrop-blur-md border border-white/10 p-10 sm:p-12 md:p-20 text-center text-white shadow-2xl shadow-[#3F2965]/20 isolate">
+          <div className="relative overflow-hidden rounded-[2.5rem] bg-white/5 backdrop-blur-md border border-white/15 p-10 sm:p-12 md:p-20 text-center text-white shadow-2xl shadow-[#3F2965]/20 isolate">
             {/* Decorative Brand Accents */}
             <div className="absolute -top-32 -right-32 w-96 h-96 bg-[#DD1764]/20 rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-[#3F2965]/40 rounded-full blur-[100px] pointer-events-none" />

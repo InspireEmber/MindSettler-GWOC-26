@@ -332,7 +332,7 @@ export default function JourneyPage() {
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-[#DD1764] to-[#a855f7] blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 rounded-[2rem]" />
 
-                    <div className="relative w-64 h-80 md:w-80 md:h-96 bg-white/5 backdrop-blur-md border border-white/10 p-3 rounded-[2rem] shadow-2xl transform transition-transform duration-500 group-hover:scale-[1.02] group-hover:rotate-1">
+                    <div className="relative w-64 h-80 md:w-80 md:h-96 bg-white/5 backdrop-blur-md border border-white/15 p-3 rounded-[2rem] shadow-2xl transform transition-transform duration-500 group-hover:scale-[1.02] group-hover:rotate-1">
                       <div className="relative w-full h-full rounded-[1.5rem] overflow-hidden bg-black/50">
                         <Image
                           src={step.imageSrc}
@@ -345,7 +345,7 @@ export default function JourneyPage() {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
 
                         {/* Step Number Tag */}
-                        <div className="absolute top-4 left-4 bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full">
+                        <div className="absolute top-4 left-4 bg-black/40 backdrop-blur-md border border-white/15 px-3 py-1 rounded-full">
                           <span className="text-[10px] font-bold tracking-widest uppercase text-white/90">
                             Elevation 0{step.id}
                           </span>
@@ -375,7 +375,7 @@ export default function JourneyPage() {
                     {step.title}
                   </h2>
 
-                  <div className="relative pl-6 border-l border-white/10">
+                  <div className="relative pl-6 border-l border-white/15">
                     <p className="text-lg text-gray-300 leading-relaxed italic font-light">
                       "{step.desc}"
                     </p>

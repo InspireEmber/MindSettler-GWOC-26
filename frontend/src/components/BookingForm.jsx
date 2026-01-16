@@ -91,7 +91,7 @@ export default function BookingForm() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden"
+        className="rounded-3xl bg-white/5 backdrop-blur-xl border border-white/15 shadow-2xl overflow-hidden"
       >
         {/* Progress Header */}
         <div className="p-8 relative overflow-hidden group bg-[#eeb9ff]">

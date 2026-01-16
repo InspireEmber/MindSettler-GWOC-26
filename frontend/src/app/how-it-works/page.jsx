@@ -170,7 +170,7 @@ export default function HowItWorksPage() {
                   </div>
 
                   {/* Glass Card */}
-                  <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 sm:p-8 rounded-2xl shadow-xl hover:bg-white/15 transition-all duration-300">
+                  <div className="bg-white/10 backdrop-blur-md border border-white/15 p-6 sm:p-8 rounded-2xl shadow-xl hover:bg-white/15 transition-all duration-300">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-normal text-[#eeb9ff] mb-4 leading-tight">
                       {step.title}
                     </h2>
@@ -185,7 +185,7 @@ export default function HowItWorksPage() {
                   whileHover={{ scale: 1.05 }}
                   className={`${i % 2 !== 0 ? 'md:order-1' : ''} flex items-center justify-center mt-6 md:mt-0`}
                 >
-                  <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-full p-8 shadow-xl aspect-square flex items-center justify-center w-full max-w-[20rem] sm:max-w-[24rem] md:max-w-[30rem]">
+                  <div className="bg-white/10 backdrop-blur-md border border-white/15 rounded-full p-8 shadow-xl aspect-square flex items-center justify-center w-full max-w-[20rem] sm:max-w-[24rem] md:max-w-[30rem]">
                     <motion.img
                       initial={{ scale: 0.9, opacity: 0 }}
                       whileInView={{ scale: 1, opacity: 1 }}
@@ -219,7 +219,7 @@ export default function HowItWorksPage() {
                   exit={{ opacity: 0, scale: 0.95, y: -10, filter: "blur(5px)" }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
                   // UPDATED: Added Glass Card Styles (bg-black/30, backdrop-blur-xl, border, shadow)
-                  className="w-full flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20 bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl"
+                  className="w-full flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20 bg-black/30 backdrop-blur-xl border border-white/15 rounded-3xl p-8 md:p-12 shadow-2xl"
                 >
                   {/* Image Display */}
                   <div className="shrink-0">

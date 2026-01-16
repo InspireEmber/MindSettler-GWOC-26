@@ -96,7 +96,7 @@ const ApproachAccordion = () => {
               {/* Expanded Content (Visible when Active OR Idle) */}
               <div className={`${(!isActive && !isIdle) ? 'lg:hidden' : ''} h-full flex flex-col justify-end`}>
                 <div className="mb-auto hidden lg:block">
-                  <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center mb-6">
+                  <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 flex items-center justify-center mb-6">
                     <item.icon className="w-7 h-7 text-white" />
                   </div>
                 </div>
@@ -147,7 +147,7 @@ export default function AboutPage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 grid md:grid-cols-[240px_1fr] gap-10 items-center">
           {/* Left – Profile Image */}
           <div className="flex justify-center md:justify-start">
-            <div className="w-60 h-60 rounded-full overflow-hidden shadow-2xl border-4 border-white/10 flex-shrink-0">
+            <div className="w-60 h-60 rounded-full overflow-hidden shadow-2xl border-4 border-white/15 flex-shrink-0">
               <img
                 src="https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978718/mindsettler_assets/parnika.jpg"
                 alt="Parnika Bajaj – Psychotherapist"
@@ -282,7 +282,7 @@ export default function AboutPage() {
 
             <div
               className={`${s.reverse ? "md:order-1" : ""
-                } h-48 sm:h-64 md:h-80 rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex flex-col items-center justify-center mt-6 md:mt-0 overflow-hidden`}
+                } h-48 sm:h-64 md:h-80 rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-md border border-white/15 flex flex-col items-center justify-center mt-6 md:mt-0 overflow-hidden`}
             >
               {s.label === "Our Mission" ? (
                 <img

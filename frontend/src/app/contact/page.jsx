@@ -60,7 +60,7 @@ export default function ContactPage() {
           <div className="space-y-5 sm:space-y-6">
             {CONTACT_INFO.map((info, idx) => (
               <div key={idx} className="flex items-start gap-3 sm:gap-4">
-                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shrink-0 min-w-[44px] min-h-[44px] bg-white/10 backdrop-blur-md border border-white/10`}>
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shrink-0 min-w-[44px] min-h-[44px] bg-white/10 backdrop-blur-md border border-white/15`}>
                   {info.icon}
                 </div>
                 <div>
@@ -71,7 +71,7 @@ export default function ContactPage() {
             ))}
           </div>
 
-          <div className="p-6 sm:p-8 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
+          <div className="p-6 sm:p-8 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/15">
             <h3 className="text-lg sm:text-xl font-medium text-[#eeb9ff] mb-3 sm:mb-4">Response Time</h3>
             <p className="text-sm sm:text-base leading-relaxed text-gray-200 font-redhat">Typically 24-48 hours. For urgent booking matters, please mention it in your message.</p>
           </div>
@@ -79,7 +79,7 @@ export default function ContactPage() {
 
         {/* Form */}
         {/* Form Container */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl">
+        <div className="bg-white/5 backdrop-blur-xl border border-white/15 rounded-3xl p-6 sm:p-10 shadow-2xl">
           <h2 className="text-2xl sm:text-3xl font-light text-[#eeb9ff] mb-8">Send Us a Message</h2>
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
             {[

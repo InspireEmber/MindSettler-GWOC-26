@@ -80,7 +80,7 @@ export default function LoginPage() {
           initial={{ opacity: 0, y: 10, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="w-full max-w-md mx-auto bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden relative z-10 p-8 md:p-10"
+          className="w-full max-w-md mx-auto bg-white/10 backdrop-blur-xl border border-white/15 rounded-2xl shadow-2xl overflow-hidden relative z-10 p-8 md:p-10"
         >
           <div className="text-center mb-8">
             <img src="/logo.svg" alt="Logo" className="h-20 mx-auto mb-6 w-auto" />

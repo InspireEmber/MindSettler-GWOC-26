@@ -47,7 +47,7 @@ export default function VideosResourcesPage() {
               </motion.div>
 
               {/* Video Player */}
-              <div className="relative w-full rounded-2xl overflow-hidden bg-black/20 border border-white/10 shadow-2xl group-hover:shadow-[0_0_30px_rgba(238,185,255,0.15)] transition-all duration-500">
+              <div className="relative w-full rounded-2xl overflow-hidden bg-black/20 border border-white/15 shadow-2xl group-hover:shadow-[0_0_30px_rgba(238,185,255,0.15)] transition-all duration-500">
                 <video
                   className="w-full h-auto"
                   controls
@@ -60,7 +60,7 @@ export default function VideosResourcesPage() {
               </div>
 
               {/* Video Information */}
-              <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 space-y-4 hover:bg-white/10 transition-all duration-300">
+              <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/15 space-y-4 hover:bg-white/10 transition-all duration-300">
                 <div className="space-y-3 text-sm sm:text-base text-gray-200 leading-relaxed">
                   <div>
                     <h3 className="font-semibold text-[#eeb9ff] mb-1.5 text-base sm:text-lg">Panic Attack:</h3>
@@ -73,7 +73,7 @@ export default function VideosResourcesPage() {
                 </div>
 
                 {/* Links Section */}
-                <div className="pt-4 border-t border-white/10">
+                <div className="pt-4 border-t border-white/15">
                   <p className="text-sm sm:text-base font-medium text-white mb-3 font-redhat">Related Links:</p>
                   <ul className="space-y-2">
                     <li>
@@ -106,7 +106,7 @@ export default function VideosResourcesPage() {
               </motion.div>
 
               {/* Video Player */}
-              <div className="relative w-full rounded-2xl overflow-hidden bg-black/20 border border-white/10 shadow-2xl group-hover:shadow-[0_0_30px_rgba(238,185,255,0.15)] transition-all duration-500">
+              <div className="relative w-full rounded-2xl overflow-hidden bg-black/20 border border-white/15 shadow-2xl group-hover:shadow-[0_0_30px_rgba(238,185,255,0.15)] transition-all duration-500">
                 <video
                   className="w-full h-auto"
                   controls
@@ -119,7 +119,7 @@ export default function VideosResourcesPage() {
               </div>
 
               {/* Video Information */}
-              <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 space-y-4 hover:bg-white/10 transition-all duration-300">
+              <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/15 space-y-4 hover:bg-white/10 transition-all duration-300">
                 <div className="text-sm sm:text-base text-gray-200 leading-relaxed">
                   <p className="font-redhat">
                     Whether you're dealing with romantic partners, family, friends, or coworkers,
@@ -129,7 +129,7 @@ export default function VideosResourcesPage() {
                 </div>
 
                 {/* Links Section */}
-                <div className="pt-4 border-t border-white/10">
+                <div className="pt-4 border-t border-white/15">
                   <p className="text-sm sm:text-base font-medium text-white mb-3 font-redhat">Related Links:</p>
                   <ul className="space-y-2">
                     <li>
@@ -153,7 +153,7 @@ export default function VideosResourcesPage() {
       {/* Disclaimer */}
       <section className="py-10 sm:py-12 relative z-10">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12">
-          <div className="rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-6 sm:p-8 text-xs sm:text-sm text-gray-400 leading-relaxed italic text-center">
+          <div className="rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-sm border border-white/15 p-6 sm:p-8 text-xs sm:text-sm text-gray-400 leading-relaxed italic text-center">
             <p className="font-redhat">
               This content is provided for awareness and educational purposes only. It does not replace professional
               diagnosis, treatment, or emergency care.

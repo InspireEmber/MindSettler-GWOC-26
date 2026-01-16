@@ -91,7 +91,7 @@ export default function ProfilePage() {
 
   if (loading) return (
     <div className="min-h-screen flex flex-col items-center justify-center space-y-4 relative z-10">
-      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }} className="w-10 h-10 border-4 border-white/10 border-t-[#eeb9ff] rounded-full" />
+      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }} className="w-10 h-10 border-4 border-white/15 border-t-[#eeb9ff] rounded-full" />
       <p className="text-white animate-pulse font-medium font-redhat">Syncing your journey...</p>
     </div>
   );
@@ -133,7 +133,7 @@ export default function ProfilePage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
 
             {/* Identity Card */}
-            <div className="lg:col-span-1 bg-white/10 backdrop-blur-md rounded-[2rem] p-8 shadow-lg border border-white/20 relative overflow-hidden group transition-all">
+            <div className="lg:col-span-1 bg-white/10 backdrop-blur-md rounded-[2rem] p-8 shadow-lg border border-white/15 relative overflow-hidden group transition-all">
               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity text-white">
                 <User size={100} />
               </div>
@@ -181,10 +181,10 @@ export default function ProfilePage() {
             </div>
 
             <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <SummaryCard label="Total" value={summary?.totalSessions} icon={<Activity size={18} />} color="bg-[#eeb9ff]/20 text-[#eeb9ff] border-white/10" />
-              <SummaryCard label="Approved" value={summary?.approvedUpcomingSessions} icon={<CheckCircle2 size={18} />} color="bg-green-500/20 text-green-300 border-white/10" />
-              <SummaryCard label="Pending" value={summary?.pendingSessions} icon={<Clock size={18} />} color="bg-yellow-500/20 text-yellow-300 border-white/10" />
-              <SummaryCard label="Completed" value={summary?.completedSessions} icon={<CheckCircle2 size={18} />} color="bg-blue-500/20 text-blue-300 border-white/10" />
+              <SummaryCard label="Total" value={summary?.totalSessions} icon={<Activity size={18} />} color="bg-[#eeb9ff]/20 text-[#eeb9ff] border-white/15" />
+              <SummaryCard label="Approved" value={summary?.approvedUpcomingSessions} icon={<CheckCircle2 size={18} />} color="bg-green-500/20 text-green-300 border-white/15" />
+              <SummaryCard label="Pending" value={summary?.pendingSessions} icon={<Clock size={18} />} color="bg-yellow-500/20 text-yellow-300 border-white/15" />
+              <SummaryCard label="Completed" value={summary?.completedSessions} icon={<CheckCircle2 size={18} />} color="bg-blue-500/20 text-blue-300 border-white/15" />
             </div>
           </div>
 
@@ -208,7 +208,7 @@ function SummaryCard({ label, value, icon, color }) {
   // Extract background and text color from the composite class string for icon styling logic if needed, 
   // but here we just use the passed color class directly on the icon container
   return (
-    <div className="bg-white/5 backdrop-blur-md rounded-[2rem] p-5 border border-white/10 shadow-sm flex flex-col justify-between hover:bg-white/10 transition-colors">
+    <div className="bg-white/5 backdrop-blur-md rounded-[2rem] p-5 border border-white/15 shadow-sm flex flex-col justify-between hover:bg-white/10 transition-colors">
       <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 shadow-md ${color}`}>
         {icon}
       </div>

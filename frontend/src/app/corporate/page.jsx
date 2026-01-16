@@ -266,7 +266,7 @@ export default function CorporatePage() {
       {/* Form */}
       <section className="py-16 relative z-10">
         <div className="max-w-3xl mx-auto px-6">
-          <div className="p-8 md:p-12 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg">
+          <div className="p-8 md:p-12 rounded-3xl bg-white/10 backdrop-blur-md border border-white/15 shadow-lg">
 
             {/* Inquiry Type Selector */}
             <div className="flex justify-center mb-8">

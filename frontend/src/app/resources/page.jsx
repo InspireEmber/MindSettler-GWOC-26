@@ -42,7 +42,7 @@ const HELPFUL_RESOURCES = [
 
 const FloatingPageParticle = ({ width, height, color }) => (
   <div
-    className="w-full h-full bg-white/10 backdrop-blur-[1px] border border-white/20 rounded-[2px]"
+    className="w-full h-full bg-white/10 backdrop-blur-[1px] border border-white/15 rounded-[2px]"
     style={{ borderColor: color }}
   >
     <div className="w-[80%] h-[1px] bg-white/30 mx-auto mt-[20%]" />
@@ -53,14 +53,14 @@ const FloatingPageParticle = ({ width, height, color }) => (
 
 const FilmStripParticle = ({ width, height, color }) => (
   <div
-    className="w-full h-full bg-black/20 backdrop-blur-[1px] border border-white/20 flex flex-col justify-between py-[2px]"
+    className="w-full h-full bg-black/20 backdrop-blur-[1px] border border-white/15 flex flex-col justify-between py-[2px]"
     style={{ borderColor: color }}
   >
     <div className="flex justify-between px-[2px]">
       <div className="w-[2px] h-[3px] bg-white/40 rounded-full" />
       <div className="w-[2px] h-[3px] bg-white/40 rounded-full" />
     </div>
-    <div className="w-[80%] h-[40%] bg-white/10 mx-auto rounded-[1px] border border-white/10" />
+    <div className="w-[80%] h-[40%] bg-white/10 mx-auto rounded-[1px] border border-white/15" />
     <div className="flex justify-between px-[2px]">
       <div className="w-[2px] h-[3px] bg-white/40 rounded-full" />
       <div className="w-[2px] h-[3px] bg-white/40 rounded-full" />
@@ -138,14 +138,14 @@ const ScrollButtons = ({ scrollRef, containerClass = "" }) => {
     <>
       <button
         onClick={() => scroll("left")}
-        className={`absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/20 hover:bg-[#DD1764]/20 border border-white/10 hover:border-[#eeb9ff]/50 backdrop-blur-md rounded-full flex items-center justify-center text-white/70 hover:text-[#eeb9ff] transition-all opacity-0 group-hover:opacity-100 hidden md:flex ${containerClass}`}
+        className={`absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/20 hover:bg-[#DD1764]/20 border border-white/15 hover:border-[#eeb9ff]/50 backdrop-blur-md rounded-full flex items-center justify-center text-white/70 hover:text-[#eeb9ff] transition-all opacity-0 group-hover:opacity-100 hidden md:flex ${containerClass}`}
         aria-label="Scroll left"
       >
         <ChevronLeft size={24} />
       </button>
       <button
         onClick={() => scroll("right")}
-        className={`absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/20 hover:bg-[#DD1764]/20 border border-white/10 hover:border-[#eeb9ff]/50 backdrop-blur-md rounded-full flex items-center justify-center text-white/70 hover:text-[#eeb9ff] transition-all opacity-0 group-hover:opacity-100 hidden md:flex ${containerClass}`}
+        className={`absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/20 hover:bg-[#DD1764]/20 border border-white/15 hover:border-[#eeb9ff]/50 backdrop-blur-md rounded-full flex items-center justify-center text-white/70 hover:text-[#eeb9ff] transition-all opacity-0 group-hover:opacity-100 hidden md:flex ${containerClass}`}
         aria-label="Scroll right"
       >
         <ChevronRight size={24} />
@@ -186,7 +186,7 @@ const VideoResourceCard = ({ video, onClick }) => {
       onTouchEnd={() => setIsHovered(false)}
       onContextMenu={(e) => e.preventDefault()}
       onClick={onClick}
-      className="relative w-[300px] md:w-[360px] h-[420px] rounded-[2rem] bg-white/5 backdrop-blur-md overflow-hidden group cursor-pointer border border-white/10 snap-start shadow-xl flex flex-col transition-all hover:bg-white/10 hover:border-[#eeb9ff]/20"
+      className="relative w-[300px] md:w-[360px] h-[420px] rounded-[2rem] bg-white/5 backdrop-blur-md overflow-hidden group cursor-pointer border border-white/15 snap-start shadow-xl flex flex-col transition-all hover:bg-white/10 hover:border-[#eeb9ff]/20"
     >
       {/* Top: Video Section (80%) */}
       <div className="relative h-[80%] w-full overflow-hidden rounded-t-[2rem]">
@@ -201,7 +201,7 @@ const VideoResourceCard = ({ video, onClick }) => {
         {/* Play Icon Overlay (Subtle) */}
         {!isHovered && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/10">
-            <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
+            <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/15">
               <Play size={20} fill="white" className="text-white ml-1 opacity-80" />
             </div>
           </div>
@@ -237,7 +237,7 @@ const VideoModal = ({ video, onClose }) => {
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
-        className="relative w-full max-w-6xl h-[85vh] bg-[#150a1f] rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col lg:flex-row"
+        className="relative w-full max-w-6xl h-[85vh] bg-[#150a1f] rounded-3xl overflow-hidden shadow-2xl border border-white/15 flex flex-col lg:flex-row"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -258,7 +258,7 @@ const VideoModal = ({ video, onClose }) => {
         </div>
 
         {/* RIGHT: Related Article/Text */}
-        <div className="lg:w-[35%] h-full overflow-y-auto custom-scrollbar border-l border-white/10 bg-[#1a1025]">
+        <div className="lg:w-[35%] h-full overflow-y-auto custom-scrollbar border-l border-white/15 bg-[#1a1025]">
           <div className="p-8">
             <div className="mb-6">
               <span className="text-xs font-bold text-[#eeb9ff] tracking-widest uppercase mb-2 block">Related Guide</span>
@@ -310,7 +310,7 @@ const ArticleMarquee = ({ articles }) => {
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ y: -10, scale: 1.02 }}
-            className="min-w-[320px] h-[220px] p-8 rounded-[2rem] bg-white/5 backdrop-blur-md border border-white/10 flex flex-col justify-between group hover:bg-white/10 transition-all cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-[#eeb9ff]/10 snap-center"
+            className="min-w-[320px] h-[220px] p-8 rounded-[2rem] bg-white/5 backdrop-blur-md border border-white/15 flex flex-col justify-between group hover:bg-white/10 transition-all cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-[#eeb9ff]/10 snap-center"
           >
             <div>
               <div className="flex justify-between mb-4">
@@ -371,7 +371,7 @@ const ResourceCategoryRow = ({ section, index }) => {
     >
       <div className="px-6 md:px-12 mb-4 text-center">
         <div className="flex items-center justify-center gap-3 mb-2">
-          <div className="p-2 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md text-[#eeb9ff]">
+          <div className="p-2 rounded-lg bg-white/5 border border-white/15 shadow-sm backdrop-blur-md text-[#eeb9ff]">
             {section.icon}
           </div>
           <h3 className="text-2xl md:text-3xl font-serif font-medium text-[#eeb9ff] tracking-wide">{section.category}</h3>

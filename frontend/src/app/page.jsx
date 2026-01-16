@@ -348,7 +348,7 @@ export default function HomePage() {
                       <motion.div
                         animate={{ y: [0, -8, 0] }}
                         transition={{ duration: 4 + index, repeat: Infinity, ease: "easeInOut" }}
-                        className="p-6 md:p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/20 hover:bg-white/10 hover:border-[#eeb9ff]/30 hover:shadow-[0_0_30px_rgba(238,185,255,0.1)] transition-all group"
+                        className="p-6 md:p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/15 hover:bg-white/10 hover:border-[#eeb9ff]/30 hover:shadow-[0_0_30px_rgba(238,185,255,0.1)] transition-all group"
                       >
                         <h3 className="text-xl md:text-2xl font-serif text-white mb-2 group-hover:text-[#eeb9ff] transition-colors">{item.title}</h3>
                         <p className="text-sm md:text-base text-gray-300 font-light leading-relaxed font-redhat">{item.detail}</p>

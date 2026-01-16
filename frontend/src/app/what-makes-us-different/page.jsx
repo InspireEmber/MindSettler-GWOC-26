@@ -91,13 +91,13 @@ const ZoneCard = ({ zone, className }) => (
   <motion.div
     variants={itemVariants}
     whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-    className={`relative overflow-hidden p-6 rounded-[2rem] bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl hover:bg-white/10 hover:border-white transition-all duration-300 h-full group flex flex-col ${className}`}
+    className={`relative overflow-hidden p-6 rounded-[2rem] bg-white/5 backdrop-blur-xl border border-white/15 shadow-2xl hover:bg-white/10 hover:border-white transition-all duration-300 h-full group flex flex-col ${className}`}
     style={{ '--hover-color': zone.color }}
   >
     <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none group-hover:bg-white/10 transition-colors" />
 
     <div className="relative z-10 flex flex-col gap-4">
-      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform duration-300">
+      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/15 flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform duration-300">
         <zone.icon
           className="w-6 h-6 text-white/50 transition-colors duration-300 group-hover:text-[var(--hover-color)] group-hover:drop-shadow-[0_0_8px_var(--hover-color)]"
           strokeWidth={1.5}
@@ -271,7 +271,7 @@ export default function WhatMakesUsDifferentPage() {
                 animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, x: -50, filter: "blur(5px)" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="w-full flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20 bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl"
+                className="w-full flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20 bg-black/30 backdrop-blur-xl border border-white/15 rounded-3xl p-8 md:p-12 shadow-2xl"
               >
 
                 {/* --- IMAGE DISPLAY --- */}

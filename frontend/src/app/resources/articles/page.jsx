@@ -51,7 +51,7 @@ const FloatingPages = () => {
         <motion.div
           key={page.id}
           // The "page" look: white glassmorphism with lines
-          className="absolute top-[-10%] bg-white/5 border border-white/10 rounded-[2px] backdrop-blur-[1px]"
+          className="absolute top-[-10%] bg-white/5 border border-white/15 rounded-[2px] backdrop-blur-[1px]"
           style={{
             left: page.left,
             width: page.size,
@@ -118,7 +118,7 @@ export default function ArticlesResourcesPage() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.5 }}
               >
-                <div className="group relative flex flex-col h-full p-8 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 overflow-hidden hover:border-white/20 hover:shadow-[0_0_40px_rgba(238,185,255,0.1)] hover:-translate-y-2 transition-all duration-500 isolate">
+                <div className="group relative flex flex-col h-full p-8 rounded-3xl bg-white/5 backdrop-blur-md border border-white/15 overflow-hidden hover:border-white/20 hover:shadow-[0_0_40px_rgba(238,185,255,0.1)] hover:-translate-y-2 transition-all duration-500 isolate">
 
                   {/* Glass Shine Effect */}
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-0">
@@ -172,7 +172,7 @@ export default function ArticlesResourcesPage() {
       {/* Disclaimer */}
       <section className="py-10 relative z-10">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-6 text-sm italic leading-relaxed text-gray-400">
+          <div className="rounded-2xl bg-white/5 backdrop-blur-sm border border-white/15 p-6 text-sm italic leading-relaxed text-gray-400">
             <p className="font-redhat">
               <strong>Disclaimer:</strong> These are external educational resources. MindSettler is not responsible for the content on third-party websites. This content does not replace professional diagnosis or emergency care.
             </p>
