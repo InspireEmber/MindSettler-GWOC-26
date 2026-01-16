@@ -42,7 +42,7 @@ export default function FAQsPage() {
           </motion.p>
 
           <motion.p variants={fadeInUp} className="text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl mx-auto font-light font-redhat">
-            Everything you need to know about our psycho-education sessions,
+            Everything you need to know about our awareness sessions,
             privacy standards, and the journey toward emotional clarity.
           </motion.p>
         </motion.div>

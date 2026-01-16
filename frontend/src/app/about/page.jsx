@@ -327,7 +327,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-[#eeb9ff] leading-[1.1] tracking-tight mb-4">
-              Our Psycho-Education <br className="hidden sm:block" />
+              Our Awareness <br className="hidden sm:block" />
               Approach
             </h2>
             <p className="text-[#eeb9ff]/80 font-light tracking-[0.2em] uppercase text-xs mt-6 opacity-80">

@@ -202,7 +202,7 @@ const ToolboxItem = ({ item, index }) => {
   );
 };
 
-export default function PsychoEducationPage() {
+export default function AwarenessPage() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -270,7 +270,7 @@ export default function PsychoEducationPage() {
             transition={{ duration: 1, delay: 0.6 }}
             className="text-2xl md:text-3xl text-gray-300 max-w-3xl mx-auto font-redhat font-light leading-relaxed mb-10"
           >
-            Psycho-education is the bridge between clinical insight and <span className="text-white font-medium">lived experience</span>.
+            Awareness is the bridge between clinical insight and <span className="text-white font-medium">lived experience</span>.
             Understanding your mind is the first step toward masterfully navigating it.
           </motion.p>
         </motion.div>
@@ -300,7 +300,7 @@ export default function PsychoEducationPage() {
 
             <div className="space-y-8 text-xl text-gray-300 font-redhat font-light leading-[1.7]">
               <p>
-                Psycho-education transforms the mysterious into the manageable. By explaining the <strong className="text-white font-semibold">"why"</strong> behind your internal world, we strip away the shame often attached to mental health struggles.
+                Awareness transforms the mysterious into the manageable. By explaining the <strong className="text-white font-semibold">"why"</strong> behind your internal world, we strip away the shame often attached to mental health struggles.
               </p>
               <p className="bg-white/5 p-8 rounded-[2rem] border-l-4 border-[#eeb9ff]/40 italic">
                 "Whether it's the biological roots of panic or the cognitive architecture of anxiety, knowledge provides the map. At MindSettler, we don't just treat symptoms—we share the manual for your most powerful tool: <span className="text-white">your mind</span>."
@@ -396,7 +396,7 @@ export default function PsychoEducationPage() {
             <h2 className="text-5xl md:text-6xl font-light text-white mb-6">The <span className="text-[#eeb9ff] font-baskervville italic">Meta-Impact</span></h2>
             <div className="h-px w-24 bg-gradient-to-r from-transparent via-[#eeb9ff] to-transparent mx-auto opacity-50" />
             <p className="mt-8 text-xl text-gray-400 font-redhat max-w-2xl mx-auto">
-              Why psycho-education is the gold standard for sustainable emotional health.
+              Why awareness is the gold standard for sustainable emotional health.
             </p>
           </div>
 

@@ -183,16 +183,18 @@ export default function HowItWorksPage() {
                 {/* Image Side */}
                 <motion.div
                   whileHover={{ scale: 1.05 }}
-                  className={`${i % 2 !== 0 ? 'md:order-1' : ''} h-64 sm:h-96 md:h-[35rem] flex items-center justify-center mt-6 md:mt-0 relative`}
+                  className={`${i % 2 !== 0 ? 'md:order-1' : ''} flex items-center justify-center mt-6 md:mt-0`}
                 >
-                  <motion.img
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.2, duration: 0.5 }}
-                    src={step.imageSrc}
-                    alt={step.title}
-                    className="w-full h-full object-contain drop-shadow-2xl"
-                  />
+                  <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-full p-8 shadow-xl aspect-square flex items-center justify-center w-full max-w-[20rem] sm:max-w-[24rem] md:max-w-[30rem]">
+                    <motion.img
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.2, duration: 0.5 }}
+                      src={step.imageSrc}
+                      alt={step.title}
+                      className="w-full h-full object-contain drop-shadow-2xl rounded-full"
+                    />
+                  </div>
                 </motion.div>
               </motion.div>
             ))}
