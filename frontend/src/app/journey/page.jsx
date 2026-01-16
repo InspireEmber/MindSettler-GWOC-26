@@ -158,21 +158,61 @@ const JOURNEY_STEPS = [
   }
 ];
 
+const ConnectionLineSegment = ({ start, end }) => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 80%", "end 55%"]
+  });
+
+  const pathLength = useSpring(scrollYProgress, {
+    stiffness: 200,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  const midY = (start.y + end.y) / 2;
+  const d = `M ${start.x} ${start.y} C ${start.x} ${midY}, ${end.x} ${midY}, ${end.x} ${end.y}`;
+
+  return (
+    <div className="absolute inset-0 pointer-events-none">
+      <div
+        ref={ref}
+        style={{
+          position: 'absolute',
+          top: start.y,
+          height: Math.max(1, end.y - start.y),
+          width: '100%',
+          visibility: 'hidden'
+        }}
+      />
+
+      <svg className="absolute inset-0 size-full overflow-visible">
+        <defs>
+          <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#eeb9ff" stopOpacity="0.6" />
+            <stop offset="50%" stopColor="#eeb9ff" />
+            <stop offset="100%" stopColor="#DD1764" />
+          </linearGradient>
+        </defs>
+
+        <motion.path
+          d={d}
+          stroke="url(#pinkGradient)"
+          strokeWidth="3"
+          strokeLinecap="round"
+          fill="none"
+          style={{ pathLength }}
+        />
+      </svg>
+    </div>
+  );
+};
+
 export default function JourneyPage() {
   const containerRef = useRef(null);
   const cardRefs = useRef([]);
   const [dotPositions, setDotPositions] = useState([]);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  const pathLength = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
 
   // Calculate dot positions based on card refs
   useEffect(() => {
@@ -212,27 +252,6 @@ export default function JourneyPage() {
     };
   }, []);
 
-  // Generate SVG path string connecting bottom of card N to top of card N+1
-  const generatePath = () => {
-    if (dotPositions.length < 2) return "";
-
-    let pathParts = [];
-
-    for (let i = 0; i < dotPositions.length - 1; i++) {
-      const start = dotPositions[i].bottomDot;
-      const end = dotPositions[i + 1].topDot;
-
-      // Calculate control points for a smooth S-curve
-      const midY = (start.y + end.y) / 2;
-
-      pathParts.push(
-        `M ${start.x} ${start.y} C ${start.x} ${midY}, ${end.x} ${midY}, ${end.x} ${end.y}`
-      );
-    }
-
-    return pathParts.join(" ");
-  };
-
   return (
     <div className="min-h-screen relative text-white selection:bg-[#DD1764] selection:text-white overflow-hidden">
       <SporesRain />
@@ -263,31 +282,12 @@ export default function JourneyPage() {
 
         {/* --- THE DYNAMIC TRAIL (PATH) --- */}
         {/* SVG overlay that draws lines between card anchor dots */}
-        <svg
-          className="absolute top-0 left-0 w-full h-full pointer-events-none hidden md:block z-[5]"
-          style={{ overflow: 'visible' }}
-        >
-          <defs>
-            <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#eeb9ff" stopOpacity="0.6" />
-              <stop offset="50%" stopColor="#eeb9ff" />
-              <stop offset="100%" stopColor="#DD1764" />
-            </linearGradient>
-          </defs>
-
-          {/* Animated path connecting the dots - draws as you scroll */}
-          <motion.path
-            d={generatePath()}
-            stroke="url(#pinkGradient)"
-            strokeWidth="3"
-            strokeLinecap="round"
-            fill="none"
-            style={{ pathLength }}
-          />
-
-          {/* Render dots at each anchor point */}
-          {dotPositions.map((pos, index) => (
-            <g key={index}>
+        {/* --- DYNAMIC CONNECTION SEGMENTS --- */}
+        {/* Render independent segments for precise per-gap scroll animation */}
+        {dotPositions.map((pos, index) => (
+          <div key={`dots-${index}`} className="absolute top-0 left-0 w-full h-full pointer-events-none z-[5]">
+            {/* Render dots always */}
+            <svg className="absolute inset-0 size-full overflow-visible">
               {/* Top dot */}
               <circle cx={pos.topDot.x} cy={pos.topDot.y} r="6" fill="#eeb9ff" />
               <circle cx={pos.topDot.x} cy={pos.topDot.y} r="12" stroke="#eeb9ff" strokeWidth="1" fill="none" opacity="0.4" />
@@ -295,9 +295,17 @@ export default function JourneyPage() {
               {/* Bottom dot */}
               <circle cx={pos.bottomDot.x} cy={pos.bottomDot.y} r="6" fill="#DD1764" />
               <circle cx={pos.bottomDot.x} cy={pos.bottomDot.y} r="12" stroke="#DD1764" strokeWidth="1" fill="none" opacity="0.4" />
-            </g>
-          ))}
-        </svg>
+            </svg>
+
+            {/* Render connecting line to NEXT card if it exists */}
+            {index < dotPositions.length - 1 && (
+              <ConnectionLineSegment
+                start={pos.bottomDot}
+                end={dotPositions[index + 1].topDot}
+              />
+            )}
+          </div>
+        ))}
 
         {/* --- STEPS CONTENT --- */}
         <div className="relative z-10 flex flex-col gap-64 pt-20">
