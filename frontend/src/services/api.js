@@ -143,6 +143,7 @@ class ApiService {
   userSignup(body) { return this.request('/auth/user/signup', { method: 'POST', body }, true); }
   userLogin(body) { return this.request('/auth/user/login', { method: 'POST', body }, true); }
   getUserProfile() { return this.request('/users/profile'); }
+  updateUserProfile(body) { return this.request('/users/profile', { method: 'PUT', body }); }
   getUserSessionsSummary() { return this.request('/users/sessions-summary'); }
   getUserSessions() { return this.request('/users/sessions'); }
 

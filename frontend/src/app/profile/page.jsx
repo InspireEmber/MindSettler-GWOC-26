@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import {
   User, Calendar, CheckCircle2, Clock,
-  XCircle, ChevronRight, Activity, LogOut, MessageSquare, Building2
+  XCircle, ChevronRight, Activity, LogOut, MessageSquare, Building2, Edit2, Check, X
 } from "lucide-react";
 import { motion } from "framer-motion";
 import api from "../../services/api";
@@ -17,6 +17,34 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
   const [summary, setSummary] = useState(null);
   const [sessions, setSessions] = useState([]);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [tempName, setTempName] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+
+  const startEditing = () => {
+    setTempName(profile?.name || "");
+    setIsEditingName(true);
+  };
+
+  const cancelEditing = () => {
+    setIsEditingName(false);
+    setTempName("");
+  };
+
+  const handleSaveName = async () => {
+    if (!tempName.trim()) return;
+    setIsSaving(true);
+    try {
+      await api.updateUserProfile({ name: tempName });
+      setProfile((prev) => ({ ...prev, name: tempName }));
+      setIsEditingName(false);
+    } catch (err) {
+      console.error("Failed to update name", err);
+      alert("Failed to update name. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const refreshSessions = async () => {
     const freshSessions = await api.getUserSessions();
@@ -103,6 +131,36 @@ export default function ProfilePage() {
               </div>
               <h3 className="text-xs font-bold uppercase tracking-widest text-[#eeb9ff] mb-6">Identity</h3>
               <div className="space-y-4 relative z-10">
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase font-bold mb-1">Username</p>
+                  {isEditingName ? (
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={tempName}
+                        onChange={(e) => setTempName(e.target.value)}
+                        className="w-full bg-white/5 border border-white/20 rounded px-2 py-1 text-sm text-white focus:outline-none focus:border-[#eeb9ff]"
+                        autoFocus
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') handleSaveName();
+                        }}
+                      />
+                      <button onClick={handleSaveName} disabled={isSaving} className="text-green-400 hover:text-green-300">
+                        <Check size={16} />
+                      </button>
+                      <button onClick={cancelEditing} disabled={isSaving} className="text-red-400 hover:text-red-300">
+                        <X size={16} />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2 group/edit">
+                      <p className="text-white font-medium text-lg truncate">{profile?.name}</p>
+                      <button onClick={startEditing} className="text-[#eeb9ff] hover:text-[#eeb9ff]/80 transition-all p-1">
+                        <Edit2 size={14} />
+                      </button>
+                    </div>
+                  )}
+                </div>
                 <div>
                   <p className="text-[10px] text-gray-400 uppercase font-bold">Email Address</p>
                   <p className="text-white font-medium">{profile?.email}</p>

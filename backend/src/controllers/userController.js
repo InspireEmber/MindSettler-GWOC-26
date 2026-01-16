@@ -32,6 +32,47 @@ exports.getProfile = async (req, res) => {
   });
 };
 
+// PUT /api/users/profile
+exports.updateProfile = async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({
+      success: false,
+      message: 'Login required',
+    });
+  }
+
+  const { name } = req.body;
+  if (!name) {
+    return res.status(400).json({
+      success: false,
+      message: 'Name is required',
+    });
+  }
+
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: 'User not found',
+    });
+  }
+
+  user.name = name;
+  await user.save();
+
+  res.json({
+    success: true,
+    data: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      role: user.role || 'user',
+      createdAt: user.createdAt,
+    },
+  });
+};
+
 // Helper to compute session status based on slot date + time
 function computeStatus(slotDate, startTime) {
   const [h, m] = startTime.split(':').map(Number);
