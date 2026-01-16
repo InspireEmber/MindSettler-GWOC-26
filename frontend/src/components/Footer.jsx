@@ -15,7 +15,7 @@ export default function Footer() {
     ],
     "Resources": [
       { name: "Resources", href: "/resources" },
-      { name: "Psycho-Education", href: "/psycho-education" }
+      { name: "Awareness", href: "/awareness" }
     ],
     "Legal": [
       { name: "Privacy Policy", href: "/policies/privacy" },
@@ -42,7 +42,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs font-redhat">
-              Settle the mind, understand the self. A dedicated space for structured psycho-education.
+              Settle the mind, understand the self. A dedicated space for structured awareness.
             </p>
           </div>
 

@@ -38,7 +38,7 @@ export default function Navbar() {
       icon: BookOpen,
       children: [
         { label: "Resources", href: "/resources", icon: BookOpen },
-        { label: "Psycho-education", href: "/psycho-education", icon: Brain }
+        { label: "Awareness", href: "/awareness", icon: Brain }
       ]
     },
     {
@@ -192,7 +192,7 @@ export default function Navbar() {
               icon={BookOpen}
               dropdownItems={[
                 { label: "Resources", href: "/resources", icon: BookOpen },
-                { label: "Psycho-education", href: "/psycho-education", icon: Brain }
+                { label: "Awareness", href: "/awareness", icon: Brain }
               ]}
             >
               Resources

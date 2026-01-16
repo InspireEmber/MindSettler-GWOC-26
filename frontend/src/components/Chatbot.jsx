@@ -17,7 +17,7 @@ const QUICK_ACCESS_PAGES = [
   { keywords: ["resource", "article", "reading", "material"], label: "Resources", href: "/resources", icon: BookOpen },
   { keywords: ["faq", "question", "help", "common"], label: "FAQs", href: "/faqs", icon: HelpCircle },
   { keywords: ["contact", "reach out", "get in touch", "email", "message"], label: "Contact Us", href: "/contact", icon: MessageCircle },
-  { keywords: ["psycho-education", "learn", "education", "understand"], label: "Psycho-education", href: "/psycho-education", icon: GraduationCap },
+  { keywords: ["awareness", "psycho-education", "learn", "education", "understand"], label: "Awareness", href: "/awareness", icon: GraduationCap },
 ];
 
 // Helper to get the single best quick access button based on user's question
