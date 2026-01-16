@@ -119,23 +119,21 @@ export default function HomePage() {
               className="text-center mb-10 md:mb-16"
             >
 
-              <h2 className="text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6">Our Purpose</h2>
-              <div className="h-1 w-24 bg-gradient-to-r from-transparent via-[#eeb9ff] to-transparent mx-auto rounded-full opacity-50" />
             </motion.div>
 
 
             {/* 2. VISION CARD (Beyond Consultation) */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative mb-24 md:mb-32"
-            >
+            <div className="relative mb-24 md:mb-32">
               <div className="text-center max-w-5xl mx-auto group relative">
 
                 {/* The Animated Bulb (Trigger) */}
-                <div className="relative w-20 h-20 mx-auto mb-10 group/bulb transition-all duration-500 peer cursor-pointer z-20">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ type: "spring", stiffness: 100, damping: 20 }}
+                  className="relative w-20 h-20 mx-auto mb-10 group/bulb transition-all duration-500 peer cursor-pointer z-20"
+                >
                   <div className="absolute inset-0 bg-[#eeb9ff] rounded-full blur-3xl opacity-0 group-hover:opacity-40 group-hover:scale-150 transition-all duration-700 pointer-events-none" />
 
                   <div className="relative w-full h-full rounded-full bg-white/5 backdrop-blur-sm flex items-center justify-center border border-[#eeb9ff]/20 shadow-[0_0_20px_rgba(238,185,255,0.1)] group-hover/bulb:border-[#eeb9ff]/60 group-hover/bulb:bg-[#eeb9ff]/20 group-hover/bulb:shadow-[0_0_50px_rgba(238,185,255,0.6)] transition-all duration-500">
@@ -144,7 +142,7 @@ export default function HomePage() {
                       strokeWidth={1.5}
                     />
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Lit Content Wrapper - Reacts to Bulb Hover */}
                 <div className="relative transition-all duration-1000 ease-out peer-hover:text-white peer-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]">
@@ -152,16 +150,39 @@ export default function HomePage() {
                   {/* Ambient Light Beam Background */}
                   <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[120%] h-[150%] bg-gradient-to-b from-white/5 to-transparent blur-3xl opacity-0 peer-hover:opacity-100 transition-opacity duration-1000 pointer-events-none -z-10" />
 
-                  <h3 className="text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6 leading-tight tracking-tight">Beyond Consultation</h3>
+                  <motion.h3
+                    initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                    className="text-4xl md:text-6xl font-light text-[#eeb9ff] mb-8 leading-tight tracking-tight"
+                  >
+                    Beyond Consultation
+                  </motion.h3>
 
-                  <div className="space-y-8 text-xl md:text-3xl text-white peer-hover:text-white leading-relaxed font-light max-w-4xl mx-auto drop-shadow-sm transition-colors duration-700">
-                    <p className="md:px-20 font-redhat">
-                      This page is not just meant for online consultation; we intend to create more awareness about mental well-being and learning about mental health. It is a medium to spread knowledge and an easier mode to connect as well as reach out for help whenever in need.
-                    </p>
+                  <div className="space-y-6 text-lg md:text-2xl text-white/90 leading-relaxed font-light max-w-3xl mx-auto drop-shadow-sm transition-colors duration-700">
+                    <motion.p
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+                      className="font-redhat"
+                    >
+                      MindSettler is more than just a platform for consultation—it is a movement toward greater awareness and understanding of mental well-being.
+                    </motion.p>
+                    <motion.p
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+                      className="font-redhat"
+                    >
+                      We strive to be a beacon of knowledge, offering a seamless way to connect, learn, and find support whenever you need it.
+                    </motion.p>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
 
             {/* 3. THE DUALITY (Mind & Settler) */}
