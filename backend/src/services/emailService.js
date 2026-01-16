@@ -1,30 +1,23 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465, // Use 465 for secure, or 587 for STARTTLS
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  // CRITICAL FIX: Force IPv4. Render/Docker sometimes fail with IPv6.
-  family: 4,
-  logger: true,
-  debug: true,
-});
+// Initialize Resend with API key
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Sender email - Use your verified domain or Resend's test domain
+const FROM_EMAIL = process.env.EMAIL_FROM || 'MindSettler <onboarding@resend.dev>';
 
 exports.sendWelcomeEmail = async (userEmail, bookingDetails) => {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.warn('Email service skipped: EMAIL_USER or EMAIL_PASS not set in .env');
+  if (!process.env.RESEND_API_KEY) {
+    console.warn('Email service skipped: RESEND_API_KEY not set in environment');
     return;
   }
 
-  const mailOptions = {
-    from: `"MindSettler" <${process.env.EMAIL_USER}>`,
-    to: userEmail,
-    subject: 'Welcome to MindSettler - Booking Received',
-    html: `
+  try {
+    const { data, error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: userEmail,
+      subject: 'Welcome to MindSettler - Booking Received',
+      html: `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 20px; color: #333; line-height: 1.6;">
         <div style="text-align: center; margin-bottom: 30px;">
           <h1 style="color: #3F2965; margin: 0; font-style: italic;">MindSettler</h1>
@@ -43,24 +36,27 @@ exports.sendWelcomeEmail = async (userEmail, bookingDetails) => {
         <p>Stay mindful,<br><strong>Team MindSettler</strong></p>
       </div>
     `,
-  };
+    });
 
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log(`Welcome email sent to ${userEmail}`);
+    if (error) {
+      console.error('Error sending welcome email:', error);
+      return;
+    }
+    console.log(`Welcome email sent to ${userEmail}`, data);
   } catch (error) {
     console.error('Error sending welcome email:', error);
   }
 };
 
 exports.sendPaymentConfirmationEmail = async (userEmail, paymentDetails) => {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) return;
+  if (!process.env.RESEND_API_KEY) return;
 
-  const mailOptions = {
-    from: `"MindSettler" <${process.env.EMAIL_USER}>`,
-    to: userEmail,
-    subject: 'Payment Confirmed - MindSettler',
-    html: `
+  try {
+    const { data, error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: userEmail,
+      subject: 'Payment Confirmed - MindSettler',
+      html: `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 20px; color: #333; line-height: 1.6;">
         <h2 style="color: #059669;">Payment Successful</h2>
         <p>Hello,</p>
@@ -73,24 +69,27 @@ exports.sendPaymentConfirmationEmail = async (userEmail, paymentDetails) => {
         <p>Warmly,<br><strong>Team MindSettler</strong></p>
       </div>
     `,
-  };
+    });
 
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log(`Payment confirmation email sent to ${userEmail}`);
+    if (error) {
+      console.error('Error sending payment email:', error);
+      return;
+    }
+    console.log(`Payment confirmation email sent to ${userEmail}`, data);
   } catch (error) {
     console.error('Error sending payment email:', error);
   }
 };
 
 exports.sendSessionConfirmationEmail = async (userEmail, sessionDetails) => {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) return;
+  if (!process.env.RESEND_API_KEY) return;
 
-  const mailOptions = {
-    from: `"MindSettler" <${process.env.EMAIL_USER}>`,
-    to: userEmail,
-    subject: 'Session Confirmed - MindSettler',
-    html: `
+  try {
+    const { data, error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: userEmail,
+      subject: 'Session Confirmed - MindSettler',
+      html: `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 20px; color: #333; line-height: 1.6;">
         <div style="text-align: center; margin-bottom: 30px;">
           <h1 style="color: #3F2965; margin: 0; font-style: italic;">MindSettler</h1>
@@ -132,13 +131,14 @@ exports.sendSessionConfirmationEmail = async (userEmail, sessionDetails) => {
         <p>Stay mindful,<br><strong>Team MindSettler</strong></p>
       </div>
     `,
-  };
+    });
 
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log(`Session confirmation email sent to ${userEmail}`);
+    if (error) {
+      console.error('Error sending session confirmation email:', error);
+      return;
+    }
+    console.log(`Session confirmation email sent to ${userEmail}`, data);
   } catch (error) {
     console.error('Error sending session confirmation email:', error);
   }
 };
-
