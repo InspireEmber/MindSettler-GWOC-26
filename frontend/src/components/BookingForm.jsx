@@ -181,6 +181,15 @@ export default function BookingForm() {
               </span>
             </label>
 
+            <label className="flex items-start gap-4 cursor-pointer group">
+              <div className="relative flex items-center">
+                <input type="checkbox" required className="peer h-6 w-6 rounded-md border-white/20 bg-white/5 text-[#eeb9ff] focus:ring-[#eeb9ff] cursor-pointer" />
+              </div>
+              <span className="text-xs text-white/60 leading-relaxed font-light">
+                I agree to the <a href="/policies/non-refund" className="text-[#eeb9ff] font-bold hover:underline">Non-Refund Policy</a>.
+              </span>
+            </label>
+
             <AnimatePresence>
               {error && (
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="p-4 rounded-2xl bg-red-50 text-red-800 text-sm border border-red-100 flex items-center gap-3">

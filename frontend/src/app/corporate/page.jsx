@@ -80,7 +80,7 @@ export default function CorporatePage() {
             required
             value={formData.companyName}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-gray-500"
+            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-white/40"
             placeholder="Acme Corp"
           />
         </div>
@@ -92,7 +92,7 @@ export default function CorporatePage() {
             required
             value={formData.contactPerson}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-gray-500"
+            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-white/40"
             placeholder="HR / People Ops contact"
           />
         </div>
@@ -107,7 +107,7 @@ export default function CorporatePage() {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-gray-500"
+            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-white/40"
             placeholder="you@company.com"
           />
         </div>
@@ -118,7 +118,7 @@ export default function CorporatePage() {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-gray-500"
+            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-white/40"
             placeholder="+91..."
           />
         </div>
@@ -132,7 +132,7 @@ export default function CorporatePage() {
           min="1"
           value={formData.employeeCount}
           onChange={handleChange}
-          className="w-full max-w-xs px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-gray-500"
+          className="w-full max-w-xs px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-white/40"
           placeholder="e.g. 50"
         />
       </div>
@@ -144,7 +144,7 @@ export default function CorporatePage() {
           rows={4}
           value={formData.message}
           onChange={handleChange}
-          className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none resize-none text-white placeholder-gray-500"
+          className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none resize-none text-white placeholder-white/40"
           placeholder="e.g. group psycho-education sessions, manager training, burnout prevention..."
         />
       </div>
@@ -162,7 +162,7 @@ export default function CorporatePage() {
             required
             value={formData.companyName}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-gray-500"
+            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-white/40"
             placeholder="Your Foundation / Company"
           />
         </div>
@@ -174,7 +174,7 @@ export default function CorporatePage() {
             required
             value={formData.contactPerson}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-gray-500"
+            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-white/40"
             placeholder="Your name"
           />
         </div>
@@ -189,7 +189,7 @@ export default function CorporatePage() {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-gray-500"
+            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-white/40"
             placeholder="you@organization.com"
           />
         </div>
@@ -200,7 +200,7 @@ export default function CorporatePage() {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-gray-500"
+            className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-white/40"
             placeholder="+91..."
           />
         </div>
@@ -229,7 +229,7 @@ export default function CorporatePage() {
           rows={4}
           value={formData.proposedContribution}
           onChange={handleChange}
-          className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none resize-none text-white placeholder-gray-500"
+          className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none resize-none text-white placeholder-white/40"
           placeholder="Describe your sponsorship idea, e.g., sponsoring a number of therapy sessions for a specific demographic, co-hosting a workshop, etc."
         />
       </div>
@@ -241,7 +241,7 @@ export default function CorporatePage() {
           rows={4}
           value={formData.message}
           onChange={handleChange}
-          className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none resize-none text-white placeholder-gray-500"
+          className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none resize-none text-white placeholder-white/40"
           placeholder="Any additional details or questions."
         />
       </div>
@@ -253,9 +253,9 @@ export default function CorporatePage() {
       {/* Hero */}
       <section className="relative py-20 md:py-32 z-10">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <div className="h-1 w-16 bg-gradient-to-r from-[#eeb9ff] to-[#DD1764] rounded-full mx-auto mb-6" />
-          <h1 className="text-4xl md:text-6xl font-light text-white mb-4">
-            Corporate <span className="font-medium text-[#eeb9ff]">Partnerships</span>
+          <div className="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full mx-auto mb-6" />
+          <h1 className="text-4xl md:text-6xl font-light text-[#eeb9ff] mb-4">
+            Corporate <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#eeb9ff] to-[#fff]">Partnerships</span>
           </h1>
           <p className="text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto font-redhat">
             Explore opportunities for corporate wellness services or sponsor our programs to make a positive impact.
@@ -273,14 +273,14 @@ export default function CorporatePage() {
               <div className="flex rounded-full bg-white/5 p-1 border border-white/10">
                 <button
                   onClick={() => setInquiryType('services')}
-                  className={`px-6 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-all ${inquiryType === 'services' ? 'bg-[#eeb9ff] text-[#2E2A36]' : 'text-gray-300 hover:text-white'}`}
+                  className={`px-6 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-all ${inquiryType === 'services' ? 'bg-[#eeb9ff] text-[#3F2965]' : 'text-gray-300 hover:text-white'}`}
                 >
                   <Briefcase className="w-4 h-4" />
                   Services
                 </button>
                 <button
                   onClick={() => setInquiryType('sponsorship')}
-                  className={`px-6 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-all ${inquiryType === 'sponsorship' ? 'bg-[#eeb9ff] text-[#2E2A36]' : 'text-gray-300 hover:text-white'}`}
+                  className={`px-6 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-all ${inquiryType === 'sponsorship' ? 'bg-[#eeb9ff] text-[#3F2965]' : 'text-gray-300 hover:text-white'}`}
                 >
                   <Handshake className="w-4 h-4" />
                   Sponsorship
@@ -293,7 +293,7 @@ export default function CorporatePage() {
                 {inquiryType === 'services' ? <Building2 className="w-5 h-5" /> : <Handshake className="w-5 h-5" />}
               </div>
               <div>
-                <h2 className="text-2xl font-light text-white">
+                <h2 className="text-2xl font-light text-[#eeb9ff]">
                   {inquiryType === 'services' ? 'Corporate Services Inquiry' : 'Sponsorship Inquiry'}
                 </h2>
                 <p className="text-sm text-gray-400 font-redhat">
@@ -321,7 +321,7 @@ export default function CorporatePage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-4 rounded-full bg-[#eeb9ff] text-[#2E2A36] font-medium text-lg hover:bg-[#eeb9ff]/90 hover:shadow-lg hover:shadow-[#eeb9ff]/20 transition-all disabled:opacity-50 active:scale-95 flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-full bg-[#eeb9ff] text-[#3F2965] font-medium text-lg hover:bg-[#eeb9ff]/90 hover:shadow-lg hover:shadow-[#eeb9ff]/20 transition-all disabled:opacity-50 active:scale-95 flex items-center justify-center gap-2"
               >
                 {submitting ? (
                   <>
