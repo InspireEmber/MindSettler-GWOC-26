@@ -123,7 +123,7 @@ const JOURNEY_STEPS = [
     desc: "A moment of insight. You acknowledge that seeking help isn't weakness—it's the first step toward strength. You spot the path forward.",
     // icon: Lightbulb,
     color: "#eeb9ff", // Light Pink/Purple
-    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978720/mindsettler_assets/spark_of_awarness.jpg",
+    imageSrc: "/images/bg10.jpg",
     align: "right"
   },
   {
@@ -143,7 +143,7 @@ const JOURNEY_STEPS = [
     desc: "Knowledge turns into wisdom. You pause at a high camp to reflect, letting the insights settle deep within your mind. The air is clearer here.",
     // icon: Sprout,
     color: "#a855f7", // Purple
-    imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978708/mindsettler_assets/incubation.jpg",
+    imageSrc: "/images/bg13.jpg",
     align: "right"
   },
   {
@@ -214,27 +214,27 @@ export default function JourneyPage() {
             {/* Dashed Guide */}
             <path
               d="M 600 100 
-                       L 300 400
-                       L 900 800
-                       L 300 1200
-                       L 900 1600
-                       L 600 2100"
+                 C 600 250 300 250 300 400
+                 C 300 600 900 600 900 800
+                 C 900 1000 300 1000 300 1200
+                 C 300 1400 900 1400 900 1600
+                 C 900 1850 600 1850 600 2100"
               stroke="rgba(255,255,255,0.1)"
-              strokeWidth="2"
-              strokeDasharray="8 8"
+              strokeWidth="3"
+              strokeDasharray="12 12"
               strokeLinecap="round"
               fill="none"
             />
             {/* Lit Up Path */}
             <motion.path
               d="M 600 100 
-                       L 300 400
-                       L 900 800
-                       L 300 1200
-                       L 900 1600
-                       L 600 2100"
+                 C 600 250 300 250 300 400
+                 C 300 600 900 600 900 800
+                 C 900 1000 300 1000 300 1200
+                 C 300 1400 900 1400 900 1600
+                 C 900 1850 600 1850 600 2100"
               stroke="url(#trailGradient)"
-              strokeWidth="4"
+              strokeWidth="8"
               strokeLinecap="round"
               fill="none"
               style={{ pathLength }}
