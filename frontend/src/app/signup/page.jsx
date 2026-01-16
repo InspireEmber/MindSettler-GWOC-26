@@ -119,6 +119,7 @@ export default function SignupPage() {
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-gray-400 transition-all"
                 placeholder="Your name"
+                suppressHydrationWarning
               />
             </div>
             <div>
@@ -131,6 +132,7 @@ export default function SignupPage() {
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-gray-400 transition-all"
                 placeholder="you@example.com"
+                suppressHydrationWarning
               />
             </div>
             <div>
@@ -143,6 +145,7 @@ export default function SignupPage() {
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-gray-400 transition-all"
                 placeholder="+91..."
+                suppressHydrationWarning
               />
             </div>
             <div>
@@ -157,12 +160,14 @@ export default function SignupPage() {
                   onChange={handleChange}
                   className="w-full px-4 py-3 pr-12 rounded-xl border border-white/20 bg-white/5 focus:ring-2 focus:ring-[#eeb9ff] outline-none text-white placeholder-gray-400 transition-all"
                   placeholder="Create a password"
+                  suppressHydrationWarning
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors p-1"
                   aria-label={showPassword ? "Hide password" : "Show password"}
+                  suppressHydrationWarning
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -173,6 +178,7 @@ export default function SignupPage() {
               type="submit"
               disabled={loading}
               className="w-full py-3.5 rounded-full bg-[#eeb9ff] text-[#2E2A36] font-medium text-base hover:bg-[#eeb9ff]/90 hover:shadow-lg hover:shadow-[#eeb9ff]/20 transition-all disabled:opacity-60 mt-4"
+              suppressHydrationWarning
             >
               {loading ? "Creating account..." : "Sign Up"}
             </button>
@@ -196,6 +202,7 @@ export default function SignupPage() {
                 window.location.href = `${API_BASE_URL}/auth/google`;
               }}
               className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-white/20 bg-white/5 text-white font-medium text-sm hover:bg-white/10 transition-all"
+              suppressHydrationWarning
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path

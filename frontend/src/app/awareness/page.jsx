@@ -22,7 +22,7 @@ const AWARENESS_TOPICS = [
           id: 1,
           title: "Anxiety",
           description: "Persistent worry, fear, or unease that can interfere with daily life.",
-          image: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978687/mindsettler_assets/firstj.jpg",
+          image: "/images/bg18.jpg",
           color: "from-purple-400/20 to-pink-400/20",
           icon: Brain,
      },
