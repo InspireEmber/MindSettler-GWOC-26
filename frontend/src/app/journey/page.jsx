@@ -207,54 +207,50 @@ export default function JourneyPage() {
         <div className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none hidden md:block z-0">
           <svg
             className="w-full h-full"
-            viewBox="0 0 1200 2400"
+            viewBox="0 0 1200 5000"
             fill="none"
             preserveAspectRatio="xMidYMin slice"
           >
-            {/* Dashed Guide */}
-            <path
-              d="M 600 100 
-                 C 600 250 300 250 300 400
-                 C 300 600 900 600 900 800
-                 C 900 1000 300 1000 300 1200
-                 C 300 1400 900 1400 900 1600
-                 C 900 1850 600 1850 600 2100"
-              stroke="rgba(255,255,255,0.1)"
-              strokeWidth="3"
-              strokeDasharray="12 12"
-              strokeLinecap="round"
-              fill="none"
-            />
-            {/* Lit Up Path */}
+            {/* Main Timeline Path - Weaving widely behind images with gradient */}
             <motion.path
-              d="M 600 100 
-                 C 600 250 300 250 300 400
-                 C 300 600 900 600 900 800
-                 C 900 1000 300 1000 300 1200
-                 C 300 1400 900 1400 900 1600
-                 C 900 1850 600 1850 600 2100"
-              stroke="url(#trailGradient)"
-              strokeWidth="8"
+              d="M 200 200
+                 C 200 750 1000 750 1000 1300
+                 C 1000 1900 200 1900 200 2500
+                 C 200 3050 1000 3050 1000 3600
+                 C 1000 4100 600 4100 600 4600"
+              stroke="url(#pinkGradient)"
+              strokeWidth="4"
               strokeLinecap="round"
               fill="none"
               style={{ pathLength }}
             />
+
+            {/* Node Circles - Behind Images */}
+            <circle cx="200" cy="200" r="6" fill="#eeb9ff" />
+            <circle cx="1000" cy="1300" r="6" fill="#eeb9ff" />
+            <circle cx="200" cy="2500" r="6" fill="#eeb9ff" />
+            <circle cx="1000" cy="3600" r="6" fill="#eeb9ff" />
+            <circle cx="600" cy="4600" r="6" fill="#eeb9ff" />
+
+            {/* Outer ring accents */}
+            <circle cx="200" cy="200" r="12" stroke="#eeb9ff" strokeWidth="1" fill="none" opacity="0.4" />
+            <circle cx="1000" cy="1300" r="12" stroke="#eeb9ff" strokeWidth="1" fill="none" opacity="0.4" />
+            <circle cx="200" cy="2500" r="12" stroke="#eeb9ff" strokeWidth="1" fill="none" opacity="0.4" />
+            <circle cx="1000" cy="3600" r="12" stroke="#eeb9ff" strokeWidth="1" fill="none" opacity="0.4" />
+            <circle cx="600" cy="4600" r="12" stroke="#eeb9ff" strokeWidth="1" fill="none" opacity="0.4" />
+
             <defs>
-              <linearGradient id="trailGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#a855f7" />
-                <stop offset="50%" stopColor="#ff8ac0" />
+              <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#eeb9ff" stopOpacity="0.4" />
+                <stop offset="50%" stopColor="#eeb9ff" />
                 <stop offset="100%" stopColor="#DD1764" />
               </linearGradient>
-              <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="5" result="blur" />
-                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-              </filter>
             </defs>
           </svg>
         </div>
 
         {/* --- STEPS CONTENT --- */}
-        <div className="relative z-10 flex flex-col gap-32 pt-20">
+        <div className="relative z-10 flex flex-col gap-64 pt-20">
           {JOURNEY_STEPS.map((step, index) => {
             const isEven = index % 2 === 0;
             return (
