@@ -83,6 +83,17 @@ exports.approveAppointment = async (req, res) => {
 
   await appointment.save();
 
+  // Send session confirmation email (async)
+  if (appointment.user && appointment.user.email) {
+    emailService.sendSessionConfirmationEmail(appointment.user.email, {
+      sessionType: appointment.sessionType,
+      date: appointment.slot?.date?.toLocaleDateString() || 'scheduled date',
+      time: appointment.slot?.startTime || 'scheduled time',
+      meetingLink: appointment.meetingLink,
+      paymentMethod: appointment.paymentMethod
+    }).catch(err => console.error("Session confirmation email failed:", err));
+  }
+
   res.json({
     success: true,
     message: 'Appointment confirmed successfully',
@@ -195,6 +206,17 @@ exports.updateAppointmentStatus = async (req, res) => {
   }
 
   await appointment.save();
+
+  // Send session confirmation email if status changed to confirmed
+  if (status === 'confirmed' && appointment.user && appointment.user.email) {
+    emailService.sendSessionConfirmationEmail(appointment.user.email, {
+      sessionType: appointment.sessionType,
+      date: appointment.slot?.date?.toLocaleDateString() || 'scheduled date',
+      time: appointment.slot?.startTime || 'scheduled time',
+      meetingLink: appointment.meetingLink,
+      paymentMethod: appointment.paymentMethod
+    }).catch(err => console.error("Session confirmation email failed:", err));
+  }
 
   res.json({
     success: true,

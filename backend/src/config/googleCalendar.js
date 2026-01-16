@@ -49,7 +49,7 @@ async function createEvent({ appointment, slot, user, meetingLink }) {
     meetingLink ? `Meeting Link: ${meetingLink}` : null,
     `Appointment ID: ${appointment._id}`,
   ].filter(Boolean);
-  
+
   const event = {
     summary: `(MindSettler)Session with Parnika`,
     description: descriptionLines.join("\n"),
@@ -69,8 +69,8 @@ async function createEvent({ appointment, slot, user, meetingLink }) {
   });
 
   console.log("Google Event API Response:", {
-  id: response.data.id,
-  htmlLink: response.data.htmlLink,
+    id: response.data.id,
+    htmlLink: response.data.htmlLink,
   });
 
 
