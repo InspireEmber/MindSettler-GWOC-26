@@ -214,7 +214,7 @@ export default function HomePage() {
                       <Brain className="w-10 h-10 text-[#f1c7ff]" />
                     </div>
 
-                    <h4 className="block text-lg font-bold text-[#eeb9ff] uppercase tracking-widest mb-4">
+                    <h4 className="block text-lg tracking-widest mb-4">
                       Mind
                     </h4>
 
@@ -249,7 +249,7 @@ export default function HomePage() {
                       <Heart className="w-10 h-10 text-[#ffd0e2]" />
                     </div>
 
-                    <h4 className="text-2xl font-serif italic text-white mb-4">
+                    <h4 className="block text-lg  tracking-widest text-white mb-4 font-redhat">
                       Settler
                     </h4>
 

@@ -154,7 +154,7 @@ const JOURNEY_STEPS = [
     // icon: Mountain,
     color: "#DD1764", // Pink
     imageSrc: "https://res.cloudinary.com/dlplhnb7o/image/upload/v1767978679/mindsettler_assets/fifthj.jpg",
-    align: "center"
+    align: "left"
   }
 ];
 
