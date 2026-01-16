@@ -2,13 +2,14 @@ const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
-  port: 465,
+  port: 465, // Use 465 for secure, or 587 for STARTTLS
   secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-  // Add these for better debugging on the server
+  // CRITICAL FIX: Force IPv4. Render/Docker sometimes fail with IPv6.
+  family: 4,
   logger: true,
   debug: true,
 });
