@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import BookingForm from "../../components/BookingForm";
+import LoadingScreen from "../../components/LoadingScreen";
 import { Clock, Shield, Globe, ArrowRight, CheckCircle, Sparkles } from "lucide-react";
 import { getCurrentUser } from "../../services/auth";
 import { motion } from "framer-motion";
@@ -46,16 +47,7 @@ export default function BookSessionPage() {
   }, [router]);
 
   if (checkingAuth) {
-    return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
-          className="w-12 h-12 border-4 border-[#3F2965]/20 border-t-[#eeb9ff] rounded-full mb-4"
-        />
-        <div className="text-white font-medium tracking-wide">Preparing your safe space...</div>
-      </div>
-    );
+    return <LoadingScreen message="Preparing your safe space..." />;
   }
 
   return (
