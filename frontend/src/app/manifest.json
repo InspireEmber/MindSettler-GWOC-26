@@ -1,0 +1,25 @@
+{
+     "name": "MindSettler by Parnika",
+     "short_name": "MindSettler",
+     "description": "A safe space for mental health awareness, psychotherapy, and emotional well-being. Confidential, non-judgmental, guided support.",
+     "start_url": "/",
+     "display": "standalone",
+     "background_color": "#0b0220",
+     "theme_color": "#3F2965",
+     "orientation": "portrait-primary",
+     "icons": [
+          {
+               "src": "/logo.png",
+               "sizes": "any",
+               "type": "image/png",
+               "purpose": "any maskable"
+          }
+     ],
+     "categories": [
+          "health",
+          "lifestyle",
+          "medical"
+     ],
+     "lang": "en-US",
+     "dir": "ltr"
+}

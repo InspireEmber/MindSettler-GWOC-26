@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Brain, Sparkles, Leaf, ArrowRight, LayoutGrid, Sun } from "lucide-react";
 import Link from "next/link";
 import ReadyToBook from "@/components/ReadyToBook";
+
 const APPROACHES = [
   {
     title: "Structured Learning",
