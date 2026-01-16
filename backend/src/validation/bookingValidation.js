@@ -9,6 +9,8 @@ const createBookingSchema = Joi.object({
   slotId: Joi.string().trim().optional(), // new: explicit slot id
   isFirstSession: Joi.boolean().optional(),
   message: Joi.string().trim().allow('', null).optional(),
+  paymentMethod: Joi.string().valid('upi', 'cash').default('upi'),
+  paymentReference: Joi.string().trim().allow('', null).optional(),
 }).or('preferredTime', 'slotId');
 
 module.exports = {

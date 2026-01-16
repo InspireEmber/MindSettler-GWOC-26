@@ -20,4 +20,7 @@ router.get('/:id', wrapAsync(bookingController.getBookingStatus));
 // Add to Google Calendar (Authenticated)
 router.post('/:id/calendar', isUserAuthenticated, wrapAsync(bookingController.addToGoogleCalendar));
 
+// Update payment info (Authenticated)
+router.post('/:id/payment-info', isUserAuthenticated, wrapAsync(bookingController.updatePaymentInfo));
+
 module.exports = router;

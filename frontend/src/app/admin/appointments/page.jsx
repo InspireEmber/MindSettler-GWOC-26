@@ -66,9 +66,9 @@ export default function AdminAppointmentsPage() {
         if (reason) handleAction(appt._id, "reject", { reason: reason.trim() }, "reject");
     };
     const handleMarkPaid = (appt) => {
-        const method = window.prompt('Enter method ("upi" or "cash"):', "upi");
+        const method = appt.paymentMethod || window.prompt('Enter method ("upi" or "cash"):', "upi");
         if (method) {
-            const ref = window.prompt("Payment reference (optional):", "");
+            const ref = appt.paymentReference || window.prompt("Payment reference (optional):", "");
             handleAction(appt._id, "payment", {
                 paymentStatus: "paid",
                 paymentMethod: method.toLowerCase(),
@@ -121,8 +121,8 @@ export default function AdminAppointmentsPage() {
                             <div className="flex items-center gap-2 mb-1 flex-wrap">
                                 <h3 className="text-lg md:text-xl font-bold text-slate-900 truncate">{a.user?.name || "Guest User"}</h3>
                                 <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border shrink-0 ${a.status === 'confirmed' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' :
-                                        a.status === 'rejected' ? 'bg-red-50 text-red-700 border-red-100' :
-                                            'bg-amber-50 text-amber-700 border-amber-100'
+                                    a.status === 'rejected' ? 'bg-red-50 text-red-700 border-red-100' :
+                                        'bg-amber-50 text-amber-700 border-amber-100'
                                     }`}>
                                     {a.status}
                                 </span>
@@ -130,6 +130,18 @@ export default function AdminAppointmentsPage() {
                             <div className="flex items-center gap-2 text-sm text-slate-500 font-medium break-all">
                                 <Mail size={14} className="text-slate-400 shrink-0" /> {a.user?.email}
                             </div>
+                            {a.paymentMethod && (
+                                <div className="flex items-center gap-2 mt-1">
+                                    <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200 uppercase font-bold">
+                                        {a.paymentMethod}
+                                    </span>
+                                    {a.paymentReference && (
+                                        <span className="text-[10px] text-slate-400 font-mono truncate max-w-[100px]">
+                                            {a.paymentReference}
+                                        </span>
+                                    )}
+                                </div>
+                            )}
                         </div>
 
                         {/* Timing & Type */}
@@ -158,8 +170,8 @@ export default function AdminAppointmentsPage() {
                                             <button onClick={(e) => { e.stopPropagation(); handleReject(a); }} disabled={actionLoading[a._id]} className="flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-100 transition-colors">
                                                 {actionLoading[a._id] === 'reject' ? '...' : 'Reject'}
                                             </button>
-                                            <button onClick={(e) => { e.stopPropagation(); handleApprove(a); }} disabled={actionLoading[a._id]} className="flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-bold text-white bg-emerald-500 hover:bg-emerald-600 shadow-sm transition-colors">
-                                                {actionLoading[a._id] === 'approve' ? '...' : 'Approve'}
+                                            <button onClick={(e) => { e.stopPropagation(); handleApprove(a); if (a.paymentReference) handleMarkPaid(a); }} disabled={actionLoading[a._id]} className="flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-bold text-white bg-emerald-500 hover:bg-emerald-600 shadow-sm transition-colors">
+                                                {actionLoading[a._id] === 'approve' ? '...' : (a.paymentReference ? 'Approve & Mark Paid' : 'Approve')}
                                             </button>
                                         </>
                                     )}
@@ -255,7 +267,7 @@ export default function AdminAppointmentsPage() {
                                         key={day}
                                         onClick={() => setSelectedDate(thisDate)}
                                         className={`h-20 md:h-32 p-1 md:p-2 rounded-lg md:rounded-xl border transition-all relative cursor-pointer group flex flex-col items-center md:items-stretch ${isToday ? 'bg-indigo-50/30 border-indigo-200 shadow-sm ring-1 ring-indigo-50' :
-                                                'bg-white border-slate-100 hover:border-slate-300 hover:bg-slate-50'
+                                            'bg-white border-slate-100 hover:border-slate-300 hover:bg-slate-50'
                                             }`}
                                     >
                                         <div className="flex justify-between items-start mb-1 w-full">
@@ -278,8 +290,8 @@ export default function AdminAppointmentsPage() {
                                         <div className="hidden md:block space-y-1 overflow-hidden">
                                             {dayAppts.slice(0, 3).map(appt => (
                                                 <div key={appt._id} className={`p-1 rounded border text-[9px] font-bold truncate ${appt.status === 'confirmed' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' :
-                                                        appt.status === 'rejected' ? 'bg-rose-50 text-rose-700 border-rose-100' :
-                                                            'bg-amber-50 text-amber-700 border-amber-100'
+                                                    appt.status === 'rejected' ? 'bg-rose-50 text-rose-700 border-rose-100' :
+                                                        'bg-amber-50 text-amber-700 border-amber-100'
                                                     }`}>
                                                     {appt.slot?.startTime}
                                                 </div>

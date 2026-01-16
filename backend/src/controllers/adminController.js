@@ -1,6 +1,7 @@
 const Appointment = require('../models/Appointment');
 const Slot = require('../models/Slot');
 const User = require('../models/User');
+const emailService = require('../services/emailService');
 const { createEvent, deleteEvent, isGoogleCalendarEnabled } = require('../config/googleCalendar');
 
 // Get all appointments (Admin only)
@@ -242,6 +243,16 @@ exports.markAppointmentPayment = async (req, res) => {
   appointment.paymentReference = paymentReference || '';
 
   await appointment.save();
+
+  // Send payment confirmation email
+  const fullAppointment = await Appointment.findById(id).populate('user').populate('slot');
+  if (fullAppointment && fullAppointment.user) {
+    emailService.sendPaymentConfirmationEmail(fullAppointment.user.email, {
+      method: fullAppointment.paymentMethod,
+      reference: fullAppointment.paymentReference,
+      date: fullAppointment.slot?.date?.toLocaleDateString() || 'scheduled date'
+    }).catch(err => console.error("Payment email failed:", err));
+  }
 
   res.json({
     success: true,

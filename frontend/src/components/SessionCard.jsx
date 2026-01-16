@@ -1,5 +1,7 @@
-import { CheckCircle2, Clock, XCircle, Calendar, User, Mail, Phone, Laptop, MapPin } from "lucide-react";
+import { useState } from "react";
+import { CheckCircle2, Clock, XCircle, Calendar, User, Mail, Phone, Laptop, MapPin, QrCode, Banknote, Info, Copy, Send, Loader2, Check } from "lucide-react";
 import Link from "next/link";
+import api from "../services/api";
 
 const STATUS_CONFIG = {
   confirmed: { color: "bg-green-500/20 text-green-300 border-green-500/20", icon: <CheckCircle2 size={20} />, bgLight: "bg-green-500/10 border-green-500/20 text-green-200" },
@@ -9,6 +11,10 @@ const STATUS_CONFIG = {
 };
 
 export default function SessionCard({ booking }) {
+  const [paymentRef, setPaymentRef] = useState(booking.paymentReference || "");
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [updateStatus, setUpdateStatus] = useState(null); // 'success', 'error', null
+
   const status = booking?.status?.toLowerCase() || "pending";
   const config = STATUS_CONFIG[status] || STATUS_CONFIG.default;
 
@@ -46,6 +52,8 @@ export default function SessionCard({ booking }) {
           />
           <DetailItem label="Time Slot" value={booking.preferredTime} icon={Clock} />
           <DetailItem label="Payment Status" value={booking.paymentStatus || 'pending'} icon={CheckCircle2} />
+          <DetailItem label="Payment Method" value={booking.paymentMethod} icon={booking.paymentMethod === 'upi' ? QrCode : Banknote} />
+          {booking.paymentReference && <DetailItem label="Ref No." value={booking.paymentReference} icon={CheckCircle2} />}
           {booking.meetingLink && (
             <div className="md:col-span-2">
               <p className="text-sm font-medium text-gray-400 mb-1 flex items-center gap-2 font-redhat">
@@ -74,13 +82,22 @@ export default function SessionCard({ booking }) {
         <div className={`p-6 rounded-2xl border backdrop-blur-md ${config.bgLight}`}>
           <div className="flex gap-4">
             <div className="shrink-0 mt-1">{config.icon}</div>
-            <div>
+            <div className="flex-1">
               <h3 className="font-serif italic text-lg mb-2 capitalize">
                 {status === "pending" ? "Awaiting Review" : `Booking ${status}`}
               </h3>
               <p className="text-sm leading-relaxed mb-4 text-white/90 font-redhat">
+                {status === "confirmed" && (
+                  <>
+                    {booking.sessionType === "online" && (
+                      <span className="block mb-2 text-[#eeb9ff] font-bold text-base">
+                        You have booked this session online.
+                      </span>
+                    )}
+                    Success! Detailed session information and meeting links will arrive via email shortly.
+                  </>
+                )}
                 {status === "pending" && "Your request is under review. Expect an email confirmation within 24-48 hours."}
-                {status === "confirmed" && "Success! Detailed session information and meeting links will arrive via email shortly."}
                 {status === "rejected" && (
                   <>
                     <span className="block mb-3">
@@ -96,6 +113,85 @@ export default function SessionCard({ booking }) {
                   </>
                 )}
               </p>
+
+              {/* Payment Instructions for Confirmed but Unpaid status */}
+              {status === "confirmed" && booking.paymentStatus !== "paid" && (
+                <div className="mt-6 space-y-4">
+                  {booking.paymentMethod === "upi" ? (
+                    <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-4">
+                      <div className="flex items-center gap-2 text-[#eeb9ff]">
+                        <QrCode size={18} />
+                        <span className="text-sm font-bold uppercase tracking-wider">UPI Payment Details</span>
+                      </div>
+                      <div className="flex flex-col sm:flex-row items-center gap-6">
+                        <div className="w-32 h-32 bg-white rounded-xl p-2 flex items-center justify-center">
+                          <QrCode size={100} className="text-black" />
+                        </div>
+                        <div className="flex-1 space-y-3 w-full">
+                          <div>
+                            <p className="text-[10px] text-white/40 uppercase font-bold mb-1">UPI ID</p>
+                            <div className="flex items-center gap-2 bg-white/5 border border-white/10 p-2 rounded-lg">
+                              <code className="text-[#eeb9ff] font-mono text-xs flex-1">mindsettler@upi</code>
+                              <button
+                                onClick={() => navigator.clipboard.writeText("mindsettler@upi")}
+                                className="p-1.5 hover:bg-white/10 rounded text-white/40 hover:text-white transition-colors"
+                              >
+                                <Copy size={14} />
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="space-y-2">
+                            <p className="text-[10px] text-white/40 uppercase font-bold mb-1">Transaction Reference</p>
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="text"
+                                placeholder="Enter Ref No. / Transaction ID"
+                                value={paymentRef}
+                                onChange={(e) => setPaymentRef(e.target.value)}
+                                className="flex-1 bg-white/5 border border-white/10 p-2 rounded-lg text-xs text-white placeholder-white/20 focus:border-[#eeb9ff] outline-none transition-all"
+                              />
+                              <button
+                                onClick={async () => {
+                                  if (!paymentRef || isUpdating) return;
+                                  setIsUpdating(true);
+                                  try {
+                                    await api.updateBookingPaymentInfo(booking.id || booking._id, paymentRef);
+                                    setUpdateStatus("success");
+                                    setTimeout(() => setUpdateStatus(null), 3000);
+                                  } catch (err) {
+                                    setUpdateStatus("error");
+                                    setTimeout(() => setUpdateStatus(null), 3000);
+                                  } finally {
+                                    setIsUpdating(false);
+                                  }
+                                }}
+                                disabled={isUpdating}
+                                className={`p-2 rounded-lg transition-all ${updateStatus === 'success' ? 'bg-green-500 text-white' : 'bg-[#eeb9ff] text-[#3F2965] hover:opacity-90'}`}
+                              >
+                                {isUpdating ? <Loader2 size={14} className="animate-spin" /> : (updateStatus === 'success' ? <Check size={14} /> : <Send size={14} />)}
+                              </button>
+                            </div>
+                            <p className="text-[10px] text-white/50 italic leading-tight">
+                              Shared transaction reference number helps in faster verification.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center">
+                        <Banknote size={20} />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-white">Cash Payment Selected</p>
+                        <p className="text-xs text-white/60">Please bring the exact amount to the session location.</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
               {status === "rejected" && (
                 <Link href="/book-session" className="inline-block px-6 py-2 rounded-full bg-red-500 text-white text-sm font-bold hover:bg-red-600 transition-all shadow-lg shadow-red-900/20">
                   Reschedule

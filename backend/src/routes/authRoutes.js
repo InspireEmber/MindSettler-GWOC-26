@@ -25,11 +25,11 @@ router.post('/user/login', validateBody(userLoginSchema), wrapAsync(authControll
 
 // Google Auth Routes
 // Google Auth Routes
-router.get('/google', passport.authenticate('google', { 
+router.get('/google', passport.authenticate('google', {
   scope: ['profile', 'email']
 }));
 
-router.get('/google/callback', 
+router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/login?error=GoogleAuthFailed' }),
   (req, res) => {
     // Successful authentication, redirect to frontend dashboard/booking page

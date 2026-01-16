@@ -149,6 +149,9 @@ class ApiService {
 
   // Calendar
   addToGoogleCalendar(bookingId) { return this.request(`/bookings/${bookingId}/calendar`, { method: 'POST' }); }
+  updateBookingPaymentInfo(bookingId, paymentReference) {
+    return this.request(`/bookings/${bookingId}/payment-info`, { method: 'POST', body: { paymentReference } });
+  }
 
   // Chatbot - Uses the 'fullResponse' flag to match your backend logic
   sendChatMessage(body) {

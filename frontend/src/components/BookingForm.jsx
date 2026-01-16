@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Info, Loader2, Calendar as CalendarIcon, Clock, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { Info, Loader2, Calendar as CalendarIcon, Clock, ShieldCheck, CheckCircle2, QrCode, Banknote, Copy, Wallet } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import api from "../services/api";
 
@@ -22,6 +22,8 @@ export default function BookingForm() {
     slotId: "",
     isFirstSession: true,
     message: "",
+    paymentMethod: "upi",
+    paymentReference: "",
   });
   const [availableSlots, setAvailableSlots] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -52,10 +54,19 @@ export default function BookingForm() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    setFormData((prev) => {
+      const newData = {
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+      };
+
+      // Auto-set payment method if online session is selected
+      if (name === "sessionType" && value === "online") {
+        newData.paymentMethod = "upi";
+      }
+
+      return newData;
+    });
     setError("");
   };
 
@@ -154,6 +165,46 @@ export default function BookingForm() {
                 <span className="relative z-10">No slots available for this date.</span>
               </div>
             )}
+          </section>
+
+          {/* Step 4: Payment Method */}
+          <section className="space-y-6">
+            <h3 className="text-sm font-bold text-[#eeb9ff] uppercase tracking-widest flex items-center gap-2">
+              <Wallet size={16} /> 4. Payment Method
+            </h3>
+
+            {formData.sessionType === "online" ? (
+              <div className="p-6 rounded-2xl bg-[#eeb9ff]/10 border border-[#eeb9ff]/30 space-y-4">
+                <div className="flex items-center gap-3 text-[#eeb9ff]">
+                  <Info size={20} />
+                  <p className="font-medium text-sm">You have booked session online. Payment must be completed online.</p>
+                </div>
+                <div className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
+                  <div className="w-12 h-12 rounded-full bg-[#eeb9ff] flex items-center justify-center text-[#3F2965]">
+                    <QrCode size={24} />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-medium">Online (UPI)</h4>
+                    <p className="text-white/60 text-xs">Secure digital payment</p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { id: "upi", label: "Online (UPI)", icon: QrCode },
+                  { id: "cash", label: "Offline (Cash)", icon: Banknote }
+                ].map((method) => (
+                  <label key={method.id} className={`relative p-5 rounded-2xl border transition-all flex flex-col items-center justify-center gap-2 capitalize group cursor-pointer ${formData.paymentMethod === method.id ? "border-[#eeb9ff] bg-white/10 shadow-lg" : "border-white/5 hover:border-white/20 bg-white/5"}`}>
+                    <input type="radio" name="paymentMethod" value={method.id} checked={formData.paymentMethod === method.id} onChange={handleChange} className="sr-only" />
+                    <method.icon size={24} className={formData.paymentMethod === method.id ? "text-[#eeb9ff]" : "text-white/40 group-hover:text-white/60"} />
+                    <span className={`text-sm font-medium ${formData.paymentMethod === method.id ? "text-white" : "text-white/60"}`}>{method.label}</span>
+                  </label>
+                ))}
+              </div>
+            )}
+
+
           </section>
 
           {/* Additional Notes */}

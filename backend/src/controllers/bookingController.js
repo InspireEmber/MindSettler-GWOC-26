@@ -1,11 +1,12 @@
 const Appointment = require('../models/Appointment');
 const User = require('../models/User');
 const Slot = require('../models/Slot');
+const emailService = require('../services/emailService');
 
 // Create a new booking request (authenticated user only)
 // Validation is handled via Joi in the route layer.
 exports.createBooking = async (req, res) => {
-  const { sessionType, preferredDate, preferredTime, slotId, isFirstSession, message } = req.body;
+  const { sessionType, preferredDate, preferredTime, slotId, isFirstSession, message, paymentMethod, paymentReference } = req.body;
 
   if (!req.user) {
     return res.status(401).json({
@@ -51,12 +52,20 @@ exports.createBooking = async (req, res) => {
     message: message || '',
     status: 'pending',
     paymentStatus: 'pending',
+    paymentMethod: paymentMethod || 'upi',
+    paymentReference: paymentReference || '',
   });
 
-  // Mark slot as booked
   slot.isBooked = true;
   slot.isAvailable = false;
   await slot.save();
+
+  // Send welcome email (async, don't wait for it)
+  emailService.sendWelcomeEmail(user.email, {
+    sessionType: appointment.sessionType,
+    date: slot.date.toLocaleDateString(),
+    time: slot.startTime,
+  }).catch(err => console.error("Email send failed:", err));
 
   // Keep existing response shape; add fields only if needed later.
   res.status(201).json({
@@ -115,6 +124,8 @@ exports.getBookingStatus = async (req, res) => {
       createdAt: appointment.createdAt,
       // Non-breaking additions:
       paymentStatus: appointment.paymentStatus,
+      paymentMethod: appointment.paymentMethod || null,
+      paymentReference: appointment.paymentReference || null,
       meetingLink: appointment.meetingLink || null,
       // ✅ ADD THIS
       rejectionReason: appointment.rejectionReason || null,
@@ -198,4 +209,28 @@ exports.addToGoogleCalendar = async (req, res) => {
       message: 'Failed to add event to Google Calendar. Token might be expired. Please re-login.',
     });
   }
+};
+
+exports.updatePaymentInfo = async (req, res) => {
+  const { id } = req.params;
+  const { paymentReference } = req.body;
+
+  const appointment = await Appointment.findById(id);
+  if (!appointment) {
+    return res.status(404).json({ success: false, message: "Appointment not found" });
+  }
+
+  // Ensure only the owner can update
+  if (appointment.user.toString() !== req.user._id.toString()) {
+    return res.status(403).json({ success: false, message: "Unauthorized" });
+  }
+
+  appointment.paymentReference = paymentReference;
+  await appointment.save();
+
+  res.json({
+    success: true,
+    message: "Payment reference updated successfully",
+    data: appointment
+  });
 };
