@@ -160,6 +160,9 @@ const JOURNEY_STEPS = [
 
 export default function JourneyPage() {
   const containerRef = useRef(null);
+  const cardRefs = useRef([]);
+  const [dotPositions, setDotPositions] = useState([]);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -171,8 +174,64 @@ export default function JourneyPage() {
     restDelta: 0.001
   });
 
-  // Parallax transform for the mountain background
-  const mountainY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  // Calculate dot positions based on card refs
+  useEffect(() => {
+    const calculatePositions = () => {
+      if (!containerRef.current) return;
+
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const containerScrollTop = containerRef.current.scrollTop || 0;
+
+      const positions = cardRefs.current.map((cardRef, index) => {
+        if (!cardRef) return null;
+
+        const cardRect = cardRef.getBoundingClientRect();
+        const relativeTop = cardRect.top - containerRect.top + containerScrollTop;
+        const relativeLeft = cardRect.left - containerRect.left;
+        const centerX = relativeLeft + cardRect.width / 2;
+
+        return {
+          topDot: { x: centerX, y: relativeTop },
+          bottomDot: { x: centerX, y: relativeTop + cardRect.height }
+        };
+      }).filter(Boolean);
+
+      setDotPositions(positions);
+    };
+
+    // Calculate on mount and resize
+    calculatePositions();
+    window.addEventListener('resize', calculatePositions);
+
+    // Recalculate after a short delay to ensure layout is complete
+    const timer = setTimeout(calculatePositions, 500);
+
+    return () => {
+      window.removeEventListener('resize', calculatePositions);
+      clearTimeout(timer);
+    };
+  }, []);
+
+  // Generate SVG path string connecting bottom of card N to top of card N+1
+  const generatePath = () => {
+    if (dotPositions.length < 2) return "";
+
+    let pathParts = [];
+
+    for (let i = 0; i < dotPositions.length - 1; i++) {
+      const start = dotPositions[i].bottomDot;
+      const end = dotPositions[i + 1].topDot;
+
+      // Calculate control points for a smooth S-curve
+      const midY = (start.y + end.y) / 2;
+
+      pathParts.push(
+        `M ${start.x} ${start.y} C ${start.x} ${midY}, ${end.x} ${midY}, ${end.x} ${end.y}`
+      );
+    }
+
+    return pathParts.join(" ");
+  };
 
   return (
     <div className="min-h-screen relative text-white selection:bg-[#DD1764] selection:text-white overflow-hidden">
@@ -202,52 +261,43 @@ export default function JourneyPage() {
       {/* 2. MOUNTAIN SECTION */}
       <div ref={containerRef} className="relative max-w-7xl mx-auto px-4 md:px-12 pb-40">
 
-        {/* --- THE TRAIL (PATH) --- */}
-        {/* A line connecting the steps, styled like a topographic trail */}
-        <div className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none hidden md:block z-0">
-          <svg
-            className="w-full h-full"
-            viewBox="0 0 1200 5000"
+        {/* --- THE DYNAMIC TRAIL (PATH) --- */}
+        {/* SVG overlay that draws lines between card anchor dots */}
+        <svg
+          className="absolute top-0 left-0 w-full h-full pointer-events-none hidden md:block z-[5]"
+          style={{ overflow: 'visible' }}
+        >
+          <defs>
+            <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#eeb9ff" stopOpacity="0.6" />
+              <stop offset="50%" stopColor="#eeb9ff" />
+              <stop offset="100%" stopColor="#DD1764" />
+            </linearGradient>
+          </defs>
+
+          {/* Animated path connecting the dots - draws as you scroll */}
+          <motion.path
+            d={generatePath()}
+            stroke="url(#pinkGradient)"
+            strokeWidth="3"
+            strokeLinecap="round"
             fill="none"
-            preserveAspectRatio="xMidYMin slice"
-          >
-            {/* Main Timeline Path - Weaving widely behind images with gradient */}
-            <motion.path
-              d="M 200 200
-                 C 200 750 1000 750 1000 1300
-                 C 1000 1900 200 1900 200 2500
-                 C 200 3050 1000 3050 1000 3600
-                 C 1000 4100 600 4100 600 4600"
-              stroke="url(#pinkGradient)"
-              strokeWidth="4"
-              strokeLinecap="round"
-              fill="none"
-              style={{ pathLength }}
-            />
+            style={{ pathLength }}
+          />
 
-            {/* Node Circles - Behind Images */}
-            <circle cx="200" cy="200" r="6" fill="#eeb9ff" />
-            <circle cx="1000" cy="1300" r="6" fill="#eeb9ff" />
-            <circle cx="200" cy="2500" r="6" fill="#eeb9ff" />
-            <circle cx="1000" cy="3600" r="6" fill="#eeb9ff" />
-            <circle cx="600" cy="4600" r="6" fill="#eeb9ff" />
+          {/* Render dots at each anchor point */}
+          {dotPositions.map((pos, index) => (
+            <g key={index}>
+              {/* Top dot */}
+              <circle cx={pos.topDot.x} cy={pos.topDot.y} r="6" fill="#eeb9ff" />
+              <circle cx={pos.topDot.x} cy={pos.topDot.y} r="12" stroke="#eeb9ff" strokeWidth="1" fill="none" opacity="0.4" />
 
-            {/* Outer ring accents */}
-            <circle cx="200" cy="200" r="12" stroke="#eeb9ff" strokeWidth="1" fill="none" opacity="0.4" />
-            <circle cx="1000" cy="1300" r="12" stroke="#eeb9ff" strokeWidth="1" fill="none" opacity="0.4" />
-            <circle cx="200" cy="2500" r="12" stroke="#eeb9ff" strokeWidth="1" fill="none" opacity="0.4" />
-            <circle cx="1000" cy="3600" r="12" stroke="#eeb9ff" strokeWidth="1" fill="none" opacity="0.4" />
-            <circle cx="600" cy="4600" r="12" stroke="#eeb9ff" strokeWidth="1" fill="none" opacity="0.4" />
-
-            <defs>
-              <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#eeb9ff" stopOpacity="0.4" />
-                <stop offset="50%" stopColor="#eeb9ff" />
-                <stop offset="100%" stopColor="#DD1764" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
+              {/* Bottom dot */}
+              <circle cx={pos.bottomDot.x} cy={pos.bottomDot.y} r="6" fill="#DD1764" />
+              <circle cx={pos.bottomDot.x} cy={pos.bottomDot.y} r="12" stroke="#DD1764" strokeWidth="1" fill="none" opacity="0.4" />
+            </g>
+          ))}
+        </svg>
 
         {/* --- STEPS CONTENT --- */}
         <div className="relative z-10 flex flex-col gap-64 pt-20">
@@ -260,6 +310,7 @@ export default function JourneyPage() {
               >
                 {/* IMAGE CARD (THE COMPASS/VIEW) */}
                 <motion.div
+                  ref={(el) => (cardRefs.current[index] = el)}
                   initial={{ scale: 0.8, opacity: 0, rotate: isEven ? -5 : 5 }}
                   whileInView={{ scale: 1, opacity: 1, rotate: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
