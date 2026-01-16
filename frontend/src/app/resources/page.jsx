@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { BookOpen, Play, Link2, ArrowRight, ExternalLink, Maximize, X, PhoneCall, Globe, GraduationCap } from "lucide-react";
+import { BookOpen, Play, Link2, ArrowRight, ExternalLink, Maximize, X, PhoneCall, Globe, GraduationCap, ChevronLeft, ChevronRight } from "lucide-react";
 import ReadyToBook from "@/components/ReadyToBook";
 
 const HELPFUL_RESOURCES = [
@@ -121,6 +121,39 @@ const MixedRain = () => {
   );
 };
 
+// --- Reusable Scroll Components ---
+
+const ScrollButtons = ({ scrollRef, containerClass = "" }) => {
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = 400;
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  return (
+    <>
+      <button
+        onClick={() => scroll("left")}
+        className={`absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/20 hover:bg-[#DD1764]/20 border border-white/10 hover:border-[#eeb9ff]/50 backdrop-blur-md rounded-full flex items-center justify-center text-white/70 hover:text-[#eeb9ff] transition-all opacity-0 group-hover:opacity-100 hidden md:flex ${containerClass}`}
+        aria-label="Scroll left"
+      >
+        <ChevronLeft size={24} />
+      </button>
+      <button
+        onClick={() => scroll("right")}
+        className={`absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/20 hover:bg-[#DD1764]/20 border border-white/10 hover:border-[#eeb9ff]/50 backdrop-blur-md rounded-full flex items-center justify-center text-white/70 hover:text-[#eeb9ff] transition-all opacity-0 group-hover:opacity-100 hidden md:flex ${containerClass}`}
+        aria-label="Scroll right"
+      >
+        <ChevronRight size={24} />
+      </button>
+    </>
+  );
+};
+
 // --- Specialized Resource Components ---
 
 // 1. Video Card with Direct Playback
@@ -133,63 +166,56 @@ const VideoResourceCard = ({ video, onClick }) => {
     if (!videoEl) return;
 
     if (isHovered) {
-      // Play on hover, but KEEP MUTED
       const playPromise = videoEl.play();
       if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          // Auto-play was prevented
-          console.error("Preview autoplay prevented:", error);
-        });
+        playPromise.catch((error) => console.error("Preview autoplay prevented:", error));
       }
     } else {
       videoEl.pause();
       videoEl.currentTime = 0;
-      // Ensure it stays muted
       videoEl.muted = true;
     }
   }, [isHovered]);
 
   return (
     <motion.div
-      whileHover={{ y: -5, scale: 1.02 }}
+      whileHover={{ y: -8, scale: 1.02 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      // Mobile "Hold" support
       onTouchStart={() => setIsHovered(true)}
       onTouchEnd={() => setIsHovered(false)}
-      onContextMenu={(e) => e.preventDefault()} // Prevent menu
+      onContextMenu={(e) => e.preventDefault()}
       onClick={onClick}
-      className="relative min-w-[320px] md:min-w-[400px] h-[260px] rounded-[2rem] bg-black/40 overflow-hidden group cursor-pointer border border-white/5 snap-start shadow-lg hover:shadow-2xl hover:shadow-[#DD1764]/20 transition-all duration-300"
+      className="relative w-[300px] md:w-[360px] h-[420px] rounded-[2rem] bg-white/5 backdrop-blur-md overflow-hidden group cursor-pointer border border-white/10 snap-start shadow-xl flex flex-col transition-all hover:bg-white/10 hover:border-[#eeb9ff]/20"
     >
-      {/* Background Video Preview */}
-      <video
-        ref={videoRef}
-        src={video.href}
-        muted // Start muted
-        loop
-        playsInline
-        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${isHovered ? 'opacity-100' : 'opacity-40'}`}
-      />
+      {/* Top: Video Section (80%) */}
+      <div className="relative h-[80%] w-full overflow-hidden rounded-t-[2rem]">
+        <video
+          ref={videoRef}
+          src={video.href}
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        {/* Play Icon Overlay (Subtle) */}
+        {!isHovered && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+            <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
+              <Play size={20} fill="white" className="text-white ml-1 opacity-80" />
+            </div>
+          </div>
+        )}
+      </div>
 
-      {/* Static Thumbnail (Optional Overlay) */}
-      {!isHovered && (
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10" />
-      )}
+      {/* Bottom: Content Section (20%) */}
+      <div className="flex-1 p-4 relative flex flex-col justify-center border-t border-white/5">
+        <h3 className="text-xl font-serif text-white group-hover:text-[#eeb9ff] transition-colors leading-tight">
+          {video.title}
+        </h3>
 
-      {/* Content Overlay */}
-      <div className="absolute inset-0 z-20 p-6 flex flex-col justify-between pointer-events-none">
-        <div className="flex justify-between items-start">
-          {/* Tag Removed */}
-        </div>
-
-        <div>
-          <h3 className="text-xl md:text-2xl font-serif text-white mb-2 group-hover:text-[#eeb9ff] transition-colors drop-shadow-md leading-tight">
-            {video.title}
-          </h3>
-          <p className="text-sm md:text-base text-gray-200 line-clamp-2 opacity-0 group-hover:opacity-100 transition-all duration-500 font-redhat font-light leading-relaxed">
-            {video.desc}
-          </p>
-        </div>
+        {/* Decorative 'River' Line */}
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#eeb9ff]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
     </motion.div>
   );
@@ -267,10 +293,14 @@ const VideoModal = ({ video, onClose }) => {
 
 // 4. Standalone Article Marquee
 const ArticleMarquee = ({ articles }) => {
+  const scrollRef = useRef(null);
+
   return (
-    <div className="relative w-full py-10">
+    <div className="relative w-full py-10 group">
+      <ScrollButtons scrollRef={scrollRef} />
       <div
-        className="flex gap-6 px-6 overflow-x-auto scrollbar-hide snap-x"
+        ref={scrollRef}
+        className="flex gap-6 p-6 overflow-x-auto scrollbar-hide snap-x"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {articles.map((article, idx) => (
@@ -301,14 +331,21 @@ const ArticleMarquee = ({ articles }) => {
 
 // 5. Video Marquee (Visual Guides)
 const VideoMarquee = ({ videos, onVideoClick }) => {
+  const scrollRef = useRef(null);
+
   return (
-    <div className="relative w-full py-10">
+    <div className="relative w-full py-10 group">
+      <ScrollButtons scrollRef={scrollRef} />
       <div
-        className="flex gap-8 px-6 overflow-x-auto scrollbar-hide snap-x"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        ref={scrollRef}
+        className="flex gap-8 p-6 overflow-x-auto scrollbar-hide snap-x items-center"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', paddingBottom: '3rem' }}
       >
         {videos.map((video, idx) => (
-          <div key={`${video.id}-${idx}`} className="snap-center">
+          <div
+            key={`${video.id}-${idx}`}
+            className="snap-center transition-all duration-500"
+          >
             <VideoResourceCard
               video={video}
               onClick={() => onVideoClick(video)}
@@ -317,6 +354,69 @@ const VideoMarquee = ({ videos, onVideoClick }) => {
         ))}
       </div>
     </div>
+  );
+};
+
+// 6. Resource Category Row (Extracted for scrolling state)
+const ResourceCategoryRow = ({ section, index }) => {
+  const scrollRef = useRef(null);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ delay: index * 0.1 }}
+      className="group relative"
+    >
+      <div className="px-6 md:px-12 mb-4 text-center">
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <div className="p-2 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md text-[#eeb9ff]">
+            {section.icon}
+          </div>
+          <h3 className="text-2xl md:text-3xl font-serif font-medium text-[#eeb9ff] tracking-wide">{section.category}</h3>
+        </div>
+        <p className="text-base md:text-lg text-gray-200 font-light font-redhat w-full mx-auto leading-relaxed">
+          {section.description}
+        </p>
+      </div>
+
+      {/* Horizontal Scroll Container */}
+      <div className="relative group/scroll">
+        <ScrollButtons scrollRef={scrollRef} containerClass="!top-[calc(50%-12px)]" />
+        <div
+          ref={scrollRef}
+          className="flex overflow-x-auto gap-4 p-6 md:px-12 scrollbar-hide snap-x"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {section.links.map((link, j) => (
+            <motion.a
+              key={j}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="min-w-[280px] md:min-w-[320px] p-6 rounded-[1.5rem] bg-white/5 border border-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-[#eeb9ff]/20 hover:shadow-xl hover:shadow-[#eeb9ff]/5 transition-all group/link flex flex-col justify-between h-[150px] snap-start"
+            >
+              <div>
+                <div className="flex justify-between items-start mb-3">
+                  <div className="p-2 bg-white/5 rounded-full">
+                    <ExternalLink size={14} className="text-gray-300 group-hover/link:text-[#eeb9ff] transition-colors" />
+                  </div>
+                  <ArrowRight size={14} className="text-gray-300 group-hover/link:text-white -rotate-45 group-hover/link:rotate-0 transition-transform duration-300" />
+                </div>
+                <span className="text-lg md:text-xl font-serif font-medium text-gray-100 group-hover/link:text-white transition-colors line-clamp-2 leading-tight">
+                  {link.name}
+                </span>
+              </div>
+              <div className="text-xs font-bold text-gray-300 uppercase tracking-widest font-redhat group-hover/link:text-[#eeb9ff] transition-colors">
+                Visit Resource
+              </div>
+            </motion.a>
+          ))}
+        </div>
+      </div>
+    </motion.div>
   );
 };
 
@@ -403,12 +503,12 @@ export default function ResourcesPage() {
       </AnimatePresence>
 
       {/* 1. VISUAL GUIDES (Video Only Marquee) */}
-      <section className="mb-20">
-        <div className="px-6 md:px-12 mb-8">
+      <section className="mb-10">
+        <div className="px-6 md:px-12 mb-4 text-center">
           <h2 className="block text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6">
             Visual Guides
           </h2>
-          <p className="text-xl md:text-3xl text-gray-300 font-light leading-relaxed max-w-xl mx-auto md:mx-0 font-redhat">
+          <p className="text-xl md:text-3xl text-gray-300 font-light leading-relaxed w-full mx-auto font-redhat">
             Click on any guide to watch and read the companion insight in our interactive player.
           </p>
         </div>
@@ -417,12 +517,12 @@ export default function ResourcesPage() {
       </section>
 
       {/* 2. RESEARCH & INSIGHTS (Standalone Articles) */}
-      <section className="mb-20">
-        <div className="px-6 md:px-12 mb-8">
+      <section className="mb-10">
+        <div className="px-6 md:px-12 mb-4 text-center">
           <h2 className="block text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6">
             Research & Insights
           </h2>
-          <p className="text-xl md:text-3xl text-gray-300 font-light leading-relaxed max-w-xl mx-auto md:mx-0 font-redhat">
+          <p className="text-xl md:text-3xl text-gray-300 font-light leading-relaxed w-full mx-auto font-redhat">
             Deep dives, study papers, and scientific context for your mental health journey.
           </p>
         </div>
@@ -432,7 +532,7 @@ export default function ResourcesPage() {
 
       {/* 3. HELPFUL LINKS GRID */}
       <section className="mb-16">
-        <div className="px-6 md:px-12 mb-20">
+        <div className="px-6 md:px-12 mb-10 text-center">
           <h2 className="block text-4xl md:text-6xl font-light text-[#eeb9ff] mb-6">
             Helpful Links
           </h2>
@@ -440,55 +540,7 @@ export default function ResourcesPage() {
 
         <div className="flex flex-col gap-10">
           {HELPFUL_RESOURCES.map((section, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: i * 0.1 }}
-              className="group"
-            >
-              <div className="px-6 md:px-12 mb-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-2 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md text-[#eeb9ff]">
-                    {section.icon}
-                  </div>
-                  <h3 className="text-2xl md:text-3xl font-serif font-medium text-white tracking-wide">{section.category}</h3>
-                </div>
-                <p className="text-base md:text-lg text-gray-200 font-light font-redhat max-w-xl leading-relaxed">
-                  {section.description}
-                </p>
-              </div>
-
-              {/* Horizontal Scroll Container */}
-              <div className="flex overflow-x-auto gap-4 px-6 md:px-12 pb-6 scrollbar-hide snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                {section.links.map((link, j) => (
-                  <motion.a
-                    key={j}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ y: -5, scale: 1.02 }}
-                    className="min-w-[280px] md:min-w-[320px] p-6 rounded-[1.5rem] bg-white/5 border border-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-[#eeb9ff]/20 hover:shadow-xl hover:shadow-[#eeb9ff]/5 transition-all group/link flex flex-col justify-between h-[150px] snap-start"
-                  >
-                    <div>
-                      <div className="flex justify-between items-start mb-3">
-                        <div className="p-2 bg-white/5 rounded-full">
-                          <ExternalLink size={14} className="text-gray-300 group-hover/link:text-[#eeb9ff] transition-colors" />
-                        </div>
-                        <ArrowRight size={14} className="text-gray-300 group-hover/link:text-white -rotate-45 group-hover/link:rotate-0 transition-transform duration-300" />
-                      </div>
-                      <span className="text-lg md:text-xl font-serif font-medium text-gray-100 group-hover/link:text-white transition-colors line-clamp-2 leading-tight">
-                        {link.name}
-                      </span>
-                    </div>
-                    <div className="text-xs font-bold text-gray-300 uppercase tracking-widest font-redhat group-hover/link:text-[#eeb9ff] transition-colors">
-                      Visit Resource
-                    </div>
-                  </motion.a>
-                ))}
-              </div>
-            </motion.div>
+            <ResourceCategoryRow key={i} section={section} index={i} />
           ))}
         </div>
       </section>

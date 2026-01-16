@@ -7,10 +7,10 @@ const FAQ_DATA = [
   {
     category: "Sessions",
     questions: [
-      { q: "What is a psycho-education session?", a: "A psycho-education session is a structured 60-minute session focused on education and awareness-building about mental health. Unlike traditional therapy, it emphasizes understanding your thoughts, emotions, and patterns." },
+      { q: "What is an awareness session?", a: "An awareness session is a structured 60-minute session focused on education and awareness-building about mental health. Unlike traditional therapy, it emphasizes understanding your thoughts, emotions, and patterns." },
       { q: "How long are the sessions?", a: "Each session is 60 minutes long. This duration allows for meaningful exploration while maintaining focus throughout." },
       { q: "Can I choose between online and offline sessions?", a: "Yes, you can choose based on your preference. Both formats follow the same structured approach and maintain strict confidentiality." },
-      { q: "What happens in my first session?", a: "It's an introduction to the psycho-education approach. We'll discuss your goals, explain the process, and begin exploring your journey in a calm environment." }
+      { q: "What happens in my first session?", a: "It's an introduction to the awareness approach. We'll discuss your goals, explain the process, and begin exploring your journey in a calm environment." }
     ]
   },
   {

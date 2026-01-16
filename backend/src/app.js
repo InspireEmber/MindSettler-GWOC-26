@@ -141,6 +141,7 @@ app.use(express.urlencoded({ extended: true }));
 const SESSION_SECRET = process.env.SESSION_SECRET || 'change-this-secret';
 
 app.use(session({
+  name: 'mindsettler.sid', // Unique name to avoid conflicts
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,

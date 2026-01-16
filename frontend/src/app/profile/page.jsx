@@ -47,8 +47,16 @@ export default function ProfilePage() {
   };
 
   const refreshSessions = async () => {
-    const freshSessions = await api.getUserSessions();
-    setSessions(freshSessions || []);
+    try {
+      const freshSessions = await api.getUserSessions();
+      setSessions(freshSessions || []);
+    } catch (error) {
+      console.warn("Failed to refresh sessions silently:", error);
+      if (error.message?.includes("User account required")) {
+        // Session likely invalid/admin logged in elsewhere.
+        // We could redirect aka router.replace('/login') or just let it be.
+      }
+    }
   };
 
   useEffect(() => {
@@ -63,7 +71,7 @@ export default function ProfilePage() {
         setSummary(s);
         setSessions(sess || []);
       } catch (e) {
-        if (e.message?.toLowerCase().includes("login")) {
+        if (e.message?.toLowerCase().includes("login") || e.message?.includes("User account required")) {
           router.replace("/login");
           return;
         }
@@ -102,7 +110,7 @@ export default function ProfilePage() {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
               <h1 className="text-3xl md:text-5xl font-light text-white">
-                Hello, <span className="font-medium text-[#eeb9ff]">{profile?.name.split(' ')[0]}</span>
+                Hello, <span className="font-medium text-[#eeb9ff]">{profile?.name?.split(' ')[0]}</span>
               </h1>
               <p className="text-gray-300 mt-2 flex items-center gap-2 font-redhat">
                 <Calendar size={14} /> {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}

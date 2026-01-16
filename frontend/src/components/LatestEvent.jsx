@@ -96,7 +96,7 @@ const LatestEvent = () => {
                                 </div>
 
                                 {/* Content */}
-                                <h3 className="text-2xl font-serif text-white mb-4 group-hover:text-[#eeb9ff] transition-colors line-clamp-2">
+                                <h3 className="text-2xl text-white mb-4 group-hover:text-[#eeb9ff] transition-colors line-clamp-2">
                                     {event.title}
                                 </h3>
 

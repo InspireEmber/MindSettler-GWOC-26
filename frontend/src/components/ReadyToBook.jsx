@@ -49,10 +49,10 @@ export default function ReadyToBook() {
         </div>
 
         <div className="relative z-20">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-serif italic mb-6 sm:mb-8 leading-tight px-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-redhat italic mb-6 sm:mb-8 leading-tight px-2">
             Start Your Path to Peace
           </h2>
-          <p className="text-base sm:text-lg md:text-xl font-serif italic opacity-90 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-2">
+          <p className="text-base sm:text-lg md:text-xl  opacity-90 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-2">
             "A safe place for kind and professional help."
           </p>
           <Link
