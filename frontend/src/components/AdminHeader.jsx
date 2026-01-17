@@ -192,7 +192,7 @@ export default function AdminHeader() {
     } catch (e) {
       console.error("Admin logout failed", e);
     } finally {
-      router.push("/admin/login");
+      router.push("/login");
     }
   };
 
