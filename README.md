@@ -3,10 +3,25 @@
 <div align="center">
 
 ![MindSettler Banner](https://img.shields.io/badge/MindSettler-Mental%20Wellness%20Platform-pink?style=for-the-badge)
-[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge)](https://mindsettler.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge)](https://mind-settler-gwoc-26.vercel.app/)
 [![Instagram](https://img.shields.io/badge/Instagram-@mindsettlerbypb-E4405F?style=for-the-badge&logo=instagram)](https://www.instagram.com/mindsettlerbypb/)
 
-**Empowering individuals through structured psycho-education and personalized mental health support**
+
+</div>
+
+<div align="center">
+
+**Built with care for mental wellness**
+
+[![Made with Next.js](https://img.shields.io/badge/Made%20with-Next.js-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![Powered by React](https://img.shields.io/badge/Powered%20by-React-61DAFB?style=flat-square&logo=react&logoColor=black)](https://reactjs.org/)
+[![Powered by Node.js](https://img.shields.io/badge/Powered%20by-Node.js-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Powered by Express](https://img.shields.io/badge/Powered%20by-Express-000000?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
+[![Powered by MongoDB](https://img.shields.io/badge/Powered%20by-MongoDB-green?style=flat-square&logo=mongodb)](https://www.mongodb.com/)
+[![AI by OpenRouter](https://img.shields.io/badge/AI%20by-OpenRouter-blue?style=flat-square)](https://openrouter.ai/)
+[![Media on Cloudinary](https://img.shields.io/badge/Media%20on-Cloudinary-3448C5?style=flat-square&logo=cloudinary&logoColor=white)](https://cloudinary.com/)
+[![Styling with Tailwind CSS](https://img.shields.io/badge/Styling%20with-Tailwind%20CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Animations with Framer Motion](https://img.shields.io/badge/Animations%20with-Framer%20Motion-0055FF?style=flat-square&logo=framer&logoColor=white)](https://framer.com/motion)
 
 </div>
 
@@ -298,7 +313,6 @@ The application is deployed using:
 2. Configure Google OAuth redirect URIs
 3. Test the live application
 
-Detailed deployment guide: See [DEPLOYMENT.md](./DEPLOYMENT.md)
 
 ---
 
@@ -421,7 +435,6 @@ MindSettler-GWOC-26/
 |--------|----------|-------------|
 | GET | `/health` | Server health status |
 
-Full API documentation: See [docs/API_DOCUMENTATION.md](./docs/API_DOCUMENTATION.md)
 
 ---
 
@@ -538,7 +551,7 @@ This project is licensed under the ISC License. See the LICENSE file for details
 ## Contact & Support
 
 - **Instagram:** [@mindsettlerbypb](https://www.instagram.com/mindsettlerbypb/)
-- **Website:** [https://mindsettler.vercel.app](https://mindsettler.vercel.app)
+- **Website:** [https://mindsettler.vercel.app](https://mind-settler-gwoc-26.vercel.app/)
 - **Email:** Contact form available on website
 
 ---
@@ -546,17 +559,17 @@ This project is licensed under the ISC License. See the LICENSE file for details
 ## Roadmap
 
 ### Completed
-- [x] Full-stack MERN application
-- [x] Session booking system
-- [x] AI chatbot integration (OpenRouter)
-- [x] Google Calendar integration
-- [x] Email notifications (Brevo)
-- [x] Admin panel with latest events feature
-- [x] Responsive design with frosted glass theme
-- [x] Password reset functionality
-- [x] Corporate services section
-- [x] Image hosting (Cloudinary)
-- [x] Deployment to production (Vercel + Render)
+- [ ] Full-stack MERN application
+- [ ] Session booking system
+- [ ] AI chatbot integration (OpenRouter)
+- [ ] Google Calendar integration
+- [ ] Email notifications (Brevo)
+- [ ] Admin panel with latest events feature
+- [ ] Responsive design with frosted glass theme
+- [ ] Password reset functionality
+- [ ] Corporate services section
+- [ ] Image hosting (Cloudinary)
+- [ ] Deployment to production (Vercel + Render)
 
 ### Planned
 - [ ] Dark mode theme
@@ -572,12 +585,3 @@ This project is licensed under the ISC License. See the LICENSE file for details
 
 ---
 
-<div align="center">
-
-**Built with care for mental wellness**
-
-[![Made with Next.js](https://img.shields.io/badge/Made%20with-Next.js-black?style=flat-square&logo=next.js)](https://nextjs.org/)
-[![Powered by MongoDB](https://img.shields.io/badge/Powered%20by-MongoDB-green?style=flat-square&logo=mongodb)](https://www.mongodb.com/)
-[![AI by OpenRouter](https://img.shields.io/badge/AI%20by-OpenRouter-blue?style=flat-square)](https://openrouter.ai/)
-
-</div>
