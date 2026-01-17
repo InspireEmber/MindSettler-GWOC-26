@@ -1,18 +1,15 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import ReadyToBook from "@/components/ReadyToBook";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import {
      Brain,
      Heart,
      Users,
      Shield,
      Sparkles,
-     ArrowRight,
-     BookOpen,
      Lightbulb,
 } from "lucide-react";
 
@@ -91,15 +88,14 @@ const staggerContainer = {
 
 // Topic Card Component
 const TopicCard = ({ topic, index }) => {
-     const [isExpanded, setIsExpanded] = useState(false);
 
      return (
           <motion.div
                variants={fadeInUp}
                whileHover={{ y: -8 }}
-               className="group relative h-full"
+               className="group relative"
           >
-               <div className="h-full bg-white/10 backdrop-blur-md border border-white/20 rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-[0_0_30px_rgba(238,185,255,0.15)] hover:border-[#eeb9ff]/30 transition-all duration-500 flex flex-col">
+               <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-[0_0_30px_rgba(238,185,255,0.15)] hover:border-[#eeb9ff]/30 transition-all duration-500 flex flex-col">
                     {/* Image */}
                     <div className="relative h-56 overflow-hidden">
                          <Image
@@ -117,21 +113,13 @@ const TopicCard = ({ topic, index }) => {
                     </div>
 
                     {/* Content */}
-                    <div className="p-8 flex flex-col flex-grow">
-                         <h3 className="text-2xl font-light text-[#eeb9ff] mb-4 group-hover:text-white transition-colors">
+                    <div className="p-6 md:p-8 pb-4 flex flex-col items-center text-center">
+                         <h3 className="text-2xl font-light text-[#eeb9ff] mb-2 group-hover:text-white transition-colors">
                               {topic.title}
                          </h3>
-                         <p className="text-gray-200 leading-relaxed font-redhat mb-6 flex-grow font-light">
+                         <p className="text-gray-200 leading-relaxed font-redhat font-light">
                               {topic.description}
                          </p>
-
-                         <Link
-                              href="/resources"
-                              className="inline-flex items-center gap-2 text-[#eeb9ff] hover:text-white font-medium text-sm transition-all group/link mt-auto uppercase tracking-widest"
-                         >
-                              <span>Learn More</span>
-                              <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                         </Link>
                     </div>
                </div>
           </motion.div>
@@ -249,7 +237,7 @@ export default function AwarenessPage() {
                                    whileInView="visible"
                                    viewport={{ once: true, margin: "-100px" }}
                                    variants={staggerContainer}
-                                   className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
+                                   className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                               >
                                    {AWARENESS_TOPICS.map((topic, index) => (
                                         <TopicCard key={topic.id} topic={topic} index={index} />

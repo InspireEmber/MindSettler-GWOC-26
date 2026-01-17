@@ -22,10 +22,10 @@ const SESSION_PHOTOS = [
 ];
 
 const STEPS = [
-  { title: "Select Mode", desc: "Choose Online or In-person" },
-  { title: "Pick a Time", desc: "Find a slot that fits your day" },
-  { title: "Initial Chat", desc: "Share your focus areas" },
-  { title: "Confirmation", desc: "Receive your session link" }
+  { title: "Session Request", desc: "Select your mode, time slot, and focus areas." },
+  { title: "Expert Review", desc: "Our team reviews your request for a personalized approach." },
+  { title: "QR Payment", desc: "Receive a secure UPI QR code via email and in your session card." },
+  { title: "Get Link", desc: "Enter your transaction Ref No. to receive the final session link." }
 ];
 
 
