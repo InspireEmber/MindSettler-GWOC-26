@@ -30,6 +30,7 @@ exports.sendWelcomeEmail = async (userEmail, bookingDetails) => {
           <p style="margin: 5px 0;"><strong>Mode:</strong> ${bookingDetails.sessionType.toUpperCase()}</p>
           <p style="margin: 5px 0;"><strong>Date:</strong> ${bookingDetails.date}</p>
           <p style="margin: 5px 0;"><strong>Time:</strong> ${bookingDetails.time}</p>
+          <p style="margin: 5px 0;"><strong>Price:</strong> ₹749</p>
           <p style="margin: 5px 0;"><strong>Status:</strong> <span style="color: #d97706;">Pending Review</span></p>
         </div>
         <p>Stay mindful,<br><strong>Team MindSettler</strong></p>
@@ -58,6 +59,7 @@ exports.sendPaymentConfirmationEmail = async (userEmail, paymentDetails) => {
         <p>Your payment for the session on <strong>${paymentDetails.date}</strong> has been verified. Your appointment is now officially confirmed.</p>
         <div style="background: #f0fdf4; padding: 25px; border-radius: 15px; margin: 25px 0; border: 1px solid #bbf7d0;">
           <h3 style="margin-top: 0; color: #065f46; font-size: 16px;">Payment Summary:</h3>
+          <p style="margin: 5px 0;"><strong>Amount:</strong> ₹749</p>
           <p style="margin: 5px 0;"><strong>Method:</strong> ${paymentDetails.method.toUpperCase()}</p>
           ${paymentDetails.reference ? `<p style="margin: 5px 0;"><strong>Ref No:</strong> ${paymentDetails.reference}</p>` : ''}
         </div>
@@ -94,6 +96,7 @@ exports.sendSessionConfirmationEmail = async (userEmail, sessionDetails) => {
           <p style="margin: 5px 0;"><strong>Mode:</strong> ${sessionDetails.sessionType.toUpperCase()}</p>
           <p style="margin: 5px 0;"><strong>Date:</strong> ${sessionDetails.date}</p>
           <p style="margin: 5px 0;"><strong>Time:</strong> ${sessionDetails.time}</p>
+          <p style="margin: 5px 0;"><strong>Price:</strong> ₹749</p>
           ${sessionDetails.meetingLink ? `<p style="margin: 5px 0;"><strong>Meeting Link:</strong> <a href="${sessionDetails.meetingLink}" style="color: #DD1764;">Join Session</a></p>` : ''}
         </div>
         

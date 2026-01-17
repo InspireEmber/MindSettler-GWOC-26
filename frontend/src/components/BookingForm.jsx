@@ -123,6 +123,21 @@ export default function BookingForm() {
                 </label>
               ))}
             </div>
+
+            <div className="mt-4 p-4 rounded-xl bg-[#eeb9ff]/10 border border-[#eeb9ff]/20 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[#eeb9ff] flex items-center justify-center text-[#3F2965]">
+                  <Banknote size={20} />
+                </div>
+                <div>
+                  <p className="text-[#eeb9ff] text-xs font-bold uppercase tracking-widest">Total Price</p>
+                  <p className="text-white/60 text-xs text-light">Inclusive of all charges</p>
+                </div>
+              </div>
+              <div className="text-3xl font-serif text-white">
+                ₹749
+              </div>
+            </div>
           </section>
 
           {/* Step 2: Date Selection */}
@@ -170,7 +185,7 @@ export default function BookingForm() {
           {/* Step 4: Payment Method */}
           <section className="space-y-6">
             <h3 className="text-sm font-bold text-[#eeb9ff] uppercase tracking-widest flex items-center gap-2">
-              <Wallet size={16} /> 4. Payment Method
+              <Wallet size={16} /> 4. Payment Method (₹749)
             </h3>
 
             {formData.sessionType === "online" ? (
@@ -203,6 +218,13 @@ export default function BookingForm() {
                 ))}
               </div>
             )}
+
+            <div className="mt-4 flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/10">
+              <Info className="w-5 h-5 text-[#eeb9ff] shrink-0 mt-0.5" />
+              <p className="text-sm text-white/70 font-light leading-relaxed">
+                You will receive the <span className="text-[#eeb9ff] font-medium">Payment Scanner & UPI ID</span> after your appointment is approved. You can check this in your <span className="font-medium text-white">Appointment Status</span> page or the email we sent you.
+              </p>
+            </div>
 
 
           </section>

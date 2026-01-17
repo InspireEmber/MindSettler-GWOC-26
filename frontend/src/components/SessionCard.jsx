@@ -51,6 +51,7 @@ export default function SessionCard({ booking }) {
             })}
           />
           <DetailItem label="Time Slot" value={booking.preferredTime} icon={Clock} />
+          <DetailItem label="Amount" value="₹749" icon={Banknote} />
           <DetailItem label="Payment Status" value={booking.paymentStatus || 'pending'} icon={CheckCircle2} />
           <DetailItem label="Payment Method" value={booking.paymentMethod} icon={booking.paymentMethod === 'upi' ? QrCode : Banknote} />
           {booking.paymentReference && <DetailItem label="Ref No." value={booking.paymentReference} icon={CheckCircle2} />}
