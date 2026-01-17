@@ -190,7 +190,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Users, CalendarCheck, Clock, TrendingUp,
-  DollarSign, Activity, ArrowRight, Newspaper
+  Activity, ArrowRight, Newspaper
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { API_BASE_URL } from "../../../config/api";
@@ -266,13 +266,7 @@ export default function AdminDashboardPage() {
           trend="Active"
           theme="blue"
         />
-        <StatCard
-          label="Total Revenue"
-          value={`₹${stats?.revenue || 0}`}
-          icon={<DollarSign size={22} />}
-          trend="Net"
-          theme="emerald"
-        />
+
       </div>
 
       {/* Action Hub */}
