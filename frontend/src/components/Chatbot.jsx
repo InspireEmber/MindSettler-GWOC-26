@@ -1,11 +1,11 @@
-"use client";
+
 
 import { useState, useRef, useEffect } from "react";
-import { Send, Minimize2, Sparkles, Brain, CalendarCheck, Info, BookOpen, HelpCircle, MessageCircle, GraduationCap, ArrowRight } from "lucide-react";
+import { Send, Minimize2, Sparkles, Brain, CalendarCheck, Info, BookOpen, HelpCircle, MessageCircle, GraduationCap, ArrowRight, Calendar, Clock, CreditCard, Video } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import Image from "next/image";
-import api from "../services/api";
+import { Link } from "react-router-dom";
+
+import api from "@/services/api";
 
 const DEFAULT_GREETING = "Hi! I'm your MindSettler guide. 🌿\n\nI can help you understand our methodology or assist you in booking your first session. How can I support you today?";
 
@@ -43,10 +43,11 @@ const getQuickAccessButton = (userQuestion) => {
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: "assistant", content: DEFAULT_GREETING },
+    { role: "assistant", type: "text", content: DEFAULT_GREETING },
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [bookingState, setBookingState] = useState(null);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -75,18 +76,45 @@ export default function Chatbot() {
     try {
       const conversationHistory = messages.slice(1).map((msg) => ({
         role: msg.role === "assistant" ? "assistant" : "user",
-        content: msg.content,
+        content: msg.content || msg.text,
       }));
 
-      const response = await api.sendChatMessage({
+      const res = await api.sendChatMessage({
         message: userMessage,
         conversationHistory,
+        bookingState
       });
 
-      let responseText = response?.response || response?.message || "I'm having trouble connecting. Please try again soon.";
-      setMessages((prev) => [...prev, { role: "assistant", content: responseText }]);
+      if (res.bookingState !== undefined) {
+        setBookingState(res.bookingState);
+      }
+
+      let responseObj = res?.response;
+      if (typeof responseObj === "string") {
+        responseObj = { type: "text", text: responseObj };
+      } else if (!responseObj) {
+        responseObj = { type: "text", text: "I'm having trouble connecting. Please try again soon." };
+      }
+
+      setMessages((prev) => [...prev, { role: "assistant", ...responseObj }]);
     } catch (error) {
-      setMessages((prev) => [...prev, { role: "assistant", content: "I'm currently offline. Please reach out via our contact page!" }]);
+      setMessages((prev) => [...prev, { role: "assistant", type: "text", content: "I'm currently offline. Please reach out via our contact page!" }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleConfirmBooking = async () => {
+    setIsLoading(true);
+    try {
+      const res = await api.sendChatMessage({
+        action: "CONFIRM_BOOKING",
+        bookingState
+      });
+      if (res.bookingState === null) setBookingState(null);
+      setMessages((prev) => [...prev, { role: "assistant", ...res.response }]);
+    } catch (error) {
+      setMessages((prev) => [...prev, { role: "assistant", type: "text", text: "Failed to confirm booking." }]);
     } finally {
       setIsLoading(false);
     }
@@ -110,7 +138,7 @@ export default function Chatbot() {
       const linkText = match[2]?.trim() || "here";
       const linkPath = match[3];
       parts.push(
-        <Link key={match.index} href={linkPath} className="inline-flex items-center gap-1 text-[#3F2965] font-bold underline decoration-[#DD1764]/30 hover:text-[#DD1764] transition-colors" onClick={() => setIsOpen(false)}>
+        <Link key={match.index} to={linkPath} className="inline-flex items-center gap-1 text-[#3F2965] font-bold underline decoration-[#DD1764]/30 hover:text-[#DD1764] transition-colors" onClick={() => setIsOpen(false)}>
           {linkText}
         </Link>
       );
@@ -193,13 +221,38 @@ export default function Chatbot() {
                       : "bg-white text-[#2E2A36] border border-slate-100 rounded-[1.25rem] rounded-tl-none"
                       }`}>
                       <div className="whitespace-pre-wrap">
-                        {message.role === "assistant" ? renderMessageContent(message.content) : message.content}
+                        {message.type === "booking_confirmation" ? (
+                          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm my-2">
+                            <h4 className="font-bold text-[#3F2965] mb-3 pb-2 border-b border-slate-100 flex items-center gap-2"><CalendarCheck size={18} /> Booking Summary</h4>
+                            <div className="space-y-3 mb-5 text-sm text-[#2E2A36]">
+                              <div className="flex items-center justify-between"><div className="flex items-center gap-2 opacity-70"><Video size={16} /> Mode</div> <span className="font-medium capitalize">{message.booking.mode}</span></div>
+                              <div className="flex items-center justify-between"><div className="flex items-center gap-2 opacity-70"><Calendar size={16} /> Date</div> <span className="font-medium">{message.booking.date}</span></div>
+                              <div className="flex items-center justify-between"><div className="flex items-center gap-2 opacity-70"><Clock size={16} /> Slot</div> <span className="font-medium">{message.booking.slot}</span></div>
+                              <div className="flex items-center justify-between"><div className="flex items-center gap-2 opacity-70"><CreditCard size={16} /> Price</div> <span className="font-medium text-emerald-600">₹{message.booking.price}</span></div>
+                            </div>
+                            <button onClick={handleConfirmBooking} className="w-full py-2.5 bg-gradient-to-r from-[#a167a5] to-[#DD1764] text-white rounded-lg font-medium shadow-md shadow-pink-500/20 hover:shadow-lg hover:shadow-pink-500/30 transition-all active:scale-95">
+                              Confirm Booking
+                            </button>
+                          </div>
+                        ) : message.type === "auth_required" ? (
+                          <div className="text-center py-2">
+                            <p className="mb-4 text-sm">{message.text}</p>
+                            <Link to="/login" className="px-5 py-2 bg-[#3F2965] text-white rounded-full text-xs font-semibold hover:bg-[#2E1D4A] shadow-md transition-all" onClick={() => setIsOpen(false)}>Log In Now</Link>
+                          </div>
+                        ) : message.type === "booking_questions" ? (
+                          <div className="flex flex-col gap-1">
+                            <span className="text-xs uppercase tracking-wider font-bold text-[#a167a5]">Booking Setup</span>
+                            <span>{message.text}</span>
+                          </div>
+                        ) : (
+                          message.role === "assistant" ? renderMessageContent(message.content || message.text) : (message.content || message.text)
+                        )}
                       </div>
                       {/* Quick Access Button - based on user's question */}
                       {quickAccessButton && (
                         <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-slate-100">
                           <Link
-                            href={quickAccessButton.href}
+                            to={quickAccessButton.href}
                             onClick={() => setIsOpen(false)}
                             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#a167a5] bg-[#a167a5]/10 hover:bg-[#a167a5]/20 rounded-full transition-colors"
                           >

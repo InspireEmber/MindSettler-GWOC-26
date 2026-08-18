@@ -1,8 +1,8 @@
-// "use client";
+// 
 
 // import { useState, useEffect } from "react";
-// import Link from "next/link";
-// import { useRouter, usePathname } from "next/navigation";
+// import { Link } from "react-router-dom";
+// import { useNavigate, useLocation } from "react-router-dom";
 // import { 
 //   LayoutDashboard, 
 //   Calendar, 
@@ -16,8 +16,8 @@
 // const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 // export default function AdminHeader() {
-//   const router = useRouter();
-//   const pathname = usePathname();
+//   const navigate = useNavigate();
+//   const { pathname } = useLocation();
 //   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 //   // Close mobile menu whenever the route changes
@@ -44,7 +44,7 @@
 //     } catch (e) {
 //       console.error("Admin logout failed", e);
 //     } finally {
-//       router.push("/admin/login");
+//       navigate("/admin/login");
 //     }
 //   };
 
@@ -70,7 +70,7 @@
 //         <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
 
 //           {/* Brand */}
-//           <Link href="/admin/dashboard" className="flex items-center gap-2 group z-50 relative">
+//           <Link to="/admin/dashboard" className="flex items-center gap-2 group z-50 relative">
 //             <div className="w-8 h-8 rounded-lg bg-slate-800 text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
 //               <LayoutDashboard size={16} />
 //             </div>
@@ -82,7 +82,7 @@
 //           {/* Desktop Navigation */}
 //           <nav className="hidden md:flex items-center gap-1">
 //             {navLinks.map((link) => (
-//               <Link key={link.href} href={link.href} className={getLinkClass(link.href)}>
+//               <Link key={link.href} to={link.href} className={getLinkClass(link.href)}>
 //                 {link.icon}
 //                 {link.label}
 //               </Link>
@@ -120,7 +120,7 @@
 //             {navLinks.map((link) => (
 //               <Link 
 //                 key={link.href} 
-//                 href={link.href} 
+//                 to={link.href} 
 //                 className={getLinkClass(link.href, true)}
 //               >
 //                 {link.icon}
@@ -146,11 +146,11 @@
 // }
 
 
-'use client';
+
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   Calendar,
@@ -161,11 +161,11 @@ import {
   X,        // Added for Close icon
   Newspaper // Added for Events
 } from "lucide-react";
-import { API_BASE_URL } from "../config/api";
+import { API_BASE_URL } from "@/config/api";
 
 export default function AdminHeader() {
-  const router = useRouter();
-  const pathname = usePathname();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Close mobile menu whenever the route changes
@@ -192,7 +192,7 @@ export default function AdminHeader() {
     } catch (e) {
       console.error("Admin logout failed", e);
     } finally {
-      router.push("/login");
+      navigate("/login");
     }
   };
 
@@ -219,7 +219,7 @@ export default function AdminHeader() {
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
 
           {/* Brand */}
-          <Link href="/admin/dashboard" className="flex items-center gap-2 group z-50 relative">
+          <Link to="/admin/dashboard" className="flex items-center gap-2 group z-50 relative">
             <div className="w-8 h-8 rounded-lg bg-slate-800 text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
               <LayoutDashboard size={16} />
             </div>
@@ -231,7 +231,7 @@ export default function AdminHeader() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className={getLinkClass(link.href)}>
+              <Link key={link.href} to={link.href} className={getLinkClass(link.href)}>
                 {link.icon}
                 {link.label}
               </Link>
@@ -269,7 +269,7 @@ export default function AdminHeader() {
             {navLinks.map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
+                to={link.href}
                 className={getLinkClass(link.href, true)}
               >
                 {link.icon}

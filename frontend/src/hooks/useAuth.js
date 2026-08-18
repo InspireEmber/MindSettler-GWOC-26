@@ -1,7 +1,7 @@
-"use client";
+
 
 import { useEffect, useState } from "react";
-import { API_BASE_URL } from "../config/api";
+import { API_BASE_URL } from "@/config/api";
 
 export function useAuth() {
   const [user, setUser] = useState(null);
