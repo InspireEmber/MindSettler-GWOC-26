@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const passportLocalMongoose = require('passport-local-mongoose').default || require('passport-local-mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
@@ -46,16 +47,11 @@ const userSchema = new mongoose.Schema({
 });
 
 // Hash password if modified
-userSchema.pre('save', async function hashPassword(next) {
-  if (!this.isModified('password') || !this.password) return next();
+userSchema.pre('save', async function hashPassword() {
+  if (!this.isModified('password') || !this.password) return;
 
-  try {
-    const saltRounds = 10;
-    this.password = await bcrypt.hash(this.password, saltRounds);
-    next();
-  } catch (err) {
-    next(err);
-  }
+  const saltRounds = 10;
+  this.password = await bcrypt.hash(this.password, saltRounds);
 });
 
 // Compare candidate password with stored hash
