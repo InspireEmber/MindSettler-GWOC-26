@@ -1,4 +1,4 @@
-"use client";
+
 import { useState, useEffect } from 'react';
 import apiService from '@/services/api';
 import { motion, AnimatePresence } from 'framer-motion';

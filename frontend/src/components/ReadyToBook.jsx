@@ -1,7 +1,7 @@
-"use client";
+
 
 import { useRef } from "react";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 export default function ReadyToBook() {
   const divRef = useRef(null);
@@ -56,7 +56,7 @@ export default function ReadyToBook() {
             "A safe place for kind and professional help."
           </p>
           <Link
-            href="/book-session"
+            to="/book-session"
             className="inline-flex px-8 sm:px-12 py-4 sm:py-5 rounded-full bg-[#eeb9ff] text-[#3F2965] font-bold text-base sm:text-lg hover:shadow-[0_20px_50px_rgba(238,185,255,0.4)] hover:bg-[#eeb9ff]/90 hover:scale-105 active:scale-95 transition-all min-h-[44px] items-center justify-center"
           >
             Book Your First Session

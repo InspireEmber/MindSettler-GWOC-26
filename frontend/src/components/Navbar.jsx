@@ -1,20 +1,20 @@
-"use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter, usePathname } from "next/navigation";
+
+import { Link } from "react-router-dom";
+
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   Menu, X, User, LogOut, LogIn,
   Info, Sparkles, BookOpen, Map,
   ChevronRight, CalendarCheck, Brain, Star, HelpCircle, MessageCircle
 } from "lucide-react";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
-  const router = useRouter();
-  const pathname = usePathname();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { user, loading, logout } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
@@ -78,7 +78,7 @@ export default function Navbar() {
   const handleLogout = async () => {
     await logout();
     setIsMobileMenuOpen(false);
-    router.push("/login");
+    navigate("/login");
   };
 
   const navLinkVariants = {
@@ -105,7 +105,7 @@ export default function Navbar() {
       <div className="relative group">
         <motion.div variants={navLinkVariants} whileHover="hover" whileTap="tap">
           <Link
-            href={href}
+            to={href}
             className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isActive ? "text-white" : "text-white/80 hover:text-white"
               }`}
           >
@@ -129,7 +129,7 @@ export default function Navbar() {
               {dropdownItems.map((item, index) => (
                 <Link
                   key={index}
-                  href={item.href}
+                  to={item.href}
                   className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-white/80 hover:text-white ${dropdownItemHover} transition-colors`}
                 >
                   {item.icon && <item.icon size={16} className="text-[#eeb9ff]" />}
@@ -159,17 +159,17 @@ export default function Navbar() {
             transition={{ duration: 0.5 }}
           >
             <Link
-              href="/"
+              to="/"
               className="flex items-center gap-3 group"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <Image
+              <img
                 src="/logo.svg"
                 alt="MindSettler"
                 width={120}
                 height={40}
                 className="h-10 sm:h-12 w-auto object-contain brightness-0 invert opacity-90 group-hover:opacity-100 transition-all duration-300"
-                priority
+                
               />
             </Link>
           </motion.div>
@@ -216,7 +216,7 @@ export default function Navbar() {
             <div className="h-6 w-[1px] bg-white/20 mx-2" />
 
             <Link
-              href="/book-session"
+              to="/book-session"
               className="group relative flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#a167a5]/30 backdrop-blur-md text-white shadow-xl hover:shadow-[#4A313E]/30 transition-all overflow-hidden ring-1 ring-inset ring-white/10"
             >
               <div className="absolute inset-0 bg-white/20 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300" />
@@ -227,9 +227,9 @@ export default function Navbar() {
             <div className="flex items-center gap-3 ml-4">
               {!loading && !user && (
                 <div className="flex items-center gap-3">
-                  <Link href="/login" className="px-3 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors">Log in</Link>
+                  <Link to="/login" className="px-3 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors">Log in</Link>
                   <Link
-                    href="/signup"
+                    to="/signup"
                     className="px-6 py-2.5 rounded-full bg-[#a167a5]/10 backdrop-blur-md text-white shadow-xl hover:bg-[#a167a5]/20 hover:shadow-[#4A313E]/30 transition-all ring-1 ring-inset ring-white/10 font-semibold text-sm text-center"
                   >
                     Signup
@@ -240,7 +240,7 @@ export default function Navbar() {
               {!loading && user && (
                 <div className="flex items-center gap-4">
                   <Link
-                    href="/profile"
+                    to="/profile"
                     className="group flex items-center gap-2 p-1 pr-4 rounded-full bg-white/10 border border-white/10 hover:bg-white/20 transition-all"
                   >
                     <div className="w-8 h-8 rounded-full bg-[#a167a5]/60 backdrop-blur-md text-white flex items-center justify-center ring-1 ring-inset ring-white/20">
@@ -297,7 +297,7 @@ export default function Navbar() {
                           }`}>
 
                         <Link
-                          href={item.href}
+                          to={item.href}
                           className={`flex items-center gap-3 flex-1 px-5 py-4 font-medium`}
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
@@ -337,7 +337,7 @@ export default function Navbar() {
                                 whileTap={{ scale: 0.98 }}
                               >
                                 <Link
-                                  href={child.href}
+                                  to={child.href}
                                   onClick={() => setIsMobileMenuOpen(false)}
                                   className="flex items-center gap-3 px-6 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 border-t border-white/5 first:border-0 transition-colors"
                                 >
@@ -355,15 +355,15 @@ export default function Navbar() {
 
                 {!loading && !user && (
                   <div className="flex gap-3 p-4 mt-2 border-t border-white/10">
-                    <Link href="/login" className="flex-1 py-3 text-center text-sm font-bold text-white/90 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10">Log In</Link>
-                    <Link href="/signup" className="flex-1 py-3 text-center text-sm font-bold text-white bg-[#a167a5]/60 backdrop-blur-md rounded-xl shadow-xl hover:bg-[#a167a5]/80 transition-all ring-1 ring-inset ring-white/10">Sign Up</Link>
+                    <Link to="/login" className="flex-1 py-3 text-center text-sm font-bold text-white/90 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10">Log In</Link>
+                    <Link to="/signup" className="flex-1 py-3 text-center text-sm font-bold text-white bg-[#a167a5]/60 backdrop-blur-md rounded-xl shadow-xl hover:bg-[#a167a5]/80 transition-all ring-1 ring-inset ring-white/10">Sign Up</Link>
                   </div>
                 )}
 
                 {!loading && user && (
                   <div className="flex gap-3 p-4 mt-2 border-t border-white/10">
                     <Link
-                      href="/profile"
+                      to="/profile"
                       className="flex-1 flex items-center justify-center gap-2 py-3 text-center text-sm font-bold text-white bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >

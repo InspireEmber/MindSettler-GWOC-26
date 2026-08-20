@@ -1,9 +1,9 @@
-"use client";
+
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 import { Info, Loader2, Calendar as CalendarIcon, Clock, ShieldCheck, CheckCircle2, QrCode, Banknote, Copy, Wallet } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import api from "../services/api";
+import api from "@/services/api";
 
 const BlobBackground = () => (
   <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none bg-purple-100">
@@ -14,7 +14,7 @@ const BlobBackground = () => (
 );
 
 export default function BookingForm() {
-  const router = useRouter();
+  const navigate = useNavigate();
   const today = new Date().toISOString().split('T')[0];
   const [formData, setFormData] = useState({
     sessionType: "online",
@@ -79,7 +79,7 @@ export default function BookingForm() {
     setIsSubmitting(true);
     try {
       const booking = await api.createBooking(formData);
-      router.push(`/appointment-status?id=${booking.id}`);
+      navigate(`/appointment-status?id=${booking.id}`);
     } catch (err) {
       setError(err.message || "Failed to create booking.");
       setIsSubmitting(false);

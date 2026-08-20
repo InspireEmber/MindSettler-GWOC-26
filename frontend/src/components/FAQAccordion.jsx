@@ -1,4 +1,4 @@
-"use client";
+
 import { useState } from "react";
 import { ChevronDown, Sparkles, HelpCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";

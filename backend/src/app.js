@@ -185,12 +185,23 @@ app.use('/api/latest-events', latestEventRoutes);
 // Error handling middleware (must be last)
 app.use(errorHandler);
 
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: 'Route not found'
+const path = require('path');
+
+// Serve frontend in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../../frontend', 'dist', 'index.html'));
   });
-});
+} else {
+  // 404 handler (Dev only, since prod handles all unhandled routes with index.html)
+  app.use((req, res) => {
+    res.status(404).json({
+      success: false,
+      message: 'Route not found'
+    });
+  });
+}
 
 module.exports = app;

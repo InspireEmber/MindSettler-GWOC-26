@@ -1,7 +1,6 @@
-"use client";
-import Link from "next/link";
-import Image from "next/image";
-import { Instagram } from "lucide-react";
+
+import { Link } from "react-router-dom";
+
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -32,8 +31,8 @@ export default function Footer() {
 
           {/* Logo Section (Spans 2 columns) */}
           <div className="lg:col-span-2 space-y-6">
-            <Link href="/" className="inline-block hover:opacity-80 transition-opacity">
-              <Image
+            <Link to="/" className="inline-block hover:opacity-80 transition-opacity">
+              <img
                 src="/logo.svg"
                 alt="MindSettler"
                 width={120}
@@ -56,7 +55,7 @@ export default function Footer() {
                 {links.map((link) => (
                   <li key={link.name}>
                     <Link
-                      href={link.href}
+                      to={link.href}
                       className="text-sm text-gray-400 hover:text-white transition-all flex items-center gap-1 group"
                     >
                       <span className="relative">
@@ -83,7 +82,22 @@ export default function Footer() {
                 className="w-11 h-11 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#DD1764] hover:scale-110 transition-all duration-300 group"
                 aria-label="Instagram"
               >
-                <Instagram size={20} className="text-gray-300 group-hover:text-white" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-gray-300 group-hover:text-white"
+                >
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
               </a>
             </div>
           </div>
@@ -95,7 +109,7 @@ export default function Footer() {
             © {currentYear} MindSettler. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            <Link href="/contact" className="text-[11px] text-gray-500 hover:text-white uppercase tracking-widest transition-colors">
+            <Link to="/contact" className="text-[11px] text-gray-500 hover:text-white uppercase tracking-widest transition-colors">
               Contact Support
             </Link>
           </div>

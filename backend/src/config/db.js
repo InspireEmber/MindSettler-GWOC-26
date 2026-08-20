@@ -4,10 +4,7 @@ const connectDB = async () => {
   try {
     // Using local MongoDB
     const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/mindsettler';
-    const conn = await mongoose.connect(mongoURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const conn = await mongoose.connect(mongoURI);
 
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     console.log(`Database: ${conn.connection.name}`);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CheckCircle2, Clock, XCircle, Calendar, User, Mail, Phone, Laptop, MapPin, QrCode, Banknote, Info, Copy, Send, Loader2, Check } from "lucide-react";
-import Link from "next/link";
-import api from "../services/api";
+import { Link } from "react-router-dom";
+import api from "@/services/api";
 
 const STATUS_CONFIG = {
   confirmed: { color: "bg-green-500/20 text-green-300 border-green-500/20", icon: <CheckCircle2 size={20} />, bgLight: "bg-green-500/10 border-green-500/20 text-green-200" },
@@ -194,7 +194,7 @@ export default function SessionCard({ booking }) {
                 </div>
               )}
               {status === "rejected" && (
-                <Link href="/book-session" className="inline-block px-6 py-2 rounded-full bg-red-500 text-white text-sm font-bold hover:bg-red-600 transition-all shadow-lg shadow-red-900/20">
+                <Link to="/book-session" className="inline-block px-6 py-2 rounded-full bg-red-500 text-white text-sm font-bold hover:bg-red-600 transition-all shadow-lg shadow-red-900/20">
                   Reschedule
                 </Link>
               )}

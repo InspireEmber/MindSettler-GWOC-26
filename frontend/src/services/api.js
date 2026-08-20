@@ -72,8 +72,8 @@
 
 
 
-'use client'
-import { API_BASE_URL } from '../config/api';
+
+import { API_BASE_URL } from '@/config/api';
 
 class ApiService {
   /**

@@ -1,9 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
-    "./src/app/**/*.{js,jsx}",
-    "./src/components/**/*.{js,jsx}",
-    "./src/styles/**/*.{js,jsx,css}",
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -26,10 +25,10 @@ module.exports = {
           "linear-gradient(135deg, #25164B, #4C1D95, #BE185D)",
       },
       fontFamily: {
-        redhat: ["var(--font-redhat)"],
+        redhat: ["var(--font-redhat)", "sans-serif"],
         baskervville: ["var(--font-baskervville)", "serif"],
       },
     },
   },
   plugins: [],
-};
+}

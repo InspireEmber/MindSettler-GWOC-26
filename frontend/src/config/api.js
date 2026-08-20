@@ -4,7 +4,7 @@
  */
 
 // Get env var and clean it up
-let baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').trim();
+let baseUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000').trim();
 
 // Remove trailing slashes
 while (baseUrl.endsWith('/')) {
