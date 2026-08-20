@@ -22,6 +22,7 @@ const AWARENESS_TOPICS = [
           image: "/images/bg18.jpg",
           color: "from-purple-400/20 to-pink-400/20",
           icon: Brain,
+          href: "https://www.psychiatry.org/patients-families/anxiety-disorders/what-are-anxiety-disorders"
      },
      {
           id: 2,
@@ -30,6 +31,7 @@ const AWARENESS_TOPICS = [
           image: "/images/bg20.jpg",
           color: "from-blue-400/20 to-purple-400/20",
           icon: Heart,
+          href: "https://www.psychiatry.org/patients-families/depression/what-is-depression",
      },
      {
           id: 3,
@@ -38,6 +40,7 @@ const AWARENESS_TOPICS = [
           image: "/images/bg21.jpg",
           color: "from-pink-400/20 to-rose-400/20",
           icon: Sparkles,
+          href: "https://medlineplus.gov/ency/article/003211.htm",
      },
      {
           id: 4,
@@ -46,6 +49,7 @@ const AWARENESS_TOPICS = [
           image: "/images/bg23.jpg",
           color: "from-rose-400/20 to-orange-400/20",
           icon: Users,
+          href: "https://www.mindtalk.in/illnesses/relationship-issues",
      },
      {
           id: 5,
@@ -54,6 +58,7 @@ const AWARENESS_TOPICS = [
           image: "/images/bg24.jpg",
           color: "from-indigo-400/20 to-purple-400/20",
           icon: Shield,
+          href: "https://www.verywellmind.com/what-is-self-esteem-2795868"
      },
      {
           id: 6,
@@ -62,6 +67,7 @@ const AWARENESS_TOPICS = [
           image: "/images/bg25.jpg",
           color: "from-violet-400/20 to-fuchsia-400/20",
           icon: Lightbulb,
+          href: "https://www.mind.org.uk/information-support/types-of-mental-health-problems/trauma/about-trauma/",
      },
 ];
 
@@ -86,7 +92,6 @@ const staggerContainer = {
      }
 };
 
-// Topic Card Component
 const TopicCard = ({ topic, index }) => {
 
      return (
@@ -95,33 +100,46 @@ const TopicCard = ({ topic, index }) => {
                whileHover={{ y: -8 }}
                className="group relative"
           >
-               <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-[0_0_30px_rgba(238,185,255,0.15)] hover:border-[#eeb9ff]/30 transition-all duration-500 flex flex-col">
-                    {/* Image */}
-                    <div className="relative h-56 overflow-hidden">
-                         <img
-                              src={topic.image}
-                              alt={topic.title}
-                              fill
-                              className="object-cover transition-transform duration-700 group-hover:scale-110"
-                         />
-                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
+               <a
+                    href={topic.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block h-full cursor-pointer"
+               >
+                    <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-[0_0_30px_rgba(238,185,255,0.15)] hover:border-[#eeb9ff]/30 transition-all duration-500 h-full flex flex-col">
+                         {/* Image */}
+                         <div className="relative h-56 overflow-hidden">
+                              <img
+                                   src={topic.image}
+                                   alt={topic.title}
+                                   className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
 
-                         {/* Icon Badge */}
-                         <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
-                              <topic.icon className="w-6 h-6 text-white" />
+                              {/* Icon Badge */}
+                              <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
+                                   <topic.icon className="w-6 h-6 text-white" />
+                              </div>
+                         </div>
+
+                         {/* Content */}
+                         <div className="p-6 md:p-8 pb-4 flex flex-col items-center text-center flex-grow">
+                              <h3 className="text-2xl font-light text-[#eeb9ff] mb-2 group-hover:text-white transition-colors">
+                                   {topic.title}
+                              </h3>
+                              <p className="text-gray-200 leading-relaxed font-redhat font-light text-sm">
+                                   {topic.description}
+                              </p>
+                         </div>
+
+                         {/* Hover indicator */}
+                         <div className="pb-6 text-center">
+                              <span className="text-[10px] font-bold uppercase tracking-widest text-[#eeb9ff] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                   Explore Topic →
+                              </span>
                          </div>
                     </div>
-
-                    {/* Content */}
-                    <div className="p-6 md:p-8 pb-4 flex flex-col items-center text-center">
-                         <h3 className="text-2xl font-light text-[#eeb9ff] mb-2 group-hover:text-white transition-colors">
-                              {topic.title}
-                         </h3>
-                         <p className="text-gray-200 leading-relaxed font-redhat font-light">
-                              {topic.description}
-                         </p>
-                    </div>
-               </div>
+               </a>
           </motion.div>
      );
 };

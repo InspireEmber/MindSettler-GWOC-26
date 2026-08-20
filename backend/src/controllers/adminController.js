@@ -285,13 +285,17 @@ exports.markAppointmentPayment = async (req, res) => {
 
 // Basic admin stats overview (Admin only)
 exports.getStatsOverview = async (req, res) => {
-  const [totalAppointments, completedAppointments, upcomingAppointments, totalUsers] =
+  const [totalAppointments, completedAppointments, upcomingAppointments, pendingAppointments, paidAppointments, totalUsers] =
     await Promise.all([
-      Appointment.countDocuments(),
+      Appointment.countDocuments(), // Total
       Appointment.countDocuments({ status: 'completed' }),
       Appointment.countDocuments({ status: 'confirmed' }),
+      Appointment.countDocuments({ status: 'pending' }), // Pending
+      Appointment.countDocuments({ paymentStatus: 'paid' }), // For revenue calculation
       User.countDocuments(),
     ]);
+
+  const revenue = paidAppointments * 749; // Fixed price based on email service
 
   res.json({
     success: true,
@@ -299,7 +303,9 @@ exports.getStatsOverview = async (req, res) => {
       totalAppointments,
       completedAppointments,
       upcomingAppointments,
+      pendingAppointments,
       totalUsers,
+      revenue,
     },
   });
 };
