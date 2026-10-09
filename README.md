@@ -4,7 +4,6 @@
 
 ![MindSettler Banner](https://img.shields.io/badge/MindSettler-Mental%20Wellness%20Platform-pink?style=for-the-badge)
 [![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge)](https://mind-settler-gwoc-26.vercel.app/)
-[![Instagram](https://img.shields.io/badge/Instagram-@mindsettlerbypb-E4405F?style=for-the-badge&logo=instagram)](https://www.instagram.com/mindsettlerbypb/)
 
 
 </div>
@@ -13,7 +12,7 @@
 
 **Built with care for mental wellness**
 
-[![Made with Next.js](https://img.shields.io/badge/Made%20with-Next.js-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![Powered by Vite](https://img.shields.io/badge/Powered%20by-Vite-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Powered by React](https://img.shields.io/badge/Powered%20by-React-61DAFB?style=flat-square&logo=react&logoColor=black)](https://reactjs.org/)
 [![Powered by Node.js](https://img.shields.io/badge/Powered%20by-Node.js-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Powered by Express](https://img.shields.io/badge/Powered%20by-Express-000000?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
@@ -52,8 +51,6 @@ The platform combines:
 - **Session Booking** - Easy appointment scheduling with mental health professionals
 - **Corporate Services** - Workshops and group sessions for organizations
 - **Privacy-First** - Secure, confidential, and HIPAA-compliant practices
-
-**Official Instagram:** [@mindsettlerbypb](https://www.instagram.com/mindsettlerbypb/)
 
 ---
 
@@ -136,8 +133,9 @@ MindSettler's mission is to **empower individuals** to understand their mental a
 ### **Frontend**
 | Technology | Purpose |
 |------------|---------|
-| **Next.js 15** | React framework with SSR and routing |
+| **Vite** | Frontend build tool |
 | **React 19** | UI component library |
+| **React Router** | Client-side routing |
 | **Tailwind CSS** | Utility-first styling framework |
 | **Framer Motion** | Animation and transitions |
 | **Lucide React** | Icon library |
@@ -248,9 +246,9 @@ Ensure you have the following installed:
    npm install
    ```
 
-   Create `.env.local` file in `frontend/`:
+   Create `.env` file in `frontend/`:
    ```env
-   NEXT_PUBLIC_API_URL=http://localhost:5000
+   VITE_API_URL=http://localhost:5000
    ```
 
 4. **Seed Admin User (Optional)**
@@ -281,7 +279,7 @@ Ensure you have the following installed:
 ## Deployment
 
 The application is deployed using:
-- **Frontend:** Vercel (Next.js optimized)
+- **Frontend:** Vercel
 - **Backend:** Render (Node.js hosting)
 - **Database:** MongoDB Atlas (cloud database)
 
@@ -300,11 +298,11 @@ The application is deployed using:
 #### **Frontend (Vercel)**
 1. Import GitHub repository to Vercel
 2. Configure:
-   - **Framework:** Next.js
+   - **Framework:** Vite
    - **Root Directory:** `frontend`
 3. Add environment variable:
    ```
-   NEXT_PUBLIC_API_URL=https://your-backend.onrender.com
+   VITE_API_URL=https://your-backend.onrender.com
    ```
 4. Deploy and copy the frontend URL
 
@@ -320,15 +318,15 @@ The application is deployed using:
 
 ```
 MindSettler-GWOC-26/
-├── frontend/                # Next.js frontend application
+├── frontend/                # React/Vite frontend application
 │   ├── src/
-│   │   ├── app/            # Next.js app directory
-│   │   │   ├── page.jsx    # Home page
-│   │   │   ├── about/      # About page
-│   │   │   ├── admin/      # Admin panel pages
-│   │   │   ├── book-session/
-│   │   │   ├── journey/
-│   │   │   ├── resources/
+│   │   ├── pages/          # Application pages
+│   │   │   ├── Home.jsx    # Home page
+│   │   │   ├── About.jsx   # About page
+│   │   │   ├── Admin/      # Admin panel pages
+│   │   │   ├── BookSession.jsx
+│   │   │   ├── Journey.jsx
+│   │   │   ├── Resources.jsx
 │   │   │   └── ...
 │   │   ├── components/     # Reusable React components
 │   │   │   ├── Navbar.jsx
@@ -475,7 +473,7 @@ CLOUDINARY_API_SECRET=       # Cloudinary API secret
 ### Frontend Environment Variables
 
 ```env
-NEXT_PUBLIC_API_URL=         # Backend API URL (without /api suffix)
+VITE_API_URL=                # Backend API URL (without /api suffix)
 ```
 
 ---
@@ -550,38 +548,6 @@ This project is licensed under the ISC License. See the LICENSE file for details
 
 ## Contact & Support
 
-- **Instagram:** [@mindsettlerbypb](https://www.instagram.com/mindsettlerbypb/)
 - **Website:** [https://mindsettler.vercel.app](https://mind-settler-gwoc-26.vercel.app/)
 - **Email:** Contact form available on website
-
----
-
-## Roadmap
-
-### Completed
-- [ ] Full-stack MERN application
-- [ ] Session booking system
-- [ ] AI chatbot integration (OpenRouter)
-- [ ] Google Calendar integration
-- [ ] Email notifications (Brevo)
-- [ ] Admin panel with latest events feature
-- [ ] Responsive design with frosted glass theme
-- [ ] Password reset functionality
-- [ ] Corporate services section
-- [ ] Image hosting (Cloudinary)
-- [ ] Deployment to production (Vercel + Render)
-
-### Planned
-- [ ] Dark mode theme
-- [ ] Multi-language support
-- [ ] Video consultation integration
-- [ ] Payment gateway integration
-- [ ] Mobile app (React Native)
-- [ ] Advanced analytics dashboard
-- [ ] Automated appointment reminders
-- [ ] Resource library expansion
-- [ ] Community forum
-- [ ] Therapist marketplace
-
-----
 
